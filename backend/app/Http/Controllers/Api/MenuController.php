@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Menu;
+use Illuminate\Http\JsonResponse;
+
+class MenuController extends Controller
+{
+    public function show(string $handle): JsonResponse
+    {
+        $menus = Menu::where('handle', $handle)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $formatted = $menus->map(fn($m) => [
+            'title' => $m->title,
+            'path' => $m->path,
+        ]);
+
+        return response()->json($formatted);
+    }
+}

@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Category extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name', 'slug', 'handle', 'description', 'image',
+        'seo_title', 'seo_description', 'is_active', 'sort_order',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+}

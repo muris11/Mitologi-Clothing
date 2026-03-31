@@ -1,0 +1,25 @@
+# Local development guides
+AGENTS.md
+**/AGENTS.md
+
+# Documentation pages
+pdf_pages/
+image/
+
+# Environment files
+.env*
+! .env.example
+
+# IDE files
+.vscode/
+.idea/
+.history/
+
+# Node modules (already covered by sub-service gitignores, but for root safety)
+node_modules/
+**/node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+.worktrees/

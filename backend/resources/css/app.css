@@ -1,0 +1,133 @@
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+@import "@fontsource/plus-jakarta-sans/800.css";
+@import 'tailwindcss';
+@import 'trix/dist/trix.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* Mitologi Brand Colors (OKLCH) - Match nextjs-commerce */
+    --color-mitologi-navy: oklch(0.25 0.05 260);
+    --color-mitologi-navy-light: oklch(0.32 0.06 260);
+    --color-mitologi-gold: oklch(0.75 0.16 75);
+    --color-mitologi-gold-dark: oklch(0.65 0.16 75);
+    --color-mitologi-cream: oklch(0.98 0.01 100);
+
+    /* Corporate Colors */
+    --color-background: #F8FAFC;
+    --color-foreground: #0F172A;
+    --color-muted: #F1F5F9;
+    --color-muted-foreground: #64748B;
+    --color-border: #E2E8F0;
+    --color-border-light: #F1F5F9;
+    --color-surface: #FFFFFF;
+
+    /* Semantic Colors */
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-error: #EF4444;
+    --color-info: #3B82F6;
+
+    /* Gradients */
+    --image-gradient-gold: linear-gradient(135deg, oklch(0.75 0.16 75), oklch(0.65 0.16 75));
+    --image-gradient-navy: linear-gradient(180deg, oklch(0.25 0.05 260), oklch(0.32 0.06 260));
+
+    /* Shadows - Premium Corporate */
+    --shadow-soft: 0 4px 20px -2px rgba(20, 25, 60, 0.05), 0 0 3px rgba(20, 25, 60, 0.02);
+    --shadow-hover: 0 12px 30px -4px rgba(20, 25, 60, 0.1), 0 0 4px rgba(20, 25, 60, 0.04);
+    --shadow-btn: 0 4px 14px 0 rgba(20, 25, 60, 0.15);
+    --shadow-premium: 0 18px 42px -28px rgba(20, 32, 51, 0.28);
+    --shadow-glass: 0 16px 34px -26px rgba(20, 32, 51, 0.2);
+    --shadow-glow: 0 0 18px rgba(185, 149, 91, 0.16);
+
+    /* Border Radius - Corporate Rounded */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-3xl: 1.5rem;
+}
+
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-border, currentColor);
+    }
+
+    body {
+        @apply bg-[var(--color-background)] text-[var(--color-foreground)] font-sans antialiased;
+    }
+}
+
+@layer utilities {
+    .font-display {
+        font-family: var(--font-display);
+        letter-spacing: -0.025em;
+    }
+    
+    .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .text-shadow-gold {
+         text-shadow: 0 0 20px rgba(185, 149, 91, 0.5);
+    }
+    
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Corporate UI Utilities */
+    .shadow-soft {
+        box-shadow: var(--shadow-soft);
+    }
+
+    .shadow-hover {
+        box-shadow: var(--shadow-hover);
+    }
+
+    .shadow-btn {
+        box-shadow: var(--shadow-btn);
+    }
+
+    .gradient-text {
+        @apply bg-gradient-to-r from-mitologi-navy to-mitologi-gold bg-clip-text text-transparent;
+    }
+
+    .gradient-bg {
+        @apply bg-gradient-to-tr from-mitologi-navy to-mitologi-navy-light;
+    }
+
+    .gradient-gold {
+        @apply bg-gradient-to-r from-mitologi-gold to-mitologi-gold-dark;
+    }
+
+    .admin-shell {
+        background: linear-gradient(180deg, #f7f1e8 0%, #f3eee5 100%);
+    }
+
+    .admin-panel {
+        background: rgba(255,255,255,0.82);
+        border: 1px solid rgba(217, 208, 194, 0.9);
+        box-shadow: var(--shadow-premium);
+        border-radius: 1.5rem;
+    }
+}
