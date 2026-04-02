@@ -64,6 +64,7 @@ class OrderController extends Controller
             'orderNumber' => $order->order_number,
             'status' => $order->status,
             'statusLabel' => $order->status_label,
+            'trackingNumber' => $order->tracking_number,
             'subtotal' => (float) $order->subtotal,
             'shippingCost' => (float) $order->shipping_cost,
             'total' => (float) $order->total,
