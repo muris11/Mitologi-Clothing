@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/mitologi_page_shell.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 
@@ -37,13 +37,17 @@ class SyaratKetentuanScreen extends StatelessWidget {
     );
   }
 
-  Widget buildBullet(String text) {
+  Widget buildBullet(String text, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+      padding: EdgeInsets.only(
+        bottom: 8,
+        left: ResponsiveHelper.horizontalPadding(context) / 2,
+        right: ResponsiveHelper.horizontalPadding(context) / 2,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 6, right: 12),
             child: Icon(Icons.circle, size: 6, color: AppTheme.slate400),
           ),
@@ -93,9 +97,11 @@ class SyaratKetentuanScreen extends StatelessWidget {
               ),
               buildBullet(
                 'Aplikasi ini mengandung materi yang dimiliki oleh atau dilisensikan kepada kami. Materi ini termasuk, namun tidak terbatas pada, desain, tata letak, tampilan, dan grafis.',
+                context,
               ),
               buildBullet(
                 'Penggunaan tidak sah atas aplikasi ini dapat menimbulkan klaim ganti rugi dan/atau merupakan tindak pidana.',
+                context,
               ),
 
               buildHeading('3. Akun Pengguna'),
@@ -104,12 +110,15 @@ class SyaratKetentuanScreen extends StatelessWidget {
               ),
               buildBullet(
                 'Memberikan informasi yang akurat, valid, terkini, dan lengkap.',
+                context,
               ),
               buildBullet(
                 'Segera memberi tahu kami tentang penggunaan kata sandi atau akun Anda yang tidak sah.',
+                context,
               ),
               buildBullet(
                 'Bertanggung jawab atas semua aktivitas yang terjadi di bawah akun Anda.',
+                context,
               ),
 
               buildHeading('4. Informasi Produk dan Ketersediaan'),
@@ -123,12 +132,15 @@ class SyaratKetentuanScreen extends StatelessWidget {
               buildHeading('5. Harga dan Pembayaran'),
               buildBullet(
                 'Semua harga tercantum dalam Rupiah Indonesia (IDR) dan termasuk pajak yang berlaku jika ada.',
+                context,
               ),
               buildBullet(
                 'Kami berhak mengubah harga produk kapan saja tanpa pemberitahuan sebelumnya.',
+                context,
               ),
               buildBullet(
                 'Pembayaran harus dilakukan secara penuh dan terkonfirmasi sebelum produk dikirim.',
+                context,
               ),
 
               buildHeading('6. Pengiriman dan Risiko Kerugian'),

@@ -64,7 +64,7 @@ class AboutHistorySection extends StatelessWidget {
                     border: Border.all(color: AppTheme.slate200),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.03),
+                        color: Colors.black.withValues(alpha: 0.03),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -115,12 +115,12 @@ class AboutHistorySection extends StatelessWidget {
                           borderRadius: BorderRadius.circular(24),
                           boxShadow: [
                             BoxShadow(
-                              color: AppTheme.accent.withOpacity(0.2),
+                              color: AppTheme.accent.withValues(alpha: 0.2),
                               blurRadius: 0,
                               offset: const Offset(8, 8),
                             ),
                             BoxShadow(
-                              color: AppTheme.slate200.withOpacity(0.5),
+                              color: AppTheme.slate200.withValues(alpha: 0.5),
                               blurRadius: 0,
                               offset: const Offset(-8, -8),
                             ),
@@ -183,7 +183,7 @@ class AboutHistorySection extends StatelessWidget {
                               border: Border.all(color: AppTheme.slate100),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
+                                  color: Colors.black.withValues(alpha: 0.08),
                                   blurRadius: 12,
                                   offset: const Offset(0, 4),
                                 ),
@@ -225,7 +225,7 @@ class AboutHistorySection extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border(
                         left: BorderSide(
-                          color: AppTheme.accent.withOpacity(0.3),
+                          color: AppTheme.accent.withValues(alpha: 0.3),
                           width: 2,
                         ),
                       ),
@@ -280,7 +280,9 @@ class AboutHistorySection extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(
-                  top: BorderSide(color: AppTheme.slate200.withOpacity(0.5)),
+                  top: BorderSide(
+                    color: AppTheme.slate200.withValues(alpha: 0.5),
+                  ),
                 ),
               ),
               child: Column(
@@ -359,7 +361,7 @@ class AboutHistorySection extends StatelessWidget {
                           border: Border.all(color: AppTheme.slate200),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.03),
+                              color: Colors.black.withValues(alpha: 0.03),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),

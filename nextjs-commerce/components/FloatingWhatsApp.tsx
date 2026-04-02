@@ -5,7 +5,9 @@ import Link from "next/link";
 
 export default function FloatingWhatsApp() {
   const phoneNumber = "6281234567890"; // Ganti dengan nomor asli
-  const message = encodeURIComponent("Halo Mitologi Clothing, saya tertarik dengan produk Anda.");
+  const message = encodeURIComponent(
+    "Halo Mitologi Clothing, saya tertarik dengan produk Anda.",
+  );
 
   return (
     <Link

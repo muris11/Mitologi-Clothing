@@ -34,21 +34,21 @@ class TeamStructureSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(shouldShowLarge ? 32 : 24),
             border: Border.all(
               color: isRoot
-                  ? AppTheme.primary.withOpacity(0.2)
+                  ? AppTheme.primary.withValues(alpha: 0.2)
                   : AppTheme.slate100,
               width: 1,
             ),
             boxShadow: isRoot
                 ? [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
+                      color: Colors.black.withValues(alpha: 0.08),
                       blurRadius: 16,
                       offset: const Offset(0, 4),
                     ),
                   ]
                 : [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
+                      color: Colors.black.withValues(alpha: 0.03),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -162,7 +162,7 @@ class TeamStructureSection extends StatelessWidget {
                       Container(
                         width: 1,
                         height: 32,
-                        color: AppTheme.accent.withOpacity(0.3),
+                        color: AppTheme.accent.withValues(alpha: 0.3),
                       ),
                     if (!isRoot) const SizedBox(height: 16),
                     _buildMemberCard(node, isRoot),
@@ -171,7 +171,7 @@ class TeamStructureSection extends StatelessWidget {
                       Container(
                         width: 1,
                         height: 32,
-                        color: AppTheme.accent.withOpacity(0.3),
+                        color: AppTheme.accent.withValues(alpha: 0.3),
                       ),
                       if (children.length > 1) ...[
                         const SizedBox(height: 0),
@@ -212,7 +212,7 @@ class TeamStructureSection extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: AppTheme.primary.withOpacity(0.05),
+              color: AppTheme.primary.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(20),
             ),
             child: const Text(

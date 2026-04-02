@@ -16,7 +16,7 @@ export function SortSelect() {
       params.delete("sort");
     }
     params.delete("page");
-    
+
     router.replace(`${pathname}?${params.toString()}`);
   };
 

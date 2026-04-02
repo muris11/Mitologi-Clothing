@@ -1,10 +1,10 @@
 <?php
 
+use App\Models\PortfolioItem;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
-use App\Models\PortfolioItem;
 
 return new class extends Migration
 {
@@ -22,12 +22,12 @@ return new class extends Migration
         $items = PortfolioItem::all();
         foreach ($items as $item) {
             $slug = Str::slug($item->title);
-            
+
             // Ensure uniqueness
             $originalSlug = $slug;
             $count = 1;
             while (PortfolioItem::where('slug', $slug)->where('id', '!=', $item->id)->exists()) {
-                $slug = $originalSlug . '-' . $count;
+                $slug = $originalSlug.'-'.$count;
                 $count++;
             }
 

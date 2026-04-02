@@ -1,9 +1,9 @@
 import {
-    ArrowPathIcon,
-    ChatBubbleLeftRightIcon,
-    CheckBadgeIcon,
-    CurrencyDollarIcon,
-    TruckIcon,
+  ArrowPathIcon,
+  ChatBubbleLeftRightIcon,
+  CheckBadgeIcon,
+  CurrencyDollarIcon,
+  TruckIcon,
 } from "@heroicons/react/24/outline";
 import { StaticPageShell } from "components/shop/static-page-shell";
 import type { Metadata } from "next";
@@ -78,7 +78,8 @@ export default function KebijakanPengembalianPage() {
               Langkah Pengembalian
             </h2>
             <p className="text-sm font-sans font-medium text-slate-500">
-              Proses pengembalian barang di Mitologi Clothing mudah dan transparan.
+              Proses pengembalian barang di Mitologi Clothing mudah dan
+              transparan.
             </p>
           </div>
         </div>
@@ -120,21 +121,40 @@ export default function KebijakanPengembalianPage() {
         </h3>
         <ul className="list-disc pl-5 space-y-2">
           <li>Produk yang diterima dalam kondisi cacat/rusak dari pabrik</li>
-          <li>Produk yang tidak sesuai dengan pesanan (salah warna, salah model, salah ukuran karena kesalahan produksi)</li>
-          <li>Produk yang berbeda dari deskripsi di website secara signifikan</li>
-          <li>Produk yang masih dalam kondisi baru, belum dicuci, belum dipakai, dan tag masih melekat</li>
+          <li>
+            Produk yang tidak sesuai dengan pesanan (salah warna, salah model,
+            salah ukuran karena kesalahan produksi)
+          </li>
+          <li>
+            Produk yang berbeda dari deskripsi di website secara signifikan
+          </li>
+          <li>
+            Produk yang masih dalam kondisi baru, belum dicuci, belum dipakai,
+            dan tag masih melekat
+          </li>
         </ul>
 
         <h3 className="text-xl font-sans font-bold mt-10 mb-4">
           Produk yang Tidak Dapat Dikembalikan
         </h3>
         <ul className="list-disc pl-5 space-y-2">
-          <li>Produk yang sudah dicuci, dipakai, atau dimodifikasi dengan cara apapun</li>
+          <li>
+            Produk yang sudah dicuci, dipakai, atau dimodifikasi dengan cara
+            apapun
+          </li>
           <li>Produk dengan tag yang sudah dilepas atau rusak</li>
           <li>Produk yang dikembalikan setelah melewati batas waktu 7 hari</li>
-          <li>Produk custom atau pesanan khusus yang dibuat sesuai permintaan spesifik</li>
-          <li>Produk yang rusak akibat kelalaian pembeli (bukan dari pabrik)</li>
-          <li>Produk sale/clearance dengan keterangan &quot;tanpa pengembalian&quot;</li>
+          <li>
+            Produk custom atau pesanan khusus yang dibuat sesuai permintaan
+            spesifik
+          </li>
+          <li>
+            Produk yang rusak akibat kelalaian pembeli (bukan dari pabrik)
+          </li>
+          <li>
+            Produk sale/clearance dengan keterangan &quot;tanpa
+            pengembalian&quot;
+          </li>
         </ul>
 
         <h3 className="text-xl font-sans font-bold mt-10 mb-4">
@@ -150,8 +170,9 @@ export default function KebijakanPengembalianPage() {
                 7 Hari Kalender
               </p>
               <p className="text-sm font-sans font-medium text-slate-600 leading-relaxed">
-                Pengajuan pengembalian harus dilakukan dalam waktu 7 hari kalender setelah barang diterima.
-                Tanggal penerimaan dihitung berdasarkan konfirmasi penerimaan dari jasa pengiriman.
+                Pengajuan pengembalian harus dilakukan dalam waktu 7 hari
+                kalender setelah barang diterima. Tanggal penerimaan dihitung
+                berdasarkan konfirmasi penerimaan dari jasa pengiriman.
               </p>
             </div>
           </div>
@@ -162,34 +183,64 @@ export default function KebijakanPengembalianPage() {
         </h3>
         <ol className="list-decimal pl-5 space-y-3">
           <li>
-            <strong>Hubungi customer service kami</strong> melalui WhatsApp (+62 813-2217-0902) atau email (mitologiclothing@gmail.com) dengan menyertakan:
+            <strong>Hubungi customer service kami</strong> melalui WhatsApp (+62
+            813-2217-0902) atau email (mitologiclothing@gmail.com) dengan
+            menyertakan:
             <ul className="list-disc pl-5 mt-2 space-y-2">
               <li>Nomor pesanan (Order ID)</li>
               <li>Foto produk yang menunjukkan kondisi/masalah</li>
               <li>Alasan pengembalian</li>
             </ul>
           </li>
-          <li><strong>Tunggu konfirmasi</strong> dari tim kami (maksimal 1×24 jam pada hari kerja)</li>
-          <li><strong>Kemas produk</strong> dengan rapi menggunakan kemasan yang aman untuk pengiriman</li>
-          <li><strong>Kirimkan produk</strong> ke alamat yang diberikan oleh tim kami beserta salinan nomor pesanan</li>
-          <li><strong>Konfirmasi pengiriman</strong> dengan mengirimkan nomor resi kepada tim kami</li>
+          <li>
+            <strong>Tunggu konfirmasi</strong> dari tim kami (maksimal 1×24 jam
+            pada hari kerja)
+          </li>
+          <li>
+            <strong>Kemas produk</strong> dengan rapi menggunakan kemasan yang
+            aman untuk pengiriman
+          </li>
+          <li>
+            <strong>Kirimkan produk</strong> ke alamat yang diberikan oleh tim
+            kami beserta salinan nomor pesanan
+          </li>
+          <li>
+            <strong>Konfirmasi pengiriman</strong> dengan mengirimkan nomor resi
+            kepada tim kami
+          </li>
         </ol>
 
         <h3 className="text-xl font-sans font-bold mt-10 mb-4">
           Proses Pengembalian Dana
         </h3>
         <ul className="list-disc pl-5 space-y-2">
-          <li>Refund diproses setelah barang diterima dan lolos verifikasi oleh tim kami (1-3 hari kerja)</li>
-          <li>Dana akan dikembalikan melalui Transfer Bank ke rekening yang Anda informasikan</li>
-          <li>Proses transfer refund memakan waktu 5-14 hari kerja setelah verifikasi selesai</li>
-          <li>Jumlah refund mencakup harga produk. Biaya pengiriman awal tidak dikembalikan kecuali pengembalian disebabkan oleh kesalahan kami</li>
+          <li>
+            Refund diproses setelah barang diterima dan lolos verifikasi oleh
+            tim kami (1-3 hari kerja)
+          </li>
+          <li>
+            Dana akan dikembalikan melalui Transfer Bank ke rekening yang Anda
+            informasikan
+          </li>
+          <li>
+            Proses transfer refund memakan waktu 5-14 hari kerja setelah
+            verifikasi selesai
+          </li>
+          <li>
+            Jumlah refund mencakup harga produk. Biaya pengiriman awal tidak
+            dikembalikan kecuali pengembalian disebabkan oleh kesalahan kami
+          </li>
         </ul>
 
         <h3 className="text-xl font-sans font-bold mt-10 mb-4">
           Penukaran Produk
         </h3>
         <p>
-          Jika Anda memilih untuk menukar produk (misalnya tukar ukuran atau warna), proses pengiriman produk pengganti akan dilakukan setelah barang asli diterima dan diverifikasi. Biaya pengiriman produk pengganti ditanggung oleh Mitologi Clothing jika penukaran disebabkan oleh kesalahan kami.
+          Jika Anda memilih untuk menukar produk (misalnya tukar ukuran atau
+          warna), proses pengiriman produk pengganti akan dilakukan setelah
+          barang asli diterima dan diverifikasi. Biaya pengiriman produk
+          pengganti ditanggung oleh Mitologi Clothing jika penukaran disebabkan
+          oleh kesalahan kami.
         </p>
       </section>
 
@@ -219,7 +270,9 @@ export default function KebijakanPengembalianPage() {
               <h3 className="text-base font-sans font-bold text-slate-800 mb-2">
                 {faq.q}
               </h3>
-              <p className="text-sm font-sans font-medium text-slate-600 leading-relaxed">{faq.a}</p>
+              <p className="text-sm font-sans font-medium text-slate-600 leading-relaxed">
+                {faq.a}
+              </p>
             </div>
           ))}
         </div>

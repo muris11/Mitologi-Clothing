@@ -1,4 +1,3 @@
-
 "use client";
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -17,16 +16,16 @@ export function DeleteItemButton({ item }: { item: CartItem }) {
     if (!item.id) return;
     setIsPending(true);
     try {
-        await removeFromCart(item.id);
-    } catch(e: unknown) {
-        const err = e as Error;
-        addToast({
-          title: "Gagal",
-          description: err?.message || "Gagal menghapus produk.",
-          variant: "error"
-        });
+      await removeFromCart(item.id);
+    } catch (e: unknown) {
+      const err = e as Error;
+      addToast({
+        title: "Gagal",
+        description: err?.message || "Gagal menghapus produk.",
+        variant: "error",
+      });
     } finally {
-        setIsPending(false);
+      setIsPending(false);
     }
   };
 
@@ -37,7 +36,7 @@ export function DeleteItemButton({ item }: { item: CartItem }) {
       disabled={isPending}
       className={clsx(
         "flex h-11 w-11 items-center justify-center rounded-full bg-white border border-slate-200 hover:bg-red-50 hover:border-red-100 hover:text-red-500 transition-colors shadow-sm group touch-manipulation",
-        { "cursor-not-allowed opacity-50": isPending }
+        { "cursor-not-allowed opacity-50": isPending },
       )}
     >
       <XMarkIcon className="h-4 w-4 text-slate-400 group-hover:text-red-500 transition-colors" />

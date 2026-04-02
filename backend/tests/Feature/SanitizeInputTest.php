@@ -14,7 +14,7 @@ class SanitizeInputTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->middleware = new SanitizeInput();
+        $this->middleware = new SanitizeInput;
     }
 
     public function test_strips_html_tags_from_string_input(): void
@@ -27,7 +27,8 @@ class SanitizeInputTest extends TestCase
         $this->middleware->handle($request, function ($req) {
             $this->assertEquals('alert("xss")Test User', $req->input('name'));
             $this->assertEquals('Bold review with ', $req->input('comment'));
-            return new Response();
+
+            return new Response;
         });
     }
 
@@ -43,7 +44,8 @@ class SanitizeInputTest extends TestCase
             $this->assertEquals('<strong>P@ssw0rd!</strong>', $req->input('password'));
             $this->assertEquals('<strong>P@ssw0rd!</strong>', $req->input('password_confirmation'));
             $this->assertEquals('<em>OldPass</em>', $req->input('current_password'));
-            return new Response();
+
+            return new Response;
         });
     }
 
@@ -55,7 +57,8 @@ class SanitizeInputTest extends TestCase
 
         $this->middleware->handle($request, function ($req) {
             $this->assertEquals('<p>Rich <strong>HTML</strong> content</p>', $req->input('description_html'));
-            return new Response();
+
+            return new Response;
         });
     }
 
@@ -71,7 +74,8 @@ class SanitizeInputTest extends TestCase
         $this->middleware->handle($request, function ($req) {
             $this->assertEquals('xssJohn', $req->input('shipping.name'));
             $this->assertEquals('Jl. Normal No. 1', $req->input('shipping.address'));
-            return new Response();
+
+            return new Response;
         });
     }
 
@@ -87,7 +91,8 @@ class SanitizeInputTest extends TestCase
             $this->assertEquals(5, $req->input('quantity'));
             $this->assertTrue($req->input('active'));
             $this->assertEquals(150000.50, $req->input('price'));
-            return new Response();
+
+            return new Response;
         });
     }
 
@@ -100,7 +105,8 @@ class SanitizeInputTest extends TestCase
         $this->middleware->handle($request, function ($req) {
             // GET requests should be skipped - input not sanitized
             $this->assertEquals('<script>alert(1)</script>test', $req->input('search'));
-            return new Response();
+
+            return new Response;
         });
     }
 }

@@ -1,8 +1,3 @@
-/// Skeleton Widgets
-///
-/// Comprehensive skeleton loading states matching Next.js design.
-/// Use these for all loading states instead of CircularProgressIndicator.
-
 export 'base_skeleton.dart';
 export 'product_card_skeleton.dart';
 export 'home_skeleton.dart';

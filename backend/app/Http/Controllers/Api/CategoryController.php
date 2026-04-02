@@ -16,9 +16,17 @@ class CategoryController extends Controller
             ->orderBy('sort_order')
             ->orderBy('name')
             ->get()
-            ->map(fn(Category $category) => $this->formatCategory($category));
+            ->map(fn (Category $category) => [
+                'id' => $category->id,
+                'name' => $category->name,
+                'slug' => $category->slug,
+                'handle' => $category->handle,
+                'description' => $category->description,
+                'image' => $category->image,
+                'productsCount' => $category->products_count ?? 0,
+            ]);
 
-        return response()->json($categories);
+        return $this->successResponse($categories);
     }
 
     public function show(string $handle): JsonResponse
@@ -29,23 +37,18 @@ class CategoryController extends Controller
             ->withCount('products')
             ->first();
 
-        if (!$category) {
-            return response()->json(['error' => 'Category not found'], 404);
+        if (! $category) {
+            return $this->notFoundResponse('Category');
         }
 
-        return response()->json($this->formatCategory($category));
-    }
-
-    private function formatCategory(Category $category): array
-    {
-        return [
+        return $this->successResponse([
             'id' => $category->id,
             'name' => $category->name,
             'slug' => $category->slug,
             'handle' => $category->handle,
             'description' => $category->description,
             'image' => $category->image,
-            'products_count' => $category->products_count ?? 0,
-        ];
+            'productsCount' => $category->products_count ?? 0,
+        ]);
     }
 }

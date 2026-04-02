@@ -11,7 +11,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-
 // export const runtime = "edge"; // Disabled to avoid connection issues with local PHP backend
 
 export async function generateMetadata(props: {
@@ -27,7 +26,7 @@ export async function generateMetadata(props: {
   const tags = Array.isArray(product.tags) ? product.tags : [];
   const indexable = !tags.includes("hidden");
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mitologi.id';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id";
   const productUrl = `${baseUrl}/shop/product/${params.handle}`;
   const productTitle = product.seo.title || product.title;
   const productDescription = product.seo.description || product.description;
@@ -49,21 +48,23 @@ export async function generateMetadata(props: {
     openGraph: {
       title: productTitle,
       description: productDescription,
-      type: 'website',
+      type: "website",
       url: productUrl,
-      ...(url ? {
-        images: [
-          {
-            url,
-            width,
-            height,
-            alt,
-          },
-        ],
-      } : {}),
+      ...(url
+        ? {
+            images: [
+              {
+                url,
+                width,
+                height,
+                alt,
+              },
+            ],
+          }
+        : {}),
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: productTitle,
       description: productDescription,
       ...(url ? { images: [url] } : {}),
@@ -107,13 +108,13 @@ export default async function ProductPage(props: {
         "@type": "ListItem",
         position: 1,
         name: "Beranda",
-        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://mitologi.id'}`,
+        item: `${process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id"}`,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Katalog",
-        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://mitologi.id'}/shop`,
+        item: `${process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id"}/shop`,
       },
       {
         "@type": "ListItem",
@@ -166,11 +167,17 @@ export default async function ProductPage(props: {
       <div className="bg-white border-b border-slate-200">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-4">
           <nav className="flex items-center gap-2 text-sm text-slate-500 font-sans font-medium">
-            <Link href="/" className="hover:text-mitologi-navy transition-colors">
+            <Link
+              href="/"
+              className="hover:text-mitologi-navy transition-colors"
+            >
               Beranda
             </Link>
             <ChevronRightIcon className="w-4 h-4" />
-            <Link href="/shop" className="hover:text-mitologi-navy transition-colors">
+            <Link
+              href="/shop"
+              className="hover:text-mitologi-navy transition-colors"
+            >
               Katalog
             </Link>
             <ChevronRightIcon className="w-4 h-4" />
@@ -184,7 +191,6 @@ export default async function ProductPage(props: {
       {/* Main Content */}
       <div className="bg-slate-50 min-h-screen pb-16 pt-8">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          
           {/* Product Section Card */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 lg:p-8 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
@@ -219,7 +225,9 @@ export default async function ProductPage(props: {
                 />
               </div>
               <div>
-                <h3 className="font-sans font-bold text-lg text-mitologi-navy">Mitologi Clothing</h3>
+                <h3 className="font-sans font-bold text-lg text-mitologi-navy">
+                  Mitologi Clothing
+                </h3>
                 <div className="flex flex-wrap items-center gap-y-1 gap-x-3 text-sm text-slate-500 font-sans font-medium mt-1">
                   <span>Produk Premium</span>
                   <span className="hidden sm:inline text-slate-300">•</span>
@@ -241,25 +249,38 @@ export default async function ProductPage(props: {
                   <div className="w-1.5 h-6 bg-mitologi-gold rounded-full"></div>
                   Spesifikasi Produk
                 </h2>
-                
+
                 <div className="flex flex-col gap-4 text-sm font-sans">
                   <div className="flex flex-col gap-1 pb-4 border-b border-slate-100">
                     <span className="text-slate-500 font-medium">Kategori</span>
-                    <span className="text-mitologi-navy font-bold">{categoryName}</span>
+                    <span className="text-mitologi-navy font-bold">
+                      {categoryName}
+                    </span>
                   </div>
                   <div className="flex flex-col gap-1 pb-4 border-b border-slate-100">
                     <span className="text-slate-500 font-medium">Stok</span>
                     <span className="text-slate-900 font-semibold">
-                      Sisa Kuantitas: Tersedia {product.totalStock !== undefined ? product.totalStock : (product.variants[0]?.stock || 0)} buah
+                      Sisa Kuantitas: Tersedia{" "}
+                      {product.totalStock !== undefined
+                        ? product.totalStock
+                        : product.variants[0]?.stock || 0}{" "}
+                      buah
                     </span>
                   </div>
                   <div className="flex flex-col gap-1 pb-4 border-b border-slate-100">
-                    <span className="text-slate-500 font-medium">Dikirim Dari</span>
-                    <span className="text-slate-900 font-semibold">{process.env.NEXT_PUBLIC_SHIPPING_ORIGIN || 'Cirebon, Jawa Barat'}</span>
+                    <span className="text-slate-500 font-medium">
+                      Dikirim Dari
+                    </span>
+                    <span className="text-slate-900 font-semibold">
+                      {process.env.NEXT_PUBLIC_SHIPPING_ORIGIN ||
+                        "Cirebon, Jawa Barat"}
+                    </span>
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="text-slate-500 font-medium">SKU</span>
-                    <span className="font-mono text-slate-600 bg-slate-50 px-2 py-1 rounded w-fit">{product.variants[0]?.sku || '-'}</span>
+                    <span className="font-mono text-slate-600 bg-slate-50 px-2 py-1 rounded w-fit">
+                      {product.variants[0]?.sku || "-"}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -272,9 +293,13 @@ export default async function ProductPage(props: {
                   <div className="w-1.5 h-6 bg-mitologi-navy rounded-full"></div>
                   Deskripsi Produk
                 </h2>
-                <div 
+                <div
                   className="prose prose-slate prose-sm sm:prose-base max-w-none text-slate-600 font-sans leading-relaxed whitespace-pre-line prose-headings:text-mitologi-navy prose-a:text-mitologi-navy hover:prose-a:text-mitologi-gold prose-strong:text-slate-900"
-                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(product.descriptionHtml || product.description) }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeHtml(
+                      product.descriptionHtml || product.description,
+                    ),
+                  }}
                 />
               </div>
             </div>
@@ -287,12 +312,13 @@ export default async function ProductPage(props: {
 
           {/* Related Products */}
           <div className="mt-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">PRODUK LAIN DARI TOKO INI</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6">
+              PRODUK LAIN DARI TOKO INI
+            </h2>
             <Suspense fallback={null}>
               <RelatedProducts id={product.id} />
             </Suspense>
           </div>
-
         </div>
       </div>
     </>

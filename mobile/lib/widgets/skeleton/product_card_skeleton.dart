@@ -150,7 +150,7 @@ class ProductListSkeleton extends StatelessWidget {
           horizontal: ResponsiveHelper.horizontalPadding(context),
         ),
         itemCount: itemCount,
-        separatorBuilder: (_, __) => SizedBox(width: spacing),
+        separatorBuilder: (_, index) => SizedBox(width: spacing),
         itemBuilder: (context, index) =>
             SizedBox(width: width, child: const ProductCardSkeleton()),
       ),

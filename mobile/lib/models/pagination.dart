@@ -46,19 +46,24 @@ class ProductListResponse {
       perPage: 12,
     );
 
-    if (json.containsKey('data') && json['data'] is List) {
+    // New standardized format: { data: { products: [...], pagination: {...} } }
+    if (json.containsKey('data') && json['data'] is Map<String, dynamic>) {
+      final data = json['data'];
+      if (data.containsKey('products') && data['products'] is List) {
+        productsList = data['products'];
+        if (data['pagination'] is Map<String, dynamic>) {
+          paging = Pagination.fromJson(data['pagination']);
+        }
+      }
+    } else if (json.containsKey('data') && json['data'] is List) {
+      // Direct array format: { data: [...] }
       productsList = json['data'];
-      paging = Pagination.fromJson(json);
     } else if (json.containsKey('products') && json['products'] is List) {
+      // Old format: { products: [...], pagination: {...} }
       productsList = json['products'];
       if (json['pagination'] is Map<String, dynamic>) {
         paging = Pagination.fromJson(json['pagination']);
       }
-    } else if (json.containsKey('products') &&
-        json['products'] is Map &&
-        json['products'].containsKey('data')) {
-      productsList = json['products']['data'];
-      paging = Pagination.fromJson(json['products']);
     }
 
     return ProductListResponse(productsData: productsList, pagination: paging);

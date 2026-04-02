@@ -2,22 +2,31 @@
 
 import Price from "components/shared/ui/price";
 import Cookies from "js-cookie";
-import { Cart, CheckoutResponse, MidtransPaymentResponse, UnknownError, User } from "lib/api/types";
+import {
+  ApiError,
+  Cart,
+  CheckoutResponse,
+  MidtransPaymentResponse,
+  User,
+  Address,
+  createCheckout,
+} from "lib/api";
 import { useToast } from "components/ui/ultra-quality-toast";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+  MapPinIcon,
+  PlusIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 
 declare global {
   interface Window {
-    snap: import('lib/api/types').MidtransSnap;
+    snap: import("lib/api/types").MidtransSnap;
   }
 }
-
-
-
-
 
 export default function CheckoutForm({
   user,
@@ -29,74 +38,31 @@ export default function CheckoutForm({
   const router = useRouter();
   const { addToast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [selectedAddressId, setSelectedAddressId] = useState<number | null>(
+    null,
+  );
+  const [addresses, setAddresses] = useState<Address[]>(user.addresses || []);
 
-  // Find primary address or first available address
-  const primaryAddress = user.addresses?.find((a) => a.is_primary) || user.addresses?.[0];
-
-  const [formData, setFormData] = useState({
-    firstName: primaryAddress?.recipient_name?.split(" ")[0] || user.name.split(" ")[0] || "",
-    lastName: primaryAddress?.recipient_name?.split(" ").slice(1).join(" ") || user.name.split(" ").slice(1).join(" ") || "",
-    address: primaryAddress?.address_line_1 || user.address || "",
-    city: primaryAddress?.city || user.city || "",
-    province: primaryAddress?.province || user.province || "",
-    postalCode: primaryAddress?.postal_code || user.postal_code || "",
-    phone: primaryAddress?.phone || user.phone || "",
-    email: user.email,
-  });
-
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [shakeField, setShakeField] = useState<string | null>(null);
-
-  const validateField = (name: string, value: string) => {
-    let error = "";
-    if (value.trim() === "" && name !== "lastName") {
-      error = "Field ini wajib diisi";
-    } else if (name === "phone" && !/^[0-9+]{10,15}$/.test(value)) {
-      error = "Nomor telepon tidak valid";
+  // Set default selected address (primary or first)
+  useEffect(() => {
+    if (addresses.length > 0) {
+      const primary = addresses.find((a) => a.isPrimary);
+      setSelectedAddressId(primary?.id || addresses[0]?.id || null);
     }
-    
-    setErrors((prev) => ({ ...prev, [name]: error }));
-    return error === "";
-  };
+  }, [addresses]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error when user types
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    validateField(e.target.name, e.target.value);
-  };
+  const selectedAddress = addresses.find((a) => a.id === selectedAddressId);
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate all fields
-    let isValid = true;
-    let firstErrorField: string | null = null;
-    
-    Object.keys(formData).forEach((key) => {
-      const valid = validateField(key, formData[key as keyof typeof formData]);
-      if (!valid) {
-        isValid = false;
-        if (!firstErrorField) firstErrorField = key;
-      }
-    });
 
-    if (!isValid) {
-      if (firstErrorField) {
-        setShakeField(firstErrorField);
-        setTimeout(() => setShakeField(null), 600); // 600ms corresponds to the tailwind animation duration
-        addToast({
-          title: "Data Tidak Lengkap",
-          description: "Mohon lengkapi semua data wajib",
-          variant: "warning"
-        });
-      }
+    if (!selectedAddress) {
+      addToast({
+        title: "Alamat Belum Dipilih",
+        description:
+          "Silakan pilih alamat pengiriman atau tambah alamat baru di halaman Akun.",
+        variant: "warning",
+      });
       return;
     }
 
@@ -104,47 +70,42 @@ export default function CheckoutForm({
 
     try {
       const payload = {
-        shipping_name: `${formData.firstName} ${formData.lastName}`.trim(),
-        shipping_phone: formData.phone,
-        shipping_address: formData.address,
-        shipping_city: formData.city,
-        shipping_province: formData.province || formData.city || "-",
-        shipping_postal_code: formData.postalCode,
+        shipping_name: selectedAddress.recipientName,
+        shipping_phone: selectedAddress.phone,
+        shipping_address:
+          selectedAddress.addressLine1 +
+          (selectedAddress.addressLine2
+            ? `, ${selectedAddress.addressLine2}`
+            : ""),
+        shipping_city: selectedAddress.city,
+        shipping_province: selectedAddress.province,
+        shipping_postal_code: selectedAddress.postalCode,
         notes: "",
       };
 
-      // use apiFetch so Authorization/local token logic is applied
-      // apiFetch will throw if response is not ok
-      const data: CheckoutResponse = await (
-        await import("lib/api")
-      ).apiFetch("/checkout", {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
+      const data = await createCheckout(payload);
 
-      // Extract fields from normalized camelCase response
-      const snapToken = data.snapToken || '';
-      const orderNumber = data.orderNumber || '';
+      const snapToken = data.snapToken || "";
+      const orderNumber = data.orderNumber || "";
       const redirectUrl = data.redirectUrl;
 
-      // Dev fallback: backend may return a mock token when MIDTRANS keys are not configured.
       const isMock = data?.mock === true || snapToken === "MOCK_SNAP_TOKEN";
       if (isMock) {
-        // Simulate a successful payment in development by redirecting to success page.
         addToast({
           title: "Pesanan Berhasil",
-          description: "Pesanan berhasil dibuat! Mengalihkan ke halaman sukses...",
-          variant: "success"
+          description:
+            "Pesanan berhasil dibuat! Mengalihkan ke halaman sukses...",
+          variant: "success",
         });
-        // Clear cart — backend already deleted items, frontend needs to sync
         Cookies.remove("cartSessionId");
-        window.dispatchEvent(new Event('auth:changed'));
-        router.push("/shop/checkout/success?orderId=" + orderNumber + "&mock=true");
+        window.dispatchEvent(new Event("auth:changed"));
+        router.push(
+          "/shop/checkout/success?orderId=" + orderNumber + "&mock=true",
+        );
         return;
       }
 
       if (!snapToken) {
-        // If server provided a specific error, show it.
         if (data?.error) {
           throw new Error(data.error);
         }
@@ -160,59 +121,56 @@ export default function CheckoutForm({
       if (window.snap) {
         window.snap.pay(snapToken, {
           onSuccess: async function (result: MidtransPaymentResponse) {
-            // Sync payment status with backend
             try {
               const { confirmOrderPayment } = await import("lib/api");
               await confirmOrderPayment(orderNumber);
             } catch (e) {
-              console.error("Failed to confirm payment with backend:", e);
+              // Silent fail
             }
-            // Clear cart after successful payment
             Cookies.remove("cartSessionId");
-            window.dispatchEvent(new Event('auth:changed'));
+            window.dispatchEvent(new Event("auth:changed"));
             addToast({
               title: "Pembayaran Berhasil",
               description: "Pembayaran berhasil! Pesanan Anda sedang diproses.",
-              variant: "success"
+              variant: "success",
             });
             router.push("/shop/checkout/success?orderId=" + orderNumber);
           },
           onPending: async function (result: MidtransPaymentResponse) {
             try {
               const { confirmOrderPayment } = await import("lib/api");
-              // This endpoint now mostly just fetches the current order state
               await confirmOrderPayment(orderNumber);
             } catch (e) {}
-            // Clear cart after pending payment too — order already created
             Cookies.remove("cartSessionId");
-            window.dispatchEvent(new Event('auth:changed'));
+            window.dispatchEvent(new Event("auth:changed"));
             addToast({
               title: "Pembayaran Tertunda",
-              description: "Menunggu pembayaran. Silahkan selesaikan pembayaran pesanan Anda.",
-              variant: "warning"
+              description:
+                "Menunggu pembayaran. Silahkan selesaikan pembayaran pesanan Anda.",
+              variant: "warning",
             });
             router.push(`/shop/account/orders/${orderNumber}`);
           },
           onError: function (result: MidtransPaymentResponse) {
-            // Clear cart, order is already created
             Cookies.remove("cartSessionId");
-            window.dispatchEvent(new Event('auth:changed'));
+            window.dispatchEvent(new Event("auth:changed"));
             addToast({
               title: "Pembayaran Gagal",
-              description: "Pembayaran gagal. Silahkan coba lagi dari detail pesanan.",
-              variant: "error"
+              description:
+                "Pembayaran gagal. Silahkan coba lagi dari detail pesanan.",
+              variant: "error",
             });
             setIsProcessing(false);
             router.push(`/shop/account/orders/${orderNumber}`);
           },
           onClose: function () {
-            // Clear cart, order is already created
             Cookies.remove("cartSessionId");
-            window.dispatchEvent(new Event('auth:changed'));
+            window.dispatchEvent(new Event("auth:changed"));
             addToast({
               title: "Pembayaran Dibatalkan",
-              description: "Anda menutup jendela pembayaran. Silahkan lakukan pembayaran dari detail pesanan.",
-              variant: "warning"
+              description:
+                "Anda menutup jendela pembayaran. Silahkan lakukan pembayaran dari detail pesanan.",
+              variant: "warning",
             });
             setIsProcessing(false);
             router.push(`/shop/account/orders/${orderNumber}`);
@@ -220,12 +178,30 @@ export default function CheckoutForm({
         });
       }
     } catch (error: unknown) {
-      const err = error as UnknownError;
-      addToast({
-        title: "Kesalahan",
-        description: err?.message || "Terjadi kesalahan saat memproses checkout.",
-        variant: "error"
-      });
+      if (
+        error instanceof ApiError &&
+        error.isValidationError() &&
+        error.errors
+      ) {
+        addToast({
+          title: "Data Tidak Valid",
+          description: Object.values(error.errors).flat().join(". "),
+          variant: "error",
+        });
+      } else if (error instanceof Error) {
+        addToast({
+          title: "Kesalahan",
+          description:
+            error.message || "Terjadi kesalahan saat memproses checkout.",
+          variant: "error",
+        });
+      } else {
+        addToast({
+          title: "Kesalahan",
+          description: "Terjadi kesalahan saat memproses checkout.",
+          variant: "error",
+        });
+      }
 
       setIsProcessing(false);
     }
@@ -246,183 +222,120 @@ export default function CheckoutForm({
         {/* Checkout Form */}
         <section className="lg:col-span-7">
           <form onSubmit={handleCheckout} className="space-y-8">
+            {/* Address Selection Section */}
             <div className="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-sm">
-              <h2 className="text-xl font-sans font-extrabold text-mitologi-navy mb-8 pb-4 border-b border-slate-100 flex items-center gap-4">
-                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-mitologi-navy text-white font-sans text-sm font-bold shadow-sm">1</span>
-                Informasi Pengiriman
-              </h2>
-              <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6">
-                <div>
-                  <label
-                    htmlFor="firstName"
-                    className="block text-sm font-sans font-bold text-slate-700 mb-2"
-                  >
-                    Nama Depan
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    required
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoComplete="given-name"
-                    className={`block w-full rounded-xl border bg-slate-50 shadow-sm focus:ring-1 sm:text-sm py-3 font-sans px-4 outline-none transition-shadow ${
-                      errors.firstName ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-slate-200 focus:border-mitologi-navy focus:ring-mitologi-navy"
-                    } ${shakeField === 'firstName' ? 'animate-shake' : ''}`}
-                    placeholder="Nama Depan"
-                  />
-                  {errors.firstName && <span className="text-red-500 text-xs mt-1 block font-sans font-medium">{errors.firstName}</span>}
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
+                <div className="flex items-center gap-4">
+                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-mitologi-navy text-white font-sans text-sm font-bold shadow-sm">
+                    1
+                  </span>
+                  <h2 className="text-xl font-sans font-extrabold text-mitologi-navy">
+                    Pilih Alamat Pengiriman
+                  </h2>
                 </div>
-                <div>
-                  <label
-                    htmlFor="lastName"
-                    className="block text-sm font-sans font-bold text-slate-700 mb-2"
-                  >
-                    Nama Belakang
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoComplete="family-name"
-                    className={`block w-full rounded-xl border bg-slate-50 shadow-sm focus:ring-1 sm:text-sm py-3 font-sans px-4 outline-none transition-shadow ${
-                      errors.lastName ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-slate-200 focus:border-mitologi-navy focus:ring-mitologi-navy"
-                    }`}
-                    placeholder="Nama Belakang"
-                  />
-                </div>
-                <div className="sm:col-span-2 mt-4">
-                  <label
-                    htmlFor="address"
-                    className="block text-sm font-sans font-bold text-slate-700 mb-2"
-                  >
-                    Alamat Lengkap
-                  </label>
-                  <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    required
-                    value={formData.address}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoComplete="street-address"
-                    className={`block w-full rounded-xl border bg-slate-50 shadow-sm focus:ring-1 sm:text-sm py-3 font-sans px-4 outline-none transition-shadow ${
-                      errors.address ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-slate-200 focus:border-mitologi-navy focus:ring-mitologi-navy"
-                    } ${shakeField === 'address' ? 'animate-shake' : ''}`}
-                    placeholder="Nama Jalan, No. Rumah, RT/RW"
-                  />
-                  {errors.address && <span className="text-red-500 text-xs mt-1 block font-sans font-medium">{errors.address}</span>}
-                </div>
-                <div className="mt-4">
-                  <label
-                    htmlFor="city"
-                    className="block text-sm font-sans font-bold text-slate-700 mb-2"
-                  >
-                    Kota / Kabupaten
-                  </label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    required
-                    value={formData.city}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoComplete="address-level2"
-                    className={`block w-full rounded-xl border bg-slate-50 shadow-sm focus:ring-1 sm:text-sm py-3 font-sans px-4 outline-none transition-shadow ${
-                      errors.city ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-slate-200 focus:border-mitologi-navy focus:ring-mitologi-navy"
-                    } ${shakeField === 'city' ? 'animate-shake' : ''}`}
-                    placeholder="Contoh: Jakarta Selatan"
-                  />
-                  {errors.city && <span className="text-red-500 text-xs mt-1 block font-sans font-medium">{errors.city}</span>}
-                </div>
-
-                <div className="mt-4">
-                  <label
-                    htmlFor="province"
-                    className="block text-sm font-sans font-bold text-slate-700 mb-2"
-                  >
-                    Provinsi
-                  </label>
-                  <input
-                    type="text"
-                    id="province"
-                    name="province"
-                    required
-                    value={formData.province}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoComplete="address-level1"
-                    className={`block w-full rounded-xl border bg-slate-50 shadow-sm focus:ring-1 sm:text-sm py-3 font-sans px-4 outline-none transition-shadow ${
-                      errors.province ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-slate-200 focus:border-mitologi-navy focus:ring-mitologi-navy"
-                    } ${shakeField === 'province' ? 'animate-shake' : ''}`}
-                    placeholder="Contoh: DKI Jakarta"
-                  />
-                  {errors.province && <span className="text-red-500 text-xs mt-1 block font-sans font-medium">{errors.province}</span>}
-                </div>
-
-                <div className="mt-4">
-                  <label
-                    htmlFor="postalCode"
-                    className="block text-sm font-sans font-bold text-slate-700 mb-2"
-                  >
-                    Kode Pos
-                  </label>
-                  <input
-                    type="text"
-                    id="postalCode"
-                    name="postalCode"
-                    required
-                    value={formData.postalCode}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoComplete="postal-code"
-                    className={`block w-full rounded-xl border bg-slate-50 shadow-sm focus:ring-1 sm:text-sm py-3 font-sans px-4 outline-none transition-shadow ${
-                      errors.postalCode ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-slate-200 focus:border-mitologi-navy focus:ring-mitologi-navy"
-                    } ${shakeField === 'postalCode' ? 'animate-shake' : ''}`}
-                    placeholder="12345"
-                  />
-                  {errors.postalCode && <span className="text-red-500 text-xs mt-1 block font-sans font-medium">{errors.postalCode}</span>}
-                </div>
-                <div className="sm:col-span-2 mt-4">
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-sans font-bold text-slate-700 mb-2"
-                  >
-                    Nomor Telepon (WhatsApp)
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    required
-                    value={formData.phone}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoComplete="tel"
-                    className={`block w-full rounded-xl border bg-slate-50 shadow-sm focus:ring-1 sm:text-sm py-3 font-sans px-4 outline-none transition-shadow ${
-                      errors.phone ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-slate-200 focus:border-mitologi-navy focus:ring-mitologi-navy"
-                    } ${shakeField === 'phone' ? 'animate-shake' : ''}`}
-                    placeholder="08123456789"
-                  />
-                  {errors.phone && <span className="text-red-500 text-xs mt-1 block font-sans font-medium">{errors.phone}</span>}
-                </div>
+                <button
+                  type="button"
+                  onClick={() => router.push("/shop/account")}
+                  className="text-sm font-sans font-bold text-mitologi-navy hover:text-mitologi-gold transition-colors flex items-center gap-2"
+                >
+                  <PlusIcon className="w-4 h-4" />
+                  Tambah Alamat
+                </button>
               </div>
+
+              {addresses.length === 0 ? (
+                <div className="text-center py-12 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
+                  <MapPinIcon className="w-12 h-12 text-slate-400 mx-auto mb-4" />
+                  <p className="text-slate-600 font-sans mb-4">
+                    Anda belum memiliki alamat pengiriman
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => router.push("/shop/account")}
+                    className="bg-mitologi-navy text-white px-6 py-3 rounded-full font-sans font-bold hover:bg-mitologi-navy/90 transition-colors"
+                  >
+                    Tambah Alamat Baru
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {addresses.map((address) => (
+                    <label
+                      key={address.id}
+                      className={`relative flex items-start p-5 rounded-2xl border-2 cursor-pointer transition-all ${
+                        selectedAddressId === address.id
+                          ? "border-mitologi-navy bg-mitologi-navy/5"
+                          : "border-slate-200 hover:border-slate-300"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="address"
+                        value={address.id}
+                        checked={selectedAddressId === address.id}
+                        onChange={() => setSelectedAddressId(address.id)}
+                        className="sr-only"
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="font-sans font-bold text-mitologi-navy">
+                              {address.label}
+                            </span>
+                            {address.isPrimary && (
+                              <span className="text-xs font-sans font-bold bg-mitologi-gold text-mitologi-navy px-2 py-1 rounded-full">
+                                Utama
+                              </span>
+                            )}
+                            {selectedAddressId === address.id && (
+                              <CheckCircleIcon className="w-5 h-5 text-mitologi-navy" />
+                            )}
+                          </div>
+                        </div>
+                        <p className="font-sans font-bold text-slate-900 mb-1">
+                          {address.recipientName}
+                        </p>
+                        <p className="font-sans text-sm text-slate-600 mb-1">
+                          {address.phone}
+                        </p>
+                        <p className="font-sans text-sm text-slate-600">
+                          {address.addressLine1}
+                          {address.addressLine2 && `, ${address.addressLine2}`}
+                        </p>
+                        <p className="font-sans text-sm text-slate-600">
+                          {address.city}, {address.province}{" "}
+                          {address.postalCode}
+                        </p>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              )}
+
+              {/* Selected Address Summary */}
+              {selectedAddress && (
+                <div className="mt-6 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+                  <p className="text-sm font-sans font-bold text-emerald-700 mb-2">
+                    Alamat yang dipilih:
+                  </p>
+                  <p className="text-sm font-sans text-emerald-600">
+                    {selectedAddress.recipientName} • {selectedAddress.phone}
+                  </p>
+                  <p className="text-sm font-sans text-emerald-600">
+                    {selectedAddress.addressLine1}, {selectedAddress.city}
+                  </p>
+                </div>
+              )}
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
-              disabled={isProcessing}
-              className={`mt-8 w-full bg-mitologi-navy border border-transparent rounded-full py-4 px-6 font-sans tracking-wide font-bold text-white transition-all disabled:bg-slate-300 disabled:text-slate-500 disabled:cursor-not-allowed ${
-                isProcessing 
-                  ? 'pulse text-transparent relative shadow-none' 
-                  : 'hover:bg-mitologi-navy/90 focus:outline-none focus:ring-4 focus:ring-mitologi-navy/30 shadow-lg shadow-mitologi-navy/20 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]'
+              disabled={isProcessing || !selectedAddress}
+              className={`w-full bg-mitologi-navy border border-transparent rounded-full py-4 px-6 font-sans tracking-wide font-bold text-white transition-all disabled:bg-slate-300 disabled:text-slate-500 disabled:cursor-not-allowed ${
+                isProcessing
+                  ? "pulse text-transparent relative shadow-none"
+                  : "hover:bg-mitologi-navy/90 focus:outline-none focus:ring-4 focus:ring-mitologi-navy/30 shadow-lg shadow-mitologi-navy/20 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
               }`}
             >
               {isProcessing && (
@@ -441,15 +354,21 @@ export default function CheckoutForm({
             <h2 className="text-xl font-sans font-extrabold text-mitologi-navy mb-8 pb-4 border-b border-slate-100">
               Ringkasan Pesanan
             </h2>
-            <ul className="divide-y divide-slate-100 pr-2 custom-scrollbar">
+            <ul className="divide-y divide-slate-100 pr-2 custom-scrollbar max-h-96 overflow-y-auto">
               {cart.lines.map((item) => {
-                // Safe access for image URL, handling potential camelCase or snake_case
-                const product = item.merchandise.product as typeof item.merchandise.product & {
+                const product = item.merchandise
+                  .product as typeof item.merchandise.product & {
                   featured_image?: { url?: string; alt_text?: string };
                   images?: Array<{ url?: string }>;
                 };
-                const imageUrl = product.featuredImage?.url || product.featured_image?.url || product.images?.[0]?.url;
-                const altText = product.featuredImage?.altText || product.featured_image?.alt_text || product.title;
+                const imageUrl =
+                  product.featuredImage?.url ||
+                  product.featured_image?.url ||
+                  product.images?.[0]?.url;
+                const altText =
+                  product.featuredImage?.altText ||
+                  product.featured_image?.alt_text ||
+                  product.title;
 
                 return (
                   <li key={item.id} className="py-5 flex gap-5">
@@ -465,7 +384,9 @@ export default function CheckoutForm({
                             unoptimized
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-slate-50 text-slate-400 font-sans text-[10px] tracking-widest font-bold text-center p-2 leading-tight">No Img</div>
+                          <div className="w-full h-full flex items-center justify-center bg-slate-50 text-slate-400 font-sans text-[10px] tracking-widest font-bold text-center p-2 leading-tight">
+                            No Img
+                          </div>
                         )}
                       </div>
                       <span className="absolute -top-2 -right-2 bg-mitologi-navy text-white rounded-full border border-white h-6 w-6 flex items-center justify-center font-sans text-[11px] font-bold shadow-sm">
@@ -476,7 +397,7 @@ export default function CheckoutForm({
                       <span className="text-sm font-bold font-sans text-slate-900 line-clamp-2">
                         {item.merchandise.product.title}
                       </span>
-                      {item.merchandise.title !== 'Default Title' && (
+                      {item.merchandise.title !== "Default Title" && (
                         <span className="text-xs font-sans font-medium text-slate-500 mt-1.5 bg-slate-100 inline-flex px-2 py-0.5 rounded-md w-fit">
                           {item.merchandise.title}
                         </span>
@@ -494,7 +415,9 @@ export default function CheckoutForm({
             </ul>
             <dl className="border-t border-slate-100 py-6 space-y-4 mt-2">
               <div className="flex items-center justify-between">
-                <dt className="text-sm font-sans font-medium text-slate-500">Subtotal</dt>
+                <dt className="text-sm font-sans font-medium text-slate-500">
+                  Subtotal
+                </dt>
                 <dd className="text-sm font-sans font-bold text-slate-700">
                   <Price
                     amount={cart.cost.subtotalAmount.amount}
@@ -503,13 +426,17 @@ export default function CheckoutForm({
                 </dd>
               </div>
               <div className="flex items-center justify-between">
-                <dt className="text-sm font-sans font-medium text-slate-500">Pengiriman</dt>
+                <dt className="text-sm font-sans font-medium text-slate-500">
+                  Pengiriman
+                </dt>
                 <dd className="text-sm font-sans font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">
                   Gratis Ongkir
                 </dd>
               </div>
               <div className="flex items-center justify-between border-t border-dashed border-slate-200 mt-6 pt-6 -mx-6 md:-mx-8 px-6 md:px-8 bg-slate-50/50 pb-2 -mb-2 rounded-b-3xl">
-                <dt className="text-base font-sans font-bold text-slate-700">Total Bayar</dt>
+                <dt className="text-base font-sans font-bold text-slate-700">
+                  Total Bayar
+                </dt>
                 <dd className="text-xl font-sans font-extrabold text-mitologi-navy">
                   <Price
                     amount={cart.cost.totalAmount.amount}

@@ -23,8 +23,8 @@ class CartSkeleton extends StatelessWidget {
             child: ListView.separated(
               padding: EdgeInsets.all(padding),
               itemCount: itemCount,
-              separatorBuilder: (_, __) => const SizedBox(height: 16),
-              itemBuilder: (_, __) => _CartItemSkeleton(),
+              separatorBuilder: (_, index) => const SizedBox(height: 16),
+              itemBuilder: (_, index) => _CartItemSkeleton(),
             ),
           ),
           // Summary panel

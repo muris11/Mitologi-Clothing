@@ -14,11 +14,12 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         $title = $this->faker->unique()->sentence(3);
+
         return [
             'title' => $title,
             'handle' => Str::slug($title),
             'description' => $this->faker->paragraph,
-            'description_html' => '<p>' . $this->faker->paragraph . '</p>',
+            'description_html' => '<p>'.$this->faker->paragraph.'</p>',
             'available_for_sale' => true,
             'is_hidden' => false,
             'seo_title' => $title,

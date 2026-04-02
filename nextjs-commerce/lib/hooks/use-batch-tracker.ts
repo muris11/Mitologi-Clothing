@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { apiFetch, ENDPOINTS } from 'lib/api';
-import { useCallback, useEffect, useRef } from 'react';
+import { apiFetch, ENDPOINTS } from "lib/api";
+import { useCallback, useEffect, useRef } from "react";
 
 interface Interaction {
   productId: number;
-  action: 'view' | 'cart' | 'purchase';
+  action: "view" | "cart" | "purchase";
   score?: number;
   timestamp: number;
 }
 
-const STORAGE_KEY = 'pending_interactions';
+const STORAGE_KEY = "pending_interactions";
 const BATCH_INTERVAL = 30000; // 30 seconds
 
 export function useBatchTracker() {
@@ -30,16 +30,23 @@ export function useBatchTracker() {
   }, []);
 
   // Add interaction
-  const track = useCallback((productId: number, action: 'view' | 'cart' | 'purchase', score?: number) => {
-    const interaction: Interaction = {
-      productId,
-      action,
-      score,
-      timestamp: Date.now(),
-    };
-    interactionsRef.current.push(interaction);
-    saveToStorage();
-  }, [saveToStorage]);
+  const track = useCallback(
+    (
+      productId: number,
+      action: "view" | "cart" | "purchase",
+      score?: number,
+    ) => {
+      const interaction: Interaction = {
+        productId,
+        action,
+        score,
+        timestamp: Date.now(),
+      };
+      interactionsRef.current.push(interaction);
+      saveToStorage();
+    },
+    [saveToStorage],
+  );
 
   // Send batch to API
   const sendBatch = useCallback(async () => {
@@ -51,10 +58,10 @@ export function useBatchTracker() {
 
     try {
       await apiFetch(ENDPOINTS.INTERACTIONS_BATCH, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
-          interactions: batch.map(i => ({
-            product_id: i.productId,
+          interactions: batch.map((i) => ({
+            productId: i.productId,
             action: i.action,
             score: i.score,
           })),

@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class CheckoutPaymentFlowTest extends TestCase
 {
@@ -17,7 +17,7 @@ class CheckoutPaymentFlowTest extends TestCase
     public function test_stock_reservation_lifecycle()
     {
         $user = User::factory()->create();
-        
+
         $product = Product::create(['title' => 'Test', 'description' => 'Test', 'handle' => 'test-auth', 'available_for_sale' => true]);
         $variant = ProductVariant::create(['product_id' => $product->id, 'title' => 'Red', 'price' => 10000, 'stock' => 10, 'reserved_stock' => 2, 'sku' => 'red']);
 
@@ -28,7 +28,7 @@ class CheckoutPaymentFlowTest extends TestCase
             'status' => 'pending',
             'total' => 10000,
             'subtotal' => 10000,
-            'currency_code' => 'IDR'
+            'currency_code' => 'IDR',
         ]);
 
         OrderItem::create([
@@ -39,7 +39,7 @@ class CheckoutPaymentFlowTest extends TestCase
             'price' => 10000,
             'total' => 10000,
             'product_title' => 'Test',
-            'variant_title' => 'Red'
+            'variant_title' => 'Red',
         ]);
 
         // Simulating processing payment

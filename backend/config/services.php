@@ -37,6 +37,7 @@ return [
 
     'ai' => [
         'url' => env('AI_SERVICE_URL', 'http://localhost:8001/api'),
+        'key' => env('RECOMMENDER_API_KEY', 'mitologi-secret-key'),
     ],
 
     'groq' => [

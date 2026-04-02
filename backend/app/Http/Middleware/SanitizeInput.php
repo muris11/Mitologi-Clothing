@@ -32,7 +32,7 @@ class SanitizeInput
 
         $input = $request->except(array_keys($request->allFiles()));
 
-        if (!empty($input)) {
+        if (! empty($input)) {
             $request->merge($this->sanitize($input));
         }
 

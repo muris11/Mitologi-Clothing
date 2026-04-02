@@ -85,9 +85,15 @@ class ProductService {
     final response = await _api.get('/recommendations', requiresAuth: true);
 
     List<dynamic> data = [];
-    if (response is Map<String, dynamic> &&
-        response.containsKey('recommendations')) {
-      data = response['recommendations'];
+    // New standardized format: { data: [...] }
+    if (response is Map<String, dynamic> && response.containsKey('data')) {
+      final dynamic rawData = response['data'];
+      if (rawData is List) {
+        data = rawData;
+      } else if (rawData is Map && rawData.containsKey('data')) {
+        // Nested data structure
+        data = rawData['data'];
+      }
     } else if (response is List) {
       data = response;
     }

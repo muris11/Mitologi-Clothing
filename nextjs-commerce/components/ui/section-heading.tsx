@@ -1,14 +1,24 @@
-import { cn } from "lib/utils"
-import * as React from "react"
+import { cn } from "lib/utils";
+import * as React from "react";
 
-export interface SectionHeadingProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
-  title: React.ReactNode
-  subtitle?: React.ReactNode
-  overline?: React.ReactNode
-  description?: React.ReactNode
+export interface SectionHeadingProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "title"
+> {
+  title: React.ReactNode;
+  subtitle?: React.ReactNode;
+  overline?: React.ReactNode;
+  description?: React.ReactNode;
 }
 
-function SectionHeading({ title, subtitle, overline, description, className, ...props }: SectionHeadingProps) {
+function SectionHeading({
+  title,
+  subtitle,
+  overline,
+  description,
+  className,
+  ...props
+}: SectionHeadingProps) {
   return (
     <div className={cn("flex flex-col", className)} {...props}>
       {overline && (
@@ -25,7 +35,7 @@ function SectionHeading({ title, subtitle, overline, description, className, ...
         </p>
       )}
     </div>
-  )
+  );
 }
 
-export { SectionHeading }
+export { SectionHeading };

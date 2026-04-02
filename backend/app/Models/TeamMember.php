@@ -39,8 +39,13 @@ class TeamMember extends Model
      */
     public function getPhotoUrlAttribute(): ?string
     {
-        if (!$this->photo) return null;
-        if (str_starts_with($this->photo, 'http')) return $this->photo;
-        return url('/api/team-members/' . $this->id . '/photo');
+        if (! $this->photo) {
+            return null;
+        }
+        if (str_starts_with($this->photo, 'http')) {
+            return $this->photo;
+        }
+
+        return url('/api/team-members/'.$this->id.'/photo');
     }
 }

@@ -26,7 +26,7 @@ class Cart extends Model
     public function getCostAttribute(): array
     {
         $items = $this->items->load('variant');
-        $subtotal = $items->sum(fn($item) => $item->variant->price * $item->quantity);
+        $subtotal = $items->sum(fn ($item) => $item->variant->price * $item->quantity);
         $currency = $items->first()?->variant?->currency_code ?? 'IDR';
 
         return [

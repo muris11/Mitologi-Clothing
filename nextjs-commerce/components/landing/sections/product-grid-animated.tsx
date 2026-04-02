@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { ShoppingBagIcon } from "@heroicons/react/24/outline"
-import { motion } from 'framer-motion'
-import { Product } from "lib/api/types"
-import { normalizeTags } from "lib/utils"
-import { storageUrl } from "lib/utils/storage-url"
-import Link from "next/link"
-import { useState } from "react"
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { motion } from "framer-motion";
+import { Product } from "lib/api/types";
+import { normalizeTags } from "lib/utils";
+import { storageUrl } from "lib/utils/storage-url";
+import Link from "next/link";
+import { useState } from "react";
 
 // Animation variants
 const easeOutExpo = [0.25, 1, 0.5, 1] as const;
@@ -17,59 +17,59 @@ const containerVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
+      delayChildren: 0.2,
+    },
+  },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
-  show: { 
-    opacity: 1, 
+  show: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: easeOutExpo }
-  }
+    transition: { duration: 0.6, ease: easeOutExpo },
+  },
 };
 
 const cardVariants = {
   hidden: { opacity: 0, scale: 0.95 },
-  show: { 
-    opacity: 1, 
+  show: {
+    opacity: 1,
     scale: 1,
-    transition: { duration: 0.5, ease: easeOutExpo }
-  }
+    transition: { duration: 0.5, ease: easeOutExpo },
+  },
 };
 
 export interface ProductGridAnimatedProps {
-  products: Product[]
+  products: Product[];
 }
 
 interface ProductCardExpandedProps {
-  product: Product
-  isActive: boolean
-  onClick: () => void
-  variants?: any
+  product: Product;
+  isActive: boolean;
+  onClick: () => void;
+  variants?: any;
 }
 
 export function ProductGridAnimated({ products }: ProductGridAnimatedProps) {
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0);
 
   if (products.length === 0) {
     return (
       <div className="py-16 text-center">
         <p className="text-sm text-slate-400">Produk tidak ditemukan</p>
       </div>
-    )
+    );
   }
 
-  const rowOne = products.slice(0, 4)
-  const rowTwo = products.slice(4, 8)
+  const rowOne = products.slice(0, 4);
+  const rowTwo = products.slice(4, 8);
 
   return (
     <>
       {/* Desktop: semua produk satu baris */}
-      <motion.div 
-        className="hidden lg:flex w-full gap-2.5" 
+      <motion.div
+        className="hidden lg:flex w-full gap-2.5"
         style={{ height: "420px" }}
         variants={containerVariants}
         initial="hidden"
@@ -88,14 +88,17 @@ export function ProductGridAnimated({ products }: ProductGridAnimatedProps) {
       </motion.div>
 
       {/* Mobile: 2 baris expanding panel */}
-      <motion.div 
+      <motion.div
         className="flex flex-col gap-2.5 lg:hidden"
         variants={containerVariants}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-50px" }}
       >
-        <div className="flex w-full gap-2" style={{ height: "clamp(180px, 40vw, 260px)" }}>
+        <div
+          className="flex w-full gap-2"
+          style={{ height: "clamp(180px, 40vw, 260px)" }}
+        >
           {rowOne.map((product, index) => (
             <ProductCardExpanded
               key={product.id}
@@ -107,7 +110,10 @@ export function ProductGridAnimated({ products }: ProductGridAnimatedProps) {
           ))}
         </div>
         {rowTwo.length > 0 && (
-          <div className="flex w-full gap-2" style={{ height: "clamp(180px, 40vw, 260px)" }}>
+          <div
+            className="flex w-full gap-2"
+            style={{ height: "clamp(180px, 40vw, 260px)" }}
+          >
             {rowTwo.map((product, index) => (
               <ProductCardExpanded
                 key={product.id}
@@ -121,13 +127,18 @@ export function ProductGridAnimated({ products }: ProductGridAnimatedProps) {
         )}
       </motion.div>
     </>
-  )
+  );
 }
 
-function ProductCardExpanded({ product, isActive, onClick, variants }: ProductCardExpandedProps) {
-  const imageUrl = storageUrl(product.featuredImage?.url)
-  const tags = normalizeTags(product.tags)
-  const price = product.priceRange?.minVariantPrice?.amount
+function ProductCardExpanded({
+  product,
+  isActive,
+  onClick,
+  variants,
+}: ProductCardExpandedProps) {
+  const imageUrl = storageUrl(product.featuredImage?.url);
+  const tags = normalizeTags(product.tags);
+  const price = product.priceRange?.minVariantPrice?.amount;
 
   return (
     <motion.div
@@ -241,11 +252,16 @@ function ProductCardExpanded({ product, isActive, onClick, variants }: ProductCa
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </div>
         </Link>
       </div>
     </motion.div>
-  )
+  );
 }

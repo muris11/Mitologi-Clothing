@@ -1,1 +1,1 @@
-export { KontakHero as HeroSection } from './hero-section';
+export { KontakHero as HeroSection } from "./hero-section";

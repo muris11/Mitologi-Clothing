@@ -4,8 +4,6 @@ namespace Tests\Feature\Api;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
@@ -18,10 +16,10 @@ class ProfileTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user, 'sanctum')
-                         ->getJson('/api/profile');
+            ->getJson('/api/profile');
 
         $response->assertStatus(200)
-                 ->assertJsonStructure(['id', 'name', 'email']);
+            ->assertJsonStructure(['data' => ['id', 'name', 'email']]);
     }
 
     /** @test */
@@ -38,9 +36,9 @@ class ProfileTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user, 'sanctum')
-                         ->putJson('/api/profile', [
-                             'name' => 'Updated Name',
-                         ]);
+            ->putJson('/api/profile', [
+                'name' => 'Updated Name',
+            ]);
 
         $response->assertStatus(200);
         $this->assertDatabaseHas('users', ['id' => $user->id, 'name' => 'Updated Name']);
@@ -54,11 +52,11 @@ class ProfileTest extends TestCase
         ]);
 
         $response = $this->actingAs($user, 'sanctum')
-                         ->putJson('/api/profile/password', [
-                             'current_password' => 'old-password',
-                             'password' => 'new-password123',
-                             'password_confirmation' => 'new-password123',
-                         ]);
+            ->putJson('/api/profile/password', [
+                'current_password' => 'old-password',
+                'password' => 'new-password123',
+                'password_confirmation' => 'new-password123',
+            ]);
 
         $response->assertStatus(200);
     }
@@ -71,11 +69,11 @@ class ProfileTest extends TestCase
         ]);
 
         $response = $this->actingAs($user, 'sanctum')
-                         ->putJson('/api/profile/password', [
-                             'current_password' => 'wrong-password',
-                             'password' => 'new-password123',
-                             'password_confirmation' => 'new-password123',
-                         ]);
+            ->putJson('/api/profile/password', [
+                'current_password' => 'wrong-password',
+                'password' => 'new-password123',
+                'password_confirmation' => 'new-password123',
+            ]);
 
         $response->assertStatus(422);
     }
@@ -86,11 +84,11 @@ class ProfileTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user, 'sanctum')
-                         ->putJson('/api/profile', [
-                             'name' => '',
-                         ]);
+            ->putJson('/api/profile', [
+                'name' => '',
+            ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['name']);
+            ->assertJsonPath('error.details.name', fn ($errors) => is_array($errors) && count($errors) > 0);
     }
 }

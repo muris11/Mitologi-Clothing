@@ -10,39 +10,44 @@ use Illuminate\Http\Request;
 
 class RecommendationController extends Controller
 {
-  use \App\Traits\FormatsProduct;
+    use \App\Traits\FormatsProduct;
 
-  public function forUser(Request $request, RecommendationService $service): JsonResponse
-  {
-    $user = $request->user();
-    $limit = $request->input('limit', 10);
+    public function forUser(Request $request, RecommendationService $service): JsonResponse
+    {
+        $user = $request->user();
 
-    $recommendedIds = $service->forUser($user->id, $limit);
+        if (! $user) {
+            return $this->forbiddenResponse('Autentikasi diperlukan untuk mendapatkan rekomendasi');
+        }
 
-    // Base query with all necessary eager loads for product cards
-    $baseQuery = Product::with(['variants.selectedOptions', 'options', 'images', 'categories'])
-      ->withAvg(['reviews' => fn($q) => $q->where('is_visible', true)], 'rating')
-      ->withCount(['reviews' => fn($q) => $q->where('is_visible', true)])
-      ->where('is_hidden', false);
+        $limit = $request->input('limit', 10);
 
-    if (!empty($recommendedIds)) {
-      $orderMap = array_flip($recommendedIds);
-      $products = (clone $baseQuery)
-        ->whereIn('id', $recommendedIds)
-        ->get()
-        ->sortBy(fn($product) => $orderMap[$product->id] ?? PHP_INT_MAX)
-        ->values();
-    } else {
-      // Fallback: trending products (most interactions)
-      $products = (clone $baseQuery)
-        ->withCount('interactions')
-        ->orderByDesc('interactions_count')
-        ->limit($limit)
-        ->get();
+        $recommendedIds = $service->forUser($user->id, $limit);
+
+        // Base query with all necessary eager loads for product cards
+        $baseQuery = Product::with(['variants.selectedOptions', 'options', 'images', 'categories'])
+            ->withAvg(['reviews' => fn ($q) => $q->where('is_visible', true)], 'rating')
+            ->withCount(['reviews' => fn ($q) => $q->where('is_visible', true)])
+            ->where('is_hidden', false);
+
+        if (! empty($recommendedIds)) {
+            $orderMap = array_flip($recommendedIds);
+            $products = (clone $baseQuery)
+                ->whereIn('id', $recommendedIds)
+                ->get()
+                ->sortBy(fn ($product) => $orderMap[$product->id] ?? PHP_INT_MAX)
+                ->values();
+        } else {
+            // Fallback: trending products (most interactions)
+            $products = (clone $baseQuery)
+                ->withCount('interactions')
+                ->orderByDesc('interactions_count')
+                ->limit($limit)
+                ->get();
+        }
+
+        $formatted = $products->map(fn (Product $p) => $this->formatProduct($p));
+
+        return $this->successResponse($formatted, 'Rekomendasi produk berhasil diambil');
     }
-
-    $formatted = $products->map(fn(Product $p) => $this->formatProduct($p));
-
-    return response()->json(['recommendations' => $formatted]);
-  }
 }

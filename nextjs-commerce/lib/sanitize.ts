@@ -1,55 +1,108 @@
-import sanitizeHtmlLib from 'sanitize-html';
+import sanitizeHtmlLib from "sanitize-html";
 
 /**
  * Sanitize HTML string using sanitize-html library.
  * This provides robust protection against XSS attacks while preserving
  * safe HTML content from the CMS.
- * 
+ *
  * @see https://github.com/apostrophecms/sanitize-html
  */
 export function sanitizeHtmlContent(html: string): string {
-  if (!html) return '';
+  if (!html) return "";
 
   return sanitizeHtmlLib(html, {
     allowedTags: [
       // Headers
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
       // Text formatting
-      'p', 'br', 'hr', 'strong', 'em', 'b', 'i', 'u', 's', 'strike', 'sub', 'sup',
+      "p",
+      "br",
+      "hr",
+      "strong",
+      "em",
+      "b",
+      "i",
+      "u",
+      "s",
+      "strike",
+      "sub",
+      "sup",
       // Lists
-      'ul', 'ol', 'li', 'dl', 'dt', 'dd',
+      "ul",
+      "ol",
+      "li",
+      "dl",
+      "dt",
+      "dd",
       // Links and media
-      'a', 'img',
+      "a",
+      "img",
       // Tables
-      'table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td', 'caption', 'colgroup', 'col',
+      "table",
+      "thead",
+      "tbody",
+      "tfoot",
+      "tr",
+      "th",
+      "td",
+      "caption",
+      "colgroup",
+      "col",
       // Semantic elements
-      'article', 'section', 'nav', 'aside', 'header', 'footer', 'main', 'figure', 'figcaption',
-      'blockquote', 'cite', 'q', 'abbr', 'address', 'time', 'mark', 'small', 'del', 'ins',
+      "article",
+      "section",
+      "nav",
+      "aside",
+      "header",
+      "footer",
+      "main",
+      "figure",
+      "figcaption",
+      "blockquote",
+      "cite",
+      "q",
+      "abbr",
+      "address",
+      "time",
+      "mark",
+      "small",
+      "del",
+      "ins",
       // Code
-      'pre', 'code', 'kbd', 'samp', 'var',
+      "pre",
+      "code",
+      "kbd",
+      "samp",
+      "var",
       // Other
-      'div', 'span',
+      "div",
+      "span",
     ],
     allowedAttributes: {
-      a: ['href', 'title', 'target', 'rel'],
-      img: ['src', 'alt', 'title', 'width', 'height', 'loading'],
-      table: ['border', 'cellpadding', 'cellspacing'],
-      td: ['colspan', 'rowspan'],
-      th: ['colspan', 'rowspan'],
-      ol: ['start', 'type'],
-      ul: ['type'],
-      li: ['value'],
-      time: ['datetime'],
-      abbr: ['title'],
-      '*': ['class', 'id', 'style'],
+      a: ["href", "title", "target", "rel"],
+      img: ["src", "alt", "title", "width", "height", "loading"],
+      table: ["border", "cellpadding", "cellspacing"],
+      td: ["colspan", "rowspan"],
+      th: ["colspan", "rowspan"],
+      ol: ["start", "type"],
+      ul: ["type"],
+      li: ["value"],
+      time: ["datetime"],
+      abbr: ["title"],
+      "*": ["class", "id", "style"],
     },
-    allowedSchemes: ['https', 'http', 'mailto', 'tel'],
-    allowedSchemesAppliedToAttributes: ['href', 'src'],
+    allowedSchemes: ["https", "http", "mailto", "tel"],
+    allowedSchemesAppliedToAttributes: ["href", "src"],
     allowProtocolRelative: false,
     transformTags: {
-      a: sanitizeHtmlLib.simpleTransform('a', {}, true),
+      a: sanitizeHtmlLib.simpleTransform("a", {}, true),
     },
-    disallowedTagsMode: 'discard',
+    disallowedTagsMode: "discard",
   });
 }
 
@@ -64,7 +117,7 @@ export function sanitizeProductDescription(html: string): string {
  * Sanitize plain text - escapes HTML entities
  */
 export function sanitizePlainText(text: string): string {
-  if (!text) return '';
+  if (!text) return "";
   return sanitizeHtmlLib(text, {
     allowedTags: [],
     allowedAttributes: {},
@@ -73,4 +126,3 @@ export function sanitizePlainText(text: string): string {
 
 // Legacy export for backward compatibility
 export { sanitizeHtmlContent as sanitizeHtml };
-

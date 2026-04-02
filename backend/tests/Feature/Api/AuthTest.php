@@ -21,7 +21,7 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure(['user', 'token']);
+            ->assertJsonStructure(['data' => ['user', 'token']]);
 
         $this->assertDatabaseHas('users', ['email' => 'test@example.com']);
     }
@@ -37,7 +37,7 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['email']);
+            ->assertJsonPath('error.details.email', fn ($errors) => is_array($errors) && count($errors) > 0);
     }
 
     /** @test */
@@ -51,7 +51,7 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['password']);
+            ->assertJsonPath('error.details.password', fn ($errors) => is_array($errors) && count($errors) > 0);
     }
 
     /** @test */
@@ -67,7 +67,7 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['email']);
+            ->assertJsonPath('error.details.email', fn ($errors) => is_array($errors) && count($errors) > 0);
     }
 
     /** @test */
@@ -84,7 +84,7 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-                 ->assertJsonStructure(['user', 'token']);
+            ->assertJsonStructure(['data' => ['user', 'token']]);
     }
 
     /** @test */
@@ -100,7 +100,7 @@ class AuthTest extends TestCase
             'password' => 'wrong-password',
         ]);
 
-        $response->assertUnprocessable();
+        $response->assertStatus(401);
     }
 
     /** @test */
@@ -109,10 +109,10 @@ class AuthTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user, 'sanctum')
-                         ->getJson('/api/auth/user');
+            ->getJson('/api/auth/user');
 
         $response->assertStatus(200)
-                 ->assertJsonStructure(['user' => ['id', 'name', 'email']]);
+            ->assertJsonStructure(['data' => ['id', 'name', 'email']]);
     }
 
     /** @test */
@@ -121,7 +121,7 @@ class AuthTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user, 'sanctum')
-                         ->postJson('/api/auth/logout');
+            ->postJson('/api/auth/logout');
 
         $response->assertStatus(200);
     }

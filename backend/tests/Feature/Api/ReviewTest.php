@@ -4,7 +4,6 @@ namespace Tests\Feature\Api;
 
 use App\Models\Product;
 use App\Models\ProductReview;
-use App\Models\Order;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,6 +13,7 @@ class ReviewTest extends TestCase
     use RefreshDatabase;
 
     private User $customer;
+
     private Product $product;
 
     protected function setUp(): void
@@ -44,8 +44,10 @@ class ReviewTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure([
-                'reviews',
-                'summary' => ['average_rating', 'total_reviews', 'rating_breakdown'],
+                'data' => [
+                    'reviews',
+                    'summary' => ['averageRating', 'totalReviews', 'ratingBreakdown'],
+                ],
             ]);
     }
 
@@ -67,8 +69,9 @@ class ReviewTest extends TestCase
                 'comment' => 'short', // invalid: min 10 chars
             ]);
 
-        $response->assertUnprocessable()
-            ->assertJsonValidationErrors(['rating', 'comment']);
+        $response->assertStatus(422)
+            ->assertJsonPath('error.details.rating', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.comment', fn ($errors) => is_array($errors) && count($errors) > 0);
     }
 
     public function test_review_requires_purchase(): void
@@ -79,7 +82,7 @@ class ReviewTest extends TestCase
                 'comment' => 'Produk sangat berkualitas tinggi!',
             ]);
 
-        // Should be forbidden because user hasn't purchased this product
-        $response->assertForbidden();
+        // Should be validation error (422) because user hasn't purchased this product
+        $response->assertStatus(422);
     }
 }

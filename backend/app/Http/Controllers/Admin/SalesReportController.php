@@ -34,17 +34,17 @@ class SalesReportController extends Controller
         // Calculate Stats
         // Count any order that is effectively paid or confirmed
         $paidStatuses = ['paid', 'processing', 'shipped', 'completed'];
-        
+
         $totalRevenue = $statsQuery->clone()
             ->whereIn('status', $paidStatuses)
             ->sum('total');
 
         $totalOrders = $statsQuery->clone()->count();
-        
+
         $paidOrdersCount = $statsQuery->clone()
             ->whereIn('status', $paidStatuses)
             ->count();
-        
+
         $avgOrderValue = $paidOrdersCount > 0 ? $totalRevenue / $paidOrdersCount : 0;
 
         return view('admin.sales-report.index', compact('orders', 'totalRevenue', 'totalOrders', 'avgOrderValue'));
@@ -65,27 +65,27 @@ class SalesReportController extends Controller
             $query->where('status', $request->status);
         }
 
-        $filename = "sales-report-" . date('Y-m-d-His') . ".csv";
+        $filename = 'sales-report-'.date('Y-m-d-His').'.csv';
 
         return response()->streamDownload(function () use ($query) {
             $handle = fopen('php://output', 'w');
-            
+
             // Add BOM for Excel compatibility
             fprintf($handle, chr(0xEF).chr(0xBB).chr(0xBF));
 
             // Headers
             fputcsv($handle, [
-                'No', 
-                'Order Number', 
-                'Date', 
-                'Customer', 
-                'Items Count', 
+                'No',
+                'Order Number',
+                'Date',
+                'Customer',
+                'Items Count',
                 'Subtotal',
                 'Shipping',
                 'Tax',
-                'Total', 
-                'Status', 
-                'Payment Method'
+                'Total',
+                'Status',
+                'Payment Method',
             ]);
 
             $counter = 1;
@@ -102,7 +102,7 @@ class SalesReportController extends Controller
                         $order->tax,
                         $order->total,
                         ucfirst($order->status),
-                        ucfirst($order->payment_method ?? '-')
+                        ucfirst($order->payment_method ?? '-'),
                     ]);
                 }
             });

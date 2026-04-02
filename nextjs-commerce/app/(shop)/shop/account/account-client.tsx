@@ -40,7 +40,7 @@ export default function AccountClient() {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((data) => {
-        setOrders(data || []);
+        setOrders(data?.orders || []);
       })
       .catch(() => {
         setOrders([]);
@@ -81,27 +81,36 @@ export default function AccountClient() {
         {/* Decorative Elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-mitologi-gold/20 rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-slate-800/60 rounded-full blur-[100px] pointer-events-none -translate-x-1/3 translate-y-1/3" />
-        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_2px_2px,_white_1px,_transparent_0)]" style={{ backgroundSize: "32px 32px" }} />
-        
+        <div
+          className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_2px_2px,_white_1px,_transparent_0)]"
+          style={{ backgroundSize: "32px 32px" }}
+        />
+
         <div className="relative mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 z-10">
-            <nav className="flex items-center gap-2 text-sm text-slate-300 font-sans font-medium mb-8">
-                <Link href="/shop" className="hover:text-mitologi-gold transition-colors">Beranda</Link>
-                <ChevronRightIcon className="h-3.5 w-3.5" />
-                <span className="text-white font-bold">Akun Saya</span>
-            </nav>
-            <h1 className="text-3xl md:text-5xl font-sans font-extrabold text-white tracking-tight mb-4">
-                Akun Saya
-            </h1>
-            <p className="text-slate-300 text-lg max-w-2xl font-sans font-medium">
-                Kelola informasi profil, pantau status pesanan, dan atur preferensi akun Anda dalam satu tempat.
-            </p>
+          <nav className="flex items-center gap-2 text-sm text-slate-300 font-sans font-medium mb-8">
+            <Link
+              href="/shop"
+              className="hover:text-mitologi-gold transition-colors"
+            >
+              Beranda
+            </Link>
+            <ChevronRightIcon className="h-3.5 w-3.5" />
+            <span className="text-white font-bold">Akun Saya</span>
+          </nav>
+          <h1 className="text-3xl md:text-5xl font-sans font-extrabold text-white tracking-tight mb-4">
+            Akun Saya
+          </h1>
+          <p className="text-slate-300 text-lg max-w-2xl font-sans font-medium">
+            Kelola informasi profil, pantau status pesanan, dan atur preferensi
+            akun Anda dalam satu tempat.
+          </p>
         </div>
       </div>
 
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 -mt-12 relative z-20 pb-24">
-         <div className="bg-white rounded-3xl shadow-xl shadow-mitologi-navy/5 border border-slate-100 overflow-hidden min-h-[600px]">
-            <AccountDashboard user={user} orders={orders} />
-         </div>
+        <div className="bg-white rounded-3xl shadow-xl shadow-mitologi-navy/5 border border-slate-100 overflow-hidden min-h-[600px]">
+          <AccountDashboard user={user} orders={orders} />
+        </div>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ class AddressListSkeleton extends StatelessWidget {
       child: ListView.builder(
         padding: EdgeInsets.all(padding),
         itemCount: 3,
-        itemBuilder: (_, __) => _buildAddressCardSkeleton(),
+        itemBuilder: (_, index) => _buildAddressCardSkeleton(),
       ),
     );
   }

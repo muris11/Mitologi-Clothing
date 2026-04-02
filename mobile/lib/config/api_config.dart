@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 class ApiConfig {
@@ -34,15 +35,21 @@ class ApiConfig {
       value.endsWith('/') ? value.substring(0, value.length - 1) : value;
 
   static String get _defaultBackendOrigin {
-    // Platform-specific defaults - no need to change IP manually!
+    // TIPS: Use 'ipconfig' on Windows to find your IPv4 if using physical device.
+    // const String physicalDeviceIp = 'http://192.168.1.XX:8000';
+
     if (kIsWeb) return 'http://localhost:8000';
 
-    // Android Emulator: 10.0.2.2 is the special alias to host's localhost
     if (Platform.isAndroid) {
+      // 10.0.2.2 is the special alias for the host machine in Android Emulator
       return 'http://10.0.2.2:8000';
     }
 
-    // iOS Simulator & Desktop: Use localhost
+    if (Platform.isIOS) {
+      // iOS Simulator shares the host's localhost
+      return 'http://localhost:8000';
+    }
+
     return 'http://localhost:8000';
   }
 

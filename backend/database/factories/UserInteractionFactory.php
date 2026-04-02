@@ -18,9 +18,9 @@ class UserInteractionFactory extends Factory
             'cart' => 3,
             'purchase' => 5,
         ];
-        
+
         $type = $this->faker->randomElement(array_keys($interactions));
-        
+
         return [
             'user_id' => User::factory(),
             'product_id' => Product::factory(),

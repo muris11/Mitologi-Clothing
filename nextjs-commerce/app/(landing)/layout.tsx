@@ -8,7 +8,7 @@ import { PortfolioPageSkeleton } from "components/ui/skeletons/portfolio-page-sk
 import { KontakPageSkeleton } from "components/ui/skeletons/kontak-page-skeleton";
 import { TentangKamiPageSkeleton } from "components/ui/skeletons/tentang-kami-page-skeleton";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function LandingLayout({
@@ -17,19 +17,25 @@ export default async function LandingLayout({
   children: ReactNode;
 }) {
   const data = await getLandingPageData();
-  const settings = data?.site_settings;
+  const settings = data?.siteSettings;
 
   return (
     <>
-      <Suspense fallback={<div className="h-20 w-full bg-white border-b border-slate-100" />}>
+      <Suspense
+        fallback={
+          <div className="h-20 w-full bg-white border-b border-slate-100" />
+        }
+      >
         <LandingNavbar settings={settings} />
       </Suspense>
-      <Suspense fallback={
-        <div className="min-h-screen">
-          {/* Check children type and render appropriate skeleton */}
-          {children}
-        </div>
-      }>
+      <Suspense
+        fallback={
+          <div className="min-h-screen">
+            {/* Check children type and render appropriate skeleton */}
+            {children}
+          </div>
+        }
+      >
         <main className="min-h-screen">{children}</main>
       </Suspense>
       <LandingFooter settings={settings} />

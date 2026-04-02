@@ -7,8 +7,9 @@ import '../../helpers/provider_overrides.dart';
 import '../../helpers/test_app.dart';
 
 void main() {
-  testWidgets('ShopScreen renders search, top bar, and product grid shell',
-      (tester) async {
+  testWidgets('ShopScreen renders search, top bar, and product grid shell', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       buildTestApp(
         productProvider: FakeProductProvider(),
@@ -20,9 +21,13 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('Mitologi Clothing'), findsOneWidget);
-    expect(find.text('Cari produk eksklusif kami...'), findsOneWidget);
+    // Updated texts and icons to match actual UI
+    expect(find.text('Katalog'), findsOneWidget);
+    expect(
+      find.text('Temukan koleksi premium dari Mitologi Clothing'),
+      findsOneWidget,
+    );
     expect(find.text('Jaket Mitologi Signature'), findsWidgets);
-    expect(find.byIcon(Icons.tune_rounded), findsOneWidget);
+    expect(find.byIcon(Icons.sort), findsOneWidget);
   });
 }

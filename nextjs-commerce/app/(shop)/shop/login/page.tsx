@@ -13,7 +13,9 @@ export default function LoginPage() {
 
       <div className="w-full max-w-xl p-8 sm:p-10 relative z-10 bg-white rounded-[30px] shadow-soft border border-app">
         <div className="text-center mb-10 border-b border-app pb-8">
-          <p className="font-sans text-[11px] uppercase tracking-[0.28em] text-mitologi-gold-dark mb-4">Akun Toko</p>
+          <p className="font-sans text-[11px] uppercase tracking-[0.28em] text-mitologi-gold-dark mb-4">
+            Akun Toko
+          </p>
           <h1 className="font-display text-4xl sm:text-5xl font-semibold text-mitologi-navy tracking-tight mb-3 leading-none">
             Selamat Datang
           </h1>
@@ -23,13 +25,20 @@ export default function LoginPage() {
         </div>
 
         <div>
-          <Suspense fallback={<div className="flex justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-2 border-mitologi-navy border-t-transparent"></div></div>}>
+          <Suspense
+            fallback={
+              <div className="flex justify-center py-10">
+                <div className="animate-spin rounded-full h-8 w-8 border-2 border-mitologi-navy border-t-transparent"></div>
+              </div>
+            }
+          >
             <LoginForm />
           </Suspense>
         </div>
-        
+
         <p className="text-center mt-10 text-xs font-sans font-medium text-slate-400 pt-8 border-t border-slate-100">
-          &copy; {new Date().getFullYear()} Mitologi Clothing. Hak cipta dilindungi.
+          &copy; {new Date().getFullYear()} Mitologi Clothing. Hak cipta
+          dilindungi.
         </p>
       </div>
     </div>

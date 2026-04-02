@@ -17,7 +17,7 @@ class ProductTest extends TestCase
         $response = $this->getJson('/api/products');
 
         $response->assertStatus(200)
-            ->assertJsonCount(3, 'products');
+            ->assertJsonCount(3, 'data.products');
     }
 
     public function test_can_filter_products_by_ids()
@@ -28,7 +28,7 @@ class ProductTest extends TestCase
         $response = $this->getJson("/api/products?ids={$ids}");
 
         $response->assertStatus(200)
-            ->assertJsonCount(2, 'products');
+            ->assertJsonCount(2, 'data.products');
     }
 
     public function test_can_search_products()
@@ -39,7 +39,7 @@ class ProductTest extends TestCase
         $response = $this->getJson('/api/products?q=Unique');
 
         $response->assertStatus(200)
-            ->assertJsonCount(1, 'products')
+            ->assertJsonCount(1, 'data.products')
             ->assertJsonFragment(['title' => 'Unique Shirt']);
     }
 }

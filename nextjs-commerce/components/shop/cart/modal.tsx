@@ -95,8 +95,14 @@ export default function CartModal() {
         >
           <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-slate-200 bg-white p-6 shadow-xl md:w-[390px]">
             <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-              <p className="text-xl font-sans font-bold text-mitologi-navy">Keranjang Belanja</p>
-              <button aria-label="Tutup keranjang" onClick={closeCart} className="text-slate-400 hover:text-mitologi-navy transition-colors">
+              <p className="text-xl font-sans font-bold text-mitologi-navy">
+                Keranjang Belanja
+              </p>
+              <button
+                aria-label="Tutup keranjang"
+                onClick={closeCart}
+                className="text-slate-400 hover:text-mitologi-navy transition-colors"
+              >
                 <CloseCart />
               </button>
             </div>
@@ -123,8 +129,13 @@ export default function CartModal() {
               <div className="flex h-full flex-col justify-between overflow-hidden p-1">
                 <ul className="grow overflow-auto py-4 space-y-4">
                   {cart.lines.map((item, i) => {
-                    const merchandiseSearchParams = {} as MerchandiseSearchParams;
-                    const selectedOptions = Array.isArray(item.merchandise.selectedOptions) ? item.merchandise.selectedOptions : [];
+                    const merchandiseSearchParams =
+                      {} as MerchandiseSearchParams;
+                    const selectedOptions = Array.isArray(
+                      item.merchandise.selectedOptions,
+                    )
+                      ? item.merchandise.selectedOptions
+                      : [];
                     selectedOptions.forEach(({ name, value }) => {
                       if (value !== DEFAULT_OPTION) {
                         merchandiseSearchParams[name.toLowerCase()] = value;
@@ -132,14 +143,17 @@ export default function CartModal() {
                     });
                     const merchandiseUrl = createUrl(
                       `/shop/product/${item.merchandise.product.handle}`,
-                      new URLSearchParams(merchandiseSearchParams)
+                      new URLSearchParams(merchandiseSearchParams),
                     );
 
                     // Use item.id if available (unique per line), otherwise fallback to merchandise.id and index composite
                     const itemKey = item.id || `${item.merchandise.id}-${i}`;
 
                     return (
-                      <li key={itemKey} className="flex w-full flex-col border-b border-slate-100 pb-4 last:border-0 pt-4 first:pt-0">
+                      <li
+                        key={itemKey}
+                        className="flex w-full flex-col border-b border-slate-100 pb-4 last:border-0 pt-4 first:pt-0"
+                      >
                         <div className="relative flex w-full flex-row justify-between px-1 py-2">
                           <div className="absolute z-40 -ml-2 -mt-3">
                             <DeleteItemButton item={item} />
@@ -151,9 +165,16 @@ export default function CartModal() {
                                   className="h-full w-full object-cover"
                                   width={96}
                                   height={96}
-                                  alt={item.merchandise.product.featuredImage.altText || item.merchandise.product.title}
-                                  src={item.merchandise.product.featuredImage.url}
-                                  unoptimized={shouldBypassImageOptimization(item.merchandise.product.featuredImage.url)}
+                                  alt={
+                                    item.merchandise.product.featuredImage
+                                      .altText || item.merchandise.product.title
+                                  }
+                                  src={
+                                    item.merchandise.product.featuredImage.url
+                                  }
+                                  unoptimized={shouldBypassImageOptimization(
+                                    item.merchandise.product.featuredImage.url,
+                                  )}
                                 />
                               ) : (
                                 <div className="flex h-full w-full items-center justify-center text-[10px] font-sans font-semibold uppercase text-slate-400">
@@ -167,7 +188,9 @@ export default function CartModal() {
                               className="z-30 flex flex-col justify-between"
                             >
                               <div>
-                                <span className="leading-tight font-sans font-bold text-mitologi-navy hover:text-mitologi-gold transition-colors block mb-1 text-base">{item.merchandise.product.title}</span>
+                                <span className="leading-tight font-sans font-bold text-mitologi-navy hover:text-mitologi-gold transition-colors block mb-1 text-base">
+                                  {item.merchandise.product.title}
+                                </span>
                                 {item.merchandise.title !== DEFAULT_OPTION && (
                                   <p className="text-sm font-sans text-slate-500">
                                     {item.merchandise.title}
@@ -177,15 +200,22 @@ export default function CartModal() {
                               <Price
                                 className="text-sm font-sans font-semibold text-mitologi-navy"
                                 amount={item.cost.totalAmount.amount}
-                                currencyCode={item.cost.totalAmount.currencyCode}
+                                currencyCode={
+                                  item.cost.totalAmount.currencyCode
+                                }
                               />
                             </Link>
                           </div>
                           <div className="flex flex-col justify-end items-end">
                             <div className="flex h-9 flex-row items-center rounded-lg border border-slate-200 bg-white shadow-sm">
-                              <EditItemQuantityButton item={item} type="minus" />
+                              <EditItemQuantityButton
+                                item={item}
+                                type="minus"
+                              />
                               <p className="w-8 text-center">
-                                <span className="w-full text-sm font-sans font-semibold text-mitologi-navy">{item.quantity}</span>
+                                <span className="w-full text-sm font-sans font-semibold text-mitologi-navy">
+                                  {item.quantity}
+                                </span>
                               </p>
                               <EditItemQuantityButton item={item} type="plus" />
                             </div>
@@ -221,12 +251,5 @@ export default function CartModal() {
 }
 
 function CloseCart({ className }: { className?: string }) {
-  return (
-      <XMarkIcon
-        className={clsx(
-          "h-6 transition-none",
-          className,
-        )}
-      />
-  );
+  return <XMarkIcon className={clsx("h-6 transition-none", className)} />;
 }

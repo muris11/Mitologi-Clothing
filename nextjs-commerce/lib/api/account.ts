@@ -15,33 +15,45 @@ export async function updateProfile(
     address?: string;
     city?: string;
     province?: string;
-    postal_code?: string;
-  }
+    postalCode?: string;
+  },
 ): Promise<User> {
+  const { postalCode, ...otherData } = data;
+  const payload = {
+    ...otherData,
+    ...(postalCode ? { postal_code: postalCode } : {}),
+  };
   return await apiFetch<User>(ENDPOINTS.PROFILE, {
     method: "PUT",
-    body: JSON.stringify(data),
+    body: JSON.stringify(payload),
   });
 }
 
 export async function updateAvatar(
-  file: File
-): Promise<{ message: string; avatar_url: string; avatar: string }> {
+  file: File,
+): Promise<{ message: string; avatarUrl: string; avatar: string }> {
   const formData = new FormData();
   formData.append("avatar", file);
-  return await apiFetch<{ message: string; avatar_url: string; avatar: string }>(ENDPOINTS.PROFILE_AVATAR, {
-    method: "POST",
-    body: formData,
-  });
+  return await apiFetch<{ message: string; avatarUrl: string; avatar: string }>(
+    ENDPOINTS.PROFILE_AVATAR,
+    {
+      method: "POST",
+      body: formData,
+    },
+  );
 }
 
 export async function updatePassword(data: {
-  current_password: string;
+  currentPassword: string;
   password: string;
-  password_confirmation: string;
+  passwordConfirmation: string;
 }): Promise<{ message: string }> {
   return await apiFetch<{ message: string }>(ENDPOINTS.PROFILE_PASSWORD, {
     method: "PUT",
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      current_password: data.currentPassword,
+      password: data.password,
+      password_confirmation: data.passwordConfirmation,
+    }),
   });
 }

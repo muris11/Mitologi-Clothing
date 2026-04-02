@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Product;
 use App\Models\UserInteraction;
-use App\Models\Product; // Ensure Product model is imported
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class WishlistController extends Controller
 {
@@ -15,60 +15,65 @@ class WishlistController extends Controller
     /**
      * Get all wishlisted products for the authenticated user.
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $userId = $request->user()->id;
 
         $wishlistItems = UserInteraction::where('user_id', $userId)
             ->where('type', 'wishlist')
-            ->with(['product.variants', 'product.options', 'product.images', 'product.categories']) // Eager load all necessary relations
+            ->with(['product.variants', 'product.options', 'product.images', 'product.categories'])
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // Transform the data to return a clean product list
         $products = $wishlistItems->map(function ($item) {
-             $product = $item->product;
-             if (!$product) return null;
-             
-             $formatted = $this->formatProduct($product);
-             $formatted['is_wishlisted'] = true;
-             return $formatted;
+            $product = $item->product;
+            if (! $product) {
+                return null;
+            }
+
+            $formatted = $this->formatProduct($product);
+            $formatted['isWishlisted'] = true;
+
+            return $formatted;
         })->filter()->values();
 
-        return response()->json($products);
+        return $this->successResponse($products);
     }
 
     /**
      * Add a product to the wishlist.
      */
-    public function store(Request $request, $productId)
+    public function store(Request $request, $productId): JsonResponse
     {
         $userId = $request->user()->id;
 
-        // Verify product exists
-        $product = Product::findOrFail($productId);
+        $product = Product::find($productId);
 
-        $interaction = UserInteraction::firstOrCreate(
+        if (! $product) {
+            return $this->notFoundResponse('Product');
+        }
+
+        UserInteraction::firstOrCreate(
             [
                 'user_id' => $userId,
                 'product_id' => $productId,
-                'type' => 'wishlist'
+                'type' => 'wishlist',
             ],
             [
-                'score' => 3 // Higher score for wishlist
+                'score' => 3,
             ]
         );
 
-        return response()->json([
-            'message' => 'Product added to wishlist',
-            'is_wishlisted' => true
-        ]);
+        return $this->successResponse(
+            ['isWishlisted' => true],
+            'Product added to wishlist'
+        );
     }
 
     /**
      * Remove a product from the wishlist.
      */
-    public function destroy(Request $request, $productId)
+    public function destroy(Request $request, $productId): JsonResponse
     {
         $userId = $request->user()->id;
 
@@ -77,16 +82,16 @@ class WishlistController extends Controller
             ->where('type', 'wishlist')
             ->delete();
 
-        return response()->json([
-            'message' => 'Product removed from wishlist',
-            'is_wishlisted' => false
-        ]);
+        return $this->successResponse(
+            ['isWishlisted' => false],
+            'Product removed from wishlist'
+        );
     }
 
     /**
      * Check if a specific product is in the wishlist.
      */
-    public function check(Request $request, $productId)
+    public function check(Request $request, $productId): JsonResponse
     {
         $userId = $request->user()->id;
 
@@ -95,7 +100,6 @@ class WishlistController extends Controller
             ->where('type', 'wishlist')
             ->exists();
 
-        return response()->json(['is_wishlisted' => $exists]);
+        return $this->successResponse(['isWishlisted' => $exists]);
     }
-
 }

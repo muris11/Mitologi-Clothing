@@ -18,7 +18,8 @@ class ProductImage extends Model
         if (str_starts_with($this->url, 'http')) {
             return $this->url;
         }
+
         // Use url() instead of asset() to get the full URL without the /api prefix
-        return url('storage/' . $this->url);
+        return url('storage/'.$this->url);
     }
 }

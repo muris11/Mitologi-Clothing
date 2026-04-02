@@ -6,18 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\OrderStep;
 use App\Services\FrontendCacheService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class OrderStepController extends Controller
 {
     public function index()
     {
         $orderSteps = OrderStep::orderBy('step_number')->paginate(10);
+
         return view('admin.beranda.order-steps.index', compact('orderSteps'));
     }
 
     public function create()
     {
         $nextStep = OrderStep::max('step_number') + 1;
+
         return view('admin.beranda.order-steps.create', compact('nextStep'));
     }
 
@@ -39,6 +42,7 @@ class OrderStepController extends Controller
             'sort_order' => $request->sort_order ?? $request->step_number,
         ]);
 
+        Cache::forget('api.landing_page_data_v2');
         FrontendCacheService::revalidate(['order-steps', 'landing-page']);
 
         return redirect()->route('admin.beranda.order-steps.index')->with('success', 'Langkah pemesanan berhasil ditambahkan.');
@@ -67,6 +71,7 @@ class OrderStepController extends Controller
             'sort_order' => $request->sort_order ?? $request->step_number,
         ]);
 
+        Cache::forget('api.landing_page_data_v2');
         FrontendCacheService::revalidate(['order-steps', 'landing-page']);
 
         return redirect()->route('admin.beranda.order-steps.index')->with('success', 'Langkah pemesanan berhasil diperbarui.');
@@ -74,9 +79,10 @@ class OrderStepController extends Controller
 
     public function destroy(OrderStep $order_step)
     {
+        Cache::forget('api.landing_page_data_v2');
         FrontendCacheService::revalidate(['order-steps', 'landing-page']);
         $order_step->delete();
+
         return redirect()->route('admin.beranda.order-steps.index')->with('success', 'Langkah pemesanan berhasil dihapus.');
     }
 }
-

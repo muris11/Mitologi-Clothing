@@ -6,17 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-  public function up(): void
-  {
-    Schema::table('features', function (Blueprint $table) {
-      $table->boolean('is_active')->default(true)->after('icon');
-    });
-  }
+    public function up(): void
+    {
+        Schema::table('features', function (Blueprint $table) {
+            $table->boolean('is_active')->default(true)->after('icon');
+        });
+    }
 
-  public function down(): void
-  {
-    Schema::table('features', function (Blueprint $table) {
-      $table->dropColumn('is_active');
-    });
-  }
+    public function down(): void
+    {
+        Schema::table('features', function (Blueprint $table) {
+            $table->dropColumn('is_active');
+        });
+    }
 };

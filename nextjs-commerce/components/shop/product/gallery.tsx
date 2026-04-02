@@ -29,16 +29,14 @@ export function Gallery({
   // Default image if none provided
   const currentImage = images[imageIndex] || {
     src: "",
-    altText: "Product image"
+    altText: "Product image",
   };
-
-
 
   return (
     <div className="flex flex-col gap-4">
       {/* Main Image */}
       <div className="relative aspect-square w-full rounded-3xl border border-slate-200 bg-slate-50 overflow-hidden shadow-soft group">
-        {currentImage.src && currentImage.src !== '' ? (
+        {currentImage.src && currentImage.src !== "" ? (
           <>
             <Image
               className="h-full w-full object-contain transition-transform duration-700 ease-in-out group-hover:scale-105"
@@ -72,7 +70,9 @@ export function Gallery({
           </>
         ) : (
           <div className="flex h-full items-center justify-center">
-            <span className="text-sm font-sans font-medium text-slate-400">No Image</span>
+            <span className="text-sm font-sans font-medium text-slate-400">
+              No Image
+            </span>
           </div>
         )}
       </div>
@@ -84,7 +84,7 @@ export function Gallery({
             const isActive = index === imageIndex;
 
             return (
-               <button
+              <button
                 key={`${image.src}-${index}`}
                 onClick={() => updateImage(index.toString())}
                 aria-label={`Select product image ${index + 1}`}

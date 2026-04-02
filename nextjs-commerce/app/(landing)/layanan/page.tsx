@@ -1,16 +1,16 @@
-import { AboutServicesDetail as ServicesDetail } from 'components/landing/about/services-detail';
-import { CategoryPricelist } from 'components/landing/sections/category-pricelist';
-import { PrintingMethods } from 'components/landing/sections/printing-methods';
+import { AboutServicesDetail as ServicesDetail } from "components/landing/about/services-detail";
+import { CategoryPricelist } from "components/landing/sections/category-pricelist";
+import { PrintingMethods } from "components/landing/sections/printing-methods";
 import { SubpageHero } from "components/landing/shared/subpage-hero";
-import { getLandingPageData } from 'lib/api';
-import type { Metadata } from 'next';
+import { getLandingPageData } from "lib/api";
+import type { Metadata } from "next";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getLandingPageData();
-  const siteName = data.site_settings?.general?.site_name || 'Mitologi Clothing';
+  const siteName = data?.siteSettings?.general?.siteName || "Mitologi Clothing";
   const title = `Layanan Produksi — ${siteName}`;
   const description = `Layanan produksi dari ${siteName}: kemeja, jersey, sablon kaos, dan lainnya.`;
 
@@ -20,14 +20,14 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      type: 'website',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://mitologi.id'}/layanan`,
+      type: "website",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id"}/layanan`,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title,
       description,
-    }
+    },
   };
 }
 
@@ -39,19 +39,23 @@ export default async function LayananPage() {
       {/* Hero Section */}
       <SubpageHero
         title="Layanan Produksi"
-        subtitle={data.site_settings?.general?.site_tagline || data.site_settings?.general?.site_description || 'Solusi lengkap untuk kebutuhan produksi pakaian Anda dengan kualitas terbaik.'}
+        subtitle={
+          data?.siteSettings?.general?.siteTagline ||
+          data?.siteSettings?.general?.siteDescription ||
+          "Solusi lengkap untuk kebutuhan produksi pakaian Anda dengan kualitas terbaik."
+        }
         badge={true}
         badgeText="Program Kerja"
       />
 
       {/* Services Detail Section */}
-      <ServicesDetail settings={data.site_settings} />
+      <ServicesDetail settings={data?.siteSettings} />
 
       {/* Product Pricelist */}
-      <CategoryPricelist pricings={data.product_pricings} />
+      <CategoryPricelist pricings={data?.productPricings || []} />
 
       {/* Printing Methods */}
-      <PrintingMethods methods={data.printing_methods} />
+      <PrintingMethods methods={data?.printingMethods || []} />
     </main>
   );
 }

@@ -28,16 +28,19 @@ class TrainRecommendationCommand extends Command
     {
         $this->info('Starting AI model training...');
 
-        if (!$recommendationService->healthCheck()) {
+        if (! $recommendationService->healthCheck()) {
             $this->error('AI Service is not reachable. Please ensure the recommendation-service is running.');
+
             return Command::FAILURE;
         }
 
         if ($recommendationService->train()) {
             $this->info('AI model trained successfully!');
+
             return Command::SUCCESS;
         } else {
             $this->error('Failed to train AI model. Check logs for details.');
+
             return Command::FAILURE;
         }
     }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use SoftDeletes;
+
     protected $fillable = [
         'user_id', 'order_number', 'status', 'tracking_number', 'subtotal', 'tax',
         'shipping_cost', 'total', 'currency_code', 'payment_method',
@@ -44,15 +45,17 @@ class Order extends Model
 
     public static function generateOrderNumber(): string
     {
-        return 'MC-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6));
+        return 'MC-'.date('Ymd').'-'.strtoupper(substr(uniqid(), -6));
     }
 
     public function getStatusLabelAttribute(): string
     {
         $translations = [
             'pending' => 'Menunggu Pembayaran',
+            'paid' => 'Lunas',
             'processing' => 'Sedang Diproses',
             'shipped' => 'Dalam Pengiriman',
+            'delivered' => 'Terkirim',
             'completed' => 'Selesai',
             'cancelled' => 'Dibatalkan',
             'refunded' => 'Dikembalikan',
@@ -67,7 +70,7 @@ class Order extends Model
             if ($order->isDirty('status')) {
                 $oldStatus = $order->getOriginal('status');
                 $newStatus = $order->status;
-                
+
                 // Logic for stock updates when status transitions
                 if ($oldStatus === 'pending' && $newStatus === 'processing') {
                     // Paid: Decrement actual stock and clear reservation
@@ -102,9 +105,9 @@ class Order extends Model
             if ($order->wasChanged('status')) {
                 try {
                     \Illuminate\Support\Facades\Mail::to($order->user->email)->queue(new \App\Mail\OrderStatusMail($order));
-                    \Illuminate\Support\Facades\Log::info('Order status email sent to ' . $order->user->email . ' for status ' . $order->status);
+                    \Illuminate\Support\Facades\Log::info('Order status email sent to '.$order->user->email.' for status '.$order->status);
                 } catch (\Exception $e) {
-                    \Illuminate\Support\Facades\Log::error('Failed to send order status email: ' . $e->getMessage());
+                    \Illuminate\Support\Facades\Log::error('Failed to send order status email: '.$e->getMessage());
                 }
             }
         });

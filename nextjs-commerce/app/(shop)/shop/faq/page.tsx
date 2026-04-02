@@ -101,11 +101,17 @@ const faqData: Record<string, { q: string; a: string }[]> = {
     {
       q: "Apa fungsi fitur Wishlist?",
       a: "Fitur Wishlist memungkinkan Anda menyimpan produk-produk yang Anda sukai untuk dibeli nanti tanpa harus mencarinya kembali di katalog.",
-    }
+    },
   ],
 };
 
-function AccordionItem({ question, answer }: { question: string; answer: string }) {
+function AccordionItem({
+  question,
+  answer,
+}: {
+  question: string;
+  answer: string;
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -163,7 +169,11 @@ export default function FAQPage() {
       {/* Accordion List */}
       <div className="space-y-3">
         {activeFaqs.map((faq, i) => (
-          <AccordionItem key={`${activeCategory}-${i}`} question={faq.q} answer={faq.a} />
+          <AccordionItem
+            key={`${activeCategory}-${i}`}
+            question={faq.q}
+            answer={faq.a}
+          />
         ))}
       </div>
 

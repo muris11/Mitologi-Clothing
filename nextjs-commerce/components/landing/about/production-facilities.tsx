@@ -1,20 +1,28 @@
 "use client";
 
-import { SectionHeading } from 'components/ui/section-heading';
-import { Facility } from 'lib/api/types';
-import { storageUrl } from 'lib/utils/storage-url';
-import { MotionSection, StaggerGrid, StaggerGridItem } from 'components/ui/motion';
+import { SectionHeading } from "components/ui/section-heading";
+import { Facility } from "lib/api/types";
+import { storageUrl } from "lib/utils/storage-url";
+import {
+  MotionSection,
+  StaggerGrid,
+  StaggerGridItem,
+} from "components/ui/motion";
 
-export function ProductionFacilities({ facilities }: { facilities?: Facility[] }) {
+export function ProductionFacilities({
+  facilities,
+}: {
+  facilities?: Facility[];
+}) {
   if (!facilities || facilities.length === 0) return null;
 
   return (
     <MotionSection className="relative py-24 sm:py-32 bg-white overflow-hidden border-t border-slate-200/50">
       <div className="mx-auto max-w-[1440px] px-6 lg:px-8 relative z-10">
         <div className="mx-auto max-w-3xl text-center mb-16 flex flex-col items-center">
-          <SectionHeading 
+          <SectionHeading
             overline="Bengkel Kreativitas"
-            title="Fasilitas Produksi Terpadu" 
+            title="Fasilitas Produksi Terpadu"
             subtitle="Pusat dari setiap mahakarya. Didukung mesin berteknologi mutakhir dan tenaga ahli berpengalaman untuk memastikan setiap produk memenuhi standar tertinggi."
             className="items-center"
           />
@@ -24,11 +32,11 @@ export function ProductionFacilities({ facilities }: { facilities?: Facility[] }
           {facilities.map((facility, index) => {
             // Create a varied grid layout: some items might span 2 columns if conditions match
             const isLarge = index === 0 || index === 3;
-            
+
             return (
-              <StaggerGridItem 
-                key={facility.id} 
-                className={`group relative overflow-hidden rounded-3xl bg-slate-100 shadow-soft border border-slate-200 hover:shadow-hover transition-all duration-500 ${isLarge ? 'md:col-span-2' : ''}`}
+              <StaggerGridItem
+                key={facility.id}
+                className={`group relative overflow-hidden rounded-3xl bg-slate-100 shadow-soft border border-slate-200 hover:shadow-hover transition-all duration-500 ${isLarge ? "md:col-span-2" : ""}`}
               >
                 {facility.image ? (
                   <>
@@ -43,15 +51,19 @@ export function ProductionFacilities({ facilities }: { facilities?: Facility[] }
                   </>
                 ) : (
                   <div className="absolute inset-0 bg-mitologi-navy/10 flex items-center justify-center">
-                    <span className="text-slate-400 font-sans tracking-widest uppercase text-xs">No Image</span>
+                    <span className="text-slate-400 font-sans tracking-widest uppercase text-xs">
+                      No Image
+                    </span>
                   </div>
                 )}
-                
+
                 {/* Content Overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-8 z-20 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                   <div className="flex items-center gap-3 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                     <span className="w-8 h-px bg-mitologi-gold"></span>
-                    <span className="text-mitologi-gold text-[10px] uppercase tracking-widest font-bold">Mitologi</span>
+                    <span className="text-mitologi-gold text-[10px] uppercase tracking-widest font-bold">
+                      Mitologi
+                    </span>
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold font-sans text-white mb-2 tracking-tight group-hover:text-mitologi-gold transition-colors duration-300">
                     {facility.name}

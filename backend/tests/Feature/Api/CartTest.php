@@ -14,7 +14,9 @@ class CartTest extends TestCase
     use RefreshDatabase;
 
     private Product $product;
+
     private ProductVariant $variant;
+
     private string $sessionId = 'test-session-abc123';
 
     protected function setUp(): void
@@ -53,7 +55,7 @@ class CartTest extends TestCase
         ], ['X-Cart-Id' => $this->sessionId]);
 
         $response->assertOk()
-            ->assertJsonPath('totalQuantity', 2);
+            ->assertJsonPath('data.totalQuantity', 2);
 
         $this->assertDatabaseHas('cart_items', [
             'variant_id' => $this->variant->id,
@@ -75,7 +77,7 @@ class CartTest extends TestCase
         ], ['X-Cart-Id' => $this->sessionId]);
 
         $response->assertOk()
-            ->assertJsonPath('totalQuantity', 4);
+            ->assertJsonPath('data.totalQuantity', 4);
 
         $this->assertDatabaseHas('cart_items', [
             'variant_id' => $this->variant->id,
@@ -96,7 +98,7 @@ class CartTest extends TestCase
         ], ['X-Cart-Id' => $this->sessionId]);
 
         $response->assertOk()
-            ->assertJsonPath('totalQuantity', 5);
+            ->assertJsonPath('data.totalQuantity', 5);
     }
 
     public function test_setting_quantity_zero_removes_item(): void
@@ -112,7 +114,7 @@ class CartTest extends TestCase
         ], ['X-Cart-Id' => $this->sessionId]);
 
         $response->assertOk()
-            ->assertJsonPath('totalQuantity', 0);
+            ->assertJsonPath('data.totalQuantity', 0);
 
         $this->assertDatabaseMissing('cart_items', [
             'id' => $item->id,
@@ -132,7 +134,7 @@ class CartTest extends TestCase
         ]);
 
         $response->assertOk()
-            ->assertJsonPath('totalQuantity', 0);
+            ->assertJsonPath('data.totalQuantity', 0);
     }
 
     public function test_add_item_validation_rejects_invalid_data(): void
@@ -145,7 +147,8 @@ class CartTest extends TestCase
         ], ['X-Cart-Id' => $this->sessionId]);
 
         $response->assertUnprocessable()
-            ->assertJsonValidationErrors(['merchandiseId', 'quantity']);
+            ->assertJsonPath('error.details.merchandiseId', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.quantity', fn ($errors) => is_array($errors) && count($errors) > 0);
     }
 
     public function test_authenticated_user_cart_persists(): void
@@ -161,6 +164,6 @@ class CartTest extends TestCase
             ->getJson('/api/cart');
 
         $response->assertOk()
-            ->assertJsonPath('totalQuantity', 3);
+            ->assertJsonPath('data.totalQuantity', 3);
     }
 }

@@ -40,7 +40,7 @@ def require_api_key(f):
         api_key = request.headers.get('X-API-Key')
         if api_key and api_key == API_KEY:
             return f(*args, **kwargs)
-        return jsonify({'error': 'Unauthorized'}), 401
+        return jsonify({'error': {'code': 'unauthorized', 'message': 'Unauthorized'}}), 401
     return decorated_function
 
 
@@ -49,10 +49,10 @@ def parse_limit(default_value, max_value=100):
     try:
         limit = int(raw_limit)
     except (TypeError, ValueError):
-        return None, jsonify({'error': 'Invalid limit parameter'}), 400
+        return None, jsonify({'error': {'code': 'invalid_parameter', 'message': 'Invalid limit parameter'}}), 400
 
     if limit < 1 or limit > max_value:
-        return None, jsonify({'error': f'limit must be between 1 and {max_value}'}), 400
+        return None, jsonify({'error': {'code': 'invalid_parameter', 'message': f'limit must be between 1 and {max_value}'}}), 400
 
     return limit, None, None
 
@@ -69,7 +69,7 @@ def recommend_user(user_id):
     if not recommendations:
         recommendations = recommender.get_popular_products(limit)
 
-    return jsonify({'recommendations': recommendations})
+    return jsonify({'data': recommendations})
 
 @app.route('/api/recommendations/product/<int:product_id>', methods=['GET'])
 @require_api_key
@@ -79,7 +79,7 @@ def recommend_product(product_id):
         return error_response, status_code
 
     recommendations = recommender.predict_related_products(product_id, limit)
-    return jsonify({'recommendations': recommendations})
+    return jsonify({'data': recommendations})
 
 @app.route('/api/train', methods=['POST'])
 @require_api_key
@@ -87,7 +87,7 @@ def train():
     print("Received training request")
     data = request.get_json(silent=True) or {}
     if not isinstance(data, dict):
-        return jsonify({'error': 'Invalid JSON payload'}), 400
+        return jsonify({'error': {'code': 'invalid_json', 'message': 'Invalid JSON payload'}}), 400
 
     interactions = data.get('interactions', [])
     products = data.get('products', [])
@@ -96,15 +96,15 @@ def train():
 
     if not interactions and not products:
         print("Error: No data")
-        return jsonify({'error': 'Interactions or Products data is required'}), 400
+        return jsonify({'error': {'code': 'validation_error', 'message': 'Interactions or Products data is required'}}), 400
         
     try:
         recommender.train(interactions, products)
         print("Model trained successfully")
-        return jsonify({'message': 'Model trained successfully'})
+        return jsonify({'data': None, 'message': 'Model trained successfully'})
     except Exception as e:
         print(f"Training error: {e}")
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': {'code': 'training_error', 'message': str(e)}}), 500
 
 @app.route('/api/health', methods=['GET'])
 def health():

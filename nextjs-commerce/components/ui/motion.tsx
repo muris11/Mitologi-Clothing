@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { motion, HTMLMotionProps } from 'framer-motion';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { motion, HTMLMotionProps } from "framer-motion";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
 const easeOutExpo = [0.25, 1, 0.5, 1] as const;
 
@@ -11,46 +11,46 @@ const easeOutExpo = [0.25, 1, 0.5, 1] as const;
 
 export const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: easeOutExpo }
-  }
+    transition: { duration: 0.6, ease: easeOutExpo },
+  },
 };
 
 export const fadeIn = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
-    transition: { duration: 0.5 }
-  }
+    transition: { duration: 0.5 },
+  },
 };
 
 export const fadeInLeft = {
   hidden: { opacity: 0, x: -50 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     x: 0,
-    transition: { duration: 0.6, ease: easeOutExpo }
-  }
+    transition: { duration: 0.6, ease: easeOutExpo },
+  },
 };
 
 export const fadeInRight = {
   hidden: { opacity: 0, x: 50 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     x: 0,
-    transition: { duration: 0.6, ease: easeOutExpo }
-  }
+    transition: { duration: 0.6, ease: easeOutExpo },
+  },
 };
 
 export const scaleIn = {
   hidden: { opacity: 0, scale: 0.9 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     scale: 1,
-    transition: { duration: 0.5, ease: easeOutExpo }
-  }
+    transition: { duration: 0.5, ease: easeOutExpo },
+  },
 };
 
 export const staggerContainer = {
@@ -59,25 +59,25 @@ export const staggerContainer = {
     opacity: 1,
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
+      delayChildren: 0.2,
+    },
+  },
 };
 
 export const staggerItem = {
   hidden: { opacity: 0, y: 30 },
-  show: { 
-    opacity: 1, 
+  show: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: easeOutExpo }
-  }
+    transition: { duration: 0.5, ease: easeOutExpo },
+  },
 };
 
 // ─────────────────────────────────────────────────────────────
 // Reusable Motion Components
 // ─────────────────────────────────────────────────────────────
 
-interface MotionSectionProps extends HTMLMotionProps<'section'> {
+interface MotionSectionProps extends HTMLMotionProps<"section"> {
   children: React.ReactNode;
   className?: string;
   delay?: number;
@@ -101,9 +101,9 @@ export const MotionSection = forwardRef<HTMLDivElement, MotionSectionProps>(
     >
       {children}
     </motion.section>
-  )
+  ),
 );
-MotionSection.displayName = 'MotionSection';
+MotionSection.displayName = "MotionSection";
 
 /**
  * MotionDiv - Generic motion div with fade-in-up
@@ -123,9 +123,9 @@ export const MotionDiv = forwardRef<HTMLDivElement, MotionSectionProps>(
     >
       {children}
     </motion.div>
-  )
+  ),
 );
-MotionDiv.displayName = 'MotionDiv';
+MotionDiv.displayName = "MotionDiv";
 
 /**
  * MotionHeading - Heading with fade-in animation
@@ -145,9 +145,9 @@ export const MotionHeading = forwardRef<HTMLDivElement, MotionSectionProps>(
     >
       {children}
     </motion.div>
-  )
+  ),
 );
-MotionHeading.displayName = 'MotionHeading';
+MotionHeading.displayName = "MotionHeading";
 
 /**
  * MotionCard - Card with scale-in animation
@@ -167,15 +167,15 @@ export const MotionCard = forwardRef<HTMLDivElement, MotionSectionProps>(
     >
       {children}
     </motion.div>
-  )
+  ),
 );
-MotionCard.displayName = 'MotionCard';
+MotionCard.displayName = "MotionCard";
 
 /**
  * MotionImage - Image with reveal animation
  * Usage: <MotionImage src="..." alt="..." />
  */
-interface MotionImageProps extends HTMLMotionProps<'img'> {
+interface MotionImageProps extends HTMLMotionProps<"img"> {
   src: string;
   alt: string;
   className?: string;
@@ -194,13 +194,13 @@ export const MotionImage = forwardRef<HTMLImageElement, MotionImageProps>(
       className={className}
       {...props}
     />
-  )
+  ),
 );
-MotionImage.displayName = 'MotionImage';
+MotionImage.displayName = "MotionImage";
 
 /**
  * StaggerGrid - Container for staggered grid animations
- * Usage: 
+ * Usage:
  * <StaggerGrid>
  *   <StaggerGridItem>Item 1</StaggerGridItem>
  *   <StaggerGridItem>Item 2</StaggerGridItem>
@@ -219,9 +219,9 @@ export const StaggerGrid = forwardRef<HTMLDivElement, MotionSectionProps>(
     >
       {children}
     </motion.div>
-  )
+  ),
 );
-StaggerGrid.displayName = 'StaggerGrid';
+StaggerGrid.displayName = "StaggerGrid";
 
 /**
  * StaggerGridItem - Individual item in staggered grid
@@ -236,9 +236,9 @@ export const StaggerGridItem = forwardRef<HTMLDivElement, MotionSectionProps>(
     >
       {children}
     </motion.div>
-  )
+  ),
 );
-StaggerGridItem.displayName = 'StaggerGridItem';
+StaggerGridItem.displayName = "StaggerGridItem";
 
 /**
  * MotionNumber - Animated counter for numbers
@@ -252,7 +252,13 @@ interface MotionNumberProps {
   duration?: number;
 }
 
-export const MotionNumber = ({ value, suffix = '', prefix = '', className = '', duration = 2 }: MotionNumberProps) => {
+export const MotionNumber = ({
+  value,
+  suffix = "",
+  prefix = "",
+  className = "",
+  duration = 2,
+}: MotionNumberProps) => {
   const [displayValue, setDisplayValue] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
   const frameRef = useRef<number | null>(null);

@@ -9,15 +9,15 @@ class CartService
 {
     public function getOrCreateCart(?int $userId, ?string $sessionId): Cart
     {
-        \Illuminate\Support\Facades\Log::info("getOrCreateCart Called", ['userId' => $userId, 'sessionId' => $sessionId]);
-        
+        \Illuminate\Support\Facades\Log::info('getOrCreateCart Called', ['userId' => $userId, 'sessionId' => $sessionId]);
+
         // 1. Check for Guest Cart FIRST to handle merging
         if ($sessionId) {
             $guestCart = Cart::where('session_id', $sessionId)->first();
-            
+
             // FAILSAFE: If not found by session_id, and sessionId is numeric (Cart ID), try finding by ID
             // This handles cases where frontend stores Cart ID as the session key
-            if (!$guestCart && is_numeric($sessionId)) {
+            if (! $guestCart && is_numeric($sessionId)) {
                 $guestCart = Cart::where('id', $sessionId)->whereNull('user_id')->first();
             }
 
@@ -25,24 +25,26 @@ class CartService
                 // If we also have a User ID (Logged In)
                 if ($userId) {
                     // Valid Guest Cart that needs claiming/merging
-                    if (!$guestCart->user_id) {
-                         // Check if user has ANOTHER cart
-                         $existingUserCart = Cart::where('user_id', $userId)
+                    if (! $guestCart->user_id) {
+                        // Check if user has ANOTHER cart
+                        $existingUserCart = Cart::where('user_id', $userId)
                             ->where('id', '!=', $guestCart->id)
                             ->first();
-                         
-                         if ($existingUserCart) {
-                             // Merge Guest -> Existing User Cart
-                             $this->mergeGuestCart($guestCart, $userId); 
-                             return $existingUserCart;
-                         } else {
-                             // No other cart, claim this one
-                             $guestCart->user_id = $userId;
-                             $guestCart->save();
-                             return $guestCart;
-                         }
+
+                        if ($existingUserCart) {
+                            // Merge Guest -> Existing User Cart
+                            $this->mergeGuestCart($guestCart, $userId);
+
+                            return $existingUserCart;
+                        } else {
+                            // No other cart, claim this one
+                            $guestCart->user_id = $userId;
+                            $guestCart->save();
+
+                            return $guestCart;
+                        }
                     }
-                    
+
                     // If cart belongs to THIS user, return it
                     if ($guestCart->user_id === $userId) {
                         return $guestCart;
@@ -60,10 +62,11 @@ class CartService
             $cart = Cart::where('user_id', $userId)->first();
             if ($cart) {
                 // Backfill missing session_id so frontend can track cart via UUID cookie
-                if (!$cart->session_id) {
+                if (! $cart->session_id) {
                     $cart->session_id = \Illuminate\Support\Str::uuid()->toString();
                     $cart->save();
                 }
+
                 return $cart;
             }
         }
@@ -88,7 +91,7 @@ class CartService
         if ($userCart) {
             foreach ($guestCart->items as $item) {
                 // Skip if item no longer exists (might have been deleted)
-                if (!$item->exists) {
+                if (! $item->exists) {
                     continue;
                 }
 
@@ -113,7 +116,7 @@ class CartService
      */
     private function formatSelectedOptions($options): array
     {
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             return [];
         }
 
@@ -145,9 +148,8 @@ class CartService
         $lines = $cart->items->map(function (CartItem $item) {
             $variant = $item->variant;
             $product = $variant ? $variant->product : null;
-            
-            
-            if (!$variant || !$product) {
+
+            if (! $variant || ! $product) {
                 return null;
             }
 
@@ -178,7 +180,6 @@ class CartService
                 ],
             ];
         })->filter()->values()->toArray();
-
 
         return [
             'id' => (string) $cart->id,

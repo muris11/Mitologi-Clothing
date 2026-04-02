@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryRequest;
 use App\Models\Category;
 use App\Services\FrontendCacheService;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
@@ -17,6 +18,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::latest()->paginate(10);
+
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -43,7 +45,8 @@ class CategoryController extends Controller
 
         Category::create($data);
 
-        FrontendCacheService::revalidate(['categories', 'products']);
+        Cache::forget('api.landing_page_data_v2');
+        FrontendCacheService::revalidate(['categories', 'landing-page', 'products']);
 
         return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
@@ -67,14 +70,20 @@ class CategoryController extends Controller
 
         if ($request->hasFile('image')) {
             if ($category->image) {
-                Storage::disk('public')->delete($category->image);
+                if (Storage::disk('public')->exists($category->image)) {
+                    Storage::disk('public')->delete($category->image);
+                    Log::info('Category old image deleted', ['path' => $category->image, 'category_id' => $category->id]);
+                } else {
+                    Log::warning('Category old image not found for deletion', ['path' => $category->image, 'category_id' => $category->id]);
+                }
             }
             $data['image'] = $request->file('image')->store('categories', 'public');
         }
 
         $category->update($data);
 
-        FrontendCacheService::revalidate(['categories', 'products']);
+        Cache::forget('api.landing_page_data_v2');
+        FrontendCacheService::revalidate(['categories', 'landing-page', 'products']);
 
         return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diperbarui.');
     }
@@ -84,14 +93,30 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if ($category->image) {
-            Storage::disk('public')->delete($category->image);
+        try {
+            $categoryId = $category->id;
+            $categoryName = $category->name;
+
+            if ($category->image) {
+                if (Storage::disk('public')->exists($category->image)) {
+                    Storage::disk('public')->delete($category->image);
+                    Log::info('Category image deleted', ['path' => $category->image, 'category_id' => $categoryId, 'category_name' => $categoryName]);
+                } else {
+                    Log::warning('Category image not found for deletion', ['path' => $category->image, 'category_id' => $categoryId, 'category_name' => $categoryName]);
+                }
+            }
+
+            $category->delete();
+            Log::info('Category deleted from database', ['category_id' => $categoryId, 'category_name' => $categoryName]);
+
+            Cache::forget('api.landing_page_data_v2');
+            FrontendCacheService::revalidate(['categories', 'landing-page', 'products']);
+
+            return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
+        } catch (\Exception $e) {
+            Log::error('Failed to delete category', ['category_id' => $category->id, 'error' => $e->getMessage()]);
+
+            return redirect()->route('admin.categories.index')->with('error', 'Gagal menghapus kategori: '.$e->getMessage());
         }
-        
-        $category->delete();
-
-        FrontendCacheService::revalidate(['categories', 'products']);
-
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
     }
 }

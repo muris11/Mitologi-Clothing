@@ -22,12 +22,13 @@ export default function Error({ reset }: { reset: () => void }) {
             />
           </svg>
         </div>
-        
+
         <h2 className="text-3xl font-sans font-extrabold text-mitologi-navy mb-4 tracking-tight">
           Terjadi Kesalahan
         </h2>
         <p className="font-sans font-medium text-slate-500 leading-relaxed mb-8 max-w-md">
-          Maaf, terjadi kendala saat memuat halaman ini. Silakan coba muat ulang atau kembali ke beranda.
+          Maaf, terjadi kendala saat memuat halaman ini. Silakan coba muat ulang
+          atau kembali ke beranda.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
           <button

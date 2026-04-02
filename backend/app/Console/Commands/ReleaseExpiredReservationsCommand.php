@@ -40,7 +40,7 @@ class ReleaseExpiredReservationsCommand extends Command
                 });
                 $count++;
             } catch (\Exception $e) {
-                \Illuminate\Support\Facades\Log::error("Gagal membatalkan pesanan kedaluwarsa {$order->order_number}: " . $e->getMessage());
+                \Illuminate\Support\Facades\Log::error("Gagal membatalkan pesanan kedaluwarsa {$order->order_number}: ".$e->getMessage());
             }
         }
 

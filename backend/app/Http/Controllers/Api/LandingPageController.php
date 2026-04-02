@@ -15,7 +15,6 @@ use App\Models\TeamMember;
 use App\Models\Testimonial;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 
 class LandingPageController extends Controller
 {
@@ -41,15 +40,13 @@ class LandingPageController extends Controller
         $normalized = preg_replace('#^storage/+#', '', $normalized) ?? $normalized;
 
         // Build storage URL using request host instead of APP_URL
-        // This ensures mobile can access images via LAN IP
         $host = request()->getHost();
         $port = request()->getPort();
         $scheme = request()->getScheme();
 
         // Don't use localhost/127.0.0.1 for mobile access
         if ($host === '127.0.0.1' || $host === 'localhost') {
-            // Fallback to a LAN IP - update this to your actual IP!
-            $host = '192.168.1.5'; // <-- GANTI INI DENGAN IP ANDA
+            $host = '192.168.1.5';
         }
 
         $baseUrl = $port ? "$scheme://$host:$port" : "$scheme://$host";
@@ -59,9 +56,8 @@ class LandingPageController extends Controller
 
     public function index(): JsonResponse
     {
-        // Cache EVERYTHING for 1 hour — including site_settings processing
-        $responseData = Cache::remember('api.landing_page_data', 3600, function () {
-
+        // Cache EVERYTHING for 1 hour
+        $responseData = Cache::remember('api.landing_page_data_v2', 3600, function () {
             // Fetch and format settings INSIDE the cache closure
             $settings = SiteSetting::all();
 
@@ -106,7 +102,19 @@ class LandingPageController extends Controller
             }
 
             return [
-                'hero_slides' => HeroSlide::where('is_active', true)->orderBy('sort_order')->get(),
+                'hero_slides' => HeroSlide::where('is_active', true)
+                    ->orderBy('sort_order')
+                    ->get()
+                    ->map(fn ($slide) => [
+                        'id' => $slide->id,
+                        'title' => $slide->title,
+                        'subtitle' => $slide->subtitle,
+                        'image_url' => $this->toPublicStorageUrl($slide->image_url),
+                        'cta_text' => $slide->cta_text,
+                        'cta_link' => $slide->cta_link,
+                        'sort_order' => $slide->sort_order,
+                        'is_active' => $slide->is_active,
+                    ]),
                 'features' => Feature::where('is_active', true)->orderBy('sort_order')->limit(6)->get(),
                 'testimonials' => Testimonial::where('is_active', true)->orderBy('created_at', 'desc')->limit(10)->get(),
                 'materials' => Material::orderBy('sort_order')->get(),
@@ -133,7 +141,19 @@ class LandingPageController extends Controller
                     'button_link' => SiteSetting::get('cta_button_link', 'https://wa.me/6281322170902'),
                 ],
                 'site_settings' => $formattedSettings,
-                'categories' => Category::withCount('products')->get(),
+                'categories' => Category::where('is_active', true)
+                    ->withCount('products')
+                    ->orderBy('name')
+                    ->get()
+                    ->map(fn ($category) => [
+                        'id' => $category->id,
+                        'name' => $category->name,
+                        'slug' => $category->slug,
+                        'handle' => $category->handle,
+                        'description' => $category->description,
+                        'image' => $this->toPublicStorageUrl($category->image),
+                        'productsCount' => $category->products_count ?? 0,
+                    ]),
                 'new_arrivals' => Product::with(['variants', 'images'])
                     ->where('is_hidden', false)
                     ->latest()
@@ -163,13 +183,9 @@ class LandingPageController extends Controller
             ];
         });
 
-        return response()->json($responseData);
+        return $this->successResponse($this->toCamelCase($responseData), 'Data landing page berhasil diambil');
     }
 
-    /**
-     * Serve team member photo files directly.
-     * Bypasses artisan serve symlink issues on Windows.
-     */
     public function teamMemberPhoto(int $id)
     {
         $member = TeamMember::find($id);

@@ -1,9 +1,9 @@
 import {
-    CalendarDaysIcon,
-    GiftIcon,
-    TagIcon,
-    TruckIcon,
-    UserGroupIcon,
+  CalendarDaysIcon,
+  GiftIcon,
+  TagIcon,
+  TruckIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import { StaticPageShell } from "components/shop/static-page-shell";
 import type { Metadata } from "next";

@@ -23,11 +23,14 @@ def run_train_job():
         # Check if the request was successful
         if response.status_code != 200:
             print(f"[{datetime.now()}] MLOps Error: Failed to fetch data. Laravel responded with status: {response.status_code}")
-            print(f"[{datetime.now()}] Response text: {response.text[:200]}")
             return False
             
-        data = response.json()
-        
+        try:
+            data = response.json()
+        except json.JSONDecodeError:
+            print(f"[{datetime.now()}] MLOps Error: Failed to parse JSON from Laravel. Response snippet: {response.text[:200]}")
+            return False
+            
         interactions = data.get('interactions', [])
         products = data.get('products', [])
         

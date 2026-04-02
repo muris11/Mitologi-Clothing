@@ -13,6 +13,7 @@ Frontend Next.js untuk Mitologi Clothing, platform e-commerce clothing brand.
 ## Architecture
 
 Frontend ini terintegrasi dengan:
+
 - **Laravel Backend API** (port 8000) - Products, orders, users, cart, checkout
 - **Python Recommendation Service** (port 8001) - ML-based product recommendations
 - **Midtrans** - Payment gateway
@@ -27,16 +28,19 @@ Frontend ini terintegrasi dengan:
 ### Setup
 
 1. Install dependencies:
+
 ```bash
 pnpm install
 ```
 
 2. Copy `.env.example` to `.env`:
+
 ```bash
 cp .env.example .env
 ```
 
 3. Update environment variables di `.env`:
+
 ```env
 COMPANY_NAME="Mitologi Clothing"
 SITE_NAME="Mitologi"
@@ -47,6 +51,7 @@ NEXT_PUBLIC_AI_SERVICE_URL="http://localhost:8001"
 ```
 
 4. Start development server:
+
 ```bash
 pnpm dev
 ```
@@ -55,13 +60,13 @@ App akan berjalan di [http://localhost:3000](http://localhost:3000/).
 
 ## Development Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start Next.js dev server (Turbopack) |
-| `pnpm build` | Build for production |
-| `pnpm start` | Start production server |
-| `pnpm prettier` | Format code |
-| `pnpm prettier:check` | Check code formatting |
+| Command               | Description                          |
+| --------------------- | ------------------------------------ |
+| `pnpm dev`            | Start Next.js dev server (Turbopack) |
+| `pnpm build`          | Build for production                 |
+| `pnpm start`          | Start production server              |
+| `pnpm prettier`       | Format code                          |
+| `pnpm prettier:check` | Check code formatting                |
 
 ## Project Structure
 
@@ -114,6 +119,7 @@ Frontend memanggil Laravel Backend API di `/api/*` endpoints:
 ## Payment Integration
 
 Menggunakan **Midtrans Snap** untuk payment processing:
+
 - Sandbox: `https://app.sandbox.midtrans.com`
 - Production: `https://app.midtrans.com`
 
@@ -152,6 +158,7 @@ Test configuration di `playwright.config.ts`.
 - **ESLint** - Code quality (via Next.js)
 
 Format code:
+
 ```bash
 pnpm prettier
 ```

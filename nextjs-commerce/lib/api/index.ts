@@ -1,21 +1,28 @@
-
 export interface ApiErrorResponse {
-  message: string;
+  error?: {
+    code: string;
+    message: string;
+    details?: Record<string, string[]>;
+  };
+  message?: string;
   errors?: Record<string, string[]>;
 }
 
 export class ApiError extends Error {
   status: number;
+  code?: string;
   errors?: Record<string, string[]>;
 
   constructor(
     message: string,
     status: number,
+    code?: string,
     errors?: Record<string, string[]>,
   ) {
     super(message);
     this.name = "ApiError";
     this.status = status;
+    this.code = code;
     this.errors = errors;
   }
 
@@ -29,6 +36,10 @@ export class ApiError extends Error {
 
   isAuthError(): boolean {
     return this.status === 401;
+  }
+
+  isNotFound(): boolean {
+    return this.status === 404;
   }
 
   isEmailTaken(): boolean {
@@ -62,7 +73,7 @@ export function resolveApiBaseUrl(): string {
   const isServerRuntime = typeof window === "undefined";
 
   const resolved = isServerRuntime
-    ? (internalApiUrl || publicApiUrl)
+    ? internalApiUrl || publicApiUrl
     : publicApiUrl;
 
   if (!resolved) {
@@ -78,7 +89,7 @@ export function resolveBackendBaseUrl(): string {
 }
 
 /** Default server-side revalidation interval for GET requests (in seconds) */
-const DEFAULT_REVALIDATION_SECONDS = 0; // Set to 0 for strict real-time data
+const DEFAULT_REVALIDATION_SECONDS = 0;
 
 /** Type-safe Next.js fetch config for caching and revalidation */
 interface NextFetchConfig {
@@ -87,15 +98,35 @@ interface NextFetchConfig {
 }
 
 /**
+ * Extract data from standardized API response format.
+ * Backend now returns: { data: T, message?: string }
+ * This function extracts the data field from the response.
+ */
+function extractData<T>(response: unknown): T {
+  if (response === null || typeof response !== "object") {
+    return response as T;
+  }
+
+  const obj = response as Record<string, unknown>;
+
+  // Check if response has 'data' field (new standardized format)
+  if ("data" in obj && obj.data !== undefined) {
+    return obj.data as T;
+  }
+
+  // Fallback: return the whole response (for backward compatibility)
+  return response as T;
+}
+
+/**
  * Recursively converts snake_case keys to camelCase.
- * This normalizes Laravel's snake_case API responses to JavaScript conventions,
- * eliminating the need for dual-key patterns like `data.order_id || data.orderId`.
+ * This normalizes Laravel's snake_case API responses to JavaScript conventions.
  */
 function normalizeKeys<T>(obj: unknown): T {
   if (Array.isArray(obj)) {
     return obj.map((item) => normalizeKeys(item)) as T;
   }
-  if (obj !== null && typeof obj === 'object' && !(obj instanceof Date)) {
+  if (obj !== null && typeof obj === "object" && !(obj instanceof Date)) {
     const result: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
       // Convert snake_case to camelCase
@@ -146,15 +177,20 @@ export async function apiFetch<T>(
   }
 
   if (typeof window !== "undefined") {
-    const match = document.cookie.match(new RegExp('(^| )XSRF-TOKEN=([^;]+)'));
+    const match = document.cookie.match(new RegExp("(^| )XSRF-TOKEN=([^;]+)"));
     if (match && match[2]) {
-      (headers as Record<string, string>)["X-XSRF-TOKEN"] = decodeURIComponent(match[2]);
+      (headers as Record<string, string>)["X-XSRF-TOKEN"] = decodeURIComponent(
+        match[2],
+      );
     }
 
     if (!(headers as Record<string, string>)["Authorization"]) {
-      const matchAuth = document.cookie.match(new RegExp('(^| )auth_token=([^;]+)'));
+      const matchAuth = document.cookie.match(
+        new RegExp("(^| )auth_token=([^;]+)"),
+      );
       if (matchAuth && matchAuth[2]) {
-        (headers as Record<string, string>)["Authorization"] = `Bearer ${decodeURIComponent(matchAuth[2])}`;
+        (headers as Record<string, string>)["Authorization"] =
+          `Bearer ${decodeURIComponent(matchAuth[2])}`;
       }
     }
   }
@@ -163,15 +199,17 @@ export async function apiFetch<T>(
   if (tags) nextConfig.tags = tags;
 
   // User explicitly wants everything to be 100% realtime instantly.
-  // We'll set cache: "no-store", which forces Next.js to always fetch fresh data.
   const fetchCacheOption = options.cache || "no-store";
 
   try {
     const res = await fetch(url, {
       ...options,
       headers,
-      next: Object.keys(nextConfig).length > 0 && fetchCacheOption !== "no-store" ? nextConfig : undefined,
-      cache: fetchCacheOption, // Ensure no-store is passed to disable caching
+      next:
+        Object.keys(nextConfig).length > 0 && fetchCacheOption !== "no-store"
+          ? nextConfig
+          : undefined,
+      cache: fetchCacheOption,
     } as RequestInit);
 
     if (res.status === 204) {
@@ -188,20 +226,31 @@ export async function apiFetch<T>(
 
       // Try to parse as JSON for structured errors
       try {
-        // Many Laravel errors return {"error": "Message"} instead of {"message": "Message"}
-        const errorJson = JSON.parse(errorBody);
-        const errorMessage = errorJson.message || errorJson.error || `Request failed with status ${res.status}`;
-        
-        throw new ApiError(
-          errorMessage,
-          res.status,
-          errorJson.errors,
-        );
+        const errorJson = JSON.parse(errorBody) as ApiErrorResponse;
+        let errorMessage: string;
+
+        if (typeof errorJson.error === "string") {
+          errorMessage = errorJson.error;
+        } else if (errorJson.error?.message) {
+          errorMessage = errorJson.error.message;
+        } else if (errorJson.message) {
+          errorMessage = errorJson.message;
+        } else {
+          errorMessage = `Request failed with status ${res.status}`;
+        }
+
+        const errorCode = errorJson.error?.code;
+        const errorDetails = errorJson.error?.details || errorJson.errors;
+
+        throw new ApiError(errorMessage, res.status, errorCode, errorDetails);
       } catch (e) {
         // If parsing fails, throw generic error
         if (e instanceof ApiError) throw e;
         const errorSnippet = errorBody.slice(0, 300);
-        throw new ApiError(`API error ${res.status}: ${errorSnippet}`, res.status);
+        throw new ApiError(
+          `API error ${res.status}: ${errorSnippet}`,
+          res.status,
+        );
       }
     }
 
@@ -215,8 +264,11 @@ export async function apiFetch<T>(
     }
 
     try {
-      const data = await res.json();
-      return normalizeKeys<T>(data);
+      const rawData = await res.json();
+      // Extract data from standardized response format { data: T, message?: string }
+      const extractedData = extractData(rawData);
+      // Normalize keys (snake_case to camelCase)
+      return normalizeKeys<T>(extractedData);
     } catch (jsonError) {
       throw new ApiError(
         `Network error or invalid JSON response: ${jsonError instanceof Error ? jsonError.message : String(jsonError)} (${method} ${url})`,
@@ -224,21 +276,11 @@ export async function apiFetch<T>(
       );
     }
   } catch (error) {
-    // Only log unexpected errors to the console, not expected API responses (like 401, 422, etc.)
-    if (!(error instanceof ApiError)) {
-      const message = error instanceof Error ? error.message : String(error);
-      console.warn(`apiFetch warning [${method} ${url}]: ${message}`);
-    } else if (error.status === 401 && url.includes('/profile') && method === 'GET') {
-      // Ignore 401 on profile GET requests in console as they are handled by auth hooks
-    } else if (error.status !== 401 && error.status !== 404 && error.status !== 422) {
-      // Log other non-common errors for debugging
-      console.warn(`apiFetch error [${method} ${url}]: ${error.message} (${error.status})`);
-    }
-
+    // Silently handle all API errors - no console logging
     if (error instanceof ApiError) {
       throw error;
     }
-    // Network errors are thrown as 500 ApiError, caller should log if needed.
+    // Network errors are thrown as 500 ApiError, caller should handle if needed.
     throw new ApiError(
       `Network error or invalid JSON response: ${error instanceof Error ? error.message : String(error)} (${method} ${url})`,
       500,
@@ -256,9 +298,10 @@ export function getCookie(name: string): string | undefined {
 
 export interface Pagination {
   total: number;
-  per_page: number;
-  current_page: number;
-  last_page: number;
+  perPage: number;
+  currentPage: number;
+  lastPage: number;
+  hasMorePages?: boolean;
 }
 
 export * from "./account";
@@ -272,4 +315,3 @@ export * from "./orders";
 export * from "./reviews";
 export * from "./types";
 export * from "./wishlist";
-

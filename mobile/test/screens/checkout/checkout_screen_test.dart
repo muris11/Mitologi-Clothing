@@ -15,6 +15,7 @@ void main() {
     );
 
     await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('Alamat Pengiriman'), findsOneWidget);
     expect(find.text('Ringkasan Pesanan'), findsOneWidget);

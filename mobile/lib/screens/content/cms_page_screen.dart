@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../providers/content_provider.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/mitologi_page_shell.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 
@@ -47,12 +47,16 @@ class _CMSPageScreenState extends State<CMSPageScreen> {
               : provider.pageError != null
               ? Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(32),
+                    padding: EdgeInsets.all(
+                      ResponsiveHelper.horizontalPadding(context) * 2,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(20),
+                          padding: EdgeInsets.all(
+                            ResponsiveHelper.horizontalPadding(context) + 4,
+                          ),
                           decoration: BoxDecoration(
                             color: AppTheme.error.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
@@ -90,8 +94,10 @@ class _CMSPageScreenState extends State<CMSPageScreen> {
                           icon: const Icon(Icons.refresh, size: 20),
                           label: const Text('Coba Lagi'),
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
+                            padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  ResponsiveHelper.horizontalPadding(context) +
+                                  8,
                               vertical: 12,
                             ),
                           ),

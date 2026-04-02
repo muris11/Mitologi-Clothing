@@ -1,15 +1,15 @@
-import { KontakSection } from 'components/landing/kontak/kontak-section';
-import { SubpageHero } from 'components/landing/shared/subpage-hero';
-import { getLandingPageData } from 'lib/api';
-import type { Metadata } from 'next';
+import { KontakSection } from "components/landing/kontak/kontak-section";
+import { SubpageHero } from "components/landing/shared/subpage-hero";
+import { getLandingPageData } from "lib/api";
+import type { Metadata } from "next";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getLandingPageData();
-  const settings = data.site_settings;
-  const siteName = settings?.general?.site_name || 'Mitologi Clothing';
+  const settings = data?.siteSettings;
+  const siteName = settings?.general?.siteName || "Mitologi Clothing";
   const title = `Kontak — ${siteName}`;
   const description = `Hubungi ${siteName} untuk konsultasi dan pemesanan clothing.`;
 
@@ -19,14 +19,14 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      type: 'website',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://mitologi.id'}/kontak`,
+      type: "website",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id"}/kontak`,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title,
       description,
-    }
+    },
   };
 }
 
@@ -41,7 +41,7 @@ export default async function KontakPage() {
         badge={true}
         badgeText="Hubungi Admin"
       />
-      <KontakSection settings={data.site_settings} />
+      <KontakSection settings={data?.siteSettings} />
     </>
   );
 }

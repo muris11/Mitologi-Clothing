@@ -2,25 +2,28 @@ import { ENDPOINTS } from "./endpoints";
 import { apiFetch, Pagination } from "./index";
 import { Category, Collection, Material, OrderStep, Product } from "./types";
 
-export async function getProducts({
-  query,
-  reverse,
-  sortKey,
-  category,
-  minPrice,
-  maxPrice,
-  page,
-  limit,
-}: {
-  query?: string;
-  reverse?: boolean;
-  sortKey?: string;
-  category?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  page?: number;
-  limit?: number;
-}, requestOptions?: RequestInit): Promise<{ products: Product[]; pagination: Pagination }> {
+export async function getProducts(
+  {
+    query,
+    reverse,
+    sortKey,
+    category,
+    minPrice,
+    maxPrice,
+    page,
+    limit,
+  }: {
+    query?: string;
+    reverse?: boolean;
+    sortKey?: string;
+    category?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    page?: number;
+    limit?: number;
+  },
+  requestOptions?: RequestInit,
+): Promise<{ products: Product[]; pagination: Pagination }> {
   try {
     const searchParams = new URLSearchParams();
 
@@ -38,57 +41,48 @@ export async function getProducts({
     return await apiFetch<{ products: Product[]; pagination: Pagination }>(
       `${ENDPOINTS.PRODUCTS}?${searchParams.toString()}`,
       requestOptions || {},
-      ["products"]
+      ["products"],
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    console.warn(`Error fetching products (fallback to empty list): ${message}`);
     return {
       products: [],
-      pagination: { total: 0, per_page: 0, current_page: 1, last_page: 1 },
+      pagination: { total: 0, perPage: 0, currentPage: 1, lastPage: 1 },
     };
   }
 }
 
 export async function getProduct(handle: string): Promise<Product | undefined> {
   try {
-    const data = await apiFetch<Product | { product: Product }>(
-      ENDPOINTS.PRODUCT_DETAIL(handle),
-      {},
-      [`product-${handle}`]
-    );
-    // Handle both wrapped `{ product: ... }` and flat `Product` shapes
-    // Guard against undefined (e.g., 404 returns undefined from apiFetch)
-    if (!data || typeof data !== 'object') return undefined;
-    return 'product' in data ? data.product : data;
+    return await apiFetch<Product>(ENDPOINTS.PRODUCT_DETAIL(handle), {}, [
+      `product-${handle}`,
+    ]);
   } catch (error) {
-    console.error(`Error fetching product ${handle}:`, error);
     return undefined;
   }
 }
 
-export async function getCollections(requestOptions?: RequestInit): Promise<Collection[]> {
+export async function getCollections(
+  requestOptions?: RequestInit,
+): Promise<Collection[]> {
   try {
-    return await apiFetch<Collection[]>(ENDPOINTS.COLLECTIONS, requestOptions || {}, ["collections"]);
+    return await apiFetch<Collection[]>(
+      ENDPOINTS.COLLECTIONS,
+      requestOptions || {},
+      ["collections"],
+    );
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    console.warn(`Error fetching collections (fallback to empty list): ${message}`);
     return [];
   }
 }
 
 export async function getCollection(
-  handle: string
+  handle: string,
 ): Promise<Collection | undefined> {
   try {
-    const data = await apiFetch<Collection>(
-      ENDPOINTS.COLLECTION_DETAIL(handle),
-      {},
-      [`collection-${handle}`]
-    );
-    return data;
+    return await apiFetch<Collection>(ENDPOINTS.COLLECTION_DETAIL(handle), {}, [
+      `collection-${handle}`,
+    ]);
   } catch (error) {
-    console.error(`Error fetching collection ${handle}:`, error);
     return undefined;
   }
 }
@@ -110,10 +104,9 @@ export async function getCollectionProducts({
     return await apiFetch<Product[]>(
       `${ENDPOINTS.COLLECTION_PRODUCTS(collection)}?${searchParams.toString()}`,
       {},
-      [`collection-products-${collection}`]
+      [`collection-products-${collection}`],
     );
   } catch (error) {
-    console.error(`Error fetching products for collection ${collection}:`, error);
     return [];
   }
 }
@@ -122,23 +115,18 @@ export async function getCategories(): Promise<Category[]> {
   try {
     return await apiFetch<Category[]>(ENDPOINTS.CATEGORIES, {}, ["categories"]);
   } catch (error) {
-    console.error("Error fetching categories:", error);
     return [];
   }
 }
 
 export async function getCategory(
-  handle: string
+  handle: string,
 ): Promise<Category | undefined> {
   try {
-    const data = await apiFetch<{ category: Category }>(
-      ENDPOINTS.CATEGORY_DETAIL(handle),
-      {},
-      [`category-${handle}`]
-    );
-    return data.category;
+    return await apiFetch<Category>(ENDPOINTS.CATEGORY_DETAIL(handle), {}, [
+      `category-${handle}`,
+    ]);
   } catch (error) {
-    console.error(`Error fetching category ${handle}:`, error);
     return undefined;
   }
 }
@@ -150,7 +138,6 @@ export async function getBestSellers(limit?: number): Promise<Product[]> {
       : ENDPOINTS.PRODUCTS_BEST_SELLERS;
     return await apiFetch<Product[]>(url, {}, ["best-sellers", "products"]);
   } catch (error) {
-    console.error("Error fetching best sellers:", error);
     return [];
   }
 }
@@ -162,7 +149,6 @@ export async function getNewArrivals(limit?: number): Promise<Product[]> {
       : ENDPOINTS.PRODUCTS_NEW_ARRIVALS;
     return await apiFetch<Product[]>(url, {}, ["new-arrivals", "products"]);
   } catch (error) {
-    console.error("Error fetching new arrivals:", error);
     return [];
   }
 }
@@ -176,13 +162,14 @@ export async function searchProducts(query: string): Promise<Product[]> {
   }
 }
 
-export async function getRelatedProducts(productId: string): Promise<Product[]> {
+export async function getRelatedProducts(
+  productId: string,
+): Promise<Product[]> {
   try {
-    // Use recommendation endpoint first
     const recommended = await apiFetch<Product[]>(
       ENDPOINTS.PRODUCT_RECOMMENDATIONS(productId),
       {},
-      [`recommendations-${productId}`]
+      [`recommendations-${productId}`],
     );
     if (recommended && recommended.length > 0) {
       return recommended.slice(0, 4);
@@ -199,12 +186,12 @@ export async function getRelatedProducts(productId: string): Promise<Product[]> 
   }
 }
 
-
 export async function getOrderSteps(): Promise<OrderStep[]> {
   try {
-    return await apiFetch<OrderStep[]>(ENDPOINTS.ORDER_STEPS, {}, ["order-steps"]);
+    return await apiFetch<OrderStep[]>(ENDPOINTS.ORDER_STEPS, {}, [
+      "order-steps",
+    ]);
   } catch (error) {
-    console.error("Error fetching order steps:", error);
     return [];
   }
 }
@@ -213,7 +200,6 @@ export async function getMaterials(): Promise<Material[]> {
   try {
     return await apiFetch<Material[]>(ENDPOINTS.MATERIALS, {}, ["materials"]);
   } catch (error) {
-    console.error("Error fetching materials:", error);
     return [];
   }
 }

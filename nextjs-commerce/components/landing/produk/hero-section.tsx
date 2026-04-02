@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 export function ProdukHero() {
   return (
@@ -13,7 +13,8 @@ export function ProdukHero() {
             Katalog Produk
           </h1>
           <p className="text-lg md:text-xl text-slate-300 font-sans font-medium max-w-2xl mx-auto drop-shadow-sm">
-            Jelajahi berbagai pilihan produk konveksi berkualitas tinggi untuk kebutuhan Anda.
+            Jelajahi berbagai pilihan produk konveksi berkualitas tinggi untuk
+            kebutuhan Anda.
           </p>
         </div>
       </div>

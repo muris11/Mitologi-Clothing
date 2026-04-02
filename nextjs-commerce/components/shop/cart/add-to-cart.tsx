@@ -17,7 +17,8 @@ function SubmitButton({
 }) {
   const buttonClasses =
     "relative flex w-full items-center justify-center rounded-xl bg-mitologi-navy p-4 font-sans font-bold text-white shadow-md transition-all hover:scale-[1.02] active:scale-95";
-  const disabledClasses = "cursor-not-allowed opacity-50 bg-slate-100 text-slate-400 shadow-none hover:scale-100 active:scale-100";
+  const disabledClasses =
+    "cursor-not-allowed opacity-50 bg-slate-100 text-slate-400 shadow-none hover:scale-100 active:scale-100";
 
   if (!availableForSale) {
     return (
@@ -54,20 +55,29 @@ function SubmitButton({
   );
 }
 
-export function AddToCart({ product, selectedVariant }: { product: Product; selectedVariant?: ProductVariant }) {
+export function AddToCart({
+  product,
+  selectedVariant,
+}: {
+  product: Product;
+  selectedVariant?: ProductVariant;
+}) {
   const { variants, availableForSale } = product;
   const { addToCart } = useCart();
   const searchParams = useSearchParams();
   const [isPending, setIsPending] = useState(false);
 
   const variantFromParams = variants.find((variant: ProductVariant) => {
-    const selectedOptions = Array.isArray(variant.selectedOptions) ? variant.selectedOptions : [];
+    const selectedOptions = Array.isArray(variant.selectedOptions)
+      ? variant.selectedOptions
+      : [];
     return selectedOptions.every(
       (option) => option.value === searchParams.get(option.name.toLowerCase()),
     );
   });
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
-  const selectedVariantId = selectedVariant?.id || variantFromParams?.id || defaultVariantId;
+  const selectedVariantId =
+    selectedVariant?.id || variantFromParams?.id || defaultVariantId;
 
   const handleAddToCart = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,8 +89,7 @@ export function AddToCart({ product, selectedVariant }: { product: Product; sele
       await addToCart(selectedVariantId, 1, product);
     } catch (e: unknown) {
       const err = e as Error;
-      console.error("Cart Add Error:", err);
-      // Removed showError here because useCart handles the toast notification now.
+      // Silent fail - useCart handles toast notification
     } finally {
       setIsPending(false);
     }

@@ -34,7 +34,10 @@ export function PortfolioPageSkeleton() {
         <div className="relative mx-auto max-w-[1440px] px-4 lg:px-8 z-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="relative w-full overflow-hidden rounded-2xl sm:rounded-[2rem] bg-slate-100 group shadow-sm border border-slate-200 aspect-square sm:aspect-[4/3]">
+              <div
+                key={i}
+                className="relative w-full overflow-hidden rounded-2xl sm:rounded-[2rem] bg-slate-100 group shadow-sm border border-slate-200 aspect-square sm:aspect-[4/3]"
+              >
                 {/* Image Placeholder */}
                 <Skeleton className="absolute inset-0 w-full h-full bg-slate-200" />
 

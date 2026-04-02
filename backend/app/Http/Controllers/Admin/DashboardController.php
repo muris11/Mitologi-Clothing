@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -25,7 +24,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        // Sales Chart (Last 30 days) - Using manual grouping if Trend package issues persist, 
+        // Sales Chart (Last 30 days) - Using manual grouping if Trend package issues persist,
         // but let's try to use the installed flowframe/laravel-trend
         try {
             $salesChart = \Flowframe\Trend\Trend::model(\App\Models\Order::class)
@@ -41,10 +40,10 @@ class DashboardController extends Controller
         }
 
         // Top Selling Products
-        $topProducts = \App\Models\OrderItem::select('product_id', 
-                \Illuminate\Support\Facades\DB::raw('sum(quantity) as total_sold'),
-                \Illuminate\Support\Facades\DB::raw('sum(total) as total_revenue')
-            )
+        $topProducts = \App\Models\OrderItem::select('product_id',
+            \Illuminate\Support\Facades\DB::raw('sum(quantity) as total_sold'),
+            \Illuminate\Support\Facades\DB::raw('sum(total) as total_revenue')
+        )
             ->groupBy('product_id')
             ->orderByDesc('total_sold')
             ->take(5)
@@ -89,7 +88,7 @@ class DashboardController extends Controller
                 'icon' => 'shopping-bag',
                 'color' => 'blue',
                 'title' => "Pesanan Baru #{$order->order_number}",
-                'subtitle' => 'Rp ' . number_format($order->total, 0, ',', '.'),
+                'subtitle' => 'Rp '.number_format($order->total, 0, ',', '.'),
                 'time' => $order->created_at->diffForHumans(),
                 'timestamp' => $order->created_at,
             ]);
@@ -183,7 +182,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'count' => $count,
-            'html' => $html
+            'html' => $html,
         ]);
     }
 }

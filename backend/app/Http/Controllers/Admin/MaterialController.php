@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Material;
 use App\Services\FrontendCacheService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class MaterialController extends Controller
 {
     public function index()
     {
         $materials = Material::orderBy('sort_order')->paginate(10);
+
         return view('admin.beranda.materials.index', compact('materials'));
     }
 
@@ -36,6 +38,7 @@ class MaterialController extends Controller
             'sort_order' => $request->sort_order ?? 0,
         ]);
 
+        Cache::forget('api.landing_page_data_v2');
         FrontendCacheService::revalidate(['materials', 'landing-page']);
 
         return redirect()->route('admin.beranda.materials.index')->with('success', 'Material berhasil ditambahkan.');
@@ -62,6 +65,7 @@ class MaterialController extends Controller
             'sort_order' => $request->sort_order ?? 0,
         ]);
 
+        Cache::forget('api.landing_page_data_v2');
         FrontendCacheService::revalidate(['materials', 'landing-page']);
 
         return redirect()->route('admin.beranda.materials.index')->with('success', 'Material berhasil diperbarui.');
@@ -69,9 +73,10 @@ class MaterialController extends Controller
 
     public function destroy(Material $material)
     {
+        Cache::forget('api.landing_page_data_v2');
         FrontendCacheService::revalidate(['materials', 'landing-page']);
         $material->delete();
+
         return redirect()->route('admin.beranda.materials.index')->with('success', 'Material berhasil dihapus.');
     }
 }
-

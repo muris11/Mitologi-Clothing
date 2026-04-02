@@ -7,4 +7,3 @@ export * from "./search-bar";
 export * from "./shop-footer";
 export * from "./shop-navbar";
 export * from "./sort-select";
-

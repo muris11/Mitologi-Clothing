@@ -17,8 +17,8 @@ class NotificationSkeleton extends StatelessWidget {
       child: ListView.separated(
         padding: EdgeInsets.all(padding),
         itemCount: 6,
-        separatorBuilder: (_, __) => const SizedBox(height: 12),
-        itemBuilder: (_, __) => _buildNotificationItemSkeleton(),
+        separatorBuilder: (_, index) => const SizedBox(height: 12),
+        itemBuilder: (_, index) => _buildNotificationItemSkeleton(),
       ),
     );
   }

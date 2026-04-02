@@ -42,13 +42,13 @@ class TrainRecommendationModel extends Command
             ->toArray();
 
         $this->info('Fetching products for content-based filtering...');
-        
+
         $products = \App\Models\Product::where('available_for_sale', true)
             ->get()
             ->map(function ($product) {
                 // Get category name safely
                 $category = $product->category ? $product->category->name : '';
-                
+
                 return [
                     'id' => (int) $product->id,
                     'title' => (string) $product->title,
@@ -60,13 +60,14 @@ class TrainRecommendationModel extends Command
 
         if (empty($interactions) && empty($products)) {
             $this->warn('No data found to train model.');
+
             return;
         }
 
-        $this->info('Sending ' . count($interactions) . ' interactions and ' . count($products) . ' products to AI service...');
-        
+        $this->info('Sending '.count($interactions).' interactions and '.count($products).' products to AI service...');
+
         $baseUrl = config('services.ai.url');
-        $url = rtrim($baseUrl, '/') . '/train';
+        $url = rtrim($baseUrl, '/').'/train';
 
         try {
             $response = Http::post($url, [
@@ -77,10 +78,10 @@ class TrainRecommendationModel extends Command
             if ($response->successful()) {
                 $this->info('Model trained successfully!');
             } else {
-                $this->error('Failed to train model: ' . $response->body());
+                $this->error('Failed to train model: '.$response->body());
             }
         } catch (\Exception $e) {
-            $this->error('Could not connect to AI service at ' . $url . ': ' . $e->getMessage());
+            $this->error('Could not connect to AI service at '.$url.': '.$e->getMessage());
         }
     }
 }

@@ -9,11 +9,15 @@ export async function createCart(): Promise<Cart> {
 export async function getCart(cartId?: string): Promise<Cart | undefined> {
   if (!cartId) return undefined;
   try {
-    return await apiFetch<Cart>(ENDPOINTS.CART, {
-      headers: {
-        "X-Cart-Id": cartId,
+    return await apiFetch<Cart>(
+      ENDPOINTS.CART,
+      {
+        headers: {
+          "X-Cart-Id": cartId,
+        },
       },
-    }, ["cart"]);
+      ["cart"],
+    );
   } catch (error) {
     return undefined;
   }
@@ -21,36 +25,39 @@ export async function getCart(cartId?: string): Promise<Cart | undefined> {
 
 export async function addToCart(
   cartId: string,
-  lines: { merchandiseId: string; quantity: number }[]
+  lines: { merchandiseId: string; quantity: number }[],
 ): Promise<Cart> {
   return await apiFetch<Cart>(ENDPOINTS.CART_ITEMS, {
     method: "POST",
     headers: {
       "X-Cart-Id": cartId,
     },
-    body: JSON.stringify({ 
-      merchandiseId: lines[0]?.merchandiseId, 
-      quantity: lines[0]?.quantity 
+    body: JSON.stringify({
+      merchandiseId: lines[0]?.merchandiseId,
+      quantity: lines[0]?.quantity,
     }),
   });
 }
 
 export async function removeFromCart(
   cartId: string,
-  lineIds: string[]
+  lineIds: string[],
 ): Promise<Cart | undefined> {
   if (!lineIds.length) return undefined;
-  return await apiFetch<Cart>(ENDPOINTS.CART_ITEM_DETAIL(lineIds[0] as string), {
-    method: "DELETE",
-    headers: {
-      "X-Cart-Id": cartId,
+  return await apiFetch<Cart>(
+    ENDPOINTS.CART_ITEM_DETAIL(lineIds[0] as string),
+    {
+      method: "DELETE",
+      headers: {
+        "X-Cart-Id": cartId,
+      },
     },
-  });
+  );
 }
 
 export async function updateCart(
   cartId: string,
-  lines: { id: string; merchandiseId: string; quantity: number }[]
+  lines: { id: string; merchandiseId: string; quantity: number }[],
 ): Promise<Cart | undefined> {
   if (!lines.length) return undefined;
   return await apiFetch<Cart>(ENDPOINTS.CART_ITEM_DETAIL(lines[0]!.id), {

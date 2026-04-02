@@ -1,1 +1,1 @@
-export { RecommendedCarousel } from './recommended-carousel';
+export { RecommendedCarousel } from "./recommended-carousel";

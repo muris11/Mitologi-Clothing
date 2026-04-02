@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('site_settings', function (Blueprint $table) {
-            if (!Schema::hasColumn('site_settings', 'type')) {
+            if (! Schema::hasColumn('site_settings', 'type')) {
                 $table->string('type')->default('text')->after('value');
             }
-            if (!Schema::hasColumn('site_settings', 'label')) {
+            if (! Schema::hasColumn('site_settings', 'label')) {
                 $table->string('label')->nullable()->after('type');
             }
         });

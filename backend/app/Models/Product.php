@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -61,11 +61,11 @@ class Product extends Model
             }
 
             // Check if file sits in 'products/' directory if not explicitly correctly path'd
-            if (!str_contains($this->featured_image, 'products/') && \Illuminate\Support\Facades\Storage::disk('public')->exists('products/' . $this->featured_image)) {
-                return url('storage/products/' . $this->featured_image);
+            if (! str_contains($this->featured_image, 'products/') && \Illuminate\Support\Facades\Storage::disk('public')->exists('products/'.$this->featured_image)) {
+                return url('storage/products/'.$this->featured_image);
             }
 
-            return url('storage/' . $this->featured_image);
+            return url('storage/'.$this->featured_image);
         }
 
         // 2. Fallback to first image in 'images' relationship
@@ -74,7 +74,8 @@ class Product extends Model
             if (str_starts_with($firstImage->url, 'http')) {
                 return $firstImage->url;
             }
-            return url('storage/' . $firstImage->url);
+
+            return url('storage/'.$firstImage->url);
         }
 
         return null;
@@ -97,6 +98,7 @@ class Product extends Model
             ],
         ];
     }
+
     public function getRouteKeyName()
     {
         return 'handle';

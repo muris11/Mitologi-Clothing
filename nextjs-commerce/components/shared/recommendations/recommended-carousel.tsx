@@ -1,17 +1,17 @@
-import { GridTileImage } from 'components/shared/grid/tile';
-import { getRecommendations } from 'lib/api/recommendations';
-import { getUser } from 'lib/api/server-auth';
-import Link from 'next/link';
+import { GridTileImage } from "components/shared/grid/tile";
+import { getRecommendations } from "lib/api/recommendations";
+import { getUser } from "lib/api/server-auth";
+import Link from "next/link";
 
 export async function RecommendedCarousel() {
   const user = await getUser();
-  
+
   if (!user) {
     return null;
   }
 
   // Fetch recommendations
-  const products = await getRecommendations(Number(user.id));
+  const products = await getRecommendations();
 
   if (!products?.length) return null;
 
@@ -26,7 +26,10 @@ export async function RecommendedCarousel() {
             key={`${product.handle}${i}`}
             className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3"
           >
-            <Link href={`/shop/product/${product.handle}`} className="relative h-full w-full block">
+            <Link
+              href={`/shop/product/${product.handle}`}
+              className="relative h-full w-full block"
+            >
               <GridTileImage
                 alt={product.title}
                 label={{

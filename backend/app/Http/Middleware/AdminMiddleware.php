@@ -15,7 +15,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user() || $request->user()->role !== 'admin') {
+        if (! $request->user() || $request->user()->role !== 'admin') {
             if ($request->expectsJson()) {
                 return response()->json(['message' => 'Forbidden: Admin access required.'], 403);
             }
@@ -29,7 +29,7 @@ class AdminMiddleware
 
             return redirect()->route('login')->with('error', 'Akses ditolak. Silakan login sebagai admin.');
         }
-        
+
         return $next($request);
     }
 }

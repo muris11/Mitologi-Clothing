@@ -10,77 +10,79 @@ use Illuminate\Support\Facades\Cache;
 
 class ProductPricingController extends Controller
 {
-  public function index()
-  {
-    $pricings = ProductPricing::orderBy('sort_order', 'asc')->get();
-    return view('admin.beranda.product-pricings.index', compact('pricings'));
-  }
+    public function index()
+    {
+        $pricings = ProductPricing::orderBy('sort_order', 'asc')->get();
 
-  public function create()
-  {
-    return view('admin.beranda.product-pricings.create');
-  }
+        return view('admin.beranda.product-pricings.index', compact('pricings'));
+    }
 
-  public function store(Request $request)
-  {
-    $request->validate([
-      'category_name' => 'required|string|max:255',
-      'min_order' => 'nullable|string|max:255',
-      'notes' => 'nullable|string',
-      'items' => 'nullable|array',
-      'sort_order' => 'integer|min:0',
-    ]);
+    public function create()
+    {
+        return view('admin.beranda.product-pricings.create');
+    }
 
-    $data = $request->all();
-    $data['is_active'] = $request->has('is_active');
-    $data['items'] = $request->items ?? [];
+    public function store(Request $request)
+    {
+        $request->validate([
+            'category_name' => 'required|string|max:255',
+            'min_order' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+            'items' => 'nullable|array',
+            'sort_order' => 'integer|min:0',
+        ]);
 
-    ProductPricing::create($data);
+        $data = $request->all();
+        $data['is_active'] = $request->has('is_active');
+        $data['items'] = $request->items ?? [];
 
-    FrontendCacheService::revalidate(['landing-page']);
-    Cache::forget('api.landing_page_data');
+        ProductPricing::create($data);
 
-    return redirect()->route('admin.beranda.product-pricings.index')->with('success', 'Pricelist Produk berhasil ditambahkan.');
-  }
+        FrontendCacheService::revalidate(['landing-page']);
+        Cache::forget('api.landing_page_data_v2');
 
-  public function edit($id)
-  {
-    $pricing = ProductPricing::findOrFail($id);
-    return view('admin.beranda.product-pricings.edit', compact('pricing'));
-  }
+        return redirect()->route('admin.beranda.product-pricings.index')->with('success', 'Pricelist Produk berhasil ditambahkan.');
+    }
 
-  public function update(Request $request, $id)
-  {
-    $pricing = ProductPricing::findOrFail($id);
+    public function edit($id)
+    {
+        $pricing = ProductPricing::findOrFail($id);
 
-    $request->validate([
-      'category_name' => 'required|string|max:255',
-      'min_order' => 'nullable|string|max:255',
-      'notes' => 'nullable|string',
-      'items' => 'nullable|array',
-      'sort_order' => 'integer|min:0',
-    ]);
+        return view('admin.beranda.product-pricings.edit', compact('pricing'));
+    }
 
-    $data = $request->except(['_token', '_method']);
-    $data['is_active'] = $request->has('is_active');
-    $data['items'] = $request->items ?? [];
+    public function update(Request $request, $id)
+    {
+        $pricing = ProductPricing::findOrFail($id);
 
-    $pricing->update($data);
+        $request->validate([
+            'category_name' => 'required|string|max:255',
+            'min_order' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+            'items' => 'nullable|array',
+            'sort_order' => 'integer|min:0',
+        ]);
 
-    FrontendCacheService::revalidate(['landing-page']);
-    Cache::forget('api.landing_page_data');
+        $data = $request->except(['_token', '_method']);
+        $data['is_active'] = $request->has('is_active');
+        $data['items'] = $request->items ?? [];
 
-    return redirect()->route('admin.beranda.product-pricings.index')->with('success', 'Pricelist Produk berhasil diperbarui.');
-  }
+        $pricing->update($data);
 
-  public function destroy($id)
-  {
-    $pricing = ProductPricing::findOrFail($id);
-    $pricing->delete();
+        FrontendCacheService::revalidate(['landing-page']);
+        Cache::forget('api.landing_page_data_v2');
 
-    FrontendCacheService::revalidate(['landing-page']);
-    Cache::forget('api.landing_page_data');
+        return redirect()->route('admin.beranda.product-pricings.index')->with('success', 'Pricelist Produk berhasil diperbarui.');
+    }
 
-    return redirect()->route('admin.beranda.product-pricings.index')->with('success', 'Pricelist Produk berhasil dihapus.');
-  }
+    public function destroy($id)
+    {
+        $pricing = ProductPricing::findOrFail($id);
+        $pricing->delete();
+
+        FrontendCacheService::revalidate(['landing-page']);
+        Cache::forget('api.landing_page_data_v2');
+
+        return redirect()->route('admin.beranda.product-pricings.index')->with('success', 'Pricelist Produk berhasil dihapus.');
+    }
 }

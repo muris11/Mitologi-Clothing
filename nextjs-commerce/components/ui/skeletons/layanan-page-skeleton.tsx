@@ -35,7 +35,7 @@ export function LayananPageSkeleton() {
             {Array.from({ length: 3 }).map((_, index) => (
               <div
                 key={index}
-                className={`flex flex-col lg:flex-row gap-16 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}
+                className={`flex flex-col lg:flex-row gap-16 items-center ${index % 2 === 1 ? "lg:flex-row-reverse" : ""}`}
               >
                 {/* Text Side */}
                 <div className="flex-1 space-y-6">
@@ -96,7 +96,10 @@ export function LayananPageSkeleton() {
             <div className="relative border-b border-slate-100 bg-slate-50/50">
               <div className="flex overflow-x-auto scrollbar-hide">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="py-4 md:py-5 px-6 md:px-8 min-h-[56px] text-[13px] sm:text-base font-bold uppercase tracking-wider whitespace-nowrap border-b-2 flex-shrink-0 sm:flex-1 text-center">
+                  <div
+                    key={i}
+                    className="py-4 md:py-5 px-6 md:px-8 min-h-[56px] text-[13px] sm:text-base font-bold uppercase tracking-wider whitespace-nowrap border-b-2 flex-shrink-0 sm:flex-1 text-center"
+                  >
                     <Skeleton className="h-5 w-24 md:w-32 bg-slate-200 rounded mx-auto" />
                   </div>
                 ))}
@@ -107,7 +110,10 @@ export function LayananPageSkeleton() {
             <div className="p-6 md:p-10">
               <div className="space-y-4">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="flex items-center justify-between bg-slate-50 rounded-xl p-4">
+                  <div
+                    key={i}
+                    className="flex items-center justify-between bg-slate-50 rounded-xl p-4"
+                  >
                     <Skeleton className="h-5 w-1/3 bg-slate-200 rounded" />
                     <Skeleton className="h-6 w-24 bg-slate-200 rounded" />
                   </div>
@@ -132,7 +138,10 @@ export function LayananPageSkeleton() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-[1440px] mx-auto">
             {Array.from({ length: 4 }).map((_, index) => (
-              <div key={index} className="group flex flex-col bg-white rounded-2xl md:rounded-[2rem] overflow-hidden border border-slate-200 shadow-sm relative">
+              <div
+                key={index}
+                className="group flex flex-col bg-white rounded-2xl md:rounded-[2rem] overflow-hidden border border-slate-200 shadow-sm relative"
+              >
                 {/* Number Badge */}
                 <div className="absolute top-4 left-4 z-20 w-8 h-8 rounded-full bg-slate-200 border border-white/10" />
 

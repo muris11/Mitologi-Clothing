@@ -18,9 +18,8 @@ class CollectionController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        $formatted = $collections->map(fn($c) => $this->formatCollection($c));
+        $formatted = $collections->map(fn ($c) => $this->formatCollection($c));
 
-        // Prepend "All" collection
         $all = [
             'handle' => '',
             'title' => 'All',
@@ -30,33 +29,32 @@ class CollectionController extends Controller
             'updatedAt' => now()->toISOString(),
         ];
 
-        return response()->json(array_merge([$all], $formatted->toArray()));
+        return $this->successResponse(array_merge([$all], $formatted->toArray()));
     }
 
     public function show(string $handle): JsonResponse
     {
         $collection = Category::where('handle', $handle)->first();
 
-        if (!$collection) {
-            return response()->json(['error' => 'Collection not found'], 404);
+        if (! $collection) {
+            return $this->notFoundResponse('Collection');
         }
 
-        return response()->json($this->formatCollection($collection));
+        return $this->successResponse($this->formatCollection($collection));
     }
 
     public function products(string $handle, Request $request): JsonResponse
     {
         $collection = Category::where('handle', $handle)->first();
 
-        if (!$collection) {
-            return response()->json([]);
+        if (! $collection) {
+            return $this->successResponse([]);
         }
 
         $query = $collection->products()
             ->with(['variants', 'options', 'images'])
             ->where('is_hidden', false);
 
-        // Sort
         $sortKey = $request->input('sortKey', 'RELEVANCE');
         $reverse = filter_var($request->input('reverse', false), FILTER_VALIDATE_BOOLEAN);
 
@@ -78,9 +76,9 @@ class CollectionController extends Controller
 
         $products = $query->get();
 
-        $formatted = $products->map(fn($p) => $this->formatProduct($p));
+        $formatted = $products->map(fn ($p) => $this->formatProduct($p));
 
-        return response()->json($formatted);
+        return $this->successResponse($formatted);
     }
 
     private function formatCollection(Category $category): array
@@ -93,9 +91,8 @@ class CollectionController extends Controller
                 'title' => $category->seo_title ?? $category->name,
                 'description' => $category->seo_description ?? $category->description ?? '',
             ],
-            'path' => '/search/' . $category->handle,
+            'path' => '/search/'.$category->handle,
             'updatedAt' => $category->updated_at?->toISOString(),
         ];
     }
-
 }

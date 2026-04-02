@@ -21,9 +21,8 @@ class OrderService
     /**
      * Syncs payment status from Midtrans for a given order
      *
-     * @param User $user
-     * @param string $orderNumber
      * @return array ['message' => string, 'status' => string]
+     *
      * @throws \Exception
      */
     public function syncPaymentStatus(User $user, string $orderNumber): array
@@ -35,7 +34,7 @@ class OrderService
                 return ['message' => 'Status sudah diperbarui sebelumnya.', 'status' => $order->status];
             }
 
-            if (!$order->midtrans_order_id || empty(config('midtrans.server_key'))) {
+            if (! $order->midtrans_order_id || empty(config('midtrans.server_key'))) {
                 throw new \Exception('Tidak bisa cek status Midtrans.');
             }
 
@@ -47,7 +46,7 @@ class OrderService
 
                 $newStatus = $this->midtransService->mapTransactionStatus($transactionStatus, $fraudStatus);
 
-                if ($newStatus && !$this->midtransService->isValidTransition($order->status, $newStatus)) {
+                if ($newStatus && ! $this->midtransService->isValidTransition($order->status, $newStatus)) {
                     throw new \Exception('Transisi status tidak valid.');
                 }
 
@@ -57,7 +56,7 @@ class OrderService
                         $order->midtrans_status = $transactionStatus;
                         $order->payment_method = $paymentType;
                         $order->paid_at = now();
-                    } else if ($newStatus === 'cancelled') {
+                    } elseif ($newStatus === 'cancelled') {
                         $order->midtrans_status = $transactionStatus;
                     }
                     $order->save();
@@ -65,7 +64,7 @@ class OrderService
 
                 return ['message' => 'Status berhasil dicek.', 'status' => $order->status];
             } catch (\Exception $e) {
-                Log::error('Gagal cek status Midtrans: ' . $e->getMessage());
+                Log::error('Gagal cek status Midtrans: '.$e->getMessage());
                 throw new \Exception('Gagal cek status.');
             }
         });
@@ -74,10 +73,6 @@ class OrderService
     /**
      * Processes a user's refund request
      *
-     * @param User $user
-     * @param string $orderNumber
-     * @param string $reason
-     * @return void
      * @throws \Exception
      */
     public function processRefundRequest(User $user, string $orderNumber, string $reason): void
@@ -88,13 +83,13 @@ class OrderService
             throw new \Exception('Hanya pesanan dalam proses yang dapat diajukan refund.');
         }
 
-        if (!is_null($order->refund_requested_at)) {
+        if (! is_null($order->refund_requested_at)) {
             throw new \Exception('Pengajuan refund sudah dikirim dan sedang menunggu konfirmasi admin.');
         }
 
         // Append note indicating user requested refund
-        $note = $order->notes ? $order->notes . "\n" : "";
-        $note .= "[Refund Request]: " . $reason . " (" . now()->format('Y-m-d H:i') . ")";
+        $note = $order->notes ? $order->notes."\n" : '';
+        $note .= '[Refund Request]: '.$reason.' ('.now()->format('Y-m-d H:i').')';
 
         $order->update([
             'notes' => $note,

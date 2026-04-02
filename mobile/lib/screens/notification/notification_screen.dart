@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
-import '../../widgets/skeleton/skeleton.dart';
 import '../../config/theme.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 import '../../widgets/animations/blur_fade.dart';

@@ -5,10 +5,10 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
-export function Pagination({ 
-  totalPages, 
-  currentPage = 1 
-}: { 
+export function Pagination({
+  totalPages,
+  currentPage = 1,
+}: {
   totalPages: number;
   currentPage?: number;
 }) {
@@ -50,7 +50,7 @@ export function Pagination({
         pages.push("...");
       }
 
-        // Always show last page
+      // Always show last page
       if (totalPages > 1) {
         pages.push(totalPages);
       }
@@ -70,25 +70,30 @@ export function Pagination({
 
       <div className="flex items-center gap-1">
         {getPageNumbers().map((page, index) => {
-             if (page === "...") {
-                 return (
-                     <span key={`dots-${index}`} className="px-3 py-2 text-slate-400 flex items-center justify-center">...</span>
-                 )
-             }
-             return (
-                <Link
-                    key={page}
-                    href={createPageURL(page)}
-                    className={clsx(
-                        "relative inline-flex items-center justify-center h-10 w-10 rounded-xl font-bold transition-all",
-                        page === currentPage 
-                            ? "bg-mitologi-navy text-white shadow-md shadow-mitologi-navy/20"
-                            : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-mitologi-navy hover:border-mitologi-navy/30"
-                    )}
-                >
-                    {page}
-                </Link>
-             )
+          if (page === "...") {
+            return (
+              <span
+                key={`dots-${index}`}
+                className="px-3 py-2 text-slate-400 flex items-center justify-center"
+              >
+                ...
+              </span>
+            );
+          }
+          return (
+            <Link
+              key={page}
+              href={createPageURL(page)}
+              className={clsx(
+                "relative inline-flex items-center justify-center h-10 w-10 rounded-xl font-bold transition-all",
+                page === currentPage
+                  ? "bg-mitologi-navy text-white shadow-md shadow-mitologi-navy/20"
+                  : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-mitologi-navy hover:border-mitologi-navy/30",
+              )}
+            >
+              {page}
+            </Link>
+          );
         })}
       </div>
 
@@ -112,9 +117,9 @@ function PaginationArrow({
 }) {
   const className = clsx(
     "relative inline-flex items-center justify-center h-10 w-10 rounded-xl transition-all",
-    isDisabled 
+    isDisabled
       ? "pointer-events-none opacity-50 bg-slate-50 text-slate-400 border border-slate-200"
-      : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-mitologi-navy hover:border-mitologi-navy/30"
+      : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-mitologi-navy hover:border-mitologi-navy/30",
   );
 
   const icon =

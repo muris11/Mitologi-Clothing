@@ -62,9 +62,11 @@ class CompanyLegalitySection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppTheme.primary.withOpacity(0.05),
+                  color: AppTheme.primary.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppTheme.primary.withOpacity(0.1)),
+                  border: Border.all(
+                    color: AppTheme.primary.withValues(alpha: 0.1),
+                  ),
                 ),
                 child: Icon(
                   Icons.account_balance_outlined,

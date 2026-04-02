@@ -38,7 +38,9 @@ export default function FooterMenu({ menu }: { menu: Menu[] }) {
     <nav>
       <ul>
         {menu.map((item: Menu) => {
-          return <FooterMenuItem key={`${item.title}-${item.path}`} item={item} />;
+          return (
+            <FooterMenuItem key={`${item.title}-${item.path}`} item={item} />
+          );
         })}
       </ul>
     </nav>

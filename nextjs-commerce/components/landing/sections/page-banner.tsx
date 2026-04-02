@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 interface PageBannerProps {
   title: string;
@@ -12,13 +12,13 @@ export function PageBanner({ title, subtitle, image }: PageBannerProps) {
       {/* Decorative Blur Orbs */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-mitologi-gold/20 rounded-full blur-[100px] -translate-y-1/2 -z-0" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-mitologi-navy-light/50 rounded-full blur-[100px] translate-y-1/2 -z-0" />
-      
+
       {/* Background Image (Optional) */}
       {image && (
         <>
-          <div 
-             className="absolute inset-0 z-0 opacity-40 mix-blend-overlay bg-cover bg-center bg-no-repeat"
-             style={{ backgroundImage: `url(${image})` }}
+          <div
+            className="absolute inset-0 z-0 opacity-40 mix-blend-overlay bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${image})` }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-mitologi-navy/80 to-mitologi-navy z-0" />
         </>
@@ -30,9 +30,9 @@ export function PageBanner({ title, subtitle, image }: PageBannerProps) {
           {title}
         </h1>
         {subtitle && (
-            <p className="text-lg md:text-xl text-slate-300 font-sans font-medium max-w-2xl mx-auto drop-shadow-sm">
+          <p className="text-lg md:text-xl text-slate-300 font-sans font-medium max-w-2xl mx-auto drop-shadow-sm">
             {subtitle}
-            </p>
+          </p>
         )}
       </div>
     </div>

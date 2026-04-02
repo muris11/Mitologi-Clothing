@@ -25,7 +25,7 @@ class AdminNotificationComposer
                 'icon' => 'shopping-bag',
                 'color' => 'blue',
                 'title' => "Pesanan Baru #{$order->order_number}",
-                'subtitle' => 'Rp ' . number_format($order->total, 0, ',', '.'),
+                'subtitle' => 'Rp '.number_format($order->total, 0, ',', '.'),
                 'time' => $order->created_at->diffForHumans(),
                 'timestamp' => $order->created_at,
             ]);

@@ -15,18 +15,20 @@ class LandingPageTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure([
-                'hero_slides',
-                'features',
-                'testimonials',
-                'materials',
-                'portfolio_items',
-                'order_steps',
-                'cta' => ['title', 'subtitle', 'button_text', 'button_link'],
-                'site_settings',
-                'categories',
-                'new_arrivals',
-                'best_sellers',
-                'team_members',
+                'data' => [
+                    'heroSlides',
+                    'features',
+                    'testimonials',
+                    'materials',
+                    'portfolioItems',
+                    'orderSteps',
+                    'cta' => ['title', 'subtitle', 'buttonText', 'buttonLink'],
+                    'siteSettings',
+                    'categories',
+                    'newArrivals',
+                    'bestSellers',
+                    'teamMembers',
+                ],
             ]);
     }
 
@@ -36,8 +38,10 @@ class LandingPageTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure([
-                'products',
-                'pagination' => ['total', 'per_page', 'current_page', 'last_page'],
+                'data' => [
+                    'products',
+                    'pagination' => ['total', 'perPage', 'currentPage', 'lastPage'],
+                ],
             ]);
     }
 

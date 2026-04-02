@@ -38,14 +38,12 @@ class CheckoutTest extends TestCase
             ->postJson('/api/checkout', []);
 
         $response->assertUnprocessable()
-            ->assertJsonValidationErrors([
-                'shipping_name',
-                'shipping_phone',
-                'shipping_address',
-                'shipping_city',
-                'shipping_province',
-                'shipping_postal_code',
-            ]);
+            ->assertJsonPath('error.details.shipping_name', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.shipping_phone', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.shipping_address', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.shipping_city', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.shipping_province', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.shipping_postal_code', fn ($errors) => is_array($errors) && count($errors) > 0);
     }
 
     public function test_checkout_rejects_empty_cart(): void

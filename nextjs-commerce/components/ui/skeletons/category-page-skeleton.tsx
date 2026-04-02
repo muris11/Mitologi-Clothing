@@ -34,7 +34,10 @@ export function CategoryPageSkeleton() {
         <div className="relative mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 z-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="group relative block aspect-[4/5] sm:aspect-[3/4] overflow-hidden rounded-2xl bg-white border border-slate-100 shadow-soft">
+              <div
+                key={i}
+                className="group relative block aspect-[4/5] sm:aspect-[3/4] overflow-hidden rounded-2xl bg-white border border-slate-100 shadow-soft"
+              >
                 {/* Image Placeholder */}
                 <div className="absolute inset-0 bg-slate-100">
                   {/* Fallback Icon */}

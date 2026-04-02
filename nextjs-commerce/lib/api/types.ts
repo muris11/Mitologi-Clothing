@@ -93,7 +93,7 @@ export type Product = {
   tags: string[];
   totalStock?: number;
   updatedAt: string;
-  is_wishlisted?: boolean;
+  isWishlisted?: boolean;
   averageRating?: number;
   totalReviews?: number;
   totalSold?: number;
@@ -128,15 +128,15 @@ export type User = {
   name: string;
   email: string;
   role?: string;
-  avatar_url?: string;
+  avatarUrl?: string;
   phone?: string;
   addresses?: Address[];
   address?: string;
   city?: string;
   province?: string;
-  postal_code?: string;
-  created_at?: string;
-  updated_at?: string;
+  postalCode?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type Address = {
@@ -155,39 +155,39 @@ export type Address = {
 
 export type ReviewItem = {
   id: number;
-  product_id: number;
-  user_id: number;
-  user_name: string;
-  user_avatar?: string;
+  productId: number;
+  userId: number;
+  userName: string;
+  userAvatar?: string;
   rating: number; // 1-5
   comment: string;
-  admin_reply?: string;
-  admin_replied_at?: string;
-  created_at: string;
+  adminReply?: string;
+  adminRepliedAt?: string;
+  createdAt: string;
 };
 
 export type ReviewSummary = {
-  average_rating: number;
-  total_reviews: number;
-  rating_breakdown: Record<string, number>;
+  averageRating: number;
+  totalReviews: number;
+  ratingBreakdown: Record<string, number>;
 };
 
 export type WishlistItem = {
   id: number;
-  product_id: number;
+  productId: number;
   product: Product;
-  created_at: string;
+  createdAt: string;
 };
 
 export type OrderItem = {
   id: number;
-  product_title: string;
-  variant_title: string;
+  productTitle: string;
+  variantTitle: string;
   price: number;
   quantity: number;
   total: number;
-  product_handle?: string;
-  product_image?: string;
+  productHandle?: string;
+  productImage?: string;
 };
 
 export type Order = {
@@ -225,11 +225,11 @@ export type HeroSlide = {
   id: number;
   title: string;
   subtitle: string;
-  image_url: string;
-  cta_text: string;
-  cta_link: string;
-  sort_order: number;
-  is_active: boolean;
+  imageUrl: string;
+  ctaText: string;
+  ctaLink: string;
+  sortOrder: number;
+  isActive: boolean;
 };
 
 export type Feature = {
@@ -237,7 +237,7 @@ export type Feature = {
   title: string;
   description: string;
   icon: string;
-  sort_order: number;
+  sortOrder: number;
 };
 
 export type Testimonial = {
@@ -246,16 +246,16 @@ export type Testimonial = {
   role: string;
   content: string;
   rating: number;
-  avatar_url: string | null;
-  is_active: boolean;
+  avatarUrl: string | null;
+  isActive: boolean;
 };
 
 export type Material = {
   id: number;
   name: string;
   description: string;
-  color_theme: string;
-  sort_order: number;
+  colorTheme: string;
+  sortOrder: number;
 };
 
 export type PortfolioItem = {
@@ -263,26 +263,26 @@ export type PortfolioItem = {
   title: string;
   slug: string;
   category: string;
-  image_url: string;
+  imageUrl: string;
   description?: string;
-  sort_order: number;
-  is_active: boolean;
+  sortOrder: number;
+  isActive: boolean;
 };
 
 export type OrderStep = {
   id: number;
-  step_number: number;
+  stepNumber: number;
   title: string;
   description: string;
   type: "langsung" | "ecommerce";
-  sort_order: number;
+  sortOrder: number;
 };
 
 export type CtaData = {
   title: string;
   subtitle: string;
-  button_text: string;
-  button_link: string;
+  buttonText: string;
+  buttonLink: string;
 };
 
 export type Category = {
@@ -292,130 +292,136 @@ export type Category = {
   handle: string;
   description: string | null;
   image: string | null;
-  products_count?: number;
+  productsCount?: number;
 };
 
 export type SiteSettings = {
   general?: {
-    site_name?: string;
-    site_tagline?: string;
-    site_description?: string;
-    site_logo?: string;
-    company_founded_year?: string;
+    siteName?: string;
+    siteTagline?: string;
+    siteDescription?: string;
+    siteLogo?: string;
+    companyFoundedYear?: string;
   };
   about?: {
-    about_headline?: string;
-    company_founded_year?: string;
-    about_description_1?: string;
-    about_description_2?: string;
-    about_short_history?: string;
-    about_logo_meaning?: string;
-    about_logo_meaning_detailed?: { letter: string; description: string }[];
-    about_image?: string;
-    vision_text?: string;
-    mission_text?: string;
-    values_text?: string;
-    legal_company_name?: string;
-    legal_address?: string;
-    legal_business_field?: string;
-    legal_npwp?: string;
-    legal_nib?: string;
-    legal_nmid?: string;
+    aboutHeadline?: string;
+    companyFoundedYear?: string;
+    aboutDescription1?: string;
+    aboutDescription2?: string;
+    aboutShortHistory?: string;
+    aboutLogoMeaning?: string;
+    aboutLogoMeaningDetailed?: { letter: string; description: string }[];
+    aboutImage?: string;
+    visionText?: string;
+    missionText?: string;
+    valuesText?: string;
+    legalCompanyName?: string;
+    legalAddress?: string;
+    legalBusinessField?: string;
+    legalNpwp?: string;
+    legalNib?: string;
+    legalNmid?: string;
     // Founder Story
-    founder_name?: string;
-    founder_role?: string;
-    founder_story?: string;
-    founder_photo?: string;
+    founderName?: string;
+    founderRole?: string;
+    founderStory?: string;
+    founderPhoto?: string;
   };
-  vision_mission?: {
-    vision_text?: string;
-    mission_text?: string;
-    values_text?: string;
+  visionMission?: {
+    visionText?: string;
+    missionText?: string;
+    valuesText?: string;
   };
   legality?: {
-    legal_company_name?: string;
-    legal_address?: string;
-    legal_business_field?: string;
-    legal_npwp?: string;
-    legal_nib?: string;
-    legal_nmid?: string;
+    legalCompanyName?: string;
+    legalAddress?: string;
+    legalBusinessField?: string;
+    legalNpwp?: string;
+    legalNib?: string;
+    legalNmid?: string;
   };
   // Dynamic arrays from JSON
-  services_data?: {
+  servicesData?: {
     title: string;
     desc: string;
     image: string;
     materials?: string;
     keunggulan?: string;
   }[];
-  guarantees_data?: {
+  guaranteesData?: {
     title: string;
     description?: string;
     desc?: string;
   }[];
-  company_values_data?: {
+  companyValuesData?: {
     title: string;
     description?: string;
     desc?: string;
   }[];
   // Deprecated fixed fields (optional for backward compatibility)
   guarantee?: {
-    guarantee_1_title?: string;
-    guarantee_1_desc?: string;
-    guarantee_2_title?: string;
-    guarantee_2_desc?: string;
-    guarantee_3_title?: string;
-    guarantee_3_desc?: string;
+    guarantee1Title?: string;
+    guarantee1Desc?: string;
+    guarantee2Title?: string;
+    guarantee2Desc?: string;
+    guarantee3Title?: string;
+    guarantee3Desc?: string;
   };
   services?: {
-    service_1_title?: string;
-    service_1_desc?: string;
-    service_1_image?: string;
-    service_2_title?: string;
-    service_2_desc?: string;
-    service_2_image?: string;
-    service_3_title?: string;
-    service_3_desc?: string;
-    service_3_image?: string;
+    service1Title?: string;
+    service1Desc?: string;
+    service1Image?: string;
+    service2Title?: string;
+    service2Desc?: string;
+    service2Image?: string;
+    service3Title?: string;
+    service3Desc?: string;
+    service3Image?: string;
   };
   pricing?: {
-    pricing_min_order?: string;
-    pricing_plastisol_data?: string; // JSON string
-    pricing_addons_data?: string; // JSON string
+    pricingMinOrder?: string;
+    pricingPlastisolData?: string; // JSON string
+    pricingAddonsData?: string; // JSON string
+  };
+  beranda?: {
+    pricingPlastisolData?: string | PlastisolPrice[];
+    pricingAddonsData?: string | PricingAddon[];
+    pricingMinOrder?: string;
+    garansiBonusData?: Array<{ title: string; description: string }>;
   };
   cta?: {
-    cta_title?: string;
-    cta_subtitle?: string;
-    cta_button_text?: string;
-    cta_button_link?: string;
+    ctaTitle?: string;
+    ctaSubtitle?: string;
+    ctaButtonText?: string;
+    ctaButtonLink?: string;
   };
   contact?: {
-    contact_email?: string;
-    contact_phone?: string;
-    contact_address?: string;
-    contact_maps_embed?: string;
-    contact_whatsapp?: string;
-    contact_operational_hours?: string;
-    operating_hours_weekday_label?: string;
-    operating_hours_weekday?: string;
-    operating_hours_weekend_label?: string;
-    operating_hours_weekend?: string;
-    social_instagram?: string;
-    social_instagram_enabled?: string; // '1' or '0'
-    social_tiktok?: string;
-    social_tiktok_enabled?: string;
-    social_facebook?: string;
-    social_facebook_enabled?: string;
-    social_shopee?: string;
-    social_shopee_enabled?: string;
-    social_twitter?: string;
-    social_twitter_enabled?: string;
-    whatsapp_number?: string;
+    contactEmail?: string;
+    contactPhone?: string;
+    contactAddress?: string;
+    contactMapsEmbed?: string;
+    contactWhatsapp?: string;
+    contactOperationalHours?: string;
+    operatingHoursWeekdayLabel?: string;
+    operatingHoursWeekday?: string;
+    operatingHoursWeekendLabel?: string;
+    operatingHoursWeekend?: string;
+    socialInstagram?: string;
+    socialInstagramEnabled?: string; // '1' or '0'
+    socialTiktok?: string;
+    socialTiktokEnabled?: string;
+    socialFacebook?: string;
+    socialFacebookEnabled?: string;
+    socialShopee?: string;
+    socialShopeeEnabled?: string;
+    socialTwitter?: string;
+    socialTwitterEnabled?: string;
+    whatsappNumber?: string;
   };
   seo?: {
-    seo_meta_title?: string;
-    seo_meta_description?: string;
-    seo_og_image?: string;
+    seoMetaTitle?: string;
+    seoMetaDescription?: string;
+    seoOgImage?: string;
   };
 };
 
@@ -423,20 +429,20 @@ export type TeamMember = {
   id: number;
   name: string;
   position: string;
-  photo_url: string | null;
-  parent_id: number | null;
+  photoUrl: string | null;
+  parentId: number | null;
   level: number;
-  sort_order: number;
+  sortOrder: number;
 };
 
 export type Partner = {
   id: number;
   name: string;
   logo: string;
-  website_url?: string;
+  websiteUrl?: string;
   description?: string;
-  is_active: boolean;
-  sort_order: number;
+  isActive: boolean;
+  sortOrder: number;
 };
 
 export type PrintingMethod = {
@@ -446,19 +452,19 @@ export type PrintingMethod = {
   description: string;
   image: string | null;
   pros: string[];
-  price_range: string | null;
-  is_active: boolean;
-  sort_order: number;
+  priceRange: string | null;
+  isActive: boolean;
+  sortOrder: number;
 };
 
 export type ProductPricing = {
   id: number;
-  category_name: string;
-  items: Array<{name: string; price_range: string}>;
-  min_order: string | null;
+  categoryName: string;
+  items: Array<{ name: string; priceRange: string }>;
+  minOrder: string | null;
   notes: string | null;
-  is_active: boolean;
-  sort_order: number;
+  isActive: boolean;
+  sortOrder: number;
 };
 
 export type Facility = {
@@ -466,32 +472,38 @@ export type Facility = {
   name: string;
   description: string;
   image: string | null;
-  is_active: boolean;
-  sort_order: number;
+  isActive: boolean;
+  sortOrder: number;
 };
 
 export type LandingPageData = {
-  hero_slides: HeroSlide[];
+  heroSlides: HeroSlide[];
   features: Feature[];
   testimonials: Testimonial[];
   materials: Material[];
-  portfolio_items: PortfolioItem[];
-  order_steps: OrderStep[];
+  portfolioItems: PortfolioItem[];
+  orderSteps: OrderStep[];
   partners: Partner[];
-  printing_methods: PrintingMethod[];
-  product_pricings: ProductPricing[];
+  printingMethods: PrintingMethod[];
+  productPricings: ProductPricing[];
   facilities: Facility[];
   cta: CtaData;
-  site_settings?: SiteSettings;
+  siteSettings?: SiteSettings;
   categories: Category[];
-  new_arrivals: Product[];
-  best_sellers: Product[];
-  team_members?: TeamMember[];
+  newArrivals: Product[];
+  bestSellers: Product[];
+  teamMembers?: TeamMember[];
 };
 
-
 // Midtrans Snap Types
-export type MidtransTransactionStatus = 'capture' | 'settlement' | 'pending' | 'deny' | 'cancel' | 'expire' | 'failure';
+export type MidtransTransactionStatus =
+  | "capture"
+  | "settlement"
+  | "pending"
+  | "deny"
+  | "cancel"
+  | "expire"
+  | "failure";
 
 export type MidtransPaymentResponse = {
   status_code: string;
@@ -527,7 +539,7 @@ export type ApiErrorResponse = {
 
 export type CheckoutResponse = {
   snapToken?: string;
-  orderId?: string;
+  orderId?: string | number;
   orderNumber?: string;
   redirectUrl?: string;
   mock?: boolean;
@@ -535,19 +547,12 @@ export type CheckoutResponse = {
 };
 
 export type CheckoutPayload = {
-  cart_id: string;
-  shipping_address: {
-    recipient_name: string;
-    phone: string;
-    address_line_1: string;
-    address_line_2?: string;
-    city: string;
-    province: string;
-    postal_code: string;
-    country?: string;
-  };
-  shipping_method?: string;
-  payment_method?: string;
+  shipping_name: string;
+  shipping_phone: string;
+  shipping_address: string;
+  shipping_city: string;
+  shipping_province: string;
+  shipping_postal_code: string;
   notes?: string;
 };
 
@@ -570,6 +575,6 @@ export type UnknownError = Error & {
   status?: number;
   response?: {
     data?: ApiErrorResponse;
-  status?: number;
+    status?: number;
   };
 };

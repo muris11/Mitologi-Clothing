@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/mitologi_page_shell.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 
@@ -72,13 +72,17 @@ class KebijakanPengembalianScreen extends StatelessWidget {
     );
   }
 
-  Widget buildHtmlLikeBullet(String text) {
+  Widget buildHtmlLikeBullet(String text, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+      padding: EdgeInsets.only(
+        bottom: 8,
+        left: ResponsiveHelper.horizontalPadding(context) / 2,
+        right: ResponsiveHelper.horizontalPadding(context) / 2,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 6, right: 12),
             child: Icon(Icons.circle, size: 6, color: AppTheme.slate400),
           ),
@@ -289,35 +293,45 @@ class KebijakanPengembalianScreen extends StatelessWidget {
               buildHtmlLikeHeading('Produk yang Dapat Dikembalikan'),
               buildHtmlLikeBullet(
                 'Produk yang diterima dalam kondisi cacat/rusak dari pabrik',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Produk yang tidak sesuai dengan pesanan (salah warna, salah model, salah ukuran karena kesalahan produksi)',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Produk yang berbeda dari deskripsi secara signifikan',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Produk yang masih dalam kondisi baru, belum dicuci, belum dipakai, dan tag masih melekat',
+                context,
               ),
 
               buildHtmlLikeHeading('Produk yang Tidak Dapat Dikembalikan'),
               buildHtmlLikeBullet(
                 'Produk yang sudah dicuci, dipakai, atau dimodifikasi dengan cara apapun',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Produk dengan tag yang sudah dilepas atau rusak',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Produk yang dikembalikan setelah melewati batas waktu 7 hari',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Produk custom atau pesanan khusus yang dibuat sesuai permintaan spesifik',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Produk yang rusak akibat kelalaian pembeli (bukan dari pabrik)',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Produk sale/clearance dengan keterangan "tanpa pengembalian"',
+                context,
               ),
 
               buildHtmlLikeHeading('Batas Waktu Pengembalian'),
@@ -392,11 +406,12 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                 1,
                 'Hubungi customer service kami melalui WhatsApp atau email dengan menyertakan:',
                 children: [
-                  buildHtmlLikeBullet('Nomor pesanan (Order ID)'),
+                  buildHtmlLikeBullet('Nomor pesanan (Order ID)', context),
                   buildHtmlLikeBullet(
                     'Foto produk yang menunjukkan kondisi/masalah',
+                    context,
                   ),
-                  buildHtmlLikeBullet('Alasan pengembalian'),
+                  buildHtmlLikeBullet('Alasan pengembalian', context),
                 ],
               ),
               buildHtmlLikeNumber(
@@ -419,20 +434,28 @@ class KebijakanPengembalianScreen extends StatelessWidget {
               buildHtmlLikeHeading('Proses Pengembalian Dana'),
               buildHtmlLikeBullet(
                 'Refund diproses setelah barang diterima dan lolos verifikasi oleh tim kami (1-3 hari kerja)',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Dana akan dikembalikan melalui Transfer Bank ke rekening yang Anda informasikan',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Proses transfer refund memakan waktu 5-14 hari kerja setelah verifikasi selesai',
+                context,
               ),
               buildHtmlLikeBullet(
                 'Jumlah refund mencakup harga produk. Biaya pengiriman awal tidak dikembalikan kecuali pengembalian disebabkan oleh kesalahan kami',
+                context,
               ),
 
               buildHtmlLikeHeading('Penukaran Produk'),
-              const Padding(
-                padding: EdgeInsets.only(left: 8, right: 8, bottom: 24),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: ResponsiveHelper.horizontalPadding(context) / 2,
+                  right: ResponsiveHelper.horizontalPadding(context) / 2,
+                  bottom: 24,
+                ),
                 child: Text(
                   'Jika Anda memilih untuk menukar produk (misalnya tukar ukuran atau warna), proses pengiriman produk pengganti akan dilakukan setelah barang asli diterima dan diverifikasi. Biaya pengiriman produk pengganti ditanggung oleh Mitologi Clothing jika penukaran disebabkan oleh kesalahan kami.',
                   style: TextStyle(

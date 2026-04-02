@@ -1,18 +1,37 @@
-
 "use client";
 
 import Cookies from "js-cookie";
-import { addToCart, createCart, getCart, removeFromCart, updateCart } from "lib/api";
+import {
+  addToCart,
+  createCart,
+  getCart,
+  removeFromCart,
+  updateCart,
+} from "lib/api";
 import { Cart, UnknownError } from "lib/api/types";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useToast } from "components/ui/ultra-quality-toast";
 
 interface CartContextType {
   cart: Cart | undefined;
   isLoading: boolean;
-  addToCart: (merchandiseId: string, quantity: number, productDetails?: OptimisticProductDetails) => Promise<void>;
+  addToCart: (
+    merchandiseId: string,
+    quantity: number,
+    productDetails?: OptimisticProductDetails,
+  ) => Promise<void>;
   removeFromCart: (lineId: string) => Promise<void>;
-  updateQuantity: (lineId: string, merchandiseId: string, quantity: number) => Promise<void>;
+  updateQuantity: (
+    lineId: string,
+    merchandiseId: string,
+    quantity: number,
+  ) => Promise<void>;
   openCart: () => void;
   closeCart: () => void;
   isCartOpen: boolean;
@@ -45,7 +64,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       setCart(cartData);
     } catch (error) {
-      console.error("Failed to refresh cart:", error);
+      // Silent fail
     } finally {
       setIsLoading(false);
     }
@@ -64,14 +83,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }, 100);
     };
 
-    window.addEventListener('auth:changed', handleAuthChange);
-    return () => window.removeEventListener('auth:changed', handleAuthChange);
+    window.addEventListener("auth:changed", handleAuthChange);
+    return () => window.removeEventListener("auth:changed", handleAuthChange);
   }, []);
 
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
-  const addItem = async (merchandiseId: string, quantity: number, productDetails?: OptimisticProductDetails) => {
+  const addItem = async (
+    merchandiseId: string,
+    quantity: number,
+    productDetails?: OptimisticProductDetails,
+  ) => {
     setIsLoading(true);
     const previousCart = cart; // Store previous cart for rollback
 
@@ -82,7 +105,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         id: `temp-${Date.now()}`,
         quantity,
         cost: {
-          totalAmount: { amount: String(parseFloat(productDetails.price || "0") * quantity), currencyCode: "IDR" }
+          totalAmount: {
+            amount: String(parseFloat(productDetails.price || "0") * quantity),
+            currencyCode: "IDR",
+          },
         },
         merchandise: {
           id: merchandiseId,
@@ -92,9 +118,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
             id: productDetails.id,
             handle: productDetails.handle,
             title: productDetails.title || "Menambahkan...",
-            featuredImage: productDetails.featuredImage
-          }
-        }
+            featuredImage: productDetails.featuredImage,
+          },
+        },
       };
 
       setCart({
@@ -115,20 +141,33 @@ export function CartProvider({ children }: { children: ReactNode }) {
         // Prefer UUID sessionId for stable cart merging on login; fall back to integer id
         cartId = currentCart.sessionId || currentCart.id;
         if (cartId) {
-            Cookies.set("cartSessionId", cartId, { expires: 7, sameSite: 'Lax', secure: process.env.NODE_ENV === 'production', path: '/' });
+          Cookies.set("cartSessionId", cartId, {
+            expires: 7,
+            sameSite: "Lax",
+            secure: process.env.NODE_ENV === "production",
+            path: "/",
+          });
         }
       }
 
       if (cartId) {
-        const updatedCart = await addToCart(cartId, [{ merchandiseId, quantity }]);
+        const updatedCart = await addToCart(cartId, [
+          { merchandiseId, quantity },
+        ]);
         setCart(updatedCart);
         if (!cart) openCart(); // open if it wasn't opened optimistically
-        addToast({ variant: "success", title: "Produk berhasil ditambahkan ke keranjang" });
+        addToast({
+          variant: "success",
+          title: "Produk berhasil ditambahkan ke keranjang",
+        });
       }
     } catch (e: unknown) {
       const err = e as UnknownError;
       setCart(previousCart); // Rollback
-      addToast({ variant: "error", title: err?.message || "Gagal menambahkan ke keranjang." });
+      addToast({
+        variant: "error",
+        title: err?.message || "Gagal menambahkan ke keranjang.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -142,7 +181,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (cart) {
       setCart({
         ...cart,
-        lines: cart.lines.filter(line => line.id !== lineId),
+        lines: cart.lines.filter((line) => line.id !== lineId),
         // Accurate total count requires recalculation, ignoring for simple optimisim
       });
     }
@@ -153,11 +192,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
         try {
           const updatedCart = await removeFromCart(cartId, [lineId]);
           setCart(updatedCart);
-          addToast({ variant: "success", title: "Item dihapus dari keranjang" });
+          addToast({
+            variant: "success",
+            title: "Item dihapus dari keranjang",
+          });
         } catch (error: unknown) {
           const err = error as UnknownError;
           // If item not found (404) or already deleted, just refresh cart
-          if (err?.status === 404 || err?.message?.includes('No query results')) {
+          if (
+            err?.status === 404 ||
+            err?.message?.includes("No query results")
+          ) {
             await refreshCart();
           } else {
             throw error;
@@ -167,13 +212,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     } catch (e: unknown) {
       const err = e as UnknownError;
       setCart(previousCart); // Rollback on error
-      addToast({ variant: "error", title: err?.message || "Gagal menghapus item dari keranjang." });
+      addToast({
+        variant: "error",
+        title: err?.message || "Gagal menghapus item dari keranjang.",
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const updateItem = async (lineId: string, merchandiseId: string, quantity: number) => {
+  const updateItem = async (
+    lineId: string,
+    merchandiseId: string,
+    quantity: number,
+  ) => {
     setIsLoading(true);
     const previousCart = cart;
 
@@ -181,9 +233,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (cart) {
       setCart({
         ...cart,
-        lines: cart.lines.map(line => 
-          line.id === lineId ? { ...line, quantity } : line
-        )
+        lines: cart.lines.map((line) =>
+          line.id === lineId ? { ...line, quantity } : line,
+        ),
       });
     }
 
@@ -191,12 +243,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const cartId = Cookies.get("cartSessionId");
       if (cartId) {
         try {
-          const updatedCart = await updateCart(cartId, [{ id: lineId, merchandiseId, quantity }]);
+          const updatedCart = await updateCart(cartId, [
+            { id: lineId, merchandiseId, quantity },
+          ]);
           setCart(updatedCart);
         } catch (error: unknown) {
           const err = error as UnknownError;
           // If item not found (404) or already deleted, just refresh cart
-          if (err?.status === 404 || err?.message?.includes('No query results')) {
+          if (
+            err?.status === 404 ||
+            err?.message?.includes("No query results")
+          ) {
             await refreshCart();
           } else {
             throw error;
@@ -206,23 +263,28 @@ export function CartProvider({ children }: { children: ReactNode }) {
     } catch (e: unknown) {
       const err = e as UnknownError;
       setCart(previousCart); // Rollback
-      addToast({ variant: "error", title: err?.message || "Gagal mengubah kuantitas." });
+      addToast({
+        variant: "error",
+        title: err?.message || "Gagal mengubah kuantitas.",
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <CartContext.Provider value={{ 
-      cart, 
-      isLoading, 
-      addToCart: addItem, 
-      removeFromCart: removeItem, 
-      updateQuantity: updateItem,
-      openCart,
-      closeCart,
-      isCartOpen
-    }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        isLoading,
+        addToCart: addItem,
+        removeFromCart: removeItem,
+        updateQuantity: updateItem,
+        openCart,
+        closeCart,
+        isCartOpen,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

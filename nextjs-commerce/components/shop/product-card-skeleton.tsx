@@ -10,41 +10,41 @@ export function ProductCardSkeleton() {
 
       {/* Body Area */}
       <div className="flex flex-col flex-grow p-3 bg-white relative">
-         {/* Badges */}
-         <div className="flex flex-wrap gap-1.5 mb-2">
-            <Skeleton className="h-[18px] w-16 rounded-sm bg-slate-200" />
-         </div>
+        {/* Badges */}
+        <div className="flex flex-wrap gap-1.5 mb-2">
+          <Skeleton className="h-[18px] w-16 rounded-sm bg-slate-200" />
+        </div>
 
-         {/* Title */}
-         <div className="mb-2 space-y-1.5">
-            <Skeleton className="h-3.5 w-[90%] bg-slate-200 rounded-full" />
-            <Skeleton className="h-3.5 w-2/3 bg-slate-200 rounded-full" />
-         </div>
+        {/* Title */}
+        <div className="mb-2 space-y-1.5">
+          <Skeleton className="h-3.5 w-[90%] bg-slate-200 rounded-full" />
+          <Skeleton className="h-3.5 w-2/3 bg-slate-200 rounded-full" />
+        </div>
 
-         {/* Price */}
-         <div className="mt-auto mb-2 text-left">
-            <Skeleton className="h-5 w-24 bg-slate-200 rounded-full" />
-         </div>
+        {/* Price */}
+        <div className="mt-auto mb-2 text-left">
+          <Skeleton className="h-5 w-24 bg-slate-200 rounded-full" />
+        </div>
 
-         {/* Rating & Sold Info */}
-         <div className="flex items-center gap-1.5 mt-1">
-             <Skeleton className="h-3 w-8 bg-slate-200 rounded-full" />
-             <span className="w-0.5 h-0.5 rounded-full bg-slate-300"></span>
-             <Skeleton className="h-3 w-16 bg-slate-200 rounded-full" />
-         </div>
+        {/* Rating & Sold Info */}
+        <div className="flex items-center gap-1.5 mt-1">
+          <Skeleton className="h-3 w-8 bg-slate-200 rounded-full" />
+          <span className="w-0.5 h-0.5 rounded-full bg-slate-300"></span>
+          <Skeleton className="h-3 w-16 bg-slate-200 rounded-full" />
+        </div>
 
-         {/* Location */}
-         <div className="flex items-center justify-between mt-2">
-            <div className="flex items-center gap-1">
-                <Skeleton className="h-3 w-3 rounded-full bg-slate-200" />
-                <Skeleton className="h-3 w-16 bg-slate-200 rounded-full" />
-            </div>
-         </div>
-         
-         {/* Subtle Cart Button bottom right */}
-         <div className="absolute bottom-3 right-3 p-1.5 bg-slate-50 rounded-full border border-slate-200">
-            <Skeleton className="w-4 h-4 bg-slate-200 rounded-full" />
-         </div>
+        {/* Location */}
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center gap-1">
+            <Skeleton className="h-3 w-3 rounded-full bg-slate-200" />
+            <Skeleton className="h-3 w-16 bg-slate-200 rounded-full" />
+          </div>
+        </div>
+
+        {/* Subtle Cart Button bottom right */}
+        <div className="absolute bottom-3 right-3 p-1.5 bg-slate-50 rounded-full border border-slate-200">
+          <Skeleton className="w-4 h-4 bg-slate-200 rounded-full" />
+        </div>
       </div>
     </div>
   );

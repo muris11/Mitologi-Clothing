@@ -1,1 +1,1 @@
-export { PortofolioHero as HeroSection } from './hero-section';
+export { PortofolioHero as HeroSection } from "./hero-section";

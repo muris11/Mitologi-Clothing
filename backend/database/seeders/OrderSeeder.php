@@ -70,16 +70,20 @@ class OrderSeeder extends Seeder
 
         foreach ($ordersData as $orderData) {
             $customer = $orderData['customer'];
-            if (!$customer) continue;
+            if (! $customer) {
+                continue;
+            }
 
             $subtotal = 0;
             $orderItems = [];
 
             $pickedProducts = $allProducts->random(min($orderData['items_count'], $allProducts->count()));
             foreach ($pickedProducts as $product) {
-                if ($product->variants->isEmpty()) continue;
+                if ($product->variants->isEmpty()) {
+                    continue;
+                }
                 $variant = $product->variants->random();
-                
+
                 $qty = rand(1, 3);
                 $price = $variant->price;
                 $total = $price * $qty;
@@ -96,13 +100,15 @@ class OrderSeeder extends Seeder
                 ];
             }
 
-            if (empty($orderItems)) continue;
+            if (empty($orderItems)) {
+                continue;
+            }
 
             $shippingCost = 15000;
             $tax = 0;
             $grandTotal = $subtotal + $shippingCost + $tax;
 
-            $order = new Order();
+            $order = new Order;
             $order->user_id = $customer->id;
             $order->order_number = Order::generateOrderNumber();
             $order->status = $orderData['status'];

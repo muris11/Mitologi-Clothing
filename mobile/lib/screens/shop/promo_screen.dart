@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../widgets/skeleton/skeleton.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
 import '../../widgets/common/mitologi_page_shell.dart';

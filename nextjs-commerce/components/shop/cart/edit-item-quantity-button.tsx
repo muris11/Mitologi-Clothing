@@ -1,4 +1,3 @@
-
 "use client";
 
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
@@ -23,32 +22,35 @@ export function EditItemQuantityButton({
     if (!item.id) return;
     setIsPending(true);
     try {
-        const newQuantity = type === "plus" ? item.quantity + 1 : item.quantity - 1;
-        if (newQuantity < 1) return; // Prevent 0 if backend doesn't handle it
-        await updateQuantity(item.id, item.merchandise.id, newQuantity);
-    } catch(e: unknown) {
-        const err = e as Error;
-        addToast({
-          title: "Gagal",
-          description: err?.message || "Gagal memperbarui jumlah.",
-          variant: "error"
-        });
+      const newQuantity =
+        type === "plus" ? item.quantity + 1 : item.quantity - 1;
+      if (newQuantity < 1) return; // Prevent 0 if backend doesn't handle it
+      await updateQuantity(item.id, item.merchandise.id, newQuantity);
+    } catch (e: unknown) {
+      const err = e as Error;
+      addToast({
+        title: "Gagal",
+        description: err?.message || "Gagal memperbarui jumlah.",
+        variant: "error",
+      });
     } finally {
-        setIsPending(false);
+      setIsPending(false);
     }
   };
 
   return (
     <button
-      aria-label={type === "plus" ? "Tambah jumlah produk" : "Kurangi jumlah produk"}
+      aria-label={
+        type === "plus" ? "Tambah jumlah produk" : "Kurangi jumlah produk"
+      }
       onClick={handleUpdate}
       disabled={isPending}
       className={clsx(
         "ease flex h-full min-w-[44px] max-w-[44px] flex-none items-center justify-center rounded-lg p-3 transition-colors hover:bg-slate-100 hover:text-mitologi-navy text-slate-500 group touch-manipulation",
         {
           "ml-auto": type === "minus",
-          "cursor-not-allowed opacity-50": isPending
-        }
+          "cursor-not-allowed opacity-50": isPending,
+        },
       )}
     >
       {type === "plus" ? (

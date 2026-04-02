@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CheckoutRequest extends FormRequest
 {
@@ -36,5 +38,22 @@ class CheckoutRequest extends FormRequest
             'shipping_province.required' => 'Provinsi wajib diisi.',
             'shipping_postal_code.required' => 'Kode pos wajib diisi.',
         ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     * Override to return standardized API error format.
+     */
+    protected function failedValidation(Validator $validator): void
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'error' => [
+                    'code' => 'validation_error',
+                    'message' => 'Data yang diberikan tidak valid.',
+                    'details' => $validator->errors()->toArray(),
+                ],
+            ], 422)
+        );
     }
 }

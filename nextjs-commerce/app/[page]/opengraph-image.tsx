@@ -1,9 +1,10 @@
-;
 import { getPage } from "lib/api";
 
 export const runtime = "nodejs";
 
-export default async function Image(props: { params: Promise<{ page: string }> }) {
+export default async function Image(props: {
+  params: Promise<{ page: string }>;
+}) {
   const params = await props.params;
   const page = await getPage(params.page);
   const title = page?.seo?.title || page?.title || process.env.SITE_NAME;

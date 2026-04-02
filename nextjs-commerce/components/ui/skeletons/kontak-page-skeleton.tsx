@@ -33,7 +33,6 @@ export function KontakPageSkeleton() {
 
         <div className="relative mx-auto max-w-[1440px] px-6 lg:px-8 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-stretch">
-
             {/* Left: Info Content */}
             <div className="lg:col-span-5 flex flex-col justify-center">
               {/* Badge */}
@@ -99,7 +98,10 @@ export function KontakPageSkeleton() {
               {/* Social Media */}
               <div className="flex gap-3 mt-8">
                 {Array.from({ length: 4 }).map((_, i) => (
-                  <Skeleton key={i} className="w-10 h-10 rounded-full bg-slate-200 border border-slate-100" />
+                  <Skeleton
+                    key={i}
+                    className="w-10 h-10 rounded-full bg-slate-200 border border-slate-100"
+                  />
                 ))}
               </div>
             </div>

@@ -1,9 +1,9 @@
 <?php
 
+use App\Services\RecommendationService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
-use App\Services\RecommendationService;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
@@ -17,7 +17,7 @@ Schedule::call(function () {
         cache(['ml_last_trained_at' => now()], now()->addDay());
         \Log::info('ML model retrained successfully');
     } catch (\Exception $e) {
-        \Log::error('ML retrain failed: ' . $e->getMessage());
+        \Log::error('ML retrain failed: '.$e->getMessage());
     }
 })->dailyAt('03:00');
 

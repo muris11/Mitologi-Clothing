@@ -21,14 +21,30 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'avatar_url' => $this->avatar_url,
-            'avatar' => $this->avatar_url, // backward compatibility
+            'avatarUrl' => $this->avatar_url,
             'address' => $this->address,
             'city' => $this->city,
             'province' => $this->province,
-            'postal_code' => $this->postal_code,
+            'postalCode' => $this->postal_code,
             'role' => $this->role,
-            'created_at' => $this->created_at?->toISOString(),
+            'createdAt' => $this->created_at?->toISOString(),
+            'addresses' => $this->whenLoaded('addresses', function () {
+                return $this->addresses->map(function ($address) {
+                    return [
+                        'id' => $address->id,
+                        'label' => $address->label,
+                        'recipientName' => $address->recipient_name,
+                        'phone' => $address->phone,
+                        'addressLine1' => $address->address_line_1,
+                        'addressLine2' => $address->address_line_2,
+                        'city' => $address->city,
+                        'province' => $address->province,
+                        'postalCode' => $address->postal_code,
+                        'country' => $address->country,
+                        'isPrimary' => $address->is_primary,
+                    ];
+                });
+            }, []),
         ];
     }
 }

@@ -93,7 +93,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                         imageUrl: imageUrl,
                         fit: BoxFit.cover,
                         placeholder: (context, url) => Container(
-                          color: AppTheme.primary.withOpacity(0.05),
+                          color: AppTheme.primary.withValues(alpha: 0.05),
                           child: const Center(
                             child: SizedBox(
                               width: 24,
@@ -106,7 +106,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                           ),
                         ),
                         errorWidget: (context, url, error) => Container(
-                          color: AppTheme.primary.withOpacity(0.05),
+                          color: AppTheme.primary.withValues(alpha: 0.05),
                           child: Center(
                             child: Icon(
                               Icons.image_outlined,
@@ -118,7 +118,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                       )
                     else
                       Container(
-                        color: AppTheme.primary.withOpacity(0.05),
+                        color: AppTheme.primary.withValues(alpha: 0.05),
                         child: Center(
                           child: Text(
                             'NO IMAGE',
@@ -139,7 +139,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                           end: Alignment.bottomCenter,
                           colors: [
                             Colors.transparent,
-                            AppTheme.primary.withOpacity(0.7),
+                            AppTheme.primary.withValues(alpha: 0.7),
                           ],
                           stops: const [0.5, 1.0],
                         ),
@@ -201,7 +201,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.white.withOpacity(0.8),
+                                    color: Colors.white.withValues(alpha: 0.8),
                                   ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,

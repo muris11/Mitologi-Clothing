@@ -10,7 +10,7 @@ class PageController extends Controller
 {
     public function index(): JsonResponse
     {
-        $pages = Page::all()->map(fn($p) => [
+        $pages = Page::all()->map(fn ($p) => [
             'id' => (string) $p->id,
             'title' => $p->title,
             'handle' => $p->handle,
@@ -24,14 +24,18 @@ class PageController extends Controller
             'updatedAt' => $p->updated_at?->toISOString(),
         ]);
 
-        return response()->json($pages);
+        return $this->successResponse($pages, 'Daftar halaman berhasil diambil');
     }
 
     public function show(string $handle): JsonResponse
     {
-        $page = Page::where('handle', $handle)->firstOrFail();
+        $page = Page::where('handle', $handle)->first();
 
-        return response()->json([
+        if (! $page) {
+            return $this->notFoundResponse('Halaman tidak ditemukan');
+        }
+
+        $data = [
             'id' => (string) $page->id,
             'title' => $page->title,
             'handle' => $page->handle,
@@ -43,6 +47,8 @@ class PageController extends Controller
             ],
             'createdAt' => $page->created_at?->toISOString(),
             'updatedAt' => $page->updated_at?->toISOString(),
-        ]);
+        ];
+
+        return $this->successResponse($data, 'Detail halaman berhasil diambil');
     }
 }

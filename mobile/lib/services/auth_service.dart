@@ -9,10 +9,18 @@ class AuthResponse {
   AuthResponse({required this.token, required this.user, this.cartId});
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    // Handle both camelCase (backend) and snake_case (legacy) responses
+    final data = json['data'] ?? json;
+
     return AuthResponse(
-      token: json['token'] ?? '',
-      user: User.fromJson(json['user']),
-      cartId: json['cart_id'],
+      token: data['token'] ?? json['token'] ?? '',
+      user: User.fromJson(data['user'] ?? data),
+      // Support both camelCase (new) and snake_case (legacy)
+      cartId:
+          data['cartId'] ??
+          data['cart_id'] ??
+          json['cartId'] ??
+          json['cart_id'],
     );
   }
 }
@@ -27,7 +35,7 @@ class AuthService {
   }) async {
     final body = {'email': email, 'password': password};
     if (cartSessionId != null) {
-      body['cart_session_id'] = cartSessionId;
+      body['cartSessionId'] = cartSessionId; // Backend expects camelCase
     }
 
     final response = await _api.post('/auth/login', body: body);
@@ -48,7 +56,7 @@ class AuthService {
       'password_confirmation': passwordConfirmation,
     };
     if (cartSessionId != null) {
-      body['cart_session_id'] = cartSessionId;
+      body['cartSessionId'] = cartSessionId; // Backend expects camelCase
     }
 
     final response = await _api.post('/auth/register', body: body);

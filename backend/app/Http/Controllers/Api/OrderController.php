@@ -11,109 +11,144 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-  public function index(Request $request): JsonResponse
-  {
-    $user = $request->user();
-    $status = $request->input('status');
+    public function index(Request $request): JsonResponse
+    {
+        $user = $request->user();
+        $status = $request->input('status');
 
-    $query = $user->orders()->with(['items', 'shippingAddress'])->latest();
+        $query = $user->orders()->with(['items', 'shippingAddress'])->latest();
 
-    if ($status) {
-      $query->where('status', $status);
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $orders = $query->paginate(10);
+
+        $formatted = collect($orders->items())->map(fn ($order) => [
+            'id' => $order->id,
+            'orderNumber' => $order->order_number,
+            'status' => $order->status,
+            'statusLabel' => $order->status_label,
+            'total' => (float) $order->total,
+            'currencyCode' => $order->currency_code,
+            'itemsCount' => $order->items->count(),
+            'paymentMethod' => $order->payment_method,
+            'createdAt' => $order->created_at?->toISOString(),
+            'paidAt' => $order->paid_at?->toISOString(),
+        ]);
+
+        return $this->successResponse([
+            'orders' => $formatted,
+            'pagination' => [
+                'total' => $orders->total(),
+                'perPage' => $orders->perPage(),
+                'currentPage' => $orders->currentPage(),
+                'lastPage' => $orders->lastPage(),
+            ],
+        ]);
     }
 
-    $orders = $query->paginate(10);
+    public function show(Request $request, string $orderNumber): JsonResponse
+    {
+        $order = $request->user()->orders()
+            ->with(['items.product', 'items.variant', 'shippingAddress'])
+            ->where('order_number', $orderNumber)
+            ->first();
 
-    $formatted = collect($orders->items())->map(fn($order) => [
-      'id' => $order->id,
-      'order_number' => $order->order_number,
-      'status' => $order->status,
-      'status_label' => $order->status_label,
-      'total' => (float) $order->total,
-      'currency_code' => $order->currency_code,
-      'items_count' => $order->items->count(),
-      'payment_method' => $order->payment_method,
-      'created_at' => $order->created_at?->toISOString(),
-      'paid_at' => $order->paid_at?->toISOString(),
-    ]);
+        if (! $order) {
+            return $this->notFoundResponse('Order');
+        }
 
-    return response()->json([
-      'orders' => $formatted,
-      'pagination' => [
-        'current_page' => $orders->currentPage(),
-        'last_page' => $orders->lastPage(),
-        'total' => $orders->total(),
-      ],
-    ]);
-  }
+        $data = [
+            'id' => $order->id,
+            'orderNumber' => $order->order_number,
+            'status' => $order->status,
+            'statusLabel' => $order->status_label,
+            'subtotal' => (float) $order->subtotal,
+            'shippingCost' => (float) $order->shipping_cost,
+            'total' => (float) $order->total,
+            'paymentMethod' => $order->payment_method,
+            'notes' => $order->notes,
+            'createdAt' => $order->created_at->toISOString(),
+            'paidAt' => $order->paid_at?->toISOString(),
+            'items' => $order->items->map(fn ($item) => [
+                'id' => $item->id,
+                'productTitle' => $item->product_title,
+                'variantTitle' => $item->variant_title,
+                'price' => (float) $item->price,
+                'quantity' => $item->quantity,
+                'total' => (float) $item->total,
+                'productHandle' => $item->product?->handle ?? null,
+                'productImage' => $item->product?->featured_image_url ?? null,
+            ]),
+            'shippingAddress' => $order->shippingAddress ? [
+                'name' => $order->shippingAddress->name,
+                'phone' => $order->shippingAddress->phone,
+                'address' => $order->shippingAddress->address,
+                'city' => $order->shippingAddress->city,
+                'province' => $order->shippingAddress->province,
+                'postalCode' => $order->shippingAddress->postal_code,
+            ] : null,
+            'refundRequestedAt' => $order->refund_requested_at?->toISOString(),
+            'refundReason' => $order->refund_reason,
+        ];
 
-  public function show(Request $request, string $orderNumber): JsonResponse
-  {
-    $order = $request->user()->orders()
-      ->with(['items.product', 'items.variant', 'shippingAddress'])
-      ->where('order_number', $orderNumber)
-      ->firstOrFail();
-
-    // Return snake_case payload matching frontend `Order` type
-    return response()->json([
-      'id' => $order->id,
-      'order_number' => $order->order_number,
-      'status' => $order->status,
-      'status_label' => $order->status_label,
-      'subtotal' => (float) $order->subtotal,
-      'shipping_cost' => (float) $order->shipping_cost,
-      'total' => (float) $order->total,
-      'payment_method' => $order->payment_method,
-      'notes' => $order->notes,
-      'created_at' => $order->created_at->toISOString(),
-      'paid_at' => $order->paid_at?->toISOString(),
-      'items' => $order->items->map(fn($item) => [
-        'id' => $item->id,
-        'product_title' => $item->product_title,
-        'variant_title' => $item->variant_title,
-        'price' => (float) $item->price,
-        'quantity' => $item->quantity,
-        'total' => (float) $item->total,
-        'product_handle' => $item->product?->handle ?? null,
-        'product_image' => $item->product?->featured_image_url ?? null,
-      ]),
-      'shipping_address' => $order->shippingAddress ? [
-        'id' => $order->shippingAddress->id,
-        'recipient_name' => $order->shippingAddress->name,
-        'phone' => $order->shippingAddress->phone,
-        'address_line_1' => $order->shippingAddress->address,
-        'address_line_2' => null,
-        'city' => $order->shippingAddress->city,
-        'province' => $order->shippingAddress->province,
-        'postal_code' => $order->shippingAddress->postal_code,
-        'country' => 'Indonesia',
-        'is_primary' => true,
-      ] : null,
-      'refund_requested_at' => $order->refund_requested_at?->toISOString(),
-      'refund_reason' => $order->refund_reason,
-    ]);
-  }
-
-  public function confirmPayment(Request $request, string $orderNumber, OrderService $orderService): JsonResponse
-  {
-    try {
-        $result = $orderService->syncPaymentStatus($request->user(), $orderNumber);
-        return response()->json($result, 200);
-    } catch (\Exception $e) {
-        return response()->json(['message' => $e->getMessage()], 400);
+        return $this->successResponse($data);
     }
-  }
 
-  public function requestRefund(Request $request, string $orderNumber, OrderService $orderService): JsonResponse
-  {
-      $request->validate(['reason' => 'required|string|max:255']);
+    public function confirmPayment(Request $request, string $orderNumber, OrderService $orderService): JsonResponse
+    {
+        try {
+            $result = $orderService->syncPaymentStatus($request->user(), $orderNumber);
 
-      try {
-          $orderService->processRefundRequest($request->user(), $orderNumber, $request->reason);
-          return response()->json(['message' => 'Pengajuan refund berhasil dikirim. Menunggu konfirmasi admin.']);
-      } catch (\Exception $e) {
-          return response()->json(['message' => $e->getMessage()], 400);
-      }
-  }
+            if (! $result['success']) {
+                return $this->errorResponse(
+                    $result['message'] ?? 'Gagal mengkonfirmasi pembayaran',
+                    'confirm_payment_failed',
+                    422
+                );
+            }
+
+            return $this->successResponse(
+                ['order' => $result['order'] ?? null],
+                'Pembayaran berhasil dikonfirmasi'
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                'Terjadi kesalahan saat mengkonfirmasi pembayaran',
+                'confirm_payment_error',
+                500
+            );
+        }
+    }
+
+    public function requestRefund(Request $request, string $orderNumber, OrderService $orderService): JsonResponse
+    {
+        try {
+            $result = $orderService->requestRefund(
+                $request->user(),
+                $orderNumber,
+                $request->input('reason')
+            );
+
+            if (! $result['success']) {
+                return $this->errorResponse(
+                    $result['message'] ?? 'Gagal mengajukan refund',
+                    'refund_request_failed',
+                    422
+                );
+            }
+
+            return $this->successResponse(
+                null,
+                $result['message'] ?? 'Pengajuan refund berhasil'
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                'Terjadi kesalahan saat mengajukan refund',
+                'refund_request_error',
+                500
+            );
+        }
+    }
 }
-

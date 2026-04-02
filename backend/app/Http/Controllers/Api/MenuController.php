@@ -15,11 +15,15 @@ class MenuController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        $formatted = $menus->map(fn($m) => [
+        if ($menus->isEmpty()) {
+            return $this->notFoundResponse('Menu tidak ditemukan');
+        }
+
+        $data = $menus->map(fn ($m) => [
             'title' => $m->title,
             'path' => $m->path,
         ]);
 
-        return response()->json($formatted);
+        return $this->successResponse($data, 'Menu berhasil diambil');
     }
 }

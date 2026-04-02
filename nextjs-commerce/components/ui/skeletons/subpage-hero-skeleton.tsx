@@ -28,16 +28,12 @@ export function SubpageHeroSkeleton({
 
           {/* Title Skeleton - Match exact font sizes */}
           <div className="space-y-3">
-            <Skeleton
-              className="mx-auto h-9 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-3/4 max-w-3xl bg-white/10 rounded-xl"
-            />
+            <Skeleton className="mx-auto h-9 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-3/4 max-w-3xl bg-white/10 rounded-xl" />
           </div>
 
           {/* Subtitle Skeleton - Match exact font sizes */}
           <div className="space-y-2 max-w-2xl mx-auto">
-            <Skeleton
-              className="mx-auto h-4 sm:h-5 md:h-6 w-full bg-white/10 rounded-md"
-            />
+            <Skeleton className="mx-auto h-4 sm:h-5 md:h-6 w-full bg-white/10 rounded-md" />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import {
-    EnvelopeIcon,
-    MapPinIcon,
-    PhoneIcon,
+  EnvelopeIcon,
+  MapPinIcon,
+  PhoneIcon,
 } from "@heroicons/react/24/outline";
 import { SiteSettings } from "lib/api/types";
 import { createSocialUrl } from "lib/utils";
@@ -11,18 +11,48 @@ import { SiShopee } from "react-icons/si";
 
 export function ShopFooter({ settings }: { settings?: SiteSettings }) {
   const currentYear = new Date().getFullYear();
-  const siteName = settings?.general?.site_name || "Mitologi Clothing";
+  const siteName = settings?.general?.siteName || "Mitologi Clothing";
   const siteDescription =
-    settings?.general?.site_description ||
+    settings?.general?.siteDescription ||
     "Koleksi pakaian premium dengan sentuhan budaya dan desain modern. Tampil percaya diri dengan kualitas terbaik.";
 
   const socialLinks = [
-    { name: "Instagram", icon: FaInstagram, href: createSocialUrl("Instagram", settings?.contact?.social_instagram), enabled: settings?.contact?.social_instagram_enabled },
-    { name: "TikTok", icon: FaTiktok, href: createSocialUrl("TikTok", settings?.contact?.social_tiktok), enabled: settings?.contact?.social_tiktok_enabled },
-    { name: "Facebook", icon: FaFacebook, href: createSocialUrl("Facebook", settings?.contact?.social_facebook), enabled: settings?.contact?.social_facebook_enabled },
-    { name: "Shopee", icon: SiShopee, href: createSocialUrl("Shopee", settings?.contact?.social_shopee), enabled: settings?.contact?.social_shopee_enabled },
-    { name: "Twitter", icon: FaTwitter, href: createSocialUrl("Twitter", settings?.contact?.social_twitter), enabled: settings?.contact?.social_twitter_enabled },
-  ].filter((link) => link.href && link.href !== "#" && (link.enabled === undefined || link.enabled === "1"));
+    {
+      name: "Instagram",
+      icon: FaInstagram,
+      href: createSocialUrl("Instagram", settings?.contact?.socialInstagram),
+      enabled: settings?.contact?.socialInstagramEnabled,
+    },
+    {
+      name: "TikTok",
+      icon: FaTiktok,
+      href: createSocialUrl("TikTok", settings?.contact?.socialTiktok),
+      enabled: settings?.contact?.socialTiktokEnabled,
+    },
+    {
+      name: "Facebook",
+      icon: FaFacebook,
+      href: createSocialUrl("Facebook", settings?.contact?.socialFacebook),
+      enabled: settings?.contact?.socialFacebookEnabled,
+    },
+    {
+      name: "Shopee",
+      icon: SiShopee,
+      href: createSocialUrl("Shopee", settings?.contact?.socialShopee),
+      enabled: settings?.contact?.socialShopeeEnabled,
+    },
+    {
+      name: "Twitter",
+      icon: FaTwitter,
+      href: createSocialUrl("Twitter", settings?.contact?.socialTwitter),
+      enabled: settings?.contact?.socialTwitterEnabled,
+    },
+  ].filter(
+    (link) =>
+      link.href &&
+      link.href !== "#" &&
+      (link.enabled === undefined || link.enabled === "1"),
+  );
 
   const footerLinks = {
     belanja: [
@@ -54,11 +84,14 @@ export function ShopFooter({ settings }: { settings?: SiteSettings }) {
                   Ikuti rilisan terbaru
                 </h3>
                 <p className="text-slate-300 text-sm md:text-[15px] max-w-md leading-relaxed">
-                  Dapatkan kabar koleksi baru, restok, dan penawaran musiman dengan ritme yang ringkas dan relevan.
+                  Dapatkan kabar koleksi baru, restok, dan penawaran musiman
+                  dengan ritme yang ringkas dan relevan.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto mt-4 md:mt-0">
-                <label htmlFor="newsletter-email" className="sr-only">Alamat email untuk newsletter</label>
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Alamat email untuk newsletter
+                </label>
                 <input
                   id="newsletter-email"
                   type="email"
@@ -66,7 +99,7 @@ export function ShopFooter({ settings }: { settings?: SiteSettings }) {
                   className="w-full md:w-72 h-12 px-5 bg-white border border-white/10 rounded-[14px] text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-mitologi-gold focus:ring-1 focus:ring-mitologi-gold transition-colors duration-200"
                   autoComplete="email"
                 />
-                  <button className="w-full sm:w-auto h-12 px-8 bg-mitologi-gold inline-flex items-center justify-center text-mitologi-navy rounded-[14px] hover:bg-mitologi-gold-light transition-colors duration-200 text-sm font-bold whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0">
+                <button className="w-full sm:w-auto h-12 px-8 bg-mitologi-gold inline-flex items-center justify-center text-mitologi-navy rounded-[14px] hover:bg-mitologi-gold-light transition-colors duration-200 text-sm font-bold whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0">
                   Berlangganan
                 </button>
               </div>
@@ -115,7 +148,10 @@ export function ShopFooter({ settings }: { settings?: SiteSettings }) {
                 <ul className="space-y-4">
                   {footerLinks.belanja.map((link) => (
                     <li key={`${link.href}-${link.label}`}>
-                      <Link href={link.href} className="text-slate-400 hover:text-mitologi-gold transition-colors duration-200 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mitologi-gold inline-block rounded-sm">
+                      <Link
+                        href={link.href}
+                        className="text-slate-400 hover:text-mitologi-gold transition-colors duration-200 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mitologi-gold inline-block rounded-sm"
+                      >
                         {link.label}
                       </Link>
                     </li>
@@ -130,7 +166,10 @@ export function ShopFooter({ settings }: { settings?: SiteSettings }) {
                 <ul className="space-y-4">
                   {footerLinks.bantuan.map((link) => (
                     <li key={`${link.href}-${link.label}`}>
-                      <Link href={link.href} className="text-slate-400 hover:text-mitologi-gold transition-colors duration-200 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mitologi-gold inline-block rounded-sm">
+                      <Link
+                        href={link.href}
+                        className="text-slate-400 hover:text-mitologi-gold transition-colors duration-200 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mitologi-gold inline-block rounded-sm"
+                      >
                         {link.label}
                       </Link>
                     </li>
@@ -145,7 +184,10 @@ export function ShopFooter({ settings }: { settings?: SiteSettings }) {
                 <ul className="space-y-4">
                   {footerLinks.legal.map((link) => (
                     <li key={`${link.href}-${link.label}`}>
-                      <Link href={link.href} className="text-slate-400 hover:text-mitologi-gold transition-colors duration-200 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mitologi-gold inline-block rounded-sm">
+                      <Link
+                        href={link.href}
+                        className="text-slate-400 hover:text-mitologi-gold transition-colors duration-200 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mitologi-gold inline-block rounded-sm"
+                      >
                         {link.label}
                       </Link>
                     </li>
@@ -159,22 +201,28 @@ export function ShopFooter({ settings }: { settings?: SiteSettings }) {
                 Kontak
               </h3>
               <ul className="space-y-4 text-sm text-slate-400">
-                {settings?.contact?.contact_phone && (
+                {settings?.contact?.contactPhone && (
                   <li className="flex items-center gap-3">
                     <PhoneIcon className="w-4 h-4 flex-shrink-0 text-mitologi-gold" />
-                    <span className="font-medium">{settings.contact.contact_phone}</span>
+                    <span className="font-medium">
+                      {settings.contact.contactPhone}
+                    </span>
                   </li>
                 )}
-                {settings?.contact?.contact_email && (
+                {settings?.contact?.contactEmail && (
                   <li className="flex items-center gap-3">
                     <EnvelopeIcon className="w-4 h-4 flex-shrink-0 text-mitologi-gold" />
-                    <span className="font-medium">{settings.contact.contact_email}</span>
+                    <span className="font-medium">
+                      {settings.contact.contactEmail}
+                    </span>
                   </li>
                 )}
-                {settings?.contact?.contact_address && (
+                {settings?.contact?.contactAddress && (
                   <li className="flex items-start gap-3 group">
                     <MapPinIcon className="w-5 h-5 flex-shrink-0 mt-0.5 text-mitologi-gold" />
-                    <span className="leading-relaxed">{settings.contact.contact_address}</span>
+                    <span className="leading-relaxed">
+                      {settings.contact.contactAddress}
+                    </span>
                   </li>
                 )}
               </ul>

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/mitologi_page_shell.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 
@@ -37,13 +37,17 @@ class KebijakanPrivasiScreen extends StatelessWidget {
     );
   }
 
-  Widget buildBullet(String text) {
+  Widget buildBullet(String text, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+      padding: EdgeInsets.only(
+        bottom: 8,
+        left: ResponsiveHelper.horizontalPadding(context) / 2,
+        right: ResponsiveHelper.horizontalPadding(context) / 2,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 6, right: 12),
             child: Icon(Icons.circle, size: 6, color: AppTheme.slate400),
           ),
@@ -88,15 +92,19 @@ class KebijakanPrivasiScreen extends StatelessWidget {
               ),
               buildBullet(
                 'Informasi Identitas Diri: Nama lengkap, alamat email, nomor telepon, dan tanggal lahir saat Anda mendaftar akun.',
+                context,
               ),
               buildBullet(
                 'Informasi Pengiriman: Alamat lengkap untuk pengiriman barang pesanan Anda.',
+                context,
               ),
               buildBullet(
                 'Informasi Transaksi: Rincian pesanan, riwayat pembelian, dan status pembayaran. (Catatan: Kami tidak menyimpan detail kartu kredit/debit Anda di server kami).',
+                context,
               ),
               buildBullet(
                 'Data Interaksi: Informasi tentang cara Anda menggunakan aplikasi kami, produk yang dilihat, dan waktu kunjungan.',
+                context,
               ),
 
               buildHeading('2. Bagaimana Kami Menggunakan Informasi Anda'),
@@ -105,18 +113,23 @@ class KebijakanPrivasiScreen extends StatelessWidget {
               ),
               buildBullet(
                 'Memproses dan memenuhi pesanan Anda secara efisien.',
+                context,
               ),
               buildBullet(
                 'Berkomunikasi dengan Anda mengenai status pesanan, pengiriman, atau kendala layanan.',
+                context,
               ),
               buildBullet(
                 'Memberikan dukungan pelanggan yang lebih baik dan dipersonalisasi.',
+                context,
               ),
               buildBullet(
                 'Meningkatkan kualitas produk, layanan pelanggan, dan pengalaman pengguna aplikasi kami.',
+                context,
               ),
               buildBullet(
                 'Mengirimkan informasi promo, penawaran khusus, dan update koleksi terbaru (jika Anda berlangganan buletin kami).',
+                context,
               ),
 
               buildHeading('3. Perlindungan Data Anda'),
@@ -130,9 +143,11 @@ class KebijakanPrivasiScreen extends StatelessWidget {
               ),
               buildBullet(
                 'Mitra Logistik: Untuk keperluan pengiriman pesanan Anda (seperti JNE, J&T, SiCepat).',
+                context,
               ),
               buildBullet(
                 'Payment Gateway: Untuk memproses pembayaran dengan aman (seperti Midtrans).',
+                context,
               ),
               buildParagraph(
                 'Pihak ketiga ini setuju untuk menjaga kerahasiaan informasi ini dan hanya menggunakannya untuk tujuan layanan yang mereka berikan.',
@@ -149,12 +164,15 @@ class KebijakanPrivasiScreen extends StatelessWidget {
               ),
               buildBullet(
                 'Hak Mengakses: Anda dapat melihat dan memperbarui informasi akun Anda kapan saja.',
+                context,
               ),
               buildBullet(
                 'Hak Penghapusan: Anda berhak meminta penghapusan akun dan data pribadi Anda dari sistem kami.',
+                context,
               ),
               buildBullet(
                 'Berhenti Berlangganan: Anda dapat memilih untuk tidak menerima email pemasaran dari kami kapan saja melalui tautan di bagian bawah email kami.',
+                context,
               ),
 
               const SizedBox(height: 24),

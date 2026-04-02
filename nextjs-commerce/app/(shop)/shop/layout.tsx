@@ -1,4 +1,3 @@
-
 import LazyChatbot from "components/shop/lazy-chatbot";
 import { ShopFooter } from "components/shop/shop-footer";
 import { ShopNavbar } from "components/shop/shop-navbar";
@@ -7,7 +6,7 @@ import { AuthProvider } from "lib/hooks/useAuth";
 import { CartProvider } from "lib/hooks/useCart";
 import { ReactNode } from "react";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function ShopLayout({
@@ -16,7 +15,7 @@ export default async function ShopLayout({
   children: ReactNode;
 }) {
   const data = await getLandingPageData();
-  const settings = data.site_settings;
+  const settings = data?.siteSettings;
 
   return (
     <AuthProvider>

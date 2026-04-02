@@ -1,11 +1,15 @@
 "use client";
 
-import { CheckIcon } from '@heroicons/react/24/solid';
-import { SectionHeading } from 'components/ui/section-heading';
-import { PrintingMethod } from 'lib/api/types';
-import { storageUrl } from 'lib/utils/storage-url';
-import Image from 'next/image';
-import { MotionSection, StaggerGrid, StaggerGridItem } from 'components/ui/motion';
+import { CheckIcon } from "@heroicons/react/24/solid";
+import { SectionHeading } from "components/ui/section-heading";
+import { PrintingMethod } from "lib/api/types";
+import { storageUrl } from "lib/utils/storage-url";
+import Image from "next/image";
+import {
+  MotionSection,
+  StaggerGrid,
+  StaggerGridItem,
+} from "components/ui/motion";
 
 export function PrintingMethods({ methods }: { methods?: PrintingMethod[] }) {
   if (!methods || methods.length === 0) return null;
@@ -18,9 +22,9 @@ export function PrintingMethods({ methods }: { methods?: PrintingMethod[] }) {
 
       <div className="relative mx-auto max-w-[1440px] px-6 lg:px-8 z-10">
         <div className="mx-auto max-w-3xl text-center mb-16 flex flex-col items-center">
-          <SectionHeading 
+          <SectionHeading
             overline="Eksplorasi Teknik Sablon"
-            title="Pilih Sesuai Kebutuhan Anda" 
+            title="Pilih Sesuai Kebutuhan Anda"
             subtitle="Kami menyediakan berbagai teknik printing berkualitas tinggi, dari sablon manual legendaris hingga digital printing modern."
             className="items-center"
           />
@@ -28,8 +32,8 @@ export function PrintingMethods({ methods }: { methods?: PrintingMethod[] }) {
 
         <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-[1440px] mx-auto">
           {methods.map((method, index) => (
-            <StaggerGridItem 
-              key={method.id} 
+            <StaggerGridItem
+              key={method.id}
               className="group flex flex-col bg-white rounded-2xl md:rounded-[2rem] overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:border-mitologi-gold/30 hover:-translate-y-2 transition-all duration-300 relative"
             >
               {/* Number Badge */}
@@ -53,15 +57,15 @@ export function PrintingMethods({ methods }: { methods?: PrintingMethod[] }) {
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-mitologi-navy to-slate-800 opacity-90"></div>
                 )}
-                
+
                 {/* Title overlay on image */}
                 <div className="absolute bottom-0 left-0 p-4 sm:p-6 w-full">
                   <h3 className="text-lg sm:text-2xl font-bold font-sans text-white tracking-tight leading-tight group-hover:text-mitologi-gold transition-colors duration-300 line-clamp-2">
                     {method.name}
                   </h3>
-                  {method.price_range && (
+                  {method.priceRange && (
                     <span className="inline-block mt-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-[10px] sm:text-xs font-bold font-sans text-white border border-white/20">
-                      {method.price_range}
+                      {method.priceRange}
                     </span>
                   )}
                 </div>
@@ -78,7 +82,7 @@ export function PrintingMethods({ methods }: { methods?: PrintingMethod[] }) {
                     <span className="w-4 h-px bg-mitologi-gold/50"></span>
                     Keunggulan
                   </h4>
-                  
+
                   {method.pros && method.pros.length > 0 && (
                     <ul className="space-y-2 sm:space-y-3">
                       {method.pros.map((pro, i) => (

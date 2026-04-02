@@ -1,5 +1,3 @@
-library animations;
-
 export 'blur_fade.dart';
 export 'shimmer_button.dart';
 export 'page_transitions.dart';

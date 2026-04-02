@@ -1,11 +1,13 @@
-
 import { AboutSection } from "components/landing/sections/about-section";
 import { CategoryPricelist } from "components/landing/sections/category-pricelist";
 import { CTASection } from "components/landing/sections/cta-section";
 import { GuaranteeBonus } from "components/landing/sections/guarantee-bonus";
 import { Hero } from "components/landing/sections/hero";
 import { MaterialShowcase } from "components/landing/sections/material-showcase";
-import { NewArrivals, NewArrivalsSkeleton } from "components/landing/sections/new-arrivals";
+import {
+  NewArrivals,
+  NewArrivalsSkeleton,
+} from "components/landing/sections/new-arrivals";
 import { OrderFlow } from "components/landing/sections/order-flow";
 import { PartnerClients } from "components/landing/sections/partner-clients";
 import { PlastisolPricing } from "components/landing/sections/plastisol-pricing";
@@ -16,21 +18,25 @@ import { getLandingPageData } from "lib/api";
 import { storageUrl } from "lib/utils/storage-url";
 import { Suspense } from "react";
 
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getLandingPageData();
-  const settings = data?.site_settings;
+  const settings = data?.siteSettings;
 
   return {
-    title: settings?.seo?.seo_meta_title || "Mitologi Clothing",
-    description: settings?.seo?.seo_meta_description || "Mitologi Clothing - Vendor Clothing Terpercaya Asal Indramayu. Spesialis Kaos, Jersey, Kemeja, dan Merchandise.",
+    title: settings?.seo?.seoMetaTitle || "Mitologi Clothing",
+    description:
+      settings?.seo?.seoMetaDescription ||
+      "Mitologi Clothing - Vendor Clothing Terpercaya Asal Indramayu. Spesialis Kaos, Jersey, Kemeja, dan Merchandise.",
     openGraph: {
       type: "website",
-      images: settings?.seo?.seo_og_image ? [storageUrl(settings.seo.seo_og_image)] : [],
+      images: settings?.seo?.seoOgImage
+        ? [storageUrl(settings.seo.seoOgImage)]
+        : [],
     },
   };
 }
@@ -40,48 +46,48 @@ export default async function HomePage() {
 
   return (
     <>
-    <Suspense fallback={null}>
-      <Hero slides={data?.hero_slides} />
-      
-      {/* Company Profile Integration */}
-      <AboutSection settings={data?.site_settings} />
-      
-      {/* <ServicesOverview settings={data.site_settings} /> */}
+      <Suspense fallback={null}>
+        <Hero slides={data?.heroSlides} />
 
-      <PlastisolPricing settings={data?.site_settings} />
-      <CategoryPricelist pricings={data?.product_pricings} />
+        {/* Company Profile Integration */}
+        <AboutSection settings={data?.siteSettings} />
 
-      <Suspense fallback={<NewArrivalsSkeleton />}>
-        <NewArrivals 
-          products={data?.new_arrivals} 
-          title="New Release" 
-          subtitle="Koleksi Terbaru" 
-          description="Jelajahi produk terbaru kami dengan material premium dan desain eksklusif."
-        />
+        {/* <ServicesOverview settings={data.siteSettings} /> */}
+
+        <PlastisolPricing settings={data?.siteSettings} />
+        <CategoryPricelist pricings={data?.productPricings} />
+
+        <Suspense fallback={<NewArrivalsSkeleton />}>
+          <NewArrivals
+            products={data?.newArrivals}
+            title="New Release"
+            subtitle="Koleksi Terbaru"
+            description="Jelajahi produk terbaru kami dengan material premium dan desain eksklusif."
+          />
+        </Suspense>
+
+        <Suspense fallback={<NewArrivalsSkeleton />}>
+          <NewArrivals
+            products={data?.bestSellers}
+            title="Best Sellers"
+            subtitle="Produk Terlaris"
+            description="Pilihan favorit pelanggan kami yang paling banyak dicari dan diminati."
+          />
+        </Suspense>
+
+        <WhyChooseUs settings={data?.siteSettings} />
+        <GuaranteeBonus settings={data?.siteSettings} />
+        <MaterialShowcase materials={data?.materials} />
+
+        <div className="bg-slate-50/50">
+          <OrderFlow orderSteps={data?.orderSteps} />
+        </div>
+
+        <PortfolioGallery items={data?.portfolioItems} />
+        <PartnerClients partners={data?.partners} />
+        <Testimonials testimonials={data?.testimonials} />
+        <CTASection cta={data?.cta} />
       </Suspense>
-      
-      <Suspense fallback={<NewArrivalsSkeleton />}>
-        <NewArrivals 
-          products={data?.best_sellers} 
-          title="Best Sellers" 
-          subtitle="Produk Terlaris" 
-          description="Pilihan favorit pelanggan kami yang paling banyak dicari dan diminati."
-        />
-      </Suspense>
-
-      <WhyChooseUs settings={data?.site_settings} />
-      <GuaranteeBonus settings={data?.site_settings} />
-      <MaterialShowcase materials={data?.materials} />
-      
-      <div className="bg-slate-50/50">
-        <OrderFlow orderSteps={data?.order_steps} />
-      </div>
-
-      <PortfolioGallery items={data?.portfolio_items} />
-      <PartnerClients partners={data?.partners} />
-      <Testimonials testimonials={data?.testimonials} />
-      <CTASection cta={data?.cta} />
-    </Suspense>
     </>
   );
 }

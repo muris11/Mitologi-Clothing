@@ -5,7 +5,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../../models/collection.dart';
 import '../../providers/content_provider.dart';
 import '../../providers/auth_provider.dart';
-import '../../providers/product_provider.dart';
 import '../../models/product.dart';
 import '../../services/collection_service.dart';
 import '../../services/product_service.dart';
@@ -71,13 +70,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _handleRefresh() async {
     await _loadData();
-    await context.read<ContentProvider>().fetchLandingPage();
+    if (mounted) {
+      await context.read<ContentProvider>().fetchLandingPage();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final horizontalPadding = ResponsiveHelper.horizontalPadding(context);
-
     return MitologiScaffold(
       title: 'Mitologi Clothing',
       subtitle: 'Premium clothing dengan kurasi koleksi dan inspirasi belanja.',
@@ -725,7 +724,7 @@ class _HomeScreenState extends State<HomeScreen> {
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             itemCount: _collections.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 16),
+            separatorBuilder: (_, index) => const SizedBox(width: 16),
             itemBuilder: (context, index) {
               final collection = _collections[index];
               return FadeInUp(
@@ -902,7 +901,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: recommendations.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 12),
+                  separatorBuilder: (_, index) => const SizedBox(width: 12),
                   itemBuilder: (context, index) {
                     return SizedBox(
                       width: 160,
@@ -940,7 +939,7 @@ class _HomeScreenState extends State<HomeScreen> {
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             itemCount: materials.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            separatorBuilder: (_, index) => const SizedBox(width: 12),
             itemBuilder: (context, index) {
               final material = materials[index];
               return Container(
@@ -1014,7 +1013,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: testimonials.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 16),
+              separatorBuilder: (_, index) => const SizedBox(width: 16),
               itemBuilder: (context, index) {
                 final testimonial = testimonials[index];
                 return Container(

@@ -15,9 +15,9 @@ export function NewArrivalsSkeleton() {
       <div className="mx-auto max-w-[1440px] px-6 lg:px-8 mb-12">
         <div className="mx-auto max-w-2xl text-center flex flex-col items-center">
           <div className="inline-flex items-center gap-2 mb-4">
-             <Skeleton className="h-1 w-8 bg-slate-200 rounded-full" />
-             <Skeleton className="h-4 w-24 bg-slate-200 rounded-full" />
-             <Skeleton className="h-1 w-8 bg-slate-200 rounded-full" />
+            <Skeleton className="h-1 w-8 bg-slate-200 rounded-full" />
+            <Skeleton className="h-4 w-24 bg-slate-200 rounded-full" />
+            <Skeleton className="h-1 w-8 bg-slate-200 rounded-full" />
           </div>
           <Skeleton className="h-8 md:h-12 w-3/4 max-w-md bg-slate-200 rounded-md mb-4" />
           <Skeleton className="h-4 md:h-5 w-5/6 max-w-lg bg-slate-200 rounded-md" />
@@ -78,7 +78,10 @@ export function NewArrivals({
         <ProductGridAnimated products={products} />
       </div>
 
-      <div className="mt-12 text-center relative z-10 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+      <div
+        className="mt-12 text-center relative z-10 animate-fade-in-up"
+        style={{ animationDelay: "200ms" }}
+      >
         <Button
           asChild
           size="lg"

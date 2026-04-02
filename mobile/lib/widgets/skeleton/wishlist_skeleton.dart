@@ -32,7 +32,7 @@ class WishlistSkeleton extends StatelessWidget {
               mainAxisSpacing: 16,
             ),
             itemCount: 6,
-            itemBuilder: (_, __) => _buildProductCardSkeleton(),
+            itemBuilder: (_, index) => _buildProductCardSkeleton(),
           );
         },
       ),

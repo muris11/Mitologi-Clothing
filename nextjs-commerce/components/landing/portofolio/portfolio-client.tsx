@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import { SubpageHero } from 'components/landing/shared/subpage-hero';
-import { Button } from 'components/ui/button';
-import { PortfolioItem } from 'lib/api/types';
-import { storageUrl } from 'lib/utils/storage-url';
-import Image from 'next/image';
-import Link from 'next/link';
-import { MotionDiv, MotionSection } from 'components/ui/motion';
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { SubpageHero } from "components/landing/shared/subpage-hero";
+import { Button } from "components/ui/button";
+import { PortfolioItem } from "lib/api/types";
+import { storageUrl } from "lib/utils/storage-url";
+import Image from "next/image";
+import Link from "next/link";
+import { MotionDiv, MotionSection } from "components/ui/motion";
 
 export function PortfolioClient({ portfolio }: { portfolio: PortfolioItem }) {
-  const hasImage = portfolio.image_url && portfolio.image_url.length > 0;
-  const imageUrl = hasImage ? storageUrl(portfolio.image_url) : null;
+  const hasImage = portfolio.imageUrl && portfolio.imageUrl.length > 0;
+  const imageUrl = hasImage ? storageUrl(portfolio.imageUrl) : null;
 
   return (
     <main className="bg-slate-50 min-h-screen">
@@ -30,8 +30,8 @@ export function PortfolioClient({ portfolio }: { portfolio: PortfolioItem }) {
         <div className="relative mx-auto max-w-[1440px] px-6 lg:px-8">
           {/* Back Button */}
           <div className="mb-12 lg:mb-16">
-            <Link 
-              href="/portofolio" 
+            <Link
+              href="/portofolio"
               className="inline-flex items-center gap-2 bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-mitologi-gold/30 transition-all duration-300 rounded-full py-3 px-6 font-sans font-bold text-sm text-slate-600 hover:text-mitologi-navy"
             >
               <ArrowLeftIcon className="h-4 w-4" />
@@ -70,21 +70,28 @@ export function PortfolioClient({ portfolio }: { portfolio: PortfolioItem }) {
             </MotionDiv>
 
             {/* Right: Content */}
-            <MotionDiv delay={0.3} className="lg:col-span-7 flex flex-col justify-center">
+            <MotionDiv
+              delay={0.3}
+              className="lg:col-span-7 flex flex-col justify-center"
+            >
               {/* Section Badge */}
               <div className="inline-flex items-center gap-3 mb-6 sm:mb-8 bg-white border border-slate-200 shadow-sm rounded-full py-2 px-5 w-fit">
-                <span className="text-mitologi-navy font-sans font-bold uppercase tracking-[0.2em] text-[11px] sm:text-xs">Detail Proyek</span>
+                <span className="text-mitologi-navy font-sans font-bold uppercase tracking-[0.2em] text-[11px] sm:text-xs">
+                  Detail Proyek
+                </span>
               </div>
 
               {/* Description Card */}
               <div className="relative mb-10">
                 <div className="absolute top-2 bottom-0 left-[11px] w-px bg-gradient-to-b from-mitologi-gold via-slate-200 to-transparent" />
-                
+
                 <div className="space-y-6 pl-8 sm:pl-10">
                   {portfolio.description ? (
                     <div
                       className="text-slate-600 leading-[1.7] font-sans font-medium text-sm sm:text-[15px] lg:text-base text-justify [&>p]:mb-6 [&>h1]:text-3xl [&>h1]:sm:text-4xl [&>h1]:font-black [&>h1]:text-mitologi-navy [&>h1]:mb-6 [&>h1]:tracking-tight [&>h2]:text-2xl [&>h2]:sm:text-3xl [&>h2]:font-bold [&>h2]:text-mitologi-navy [&>h2]:mb-4 [&>h2]:mt-10 [&>h2]:tracking-tight [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:text-mitologi-navy [&>h3]:mb-3 [&>h3]:mt-8 [&>ul]:list-disc [&>ul]:pl-5 [&>ul>li]:mb-2 [&>ul>li]:text-[15px] sm:[&>ul>li]:text-[17px] [&>ol]:list-decimal [&>ol]:pl-5 [&>ol>li]:mb-2 [&>ol>li]:text-[15px] sm:[&>ol>li]:text-[17px] [&>strong]:text-mitologi-navy [&>strong]:font-bold [&>a]:text-mitologi-gold [&>a]:underline [&>a]:underline-offset-2 hover:[&>a]:text-mitologi-navy transition-colors"
-                      dangerouslySetInnerHTML={{ __html: portfolio.description }}
+                      dangerouslySetInnerHTML={{
+                        __html: portfolio.description,
+                      }}
                     />
                   ) : (
                     <p className="text-slate-500 leading-[1.7] font-sans text-sm sm:text-[15px] lg:text-base text-justify italic">
@@ -107,12 +114,15 @@ export function PortfolioClient({ portfolio }: { portfolio: PortfolioItem }) {
                   Terinspirasi dengan karya ini?
                 </h3>
                 <p className="text-slate-600 font-sans mb-8 text-sm sm:text-base leading-relaxed max-w-md">
-                  Diskusikan kebutuhan seragam, kaos event, atau merchandise premium Anda bersama tim ahli kami.
+                  Diskusikan kebutuhan seragam, kaos event, atau merchandise
+                  premium Anda bersama tim ahli kami.
                 </p>
-                <Button asChild className="w-full sm:w-auto text-sm sm:text-base font-bold shadow-lg shadow-mitologi-gold/20 hover:shadow-xl hover:shadow-mitologi-gold/30 hover:-translate-y-0.5 transition-all rounded-full py-6 px-8" variant="primary">
-                  <Link href="/kontak">
-                    Mulai Diskusi Proyek
-                  </Link>
+                <Button
+                  asChild
+                  className="w-full sm:w-auto text-sm sm:text-base font-bold shadow-lg shadow-mitologi-gold/20 hover:shadow-xl hover:shadow-mitologi-gold/30 hover:-translate-y-0.5 transition-all rounded-full py-6 px-8"
+                  variant="primary"
+                >
+                  <Link href="/kontak">Mulai Diskusi Proyek</Link>
                 </Button>
               </div>
             </MotionDiv>

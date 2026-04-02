@@ -510,11 +510,11 @@ class AppTheme {
                 fontWeight: FontWeight.w700,
               ),
             ).copyWith(
-              overlayColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.pressed)) {
+              overlayColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.pressed)) {
                   return onPrimary.withValues(alpha: 0.12);
                 }
-                if (states.contains(MaterialState.hovered)) {
+                if (states.contains(WidgetState.hovered)) {
                   return onPrimary.withValues(alpha: 0.08);
                 }
                 return null;
@@ -551,8 +551,8 @@ class AppTheme {
                 fontWeight: FontWeight.w700,
               ),
             ).copyWith(
-              overlayColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.pressed)) {
+              overlayColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.pressed)) {
                   return primary.withValues(alpha: 0.08);
                 }
                 return null;
@@ -571,8 +571,8 @@ class AppTheme {
                 fontWeight: FontWeight.w700,
               ),
             ).copyWith(
-              overlayColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.pressed)) {
+              overlayColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.pressed)) {
                   return primary.withValues(alpha: 0.08);
                 }
                 return null;
@@ -745,38 +745,38 @@ class AppTheme {
 
       // Switch Theme
       switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return primary;
           }
           return surface;
         }),
-        trackColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return primary.withValues(alpha: 0.5);
           }
           return outline;
         }),
-        trackOutlineColor: MaterialStateProperty.all(Colors.transparent),
+        trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
       ),
 
       // Checkbox Theme
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return primary;
           }
           return surface;
         }),
-        checkColor: MaterialStateProperty.all(onPrimary),
+        checkColor: WidgetStateProperty.all(onPrimary),
         side: const BorderSide(color: outline, width: 2),
         shape: RoundedRectangleBorder(borderRadius: radius6),
       ),
 
       // Radio Theme
       radioTheme: RadioThemeData(
-        fillColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return primary;
           }
           return outline;

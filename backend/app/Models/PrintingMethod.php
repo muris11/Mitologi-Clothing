@@ -7,22 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class PrintingMethod extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $fillable = [
-    'name',
-    'slug',
-    'description',
-    'image',
-    'pros',
-    'price_range',
-    'is_active',
-    'sort_order',
-  ];
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'image',
+        'pros',
+        'price_range',
+        'is_active',
+        'sort_order',
+    ];
 
-  protected $casts = [
-    'pros' => 'array',
-    'is_active' => 'boolean',
-    'sort_order' => 'integer',
-  ];
+    protected $casts = [
+        'pros' => 'array',
+        'is_active' => 'boolean',
+        'sort_order' => 'integer',
+    ];
 }

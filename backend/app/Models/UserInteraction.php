@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserInteraction extends Model
 {
     protected $fillable = ['user_id', 'product_id', 'type', 'score'];
+
     public $timestamps = false;
 
     protected $casts = ['created_at' => 'datetime'];

@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -37,13 +36,17 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth-token')->plainTextToken;
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Registrasi berhasil',
-            'user' => new UserResource($user),
-            'token' => $token,
-            'cart_id' => $cart ? ($cart->session_id ?? (string) $cart->id) : null,
-        ], 201);
+        $user->load('addresses');
+
+        return $this->successResponse(
+            [
+                'user' => new UserResource($user),
+                'token' => $token,
+                'cartId' => $cart ? ($cart->session_id ?? (string) $cart->id) : null,
+            ],
+            'Registrasi berhasil',
+            201
+        );
     }
 
     public function login(LoginRequest $request): JsonResponse
@@ -52,16 +55,20 @@ class AuthController extends Controller
 
         $user = User::where('email', $validated['email'])->first();
 
-        if (!$user || !Hash::check($validated['password'], $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Email atau password salah.'],
-            ]);
+        if (! $user || ! Hash::check($validated['password'], $user->password)) {
+            return $this->errorResponse(
+                'Email atau password salah.',
+                'invalid_credentials',
+                401
+            );
         }
 
         if ($user->role === 'admin') {
-            throw ValidationException::withMessages([
-                'email' => ['Akun admin tidak dapat login di halaman ini.'],
-            ]);
+            return $this->errorResponse(
+                'Akun admin tidak dapat login di halaman ini.',
+                'invalid_role',
+                403
+            );
         }
 
         $user->tokens()->delete();
@@ -70,13 +77,16 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth-token')->plainTextToken;
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Login berhasil',
-            'user' => new UserResource($user),
-            'token' => $token,
-            'cart_id' => $cart ? ($cart->session_id ?? (string) $cart->id) : null,
-        ]);
+        $user->load('addresses');
+
+        return $this->successResponse(
+            [
+                'user' => new UserResource($user),
+                'token' => $token,
+                'cartId' => $cart ? ($cart->session_id ?? (string) $cart->id) : null,
+            ],
+            'Login berhasil'
+        );
     }
 
     public function logout(Request $request): JsonResponse
@@ -87,13 +97,15 @@ class AuthController extends Controller
             $accessToken->delete();
         }
 
-        return response()->json(['message' => 'Berhasil logout']);
+        return $this->successResponse(null, 'Berhasil logout');
     }
 
     public function user(Request $request): JsonResponse
     {
-        return response()->json([
-            'user' => new UserResource($request->user()),
-        ]);
+        $user = $request->user()->load('addresses');
+
+        return $this->successResponse(
+            new UserResource($user)
+        );
     }
 }

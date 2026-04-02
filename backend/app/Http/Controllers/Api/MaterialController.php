@@ -8,12 +8,20 @@ use Illuminate\Http\JsonResponse;
 
 class MaterialController extends Controller
 {
-    /**
-     * Get all materials ordered by sort_order
-     */
     public function index(): JsonResponse
     {
-        $materials = Material::orderBy('sort_order')->get();
-        return response()->json($materials);
+        $materials = Material::orderBy('sort_order')
+            ->get()
+            ->map(fn ($m) => [
+                'id' => $m->id,
+                'name' => $m->name,
+                'description' => $m->description,
+                'image' => $m->image,
+                'sortOrder' => $m->sort_order,
+                'createdAt' => $m->created_at?->toISOString(),
+                'updatedAt' => $m->updated_at?->toISOString(),
+            ]);
+
+        return $this->successResponse($materials, 'Daftar material berhasil diambil');
     }
 }

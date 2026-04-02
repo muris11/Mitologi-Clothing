@@ -2,12 +2,11 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\Order;
 use App\Models\User;
-use App\Models\WebhookEvent;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
+use Tests\TestCase;
 
 class MidtransWebhookTest extends TestCase
 {
@@ -26,7 +25,7 @@ class MidtransWebhookTest extends TestCase
             'status' => 'pending',
             'subtotal' => 10000,
             'total' => 10000,
-            'currency_code' => 'IDR'
+            'currency_code' => 'IDR',
         ]);
 
         $payload = [
@@ -36,7 +35,7 @@ class MidtransWebhookTest extends TestCase
             'signature_key' => 'invalid_signature',
             'transaction_status' => 'settlement',
             'payment_type' => 'credit_card',
-            'fraud_status' => 'accept'
+            'fraud_status' => 'accept',
         ];
 
         $response = $this->postJson('/api/checkout/notification', $payload);

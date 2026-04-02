@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Services\RecommendationService;
+use Illuminate\Console\Command;
 
 class TrainModel extends Command
 {
@@ -27,17 +27,17 @@ class TrainModel extends Command
     public function handle(RecommendationService $service)
     {
         $this->info('Starting model training...');
-        
+
         try {
             $result = $service->train();
-            
+
             if ($result) {
                 $this->info('Model trained successfully.');
             } else {
                 $this->error('Model training failed (Service returned false).');
             }
         } catch (\Exception $e) {
-            $this->error('Error: ' . $e->getMessage());
+            $this->error('Error: '.$e->getMessage());
         }
     }
 }

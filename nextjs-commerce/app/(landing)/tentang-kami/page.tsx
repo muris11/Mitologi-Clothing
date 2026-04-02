@@ -7,15 +7,17 @@ import { AboutVisionMission } from "components/landing/about/vision-mission";
 import { SubpageHero } from "components/landing/shared/subpage-hero";
 import { getLandingPageData } from "lib/api";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function generateMetadata() {
   const data = await getLandingPageData();
-  const settings = data.site_settings;
-  
-  const title = `Tentang Kami | ${settings?.general?.site_name || 'Mitologi Clothing'}`;
-  const description = settings?.general?.site_description || 'Profil Mitologi Clothing - Vendor Clothing profesional dari Indramayu yang mengutamakan kualitas, ketepatan waktu, dan nilai budaya.';
+  const settings = data?.siteSettings;
+
+  const title = `Tentang Kami | ${settings?.general?.siteName || "Mitologi Clothing"}`;
+  const description =
+    settings?.general?.siteDescription ||
+    "Profil Mitologi Clothing - Vendor Clothing profesional dari Indramayu yang mengutamakan kualitas, ketepatan waktu, dan nilai budaya.";
 
   return {
     title,
@@ -23,35 +25,40 @@ export async function generateMetadata() {
     openGraph: {
       title,
       description,
-      type: 'website',
+      type: "website",
       url: `${process.env.NEXT_PUBLIC_SITE_URL}/tentang-kami`,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title,
       description,
-    }
+    },
   };
 }
 
 export default async function AboutPage() {
   const data = await getLandingPageData();
-  const settings = data.site_settings;
+  const settings = data?.siteSettings;
 
   return (
     <>
       <SubpageHero
-        title={`Tentang ${settings?.general?.site_name || 'Kami'}`}
-        subtitle={settings?.about?.about_headline || settings?.general?.site_tagline || settings?.general?.site_description || ''}
+        title={`Tentang ${settings?.general?.siteName || "Kami"}`}
+        subtitle={
+          settings?.about?.aboutHeadline ||
+          settings?.general?.siteTagline ||
+          settings?.general?.siteDescription ||
+          ""
+        }
         badge={true}
-        badgeText={settings?.general?.site_name || "Mitologi Clothing"}
+        badgeText={settings?.general?.siteName || "Mitologi Clothing"}
       />
       <AboutHistory settings={settings} />
       <FounderStory settings={settings} />
       <AboutVisionMission settings={settings} />
-      <ProductionFacilities facilities={data.facilities} />
+      <ProductionFacilities facilities={data?.facilities || []} />
       <CompanyLegality settings={settings} />
-      <TeamStructure teamMembers={data.team_members} />
+      <TeamStructure teamMembers={data?.teamMembers || []} />
     </>
   );
 }

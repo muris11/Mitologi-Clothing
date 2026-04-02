@@ -9,12 +9,12 @@ import React, {
   Fragment,
 } from "react";
 import { Transition } from "@headlessui/react";
-import { 
-  XMarkIcon, 
-  CheckCircleIcon, 
-  ExclamationCircleIcon, 
+import {
+  XMarkIcon,
+  CheckCircleIcon,
+  ExclamationCircleIcon,
   ExclamationTriangleIcon,
-  InformationCircleIcon 
+  InformationCircleIcon,
 } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 
@@ -48,17 +48,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const addToast = useCallback(
-    ({
-      title,
-      description,
-      variant,
-      duration = 4000,
-    }: Omit<Toast, "id">) => {
+    ({ title, description, variant, duration = 4000 }: Omit<Toast, "id">) => {
       const id = Date.now().toString();
-      setToasts((arr) => [...arr, { id, title, description, variant, duration }]);
+      setToasts((arr) => [
+        ...arr,
+        { id, title, description, variant, duration },
+      ]);
       setTimeout(() => removeToast(id), duration);
     },
-    [removeToast]
+    [removeToast],
   );
 
   return (
@@ -87,27 +85,37 @@ function variantStyles(variant: ToastVariant) {
   }
 }
 
-function VariantIcon({ variant, className }: { variant: ToastVariant; className?: string }) {
+function VariantIcon({
+  variant,
+  className,
+}: {
+  variant: ToastVariant;
+  className?: string;
+}) {
   switch (variant) {
     case "success":
-      return <CheckCircleIcon className={clsx("text-emerald-500", className)} />;
+      return (
+        <CheckCircleIcon className={clsx("text-emerald-500", className)} />
+      );
     case "error":
-      return <ExclamationCircleIcon className={clsx("text-red-500", className)} />;
+      return (
+        <ExclamationCircleIcon className={clsx("text-red-500", className)} />
+      );
     case "warning":
-      return <ExclamationTriangleIcon className={clsx("text-amber-500", className)} />;
+      return (
+        <ExclamationTriangleIcon
+          className={clsx("text-amber-500", className)}
+        />
+      );
     case "info":
     default:
-      return <InformationCircleIcon className={clsx("text-sky-500", className)} />;
+      return (
+        <InformationCircleIcon className={clsx("text-sky-500", className)} />
+      );
   }
 }
 
-function ToastItem({
-  toast,
-  onClose,
-}: {
-  toast: Toast;
-  onClose: () => void;
-}) {
+function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
   return (
     <Transition
       appear
@@ -123,7 +131,7 @@ function ToastItem({
       <div
         className={clsx(
           "max-w-md w-full border-l-4 shadow-soft rounded-xl p-4 flex items-start pointer-events-auto",
-          variantStyles(toast.variant)
+          variantStyles(toast.variant),
         )}
         role="alert"
         aria-live="assertive"
@@ -134,7 +142,9 @@ function ToastItem({
         <div className="ml-3 flex-1 pt-0.5">
           <p className="text-sm font-semibold leading-5">{toast.title}</p>
           {toast.description && (
-            <p className="text-xs mt-1 opacity-90 leading-normal">{toast.description}</p>
+            <p className="text-xs mt-1 opacity-90 leading-normal">
+              {toast.description}
+            </p>
           )}
         </div>
         <div className="ml-4 flex-shrink-0 flex">

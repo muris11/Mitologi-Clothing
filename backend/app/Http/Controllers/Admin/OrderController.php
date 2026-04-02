@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 use App\Http\Requests\Admin\OrderUpdateRequest;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -23,17 +22,19 @@ class OrderController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('order_number', 'like', "%{$search}%")
-                  ->orWhereHas('user', fn($u) => $u->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%"));
+                    ->orWhereHas('user', fn ($u) => $u->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%"));
             });
         }
 
         $orders = $query->paginate(10)->withQueryString();
+
         return view('admin.orders.index', compact('orders'));
     }
 
     public function show(Order $order)
     {
         $order->load(['user', 'items.product', 'shippingAddress']);
+
         return view('admin.orders.show', compact('order'));
     }
 
@@ -65,6 +66,7 @@ class OrderController extends Controller
         ]);
 
         Log::info("Admin approved refund for order #{$order->order_number}.");
+
         return redirect()->route('admin.orders.show', $order)->with('success', 'Refund berhasil disetujui.');
     }
 
@@ -85,6 +87,7 @@ class OrderController extends Controller
         ]);
 
         Log::info("Admin rejected refund for order #{$order->order_number}.");
+
         return redirect()->route('admin.orders.show', $order)->with('success', 'Pengajuan refund ditolak, pesanan kembali diproses.');
     }
 }

@@ -26,18 +26,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date().toISOString(),
   }));
 
-  const collectionsPromise = getCollections({ cache: "force-cache" }).then((collections) =>
-    collections.map((collection) => ({
-      url: `${baseUrl}${collection.path}`,
-      lastModified: collection.updatedAt || new Date().toISOString(),
-    })),
+  const collectionsPromise = getCollections({ cache: "force-cache" }).then(
+    (collections) =>
+      collections.map((collection) => ({
+        url: `${baseUrl}${collection.path}`,
+        lastModified: collection.updatedAt || new Date().toISOString(),
+      })),
   );
 
-  const productsPromise = getProducts({}, { cache: "force-cache" }).then(({ products }) =>
-    products.map((product) => ({
-      url: `${baseUrl}/shop/product/${product.handle}`,
-      lastModified: product.updatedAt || new Date().toISOString(),
-    })),
+  const productsPromise = getProducts({}, { cache: "force-cache" }).then(
+    ({ products }) =>
+      products.map((product) => ({
+        url: `${baseUrl}/shop/product/${product.handle}`,
+        lastModified: product.updatedAt || new Date().toISOString(),
+      })),
   );
 
   const pagesPromise = getPages({ cache: "force-cache" }).then((pages) =>
@@ -54,7 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       await Promise.all([collectionsPromise, productsPromise, pagesPromise])
     ).flat();
   } catch (error) {
-    console.warn("Sitemap data fetch failed, using static routes only:", error);
+    // Silent fail - use static routes only
   }
 
   return [...routesMap, ...fetchedRoutes];

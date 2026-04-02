@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\UserInteraction;
+use Illuminate\Database\Seeder;
 
 class AiDataSeeder extends Seeder
 {
@@ -28,7 +28,7 @@ class AiDataSeeder extends Seeder
                     'score' => 1,
                 ]);
             }
-            $this->command->info('Seeded ' . count($products) . ' interactions.');
+            $this->command->info('Seeded '.count($products).' interactions.');
         } else {
             $this->command->warn('No user or products found to seed interactions.');
         }

@@ -211,8 +211,9 @@ class VisionMissionSection extends StatelessWidget {
                                             width: 28,
                                             height: 28,
                                             decoration: BoxDecoration(
-                                              color: AppTheme.accent
-                                                  .withOpacity(0.1),
+                                              color: AppTheme.accent.withValues(
+                                                alpha: 0.1,
+                                              ),
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                             ),

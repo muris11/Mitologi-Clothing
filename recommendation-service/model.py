@@ -28,36 +28,54 @@ class RecommenderSystem:
     def train(self, interactions, products):
         """
         Train both Collaborative (Naive Bayes) and Content-Based models.
-        interactions: list of dicts with 'user_id', 'product_id', 'action'
-        products: list of dicts with 'id', 'title', 'description', 'category'
         """
-        # 1. Train Naive Bayes (Collaborative / User-Product)
+        # 1. Train Naive Bayes (Collaborative)
         if interactions:
-            df = pd.DataFrame(interactions)
-            
-            # Track popular products by interaction count (cold-start fallback)
-            self.product_interaction_counts = df['product_id'].value_counts().to_dict()
-            
-            self.user_encoder.fit(df['user_id'])
-            self.product_encoder.fit(df['product_id'])
-            
-            user_indices = self.user_encoder.transform(df['user_id'])
-            product_indices = self.product_encoder.transform(df['product_id'])
-            
-            X = self.one_hot.fit_transform(user_indices.reshape(-1, 1))
-            y = product_indices
-            
-            self.nb_model.fit(X, y)
+            try:
+                df = pd.DataFrame(interactions)
+                
+                # Popular products fallback
+                self.product_interaction_counts = df['product_id'].value_counts().to_dict()
+                
+                # Filter out interactions where user or product is missing
+                df = df.dropna(subset=['user_id', 'product_id'])
+                
+                if not df.empty:
+                    self.user_encoder.fit(df['user_id'])
+                    self.product_encoder.fit(df['product_id'])
+                    
+                    user_indices = self.user_encoder.transform(df['user_id'])
+                    product_indices = self.product_encoder.transform(df['product_id'])
+                    
+                    X = self.one_hot.fit_transform(user_indices.reshape(-1, 1))
+                    y = product_indices
+                    
+                    # Need at least 2 products to train Naive Bayes
+                    if len(self.product_encoder.classes_) > 1:
+                        self.nb_model.fit(X, y)
+                        print(f"ML: Naive Bayes fitted with {len(interactions)} records.")
+                    else:
+                        print("ML: Only one product in dataset. Skipping NB model.")
+            except Exception as e:
+                print(f"ML Training Error (Collaborative): {e}")
         
         # 2. Train Content-Based (Product-Product)
         if products:
-            df_products = pd.DataFrame(products)
-            self.product_ids = df_products['id'].tolist()
-            
-            # Combine features for TF-IDF
-            df_products['content'] = df_products['title'] + " " + df_products['description'] + " " + df_products['category']
-            
-            self.content_matrix = self.tfidf.fit_transform(df_products['content'])
+            try:
+                df_products = pd.DataFrame(products)
+                self.product_ids = df_products['id'].tolist()
+                
+                # Combine features for TF-IDF
+                df_products['content'] = (
+                    df_products['title'].fillna('') + " " + 
+                    df_products['description'].fillna('') + " " + 
+                    df_products['category'].fillna('')
+                )
+                
+                self.content_matrix = self.tfidf.fit_transform(df_products['content'])
+                print(f"ML: Content matrix built for {len(products)} products.")
+            except Exception as e:
+                print(f"ML Training Error (Content): {e}")
             
         self.is_trained = True
         self.save_model()
@@ -70,12 +88,16 @@ class RecommenderSystem:
             return []
             
         try:
-            if user_id not in self.user_encoder.classes_:
+            if not hasattr(self.user_encoder, 'classes_') or user_id not in self.user_encoder.classes_:
                 return [] 
                 
             user_idx = self.user_encoder.transform([user_id])
             X_new = self.one_hot.transform(user_idx.reshape(-1, 1))
             
+            # Check if model is fitted
+            if not hasattr(self.nb_model, 'classes_'):
+                return []
+                
             probs = self.nb_model.predict_proba(X_new)[0]
             
             # Get indices of top N products

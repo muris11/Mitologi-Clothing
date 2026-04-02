@@ -46,7 +46,7 @@ export function TentangKamiPageSkeleton() {
               {/* Timeline with dots */}
               <div className="relative space-y-8 pl-8 sm:pl-10">
                 <div className="absolute top-2 bottom-0 left-[11px] w-px bg-gradient-to-b from-slate-300 via-slate-200 to-transparent" />
-                
+
                 {/* Descriptions */}
                 <div className="space-y-5">
                   <div className="absolute left-[7px] top-[6px] w-[9px] h-[9px] rounded-full bg-slate-300 ring-4 ring-white" />
@@ -74,7 +74,7 @@ export function TentangKamiPageSkeleton() {
 
                 <div className="relative aspect-square rounded-[2rem] overflow-hidden bg-slate-100 shadow-xl flex items-center justify-center z-10 border border-slate-100">
                   <Skeleton className="w-3/4 h-3/4 bg-slate-200 rounded" />
-                  
+
                   {/* Floating Badge */}
                   <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8 bg-white/95 backdrop-blur shadow-lg border border-slate-100 px-5 sm:px-6 py-3 sm:py-4 rounded-2xl">
                     <Skeleton className="h-3 w-20 bg-slate-200 rounded mb-1" />
@@ -95,7 +95,10 @@ export function TentangKamiPageSkeleton() {
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
               {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 lg:p-6 shadow-sm border border-slate-200 overflow-hidden">
+                <div
+                  key={i}
+                  className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 lg:p-6 shadow-sm border border-slate-200 overflow-hidden"
+                >
                   <div className="flex items-start justify-between mb-4 sm:mb-6">
                     <Skeleton className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-200" />
                     <Skeleton className="h-6 w-8 bg-slate-100 rounded" />
@@ -142,7 +145,9 @@ export function TentangKamiPageSkeleton() {
               <Skeleton className="h-8 sm:h-10 md:h-12 w-3/4 bg-slate-200 rounded mb-8" />
 
               <div className="relative mb-10">
-                <div className="absolute -top-6 -left-4 text-7xl text-slate-200 font-serif leading-none italic pointer-events-none opacity-50 z-0">"</div>
+                <div className="absolute -top-6 -left-4 text-7xl text-slate-200 font-serif leading-none italic pointer-events-none opacity-50 z-0">
+                  "
+                </div>
                 <div className="relative z-10 space-y-4">
                   <Skeleton className="h-4 w-full bg-slate-100 rounded" />
                   <Skeleton className="h-4 w-full bg-slate-100 rounded" />
@@ -175,7 +180,9 @@ export function TentangKamiPageSkeleton() {
             </div>
 
             <blockquote className="relative px-10 sm:px-16">
-              <span className="absolute top-0 left-0 text-7xl sm:text-8xl font-serif text-slate-200 leading-[0.8] select-none">"</span>
+              <span className="absolute top-0 left-0 text-7xl sm:text-8xl font-serif text-slate-200 leading-[0.8] select-none">
+                "
+              </span>
               <Skeleton className="h-6 sm:h-8 md:h-10 w-full bg-slate-100 rounded mb-4" />
               <Skeleton className="h-6 sm:h-8 md:h-10 w-5/6 bg-slate-100 rounded mx-auto" />
             </blockquote>
@@ -184,7 +191,10 @@ export function TentangKamiPageSkeleton() {
           {/* Mission & Values Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {Array.from({ length: 2 }).map((_, i) => (
-              <div key={i} className="rounded-[2.5rem] bg-gradient-to-br from-white to-slate-50 p-8 sm:p-10 lg:p-12 shadow-soft border border-slate-100">
+              <div
+                key={i}
+                className="rounded-[2.5rem] bg-gradient-to-br from-white to-slate-50 p-8 sm:p-10 lg:p-12 shadow-soft border border-slate-100"
+              >
                 <div className="flex items-center gap-4 mb-6">
                   <Skeleton className="w-12 h-12 rounded-2xl bg-slate-200" />
                   <Skeleton className="h-6 w-32 bg-slate-200 rounded" />
@@ -211,7 +221,10 @@ export function TentangKamiPageSkeleton() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto auto-rows-[300px]">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className={`group relative overflow-hidden rounded-3xl bg-slate-100 shadow-soft border border-slate-200 ${i === 0 || i === 3 ? 'md:col-span-2' : ''}`}>
+              <div
+                key={i}
+                className={`group relative overflow-hidden rounded-3xl bg-slate-100 shadow-soft border border-slate-200 ${i === 0 || i === 3 ? "md:col-span-2" : ""}`}
+              >
                 <Skeleton className="absolute inset-0 bg-slate-200" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
                   <Skeleton className="h-6 w-3/4 bg-slate-300/50 rounded mb-2" />
@@ -236,7 +249,10 @@ export function TentangKamiPageSkeleton() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+              <div
+                key={i}
+                className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
+              >
                 <div className="flex items-start gap-4">
                   <Skeleton className="w-12 h-12 rounded-xl bg-slate-200 shrink-0" />
                   <div className="flex-1 space-y-2">
@@ -263,7 +279,9 @@ export function TentangKamiPageSkeleton() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
             {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="flex flex-col items-center">
-                <Skeleton className={`rounded-2xl border border-slate-100 shadow-sm overflow-hidden bg-white ${i === 0 ? 'w-32 md:w-64 h-32 md:h-64' : 'w-24 md:w-48 h-24 md:h-48'}`} />
+                <Skeleton
+                  className={`rounded-2xl border border-slate-100 shadow-sm overflow-hidden bg-white ${i === 0 ? "w-32 md:w-64 h-32 md:h-64" : "w-24 md:w-48 h-24 md:h-48"}`}
+                />
                 <div className="mt-4 text-center">
                   <Skeleton className="h-5 w-24 bg-slate-200 rounded mx-auto mb-1" />
                   <Skeleton className="h-3 w-16 bg-slate-100 rounded mx-auto" />

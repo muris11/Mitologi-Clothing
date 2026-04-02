@@ -22,17 +22,17 @@ class OrderStatusMail extends Mailable
     public function envelope(): Envelope
     {
         $statusLabels = [
-            'pending'    => 'Menunggu Pembayaran',
+            'pending' => 'Menunggu Pembayaran',
             'processing' => 'Sedang Diproses',
-            'shipped'    => 'Dalam Pengiriman',
-            'completed'  => 'Selesai',
-            'cancelled'  => 'Dibatalkan',
+            'shipped' => 'Dalam Pengiriman',
+            'completed' => 'Selesai',
+            'cancelled' => 'Dibatalkan',
         ];
 
         $statusLabel = $statusLabels[$this->order->status] ?? ucfirst($this->order->status);
 
         return new Envelope(
-            subject: '[' . config('app.name', 'Mitologi Clothing') . '] Pesanan #' . $this->order->order_number . ' - ' . $statusLabel,
+            subject: '['.config('app.name', 'Mitologi Clothing').'] Pesanan #'.$this->order->order_number.' - '.$statusLabel,
         );
     }
 

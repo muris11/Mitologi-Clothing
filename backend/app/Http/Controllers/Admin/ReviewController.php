@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Services\FrontendCacheService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ReviewController extends Controller
 {
@@ -16,7 +17,7 @@ class ReviewController extends Controller
     public function reply(Request $request, Product $product, ProductReview $review)
     {
         $request->validate([
-            'admin_reply' => 'required|string|max:1000'
+            'admin_reply' => 'required|string|max:1000',
         ]);
 
         $review->update([
@@ -24,7 +25,8 @@ class ReviewController extends Controller
             'admin_replied_at' => now(),
         ]);
 
-        FrontendCacheService::revalidate(['reviews', 'products']);
+        Cache::forget('api.landing_page_data_v2');
+        FrontendCacheService::revalidate(['reviews', 'products', 'landing-page']);
 
         return back()->with('success', 'Balasan ulasan berhasil dikirim.');
     }
@@ -35,12 +37,14 @@ class ReviewController extends Controller
     public function toggleVisibility(Product $product, ProductReview $review)
     {
         $review->update([
-            'is_visible' => !$review->is_visible
+            'is_visible' => ! $review->is_visible,
         ]);
 
-        FrontendCacheService::revalidate(['reviews', 'products']);
+        Cache::forget('api.landing_page_data_v2');
+        FrontendCacheService::revalidate(['reviews', 'products', 'landing-page']);
 
         $status = $review->is_visible ? 'ditampilkan' : 'disembunyikan';
+
         return back()->with('success', "Ulasan berhasil $status.");
     }
 
@@ -49,7 +53,8 @@ class ReviewController extends Controller
      */
     public function destroy(Product $product, ProductReview $review)
     {
-        FrontendCacheService::revalidate(['reviews', 'products']);
+        Cache::forget('api.landing_page_data_v2');
+        FrontendCacheService::revalidate(['reviews', 'products', 'landing-page']);
 
         $review->delete();
 

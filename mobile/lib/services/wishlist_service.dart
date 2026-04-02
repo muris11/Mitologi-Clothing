@@ -42,9 +42,9 @@ class WishlistService {
         '/wishlist/check/$productId',
         requiresAuth: true,
       );
-      if (response is Map<String, dynamic> &&
-          response['is_wishlisted'] != null) {
-        return response['is_wishlisted'] as bool;
+      // Support both camelCase (new) and snake_case (legacy)
+      if (response is Map<String, dynamic>) {
+        return response['isWishlisted'] ?? response['is_wishlisted'] ?? false;
       }
       return false;
     } catch (e) {

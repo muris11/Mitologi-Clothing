@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('site_settings')) {
+        if (! Schema::hasTable('site_settings')) {
             Schema::create('site_settings', function (Blueprint $table) {
                 $table->id();
                 $table->string('key')->unique();

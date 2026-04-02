@@ -13,7 +13,9 @@ class ProductReviewSeeder extends Seeder
     public function run(): void
     {
         $customers = User::where('role', 'customer')->get();
-        if ($customers->isEmpty()) return;
+        if ($customers->isEmpty()) {
+            return;
+        }
 
         $completedOrders = Order::where('status', 'completed')->get();
 
@@ -71,8 +73,10 @@ class ProductReviewSeeder extends Seeder
         foreach ($reviewsData as $i => $reviewData) {
             $product = Product::where('handle', $reviewData['product_handle'])->first();
             $customer = $customers->where('email', $reviewData['customer_email'])->first() ?? $customers->random();
-            
-            if (!$product || !$customer) continue;
+
+            if (! $product || ! $customer) {
+                continue;
+            }
 
             ProductReview::updateOrCreate(
                 [

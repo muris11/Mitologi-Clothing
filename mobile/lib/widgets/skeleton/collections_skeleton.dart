@@ -32,7 +32,7 @@ class CollectionsSkeleton extends StatelessWidget {
               childAspectRatio: 0.8,
             ),
             itemCount: 6,
-            itemBuilder: (_, __) => Container(
+            itemBuilder: (_, index) => Container(
               decoration: BoxDecoration(
                 color: AppTheme.slate200,
                 borderRadius: AppTheme.radius22,

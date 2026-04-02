@@ -1,6 +1,4 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:go_router/go_router.dart';
@@ -68,20 +66,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     try {
       final product = await ProductService().getProductDetail(widget.handle);
 
-      if (product != null) {
-        setState(() {
-          _product = product;
-          _isLoading = false;
-        });
+      setState(() {
+        _product = product;
+        _isLoading = false;
+      });
 
-        // Load related data in parallel
-        _loadRelatedData(product);
-      } else {
-        setState(() {
-          _error = 'Produk tidak ditemukan';
-          _isLoading = false;
-        });
-      }
+      // Load related data in parallel
+      _loadRelatedData(product);
     } catch (e) {
       setState(() {
         _error = 'Gagal memuat produk: $e';
@@ -403,7 +394,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         }),
                         const SizedBox(width: 8),
                         Text(
-                          '${product.averageRating?.toStringAsFixed(1) ?? '0.0'}',
+                          product.averageRating?.toStringAsFixed(1) ?? '0.0',
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(fontWeight: FontWeight.w700),
                         ),
@@ -424,9 +415,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const SizedBox(height: 24),
 
                     // Description
-                    if (product.descriptionHtml != null &&
-                        product.descriptionHtml!.isNotEmpty)
-                      _buildDescription(),
+                    if (product.descriptionHtml.isNotEmpty) _buildDescription(),
 
                     const SizedBox(height: 32),
 
@@ -618,7 +607,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
         const SizedBox(height: 12),
         Html(
-          data: product.descriptionHtml!,
+          data: product.descriptionHtml,
           style: {
             'body': Style(
               fontSize: FontSize(14),
@@ -812,7 +801,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             itemCount: _relatedProducts.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            separatorBuilder: (_, index) => const SizedBox(width: 12),
             itemBuilder: (context, index) {
               return SizedBox(
                 width: 180,

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
@@ -14,12 +13,12 @@ class TestController extends Controller
         Order::query()->update([
             'status' => 'processing',
             'paid_at' => now(),
-            'payment_method' => 'manual_test'
+            'payment_method' => 'manual_test',
         ]);
 
         return response()->json([
             'message' => 'All orders updated to processing and paid.',
-            'count' => Order::count()
+            'count' => Order::count(),
         ]);
     }
 }

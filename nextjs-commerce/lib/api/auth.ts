@@ -6,7 +6,7 @@ import { User } from "./types";
 export interface AuthResponse {
   token: string;
   user: User;
-  cart_id?: string;
+  cartId?: string;
 }
 
 function getBackendBaseUrl(): string {
@@ -21,7 +21,10 @@ async function ensureSanctumCsrfCookie(): Promise<void> {
   });
 
   if (!res.ok) {
-    throw new ApiError(`Gagal mengambil CSRF cookie (${res.status}).`, res.status);
+    throw new ApiError(
+      `Gagal mengambil CSRF cookie (${res.status}).`,
+      res.status,
+    );
   }
 }
 
@@ -29,13 +32,19 @@ async function ensureSanctumCsrfCookie(): Promise<void> {
  * Login with email and password via Sanctum cookie auth.
  * Performs CSRF pre-flight before sending credentials.
  */
-export async function login(email: string, password: string, cartId?: string): Promise<AuthResponse> {
+export async function login(
+  email: string,
+  password: string,
+  cartId?: string,
+): Promise<AuthResponse> {
   await ensureSanctumCsrfCookie();
 
-  return apiFetch<AuthResponse>(ENDPOINTS.AUTH_LOGIN, {
+  const response = await apiFetch<AuthResponse>(ENDPOINTS.AUTH_LOGIN, {
     method: "POST",
     body: JSON.stringify({ email, password, cart_session_id: cartId }),
   });
+
+  return response;
 }
 
 /**
@@ -46,15 +55,23 @@ export async function register(
   name: string,
   email: string,
   password: string,
-  password_confirmation: string,
+  passwordConfirmation: string,
   cartId?: string,
 ): Promise<AuthResponse> {
   await ensureSanctumCsrfCookie();
 
-  return apiFetch<AuthResponse>(ENDPOINTS.AUTH_REGISTER, {
+  const response = await apiFetch<AuthResponse>(ENDPOINTS.AUTH_REGISTER, {
     method: "POST",
-    body: JSON.stringify({ name, email, password, password_confirmation, cart_session_id: cartId }),
+    body: JSON.stringify({
+      name,
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+      cart_session_id: cartId,
+    }),
   });
+
+  return response;
 }
 
 /** Logout the current session */
@@ -63,9 +80,11 @@ export async function logout(): Promise<void> {
 }
 
 /** Request a password reset link via email */
-export async function forgotPassword(email: string): Promise<{ message: string }> {
-  return apiFetch(ENDPOINTS.AUTH_FORGOT_PASSWORD, {
-    method: 'POST',
+export async function forgotPassword(
+  email: string,
+): Promise<{ message: string }> {
+  return apiFetch<{ message: string }>(ENDPOINTS.AUTH_FORGOT_PASSWORD, {
+    method: "POST",
     body: JSON.stringify({ email }),
   });
 }
@@ -75,10 +94,10 @@ export async function resetPassword(
   token: string,
   email: string,
   password: string,
-  passwordConfirmation: string
+  passwordConfirmation: string,
 ): Promise<{ message: string }> {
-  return apiFetch(ENDPOINTS.AUTH_RESET_PASSWORD, {
-    method: 'POST',
+  return apiFetch<{ message: string }>(ENDPOINTS.AUTH_RESET_PASSWORD, {
+    method: "POST",
     body: JSON.stringify({
       token,
       email,

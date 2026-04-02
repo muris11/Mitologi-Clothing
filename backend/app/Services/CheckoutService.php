@@ -21,9 +21,6 @@ class CheckoutService
     }
 
     /**
-     * @param User $user
-     * @param array $shippingData
-     * @return array
      * @throws \Exception
      */
     public function processCheckout(User $user, array $shippingData): array
@@ -31,8 +28,7 @@ class CheckoutService
         // Get user's cart
         $cart = Cart::where('user_id', $user->id)->first();
 
-
-        if (!$cart || $cart->items->isEmpty()) {
+        if (! $cart || $cart->items->isEmpty()) {
             throw new \Exception('Keranjang belanja kosong');
         }
 
@@ -83,7 +79,7 @@ class CheckoutService
 
             // Create order
             $orderNumber = Order::generateOrderNumber();
-            $midtransOrderId = 'MITOLOGI-' . uniqid() . '-' . $user->id;
+            $midtransOrderId = 'MITOLOGI-'.uniqid().'-'.$user->id;
 
             $order = Order::create([
                 'user_id' => $user->id,
@@ -129,12 +125,12 @@ class CheckoutService
                     $cart->items()->delete();
 
                     return [
-                        'order_id' => $order->id,
-                        'order_number' => $order->order_number,
-                        'snap_token' => 'MOCK_SNAP_TOKEN',
+                        'orderId' => $order->id,
+                        'orderNumber' => $order->order_number,
+                        'snapToken' => 'MOCK_SNAP_TOKEN',
                         'mock' => true,
                         'total' => $order->total,
-                        'redirect_url' => '/shop/account/orders/' . $order->order_number,
+                        'redirectUrl' => '/shop/account/orders/'.$order->order_number,
                     ];
                 }
                 throw new \Exception('Gateway pembayaran belum dikonfigurasi.');
@@ -145,19 +141,16 @@ class CheckoutService
             $cart->items()->delete();
 
             return [
-                'order_id' => $order->id,
-                'order_number' => $order->order_number,
-                'snap_token' => $snapToken,
+                'orderId' => $order->id,
+                'orderNumber' => $order->order_number,
+                'snapToken' => $snapToken,
                 'total' => $order->total,
-                'redirect_url' => '/shop/account/orders/' . $order->order_number,
+                'redirectUrl' => '/shop/account/orders/'.$order->order_number,
             ];
         });
     }
 
     /**
-     * @param User $user
-     * @param string $orderNumber
-     * @return array
      * @throws \Exception
      */
     public function processRepayment(User $user, string $orderNumber): array
@@ -179,27 +172,27 @@ class CheckoutService
             ]);
 
             return [
-                'order_id' => $order->id,
-                'order_number' => $order->order_number,
-                'snap_token' => 'MOCK_SNAP_TOKEN',
+                'orderId' => $order->id,
+                'orderNumber' => $order->order_number,
+                'snapToken' => 'MOCK_SNAP_TOKEN',
                 'mock' => true,
                 'total' => $order->total,
-                'redirect_url' => '/shop/account/orders/' . $order->order_number,
+                'redirectUrl' => '/shop/account/orders/'.$order->order_number,
             ];
         }
 
         // Generate a new Midtrans order ID to prevent "Transaction already processed" error in Midtrans
-        $newMidtransOrderId = 'MITOLOGI-' . uniqid() . '-' . $user->id;
+        $newMidtransOrderId = 'MITOLOGI-'.uniqid().'-'.$user->id;
         $order->update(['midtrans_order_id' => $newMidtransOrderId]);
 
         $snapToken = $this->midtransService->createSnapToken($order);
 
         return [
-            'order_id' => $order->id,
-            'order_number' => $order->order_number,
-            'snap_token' => $snapToken,
+            'orderId' => $order->id,
+            'orderNumber' => $order->order_number,
+            'snapToken' => $snapToken,
             'total' => $order->total,
-            'redirect_url' => '/shop/account/orders/' . $order->order_number,
+            'redirectUrl' => '/shop/account/orders/'.$order->order_number,
         ];
     }
 }

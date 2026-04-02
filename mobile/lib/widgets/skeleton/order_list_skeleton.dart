@@ -17,8 +17,8 @@ class OrderListSkeleton extends StatelessWidget {
       child: ListView.separated(
         padding: EdgeInsets.all(padding),
         itemCount: 4,
-        separatorBuilder: (_, __) => const SizedBox(height: 16),
-        itemBuilder: (_, __) => _buildOrderCardSkeleton(),
+        separatorBuilder: (_, index) => const SizedBox(height: 16),
+        itemBuilder: (_, index) => _buildOrderCardSkeleton(),
       ),
     );
   }

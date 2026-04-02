@@ -1,29 +1,29 @@
-import { PortfolioGallery } from 'components/landing/sections/portfolio-gallery';
-import { SubpageHero } from 'components/landing/shared/subpage-hero';
-import { getLandingPageData } from 'lib/api';
-import { getPortfolios } from 'lib/api/content';
-import type { Metadata } from 'next';
+import { PortfolioGallery } from "components/landing/sections/portfolio-gallery";
+import { SubpageHero } from "components/landing/shared/subpage-hero";
+import { getLandingPageData } from "lib/api";
+import { getPortfolios } from "lib/api/content";
+import type { Metadata } from "next";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getLandingPageData();
-  const siteName = data.site_settings?.general?.site_name || 'Mitologi Clothing';
+  const siteName = data?.siteSettings?.general?.siteName || "Mitologi Clothing";
   return {
     title: `Portofolio — ${siteName}`,
     description: `Galeri hasil karya produksi ${siteName}. Lihat project kaos, kemeja, jaket, dan merchandise yang telah kami kerjakan.`,
     openGraph: {
       title: `Portofolio — ${siteName}`,
       description: `Galeri hasil karya produksi ${siteName}.`,
-      type: 'website',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://mitologi.id'}/portofolio`,
+      type: "website",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id"}/portofolio`,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `Portofolio — ${siteName}`,
       description: `Galeri hasil karya produksi ${siteName}.`,
-    }
+    },
   };
 }
 
@@ -39,8 +39,11 @@ export default async function PortofolioPage() {
         badge={true}
         badgeText="Hasil Karya"
       />
-      <PortfolioGallery items={portfolios} showViewAll={false} showHeading={false} />
+      <PortfolioGallery
+        items={portfolios}
+        showViewAll={false}
+        showHeading={false}
+      />
     </>
   );
 }
-

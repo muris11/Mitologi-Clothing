@@ -19,7 +19,7 @@ class CategoryRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:categories,slug,' . $categoryId,
+            'slug' => 'required|string|max:255|unique:categories,slug,'.$categoryId,
             'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'is_active' => 'nullable|boolean',

@@ -1,17 +1,12 @@
 "use client";
 
-import type {
-    Cart,
-    CartItem,
-    Product,
-    ProductVariant,
-} from "lib/api/types";
+import type { Cart, CartItem, Product, ProductVariant } from "lib/api/types";
 import React, {
-    createContext,
-    use,
-    useContext,
-    useMemo,
-    useOptimistic,
+  createContext,
+  use,
+  useContext,
+  useMemo,
+  useOptimistic,
 } from "react";
 
 type UpdateType = "plus" | "minus" | "delete";
@@ -30,7 +25,9 @@ type CartContextType = {
   cartPromise: Promise<Cart | undefined>;
 };
 
-export const CartContext = createContext<CartContextType | undefined>(undefined);
+export const CartContext = createContext<CartContextType | undefined>(
+  undefined,
+);
 
 function calculateItemCost(quantity: number, price: string): string {
   return (Number(price) * quantity).toString();
@@ -85,7 +82,9 @@ function createOrUpdateCartItem(
     merchandise: {
       id: variant.id,
       title: variant.title,
-      selectedOptions: Array.isArray(variant.selectedOptions) ? variant.selectedOptions : [],
+      selectedOptions: Array.isArray(variant.selectedOptions)
+        ? variant.selectedOptions
+        : [],
       product: {
         id: product.id,
         handle: product.handle,

@@ -1,14 +1,22 @@
-'use client';
+"use client";
 
-import { StarIcon } from '@heroicons/react/20/solid';
-import { SectionHeading } from 'components/ui/section-heading';
-import { MotionSection, StaggerGrid, StaggerGridItem } from 'components/ui/motion';
-import { Testimonial } from 'lib/api/types';
-import { storageUrl } from 'lib/utils/storage-url';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { StarIcon } from "@heroicons/react/20/solid";
+import { SectionHeading } from "components/ui/section-heading";
+import {
+  MotionSection,
+  StaggerGrid,
+  StaggerGridItem,
+} from "components/ui/motion";
+import { Testimonial } from "lib/api/types";
+import { storageUrl } from "lib/utils/storage-url";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
-export function Testimonials({ testimonials = [] }: { testimonials?: Testimonial[] }) {
+export function Testimonials({
+  testimonials = [],
+}: {
+  testimonials?: Testimonial[];
+}) {
   if (!testimonials || testimonials.length === 0) return null;
 
   const col1 = testimonials.filter((_, i) => i % 3 === 0);
@@ -18,7 +26,6 @@ export function Testimonials({ testimonials = [] }: { testimonials?: Testimonial
   return (
     <MotionSection className="bg-slate-50 py-24 sm:py-32 relative overflow-hidden border-t border-slate-200/50">
       <div className="mx-auto max-w-[1440px] px-6 lg:px-8 relative z-10">
-
         <div className="mx-auto max-w-2xl text-center mb-16 flex flex-col items-center">
           <SectionHeading
             overline="Testimoni"
@@ -31,15 +38,24 @@ export function Testimonials({ testimonials = [] }: { testimonials?: Testimonial
           className="flex justify-center gap-5 overflow-hidden"
           style={{
             maxHeight: "740px",
-            maskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
+            maskImage:
+              "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
           }}
         >
           <TestimonialColumn testimonials={col1} duration={22} />
-          <TestimonialColumn testimonials={col2} duration={28} className="hidden md:block" />
-          <TestimonialColumn testimonials={col3} duration={25} className="hidden lg:block" />
+          <TestimonialColumn
+            testimonials={col2}
+            duration={28}
+            className="hidden md:block"
+          />
+          <TestimonialColumn
+            testimonials={col3}
+            duration={25}
+            className="hidden lg:block"
+          />
         </div>
-
       </div>
     </MotionSection>
   );
@@ -69,7 +85,10 @@ function TestimonialColumn({
         className="flex flex-col gap-5"
       >
         {doubled.map((testimonial, i) => (
-          <TestimonialCard key={`${testimonial.id}-${i}`} testimonial={testimonial} />
+          <TestimonialCard
+            key={`${testimonial.id}-${i}`}
+            testimonial={testimonial}
+          />
         ))}
       </motion.div>
     </div>
@@ -79,14 +98,13 @@ function TestimonialColumn({
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <div className="flex flex-col justify-between rounded-2xl bg-white p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-300">
-
       {/* Stars + content */}
       <div>
         <div className="flex gap-x-1 mb-3">
           {[...Array(5)].map((_, i) => (
             <StarIcon
               key={i}
-              className={`h-4 w-4 ${i < testimonial.rating ? 'text-mitologi-gold' : 'text-slate-200'}`}
+              className={`h-4 w-4 ${i < testimonial.rating ? "text-mitologi-gold" : "text-slate-200"}`}
               aria-hidden="true"
             />
           ))}
@@ -98,9 +116,9 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 
       {/* Author */}
       <div className="mt-5 flex items-center gap-x-3 pt-4 border-t border-slate-100">
-        {testimonial.avatar_url ? (
+        {testimonial.avatarUrl ? (
           <Image
-            src={storageUrl(testimonial.avatar_url)}
+            src={storageUrl(testimonial.avatarUrl)}
             alt={testimonial.name}
             width={40}
             height={40}
@@ -112,8 +130,12 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           </div>
         )}
         <div>
-          <div className="font-sans font-bold text-sm text-mitologi-navy tracking-tight">{testimonial.name}</div>
-          <div className="text-slate-500 text-xs font-sans font-medium mt-0.5">{testimonial.role}</div>
+          <div className="font-sans font-bold text-sm text-mitologi-navy tracking-tight">
+            {testimonial.name}
+          </div>
+          <div className="text-slate-500 text-xs font-sans font-medium mt-0.5">
+            {testimonial.role}
+          </div>
         </div>
       </div>
     </div>

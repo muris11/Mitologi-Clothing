@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
 export function SubpageHero({
   title,
   subtitle,
   badge,
-  badgeText
+  badgeText,
 }: {
   title: string;
   subtitle?: string;
@@ -21,9 +21,9 @@ export function SubpageHero({
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           {badge && (
             <div className="inline-flex items-center gap-x-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 mb-6 backdrop-blur-md shadow-sm">
-                <span className="text-xs font-bold font-sans tracking-widest text-mitologi-gold uppercase">
-                    {badgeText || title}
-                </span>
+              <span className="text-xs font-bold font-sans tracking-widest text-mitologi-gold uppercase">
+                {badgeText || title}
+              </span>
             </div>
           )}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-sans font-extrabold text-white tracking-tight mb-4 drop-shadow-sm leading-[1.1]">

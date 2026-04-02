@@ -7,7 +7,7 @@ export default function NotFound() {
       <div className="relative z-10 flex flex-col items-center max-w-lg">
         {/* 404 Number */}
         <h1 className="select-none text-[8rem] sm:text-[10rem] font-sans font-extrabold leading-none text-slate-200 mb-6 tracking-tighter">
-            404
+          404
         </h1>
 
         {/* Title */}
@@ -17,7 +17,8 @@ export default function NotFound() {
 
         {/* Description */}
         <p className="font-sans font-medium text-slate-500 leading-relaxed mb-10 max-w-sm mx-auto">
-          Maaf, halaman yang Anda cari mungkin telah dihapus, dipindahkan, atau tidak tersedia sementara.
+          Maaf, halaman yang Anda cari mungkin telah dihapus, dipindahkan, atau
+          tidak tersedia sementara.
         </p>
 
         {/* Buttons */}

@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('order_number')->unique();
             $table->enum('status', [
-                'pending', 'paid', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'
+                'pending', 'paid', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded',
             ])->default('pending');
             $table->decimal('subtotal', 12, 2)->default(0);
             $table->decimal('tax', 12, 2)->default(0);

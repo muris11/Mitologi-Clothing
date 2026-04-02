@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 class RecommendationService
 {
     protected string $baseUrl;
+
     protected string $apiKey;
 
     public function __construct()
@@ -26,12 +27,13 @@ class RecommendationService
                     ]);
 
                 if ($response->successful()) {
-                    return $response->json('recommendations', []);
+                    return $response->json('data', []);
                 }
 
                 return [];
             } catch (\Exception $e) {
-                \Log::warning('AI recommendation service unavailable: ' . $e->getMessage());
+                \Log::warning('AI recommendation service unavailable: '.$e->getMessage());
+
                 return [];
             }
         });
@@ -48,12 +50,13 @@ class RecommendationService
                     ]);
 
                 if ($response->successful()) {
-                    return $response->json('recommendations', []);
+                    return $response->json('data', []);
                 }
 
                 return [];
             } catch (\Exception $e) {
-                \Log::warning('AI recommendation service unavailable: ' . $e->getMessage());
+                \Log::warning('AI recommendation service unavailable: '.$e->getMessage());
+
                 return [];
             }
         });
@@ -81,7 +84,7 @@ class RecommendationService
                 'action' => 'purchase',
             ];
         })->filter(function ($item) {
-            return !is_null($item['user_id']);
+            return ! is_null($item['user_id']);
         })->values()->toArray();
 
         try {
@@ -96,10 +99,12 @@ class RecommendationService
                 return true;
             }
 
-            \Log::error('AI training failed with status ' . $response->status() . ': ' . $response->body());
+            \Log::error('AI training failed with status '.$response->status().': '.$response->body());
+
             return false;
         } catch (\Exception $e) {
-            \Log::error('AI training failed: ' . $e->getMessage());
+            \Log::error('AI training failed: '.$e->getMessage());
+
             return false;
         }
     }
@@ -110,6 +115,7 @@ class RecommendationService
             $response = Http::withHeaders(['X-API-Key' => $this->apiKey])
                 ->timeout(5)
                 ->get("{$this->baseUrl}/health");
+
             return $response->successful() && $response['status'] === 'ok';
         } catch (\Exception $e) {
             return false;

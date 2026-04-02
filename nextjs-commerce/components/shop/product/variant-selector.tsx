@@ -30,7 +30,9 @@ export function VariantSelector({
   }
 
   const combinations: Combination[] = variants.map((variant) => {
-    const selectedOptions = Array.isArray(variant.selectedOptions) ? variant.selectedOptions : [];
+    const selectedOptions = Array.isArray(variant.selectedOptions)
+      ? variant.selectedOptions
+      : [];
     return {
       id: variant.id,
       availableForSale: variant.availableForSale,
@@ -51,10 +53,13 @@ export function VariantSelector({
 
     // Find and notify the selected variant
     if (onVariantSelect) {
-      const selectedVariant = variants.find(variant => {
-        const options = Array.isArray(variant.selectedOptions) ? variant.selectedOptions : [];
+      const selectedVariant = variants.find((variant) => {
+        const options = Array.isArray(variant.selectedOptions)
+          ? variant.selectedOptions
+          : [];
         return options.some(
-          option => option.name.toLowerCase() === name && option.value === value
+          (option) =>
+            option.name.toLowerCase() === name && option.value === value,
         );
       });
       if (selectedVariant) {
@@ -73,7 +78,9 @@ export function VariantSelector({
   return options.map((option) => (
     <form key={option.id}>
       <dl className="mb-6">
-        <dt className="mb-3 text-sm font-sans font-bold text-mitologi-navy">{getTranslatedName(option.name)}</dt>
+        <dt className="mb-3 text-sm font-sans font-bold text-mitologi-navy">
+          {getTranslatedName(option.name)}
+        </dt>
         <dd className="flex flex-wrap gap-2.5">
           {option.values.map((value) => {
             const optionNameLowerCase = option.name.toLowerCase();
@@ -112,7 +119,8 @@ export function VariantSelector({
                 className={clsx(
                   "flex min-w-[48px] items-center justify-center rounded-xl border-2 px-4 py-2 text-sm font-sans font-semibold transition-all shadow-sm",
                   {
-                    "cursor-default border-mitologi-navy bg-mitologi-navy text-white shadow-md scale-105": isActive,
+                    "cursor-default border-mitologi-navy bg-mitologi-navy text-white shadow-md scale-105":
+                      isActive,
                     "border-slate-200 bg-white text-slate-700 hover:border-mitologi-navy hover:text-mitologi-navy":
                       !isActive && isAvailableForSale,
                     "relative z-10 cursor-not-allowed border-slate-100 bg-slate-50 text-slate-400 opacity-50":

@@ -164,8 +164,8 @@ class _CategoriesSkeleton extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: padding),
             itemCount: 6,
-            separatorBuilder: (_, __) => const SizedBox(width: 12),
-            itemBuilder: (_, __) => Container(
+            separatorBuilder: (_, index) => const SizedBox(width: 12),
+            itemBuilder: (_, index) => Container(
               width: 100,
               decoration: BoxDecoration(
                 color: AppTheme.slate200,

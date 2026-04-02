@@ -11,7 +11,7 @@ export async function PersonalizedRecommendations() {
     return null;
   }
 
-  const recommendations = await getRecommendations(Number(user.id));
+  const recommendations = await getRecommendations();
 
   if (!recommendations || recommendations.length === 0) {
     return null;

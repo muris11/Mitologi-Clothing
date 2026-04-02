@@ -37,7 +37,10 @@ export default function WishlistButton({
     e.stopPropagation();
 
     if (!isAuthenticated) {
-      addToast({ variant: "error", title: "Silakan login untuk menambahkan ke wishlist" });
+      addToast({
+        variant: "error",
+        title: "Silakan login untuk menambahkan ke wishlist",
+      });
       router.push("/shop/login");
       return;
     }
@@ -67,17 +70,24 @@ export default function WishlistButton({
       disabled={isLoading}
       className={clsx(
         "group transition-colors p-2 rounded-full hover:bg-slate-50",
-        className
+        className,
       )}
-      aria-label={isWishlisted ? "Hapus dari wishlist" : "Tambahkan ke wishlist"}
+      aria-label={
+        isWishlisted ? "Hapus dari wishlist" : "Tambahkan ke wishlist"
+      }
     >
       {isWishlisted ? (
-        <HeartIconSolid className={clsx("text-red-500 group-hover:text-red-600 transition-colors", iconClassName)} />
+        <HeartIconSolid
+          className={clsx(
+            "text-red-500 group-hover:text-red-600 transition-colors",
+            iconClassName,
+          )}
+        />
       ) : (
         <HeartIcon
           className={clsx(
             "text-slate-400 group-hover:text-mitologi-navy transition-colors",
-            iconClassName
+            iconClassName,
           )}
         />
       )}

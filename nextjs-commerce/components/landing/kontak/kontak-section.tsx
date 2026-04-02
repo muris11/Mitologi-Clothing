@@ -1,8 +1,13 @@
-'use client';
+"use client";
 
-import { ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
-import { SiteSettings } from 'lib/api/types';
-import { MotionDiv, MotionSection } from 'components/ui/motion';
+import {
+  ClockIcon,
+  EnvelopeIcon,
+  MapPinIcon,
+  PhoneIcon,
+} from "@heroicons/react/24/outline";
+import { SiteSettings } from "lib/api/types";
+import { MotionDiv, MotionSection } from "components/ui/motion";
 
 interface KontakSectionProps {
   settings?: SiteSettings;
@@ -40,42 +45,105 @@ const SocialIcon = ({ type }: { type: string }) => {
 };
 
 function parseMapsEmbed(rawValue?: string): string {
-  const defaultEmbed = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126907.0360729355!2d108.20063234335937!3d-6.326262999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6eb962174360e5%3A0x6b8014588df8e530!2sIndramayu%2C%20Indramayu%20Regency%2C%20West%20Java!5e0!3m2!1sen!2sid!4v1707720000000!5m2!1sen!2sid';
+  const defaultEmbed = "";
   if (!rawValue) return defaultEmbed;
+
+  // Extract src from iframe HTML if present
   const srcMatch = rawValue.match(/src=["']([^"']+)["']/);
-  if (srcMatch?.[1]) return srcMatch[1];
-  if (rawValue.startsWith('http')) return rawValue;
-  if (/^-?\d+\.?\d*\s*,\s*-?\d+\.?\d*$/.test(rawValue.trim())) {
-    return `https://www.google.com/maps?q=${rawValue.replace(/\s/g, '')}&output=embed`;
+  let url = srcMatch?.[1] || rawValue;
+
+  // Handle coordinates (e.g., -6.438597, 108.287315)
+  if (/^-?\d+\.?\d*\s*,\s*-?\d+\.?\d*$/.test(url.trim())) {
+    return `https://www.google.com/maps?q=${url.replace(/\s/g, "")}&output=embed`;
   }
+
+  // Convert old Google Maps embed URL format to new format
+  if (url.includes("maps.google.com/maps?")) {
+    // Extract parameters from old format (handle &amp; encoding)
+    const qMatch = url.match(/[?&](?:amp;)?q=([^&]+)/);
+    const query = qMatch && qMatch[1] ? decodeURIComponent(qMatch[1]) : "";
+    if (query) {
+      return `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+    }
+  }
+
+  // If already new format or other valid URL
+  if (url.startsWith("http")) {
+    return url;
+  }
+
   return defaultEmbed;
 }
 
 export function KontakSection({ settings }: KontakSectionProps) {
   const contact = settings?.contact;
 
-  const address = contact?.contact_address || settings?.legality?.legal_address || 'Jl. Raya Lelea, Indramayu, Jawa Barat';
-  const phone = contact?.contact_phone || contact?.whatsapp_number || '+62 812-3456-7890';
-  const email = contact?.contact_email || 'mitologiclothing@gmail.com';
-  const weekdayLabel = contact?.operating_hours_weekday_label || 'Senin - Sabtu';
-  const weekdayHours = contact?.operating_hours_weekday || '08.00 - 16.00 WIB';
-  const weekendLabel = contact?.operating_hours_weekend_label || 'Minggu';
-  const weekendHours = contact?.operating_hours_weekend || 'Tutup (Online Chat Only)';
-  const mapsEmbed = parseMapsEmbed(contact?.contact_maps_embed);
+  const address =
+    contact?.contactAddress ||
+    settings?.legality?.legalAddress ||
+    "Jl. Raya Lelea, Indramayu, Jawa Barat";
+  const phone =
+    contact?.contactPhone || contact?.whatsappNumber || "+62 812-3456-7890";
+  const email = contact?.contactEmail || "mitologiclothing@gmail.com";
+  const weekdayLabel = contact?.operatingHoursWeekdayLabel || "Senin - Sabtu";
+  const weekdayHours = contact?.operatingHoursWeekday || "08.00 - 16.00 WIB";
+  const weekendLabel = contact?.operatingHoursWeekendLabel || "Minggu";
+  const weekendHours =
+    contact?.operatingHoursWeekend || "Tutup (Online Chat Only)";
+  const mapsEmbed = parseMapsEmbed(contact?.contactMapsEmbed);
 
   // Social media links from DB (only show if enabled)
   const socials = [
-    { type: 'instagram', url: contact?.social_instagram, enabled: contact?.social_instagram_enabled !== '0', label: 'Instagram' },
-    { type: 'tiktok', url: contact?.social_tiktok, enabled: contact?.social_tiktok_enabled !== '0', label: 'TikTok' },
-    { type: 'facebook', url: contact?.social_facebook, enabled: contact?.social_facebook_enabled !== '0', label: 'Facebook' },
-    { type: 'shopee', url: contact?.social_shopee, enabled: contact?.social_shopee_enabled !== '0', label: 'Shopee' },
-    { type: 'whatsapp', url: contact?.whatsapp_number ? `https://wa.me/${contact.whatsapp_number.replace(/\D/g, '')}` : undefined, enabled: true, label: 'WhatsApp' },
-  ].filter(s => s.url && s.enabled);
+    {
+      type: "instagram",
+      url: contact?.socialInstagram,
+      enabled: contact?.socialInstagramEnabled !== "0",
+      label: "Instagram",
+    },
+    {
+      type: "tiktok",
+      url: contact?.socialTiktok,
+      enabled: contact?.socialTiktokEnabled !== "0",
+      label: "TikTok",
+    },
+    {
+      type: "facebook",
+      url: contact?.socialFacebook,
+      enabled: contact?.socialFacebookEnabled !== "0",
+      label: "Facebook",
+    },
+    {
+      type: "shopee",
+      url: contact?.socialShopee,
+      enabled: contact?.socialShopeeEnabled !== "0",
+      label: "Shopee",
+    },
+    {
+      type: "whatsapp",
+      url: contact?.whatsappNumber
+        ? `https://wa.me/${contact.whatsappNumber.replace(/\D/g, "")}`
+        : undefined,
+      enabled: true,
+      label: "WhatsApp",
+    },
+  ].filter((s) => s.url && s.enabled);
 
   const contactItems = [
-    { icon: <MapPinIcon className="w-7 h-7" />, title: 'Alamat Workshop', value: address },
-    { icon: <PhoneIcon className="w-7 h-7" />, title: 'Telepon / WhatsApp', value: phone },
-    { icon: <EnvelopeIcon className="w-7 h-7" />, title: 'Email', value: email },
+    {
+      icon: <MapPinIcon className="w-7 h-7" />,
+      title: "Alamat Workshop",
+      value: address,
+    },
+    {
+      icon: <PhoneIcon className="w-7 h-7" />,
+      title: "Telepon / WhatsApp",
+      value: phone,
+    },
+    {
+      icon: <EnvelopeIcon className="w-7 h-7" />,
+      title: "Email",
+      value: email,
+    },
   ];
 
   return (
@@ -86,134 +154,154 @@ export function KontakSection({ settings }: KontakSectionProps) {
 
       <div className="relative mx-auto max-w-[1440px] px-6 lg:px-8 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-stretch">
-
           {/* Left: Info Content */}
-          <MotionDiv delay={0.1} className="lg:col-span-5 flex flex-col justify-center">
-            
+          <MotionDiv
+            delay={0.1}
+            className="lg:col-span-5 flex flex-col justify-center"
+          >
             <div className="inline-flex items-center gap-3 mb-6 sm:mb-8 bg-white border border-slate-200 shadow-sm rounded-full py-2 px-5 w-fit">
-                {/* <span className="w-2 h-2 rounded-full bg-mitologi-gold animate-pulse" /> */}
-                <span className="text-mitologi-navy font-sans font-bold uppercase tracking-[0.2em] text-[11px] sm:text-xs">Layanan Pelanggan</span>
+              {/* <span className="w-2 h-2 rounded-full bg-mitologi-gold animate-pulse" /> */}
+              <span className="text-mitologi-navy font-sans font-bold uppercase tracking-[0.2em] text-[11px] sm:text-xs">
+                Layanan Pelanggan
+              </span>
             </div>
-            
+
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans font-black mb-8 leading-[1.15] tracking-tight text-mitologi-navy">
-                Mari <span className="text-mitologi-gold">Terhubung</span>
+              Mari <span className="text-mitologi-gold">Terhubung</span>
             </h2>
 
             <div className="relative mb-12">
-               <div className="absolute top-2 bottom-0 left-[11px] w-px bg-gradient-to-b from-mitologi-gold via-slate-200 to-transparent" />
-               <div className="pl-8 sm:pl-10 relative">
-                   <div className="absolute left-[7px] top-[6px] w-[9px] h-[9px] rounded-full bg-mitologi-gold ring-4 ring-white" />
-                   <p className="text-slate-600 leading-[1.7] font-sans font-medium text-sm sm:text-[15px] lg:text-base text-justify">
-                      Hubungi kami untuk konsultasi, pemesanan, atau sekadar bertanya seputar layanan produksi kami. Tim kami dengan senang hati akan membantu Anda.
-                   </p>
-               </div>
+              <div className="absolute top-2 bottom-0 left-[11px] w-px bg-gradient-to-b from-mitologi-gold via-slate-200 to-transparent" />
+              <div className="pl-8 sm:pl-10 relative">
+                <div className="absolute left-[7px] top-[6px] w-[9px] h-[9px] rounded-full bg-mitologi-gold ring-4 ring-white" />
+                <p className="text-slate-600 leading-[1.7] font-sans font-medium text-sm sm:text-[15px] lg:text-base text-justify">
+                  Hubungi kami untuk konsultasi, pemesanan, atau sekadar
+                  bertanya seputar layanan produksi kami. Tim kami dengan senang
+                  hati akan membantu Anda.
+                </p>
+              </div>
             </div>
 
             <div className="space-y-6">
-                {/* Contact Details Card (Matches Makna Logo Card) */}
-                <div className="relative group bg-white rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 shadow-sm border border-slate-200 hover:shadow-xl hover:border-mitologi-gold/30 transition-all duration-300 overflow-hidden flex flex-col">
-                  <div className="absolute inset-0 bg-gradient-to-br from-mitologi-navy/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  <div className="relative z-10 space-y-6">
-                    {contactItems.map((item, i) => (
-                      <div key={i} className="flex gap-5 group/item items-start">
-                        <div className="flex-shrink-0">
-                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-mitologi-navy text-white flex items-center justify-center font-sans font-black shadow-md group-hover/item:scale-110 group-hover/item:bg-mitologi-gold group-hover/item:text-mitologi-navy transition-all duration-300">
-                            {item.icon}
-                          </div>
-                        </div>
-                        <div className="pt-0.5">
-                          <h4 className="text-[11px] sm:text-xs font-sans font-bold text-slate-400 uppercase tracking-widest mb-1.5">{item.title}</h4>
-                          <p className="text-mitologi-navy font-sans font-black text-[13px] sm:text-[15px] leading-relaxed tracking-tight">{item.value}</p>
+              {/* Contact Details Card (Matches Makna Logo Card) */}
+              <div className="relative group bg-white rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 shadow-sm border border-slate-200 hover:shadow-xl hover:border-mitologi-gold/30 transition-all duration-300 overflow-hidden flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-br from-mitologi-navy/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="relative z-10 space-y-6">
+                  {contactItems.map((item, i) => (
+                    <div key={i} className="flex gap-5 group/item items-start">
+                      <div className="flex-shrink-0">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-mitologi-navy text-white flex items-center justify-center font-sans font-black shadow-md group-hover/item:scale-110 group-hover/item:bg-mitologi-gold group-hover/item:text-mitologi-navy transition-all duration-300">
+                          {item.icon}
                         </div>
                       </div>
-                    ))}
-                  </div>
+                      <div className="pt-0.5">
+                        <h4 className="text-[11px] sm:text-xs font-sans font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          {item.title}
+                        </h4>
+                        <p className="text-mitologi-navy font-sans font-black text-[13px] sm:text-[15px] leading-relaxed tracking-tight">
+                          {item.value}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Jam Operasional */}
+              <div className="relative group bg-mitologi-navy rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 shadow-sm border border-transparent hover:shadow-xl hover:border-mitologi-gold/30 transition-all duration-300 overflow-hidden flex flex-col">
+                <div className="absolute -right-6 -top-6 text-white/5 group-hover:scale-110 transition-transform duration-700">
+                  <ClockIcon className="w-32 h-32 transform rotate-12" />
                 </div>
 
-                {/* Jam Operasional */}
-                <div className="relative group bg-mitologi-navy rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 shadow-sm border border-transparent hover:shadow-xl hover:border-mitologi-gold/30 transition-all duration-300 overflow-hidden flex flex-col">
-                  <div className="absolute -right-6 -top-6 text-white/5 group-hover:scale-110 transition-transform duration-700">
-                     <ClockIcon className="w-32 h-32 transform rotate-12" />
+                <div className="relative z-10 flex items-center gap-3 mb-6 border-b border-white/10 pb-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-mitologi-gold text-mitologi-navy flex items-center justify-center font-sans font-black shadow-md">
+                    <ClockIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  
-                  <div className="relative z-10 flex items-center gap-3 mb-6 border-b border-white/10 pb-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-mitologi-gold text-mitologi-navy flex items-center justify-center font-sans font-black shadow-md">
-                        <ClockIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-black text-white font-sans tracking-tight">Jam Operasional</h3>
-                  </div>
-                  <ul className="space-y-4 font-sans text-slate-300 relative z-10 pl-2">
-                    <li className="flex justify-between items-center group/time">
-                      <div className="flex items-center gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover/time:bg-mitologi-gold transition-colors"></span>
-                        <span className="font-medium text-[13px] sm:text-[15px]">{weekdayLabel}</span>
-                      </div>
-                      <span className="font-bold text-white tracking-tight">{weekdayHours}</span>
-                    </li>
-                    <li className="flex justify-between items-center group/time pt-1">
-                      <div className="flex items-center gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover/time:bg-mitologi-gold transition-colors"></span>
-                        <span className="font-medium text-[13px] sm:text-[15px]">{weekendLabel}</span>
-                      </div>
-                      <span className="font-bold text-mitologi-gold tracking-tight">{weekendHours}</span>
-                    </li>
-                  </ul>
+                  <h3 className="text-xl sm:text-2xl font-black text-white font-sans tracking-tight">
+                    Jam Operasional
+                  </h3>
                 </div>
+                <ul className="space-y-4 font-sans text-slate-300 relative z-10 pl-2">
+                  <li className="flex justify-between items-center group/time">
+                    <div className="flex items-center gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover/time:bg-mitologi-gold transition-colors"></span>
+                      <span className="font-medium text-[13px] sm:text-[15px]">
+                        {weekdayLabel}
+                      </span>
+                    </div>
+                    <span className="font-bold text-white tracking-tight">
+                      {weekdayHours}
+                    </span>
+                  </li>
+                  <li className="flex justify-between items-center group/time pt-1">
+                    <div className="flex items-center gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover/time:bg-mitologi-gold transition-colors"></span>
+                      <span className="font-medium text-[13px] sm:text-[15px]">
+                        {weekendLabel}
+                      </span>
+                    </div>
+                    <span className="font-bold text-mitologi-gold tracking-tight">
+                      {weekendHours}
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </MotionDiv>
 
           {/* Right: Map Presentation */}
-          <MotionDiv delay={0.3} className="lg:col-span-7 h-full min-h-[400px] mt-10 lg:mt-0 lg:pl-4">
+          <MotionDiv
+            delay={0.3}
+            className="lg:col-span-7 h-full min-h-[400px] mt-10 lg:mt-0 lg:pl-4"
+          >
             <div className="relative w-full h-full group flex flex-col">
-                <div className="absolute inset-0 bg-gradient-to-br from-mitologi-gold/20 to-mitologi-navy/5 rounded-[2.5rem] transform translate-x-3 translate-y-3 sm:translate-x-6 sm:translate-y-6 transition-transform duration-500 group-hover:translate-x-4 group-hover:translate-y-4 pointer-events-none" />
-                <div className="absolute inset-0 border-2 border-slate-200 rounded-[2.5rem] transform -translate-x-3 -translate-y-3 sm:-translate-x-6 sm:-translate-y-6 transition-transform duration-500 group-hover:-translate-x-4 group-hover:-translate-y-4 bg-white/50 backdrop-blur-sm pointer-events-none" />
-                
-                <div className="relative w-full rounded-[2rem] overflow-hidden bg-white shadow-xl flex flex-col p-2 z-10 border border-slate-100 flex-1 min-h-[400px]">
-                    
-                    {/* Header Peta (matches image display in history) */}
-                    <div className="flex items-center gap-3 mb-4 mt-2 px-4 sm:px-6">
-                        <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center shadow-sm border border-slate-100">
-                            <MapPinIcon className="w-4 h-4 text-mitologi-gold" />
-                        </div>
-                        <h2 className="text-lg sm:text-xl font-black text-mitologi-navy font-sans tracking-tight">
-                            Lokasi Workshop
-                        </h2>
-                    </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-mitologi-gold/20 to-mitologi-navy/5 rounded-[2.5rem] transform translate-x-3 translate-y-3 sm:translate-x-6 sm:translate-y-6 transition-transform duration-500 group-hover:translate-x-4 group-hover:translate-y-4 pointer-events-none" />
+              <div className="absolute inset-0 border-2 border-slate-200 rounded-[2.5rem] transform -translate-x-3 -translate-y-3 sm:-translate-x-6 sm:-translate-y-6 transition-transform duration-500 group-hover:-translate-x-4 group-hover:-translate-y-4 bg-white/50 backdrop-blur-sm pointer-events-none" />
 
-                    <div className="flex-1 w-full rounded-[1.5rem] overflow-hidden relative">
-                        <iframe
-                            src={mapsEmbed}
-                            width="100%"
-                            height="100%"
-                            style={{ border: 0 }}
-                            allowFullScreen
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            className="w-full h-full filter opacity-95 grayscale-[20%] contrast-[95%] hover:opacity-100 hover:grayscale-0 hover:contrast-100 transition-all duration-500 absolute inset-0"
-                        />
-                    </div>
+              <div className="relative w-full rounded-[2rem] overflow-hidden bg-white shadow-xl flex flex-col p-2 z-10 border border-slate-100 flex-1 min-h-[400px]">
+                {/* Header Peta (matches image display in history) */}
+                <div className="flex items-center gap-3 mb-4 mt-2 px-4 sm:px-6">
+                  <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center shadow-sm border border-slate-100">
+                    <MapPinIcon className="w-4 h-4 text-mitologi-gold" />
+                  </div>
+                  <h2 className="text-lg sm:text-xl font-black text-mitologi-navy font-sans tracking-tight">
+                    Lokasi Workshop
+                  </h2>
                 </div>
 
-                {/* Social Media floating below map like the info badge */}
-                {socials.length > 0 && (
-                   <div className="absolute -bottom-6 -left-4 sm:-bottom-8 sm:-left-6 bg-white/95 backdrop-blur shadow-xl border border-slate-100 p-4 sm:p-5 rounded-3xl flex gap-3 group-hover:-translate-y-2 transition-transform duration-500 z-20">
-                      {socials.map((s) => (
-                        <a
-                          key={s.type}
-                          href={s.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={s.label}
-                          className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-slate-50 text-mitologi-navy rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg hover:border-mitologi-gold/50 hover:bg-mitologi-gold hover:text-mitologi-navy hover:-translate-y-1 transition-all duration-300 group/soc"
-                        >
-                            <SocialIcon type={s.type} />
-                        </a>
-                      ))}
-                    </div>
-                )}
+                <div className="flex-1 w-full rounded-[1.5rem] overflow-hidden relative">
+                  <iframe
+                    src={mapsEmbed}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-full filter opacity-95 grayscale-[20%] contrast-[95%] hover:opacity-100 hover:grayscale-0 hover:contrast-100 transition-all duration-500 absolute inset-0"
+                  />
+                </div>
+              </div>
+
+              {/* Social Media floating below map like the info badge */}
+              {socials.length > 0 && (
+                <div className="absolute -bottom-6 -left-4 sm:-bottom-8 sm:-left-6 bg-white/95 backdrop-blur shadow-xl border border-slate-100 p-4 sm:p-5 rounded-3xl flex gap-3 group-hover:-translate-y-2 transition-transform duration-500 z-20">
+                  {socials.map((s) => (
+                    <a
+                      key={s.type}
+                      href={s.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-slate-50 text-mitologi-navy rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg hover:border-mitologi-gold/50 hover:bg-mitologi-gold hover:text-mitologi-navy hover:-translate-y-1 transition-all duration-300 group/soc"
+                    >
+                      <SocialIcon type={s.type} />
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           </MotionDiv>
-
         </div>
       </div>
     </MotionSection>

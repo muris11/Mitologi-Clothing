@@ -29,11 +29,11 @@ export function SizeCalculator() {
 
     // A simple mapping to determine the larger size
     const sizeRank: Record<string, number> = {
-      "S": 1,
-      "M": 2,
-      "L": 3,
-      "XL": 4,
-      "XXL": 5,
+      S: 1,
+      M: 2,
+      L: 3,
+      XL: 4,
+      XXL: 5,
       "3XL": 6,
       "4XL": 7,
     };
@@ -43,7 +43,9 @@ export function SizeCalculator() {
 
     // Pick the larger recommended size to ensure it fits
     const finalRank = Math.max(rankW, rankH);
-    const finalSize = Object.keys(sizeRank).find(key => sizeRank[key] === finalRank);
+    const finalSize = Object.keys(sizeRank).find(
+      (key) => sizeRank[key] === finalRank,
+    );
 
     return finalSize || "L";
   };
@@ -69,8 +71,13 @@ export function SizeCalculator() {
           <CalculatorIcon className="w-6 h-6" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-mitologi-navy">Kalkulator Ukuran</h2>
-          <p className="text-sm text-slate-500">Masukkan tinggi dan berat badan Anda untuk rekomendasi ukuran instan.</p>
+          <h2 className="text-xl font-bold text-mitologi-navy">
+            Kalkulator Ukuran
+          </h2>
+          <p className="text-sm text-slate-500">
+            Masukkan tinggi dan berat badan Anda untuk rekomendasi ukuran
+            instan.
+          </p>
         </div>
       </div>
 
@@ -80,7 +87,12 @@ export function SizeCalculator() {
           <form onSubmit={handleCalculate} className="flex flex-col gap-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="calc-height" className="block text-sm font-semibold text-slate-700 mb-2">Tinggi Badan (cm)</label>
+                <label
+                  htmlFor="calc-height"
+                  className="block text-sm font-semibold text-slate-700 mb-2"
+                >
+                  Tinggi Badan (cm)
+                </label>
                 <div className="relative">
                   <input
                     id="calc-height"
@@ -88,18 +100,31 @@ export function SizeCalculator() {
                     inputMode="numeric"
                     pattern="[0-9]*"
                     value={height}
-                    onChange={(e) => setHeight(e.target.value.replace(/[^0-9]/g, ""))}
+                    onChange={(e) =>
+                      setHeight(e.target.value.replace(/[^0-9]/g, ""))
+                    }
                     placeholder="Contoh: 170"
                     className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 pr-12 text-slate-800 shadow-[0_10px_24px_-20px_rgba(15,23,42,0.35)] transition-all placeholder:text-slate-400 focus:border-mitologi-navy focus:bg-white focus:ring-2 focus:ring-mitologi-navy/10"
                     required
                     autoComplete="off"
                     aria-describedby="height-unit"
                   />
-                  <span id="height-unit" className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400" aria-hidden="true">cm</span>
+                  <span
+                    id="height-unit"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400"
+                    aria-hidden="true"
+                  >
+                    cm
+                  </span>
                 </div>
               </div>
               <div>
-                <label htmlFor="calc-weight" className="block text-sm font-semibold text-slate-700 mb-2">Berat Badan (kg)</label>
+                <label
+                  htmlFor="calc-weight"
+                  className="block text-sm font-semibold text-slate-700 mb-2"
+                >
+                  Berat Badan (kg)
+                </label>
                 <div className="relative">
                   <input
                     id="calc-weight"
@@ -107,18 +132,26 @@ export function SizeCalculator() {
                     inputMode="numeric"
                     pattern="[0-9]*"
                     value={weight}
-                    onChange={(e) => setWeight(e.target.value.replace(/[^0-9]/g, ""))}
+                    onChange={(e) =>
+                      setWeight(e.target.value.replace(/[^0-9]/g, ""))
+                    }
                     placeholder="Contoh: 65"
                     className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 pr-12 text-slate-800 shadow-[0_10px_24px_-20px_rgba(15,23,42,0.35)] transition-all placeholder:text-slate-400 focus:border-mitologi-navy focus:bg-white focus:ring-2 focus:ring-mitologi-navy/10"
                     required
                     autoComplete="off"
                     aria-describedby="weight-unit"
                   />
-                   <span id="weight-unit" className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400" aria-hidden="true">kg</span>
+                  <span
+                    id="weight-unit"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400"
+                    aria-hidden="true"
+                  >
+                    kg
+                  </span>
                 </div>
               </div>
             </div>
-            
+
             <button
               type="submit"
               className="mt-2 w-full sm:w-auto px-8 py-3.5 bg-mitologi-navy hover:bg-mitologi-navy-light text-white rounded-xl font-bold transition-all shadow-md active:scale-[0.98]"
@@ -132,29 +165,38 @@ export function SizeCalculator() {
         <div className="flex-1">
           {recommendation ? (
             <div className="h-full bg-gradient-to-br from-mitologi-navy to-mitologi-navy-light rounded-2xl p-6 text-white flex flex-col sm:flex-row gap-5 sm:gap-6 items-center sm:items-start text-center sm:text-left shadow-lg animate-in fade-in slide-in-from-bottom-4 duration-500">
-               <div className="w-20 h-20 shrink-0 bg-white/10 rounded-full flex items-center justify-center border border-white/20">
-                  <span className="text-3xl font-black">{recommendation}</span>
-                </div>
-                <div className="w-full">
-                  <h3 className="text-lg font-bold mb-1">Rekomendasi Kami: Ukuran {recommendation}</h3>
-                  <p className="text-sm text-slate-300 leading-relaxed">
-                    Berdasarkan profil Anda ({height}cm, {weight}kg), kami merekomendasikan ukuran <strong className="text-white">{recommendation}</strong> agar pakaian pas dan nyaman di badan Anda.
-                  </p>
-                </div>
+              <div className="w-20 h-20 shrink-0 bg-white/10 rounded-full flex items-center justify-center border border-white/20">
+                <span className="text-3xl font-black">{recommendation}</span>
+              </div>
+              <div className="w-full">
+                <h3 className="text-lg font-bold mb-1">
+                  Rekomendasi Kami: Ukuran {recommendation}
+                </h3>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  Berdasarkan profil Anda ({height}cm, {weight}kg), kami
+                  merekomendasikan ukuran{" "}
+                  <strong className="text-white">{recommendation}</strong> agar
+                  pakaian pas dan nyaman di badan Anda.
+                </p>
+              </div>
             </div>
           ) : (
             <div className="h-full bg-slate-50 border border-slate-200 border-dashed rounded-2xl p-6 flex flex-col items-center justify-center text-center">
-               <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-3">
-                 <span className="text-xl text-slate-400">?</span>
-               </div>
-               <p className="text-sm text-slate-500 font-medium">Isi form di samping untuk mendapatkan rekomendasi ukuran Anda.</p>
+              <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-3">
+                <span className="text-xl text-slate-400">?</span>
+              </div>
+              <p className="text-sm text-slate-500 font-medium">
+                Isi form di samping untuk mendapatkan rekomendasi ukuran Anda.
+              </p>
             </div>
           )}
         </div>
       </div>
-      
+
       <p className="text-xs text-slate-400 mt-6 pt-4 border-t border-slate-100">
-        * Ini adalah estimasi ukuran standar. Bentuk tubuh setiap orang berbeda-beda. Pastikan Anda juga mengecek panduan ukuran lengkap pakaian di bawah.
+        * Ini adalah estimasi ukuran standar. Bentuk tubuh setiap orang
+        berbeda-beda. Pastikan Anda juga mengecek panduan ukuran lengkap pakaian
+        di bawah.
       </p>
     </div>
   );
