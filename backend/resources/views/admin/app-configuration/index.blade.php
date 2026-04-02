@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+<x-admin-layout>
+    <x-slot name="header">
+        App Configuration
+    </x-slot>
 
-@section('title', 'App Configuration')
-
-@section('content')
-<div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto">
     <!-- Header -->
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-900">Application Configuration</h1>
@@ -309,4 +309,4 @@ document.addEventListener('DOMContentLoaded', () => {
     switchTab(savedTab);
 });
 </script>
-@endsection
+</x-admin-layout>
