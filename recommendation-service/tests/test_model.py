@@ -127,14 +127,29 @@ class TestRecommenderSystem:
         products = [{'id': 101, 'title': 'Test', 'description': 'Test', 'category': 'Test'}]
         recommender.train(interactions, products)
         
-        # Save
-        original_path = RecommenderSystem._RecommenderSystem__dict__.get('MODEL_PATH', 'recommender_model.pkl')
-        with patch('model.MODEL_PATH', str(tmp_path / 'test_model.pkl')):
+        # Use temp file as model path
+        test_model_file = str(tmp_path / 'test_model.pkl')
+        
+        # Patch MODEL_PATH for this test
+        import model
+        original_path = model.MODEL_PATH
+        model.MODEL_PATH = test_model_file
+        
+        try:
+            # Save
             recommender.save_model()
+            
+            # Verify file was created
+            assert os.path.exists(test_model_file), "Model file should be created"
             
             # Load
             loaded = RecommenderSystem.load_model()
-            assert loaded.is_trained
+            assert loaded.is_trained, "Loaded model should be trained"
+            assert len(loaded.product_ids) == 1, "Should have 1 product"
+            assert 101 in loaded.product_ids, "Product 101 should be present"
+        finally:
+            # Restore original path
+            model.MODEL_PATH = original_path
 
 
 class TestAPIRoutes:
@@ -240,71 +255,79 @@ class TestTrainJob:
 class TestSecurity:
     """Security test cases."""
 
-    def test_api_key_validation(self):
+    @pytest.fixture
+    def client(self):
+        """Create test client."""
+        from app import app
+        app.config['TESTING'] = True
+        with app.test_client() as client:
+            yield client
+
+    def test_api_key_validation(self, client):
         """Test API key validation logic."""
-        from app import require_api_key, API_KEY
-        
-        # Mock function to wrap
-        mock_func = Mock(return_value="success")
-        wrapped = require_api_key(mock_func)
+        from app import API_KEY
         
         # Test with valid key
-        with patch('app.request') as mock_request:
-            mock_request.headers.get.return_value = API_KEY
-            result = wrapped()
-            assert result == "success"
-            mock_func.assert_called_once()
+        response = client.get('/api/recommendations/user/1', 
+                              headers={'X-API-Key': API_KEY})
+        # Should not return 401 (may return other status based on model state)
+        assert response.status_code != 401, "Valid API key should not be rejected"
 
-    def test_api_key_validation_invalid(self):
+    def test_api_key_validation_invalid(self, client):
         """Test API key rejects invalid keys."""
-        from app import require_api_key
+        response = client.get('/api/recommendations/user/1', 
+                              headers={'X-API-Key': 'invalid-key'})
+        assert response.status_code == 401, "Invalid API key should return 401"
         
-        mock_func = Mock()
-        wrapped = require_api_key(mock_func)
-        
-        with patch('app.request') as mock_request:
-            mock_request.headers.get.return_value = "invalid-key"
-            result = wrapped()
-            
-            assert result[1] == 401  # Status code
-            mock_func.assert_not_called()
+        data = json.loads(response.data)
+        assert 'error' in data, "Response should contain error"
+        assert data['error']['code'] == 'unauthorized'
 
 
 class TestErrorHandling:
     """Error handling test cases."""
 
-    def test_parse_limit_valid(self):
+    @pytest.fixture
+    def client(self):
+        """Create test client."""
+        from app import app
+        app.config['TESTING'] = True
+        with app.test_client() as client:
+            yield client
+
+    def test_parse_limit_valid(self, client):
         """Test limit parsing with valid values."""
-        from app import parse_limit
+        from app import API_KEY
         
-        with patch('app.request') as mock_request:
-            mock_request.args.get.return_value = "10"
-            limit, error, status = parse_limit(10)
-            
-            assert error is None
-            assert limit == 10
+        # Test with valid limit parameter
+        response = client.get(f'/api/recommendations/user/1?limit=10',
+                              headers={'X-API-Key': API_KEY})
+        # Should not return 400 for valid limit
+        assert response.status_code != 400, "Valid limit should not return 400"
 
-    def test_parse_limit_invalid(self):
+    def test_parse_limit_invalid(self, client):
         """Test limit parsing with invalid values."""
-        from app import parse_limit
+        from app import API_KEY
         
-        with patch('app.request') as mock_request:
-            mock_request.args.get.return_value = "invalid"
-            limit, error, status = parse_limit(10)
-            
-            assert error is not None
-            assert status == 400
+        # Test with invalid limit parameter
+        response = client.get(f'/api/recommendations/user/1?limit=invalid',
+                              headers={'X-API-Key': API_KEY})
+        assert response.status_code == 400, "Invalid limit should return 400"
+        
+        data = json.loads(response.data)
+        assert 'error' in data, "Response should contain error"
 
-    def test_parse_limit_out_of_range(self):
+    def test_parse_limit_out_of_range(self, client):
         """Test limit parsing with out of range values."""
-        from app import parse_limit
+        from app import API_KEY
         
-        with patch('app.request') as mock_request:
-            mock_request.args.get.return_value = "999"
-            limit, error, status = parse_limit(10, max_value=100)
-            
-            assert error is not None
-            assert status == 400
+        # Test with limit too high
+        response = client.get(f'/api/recommendations/user/1?limit=999',
+                              headers={'X-API-Key': API_KEY})
+        assert response.status_code == 400, "Out of range limit should return 400"
+        
+        data = json.loads(response.data)
+        assert 'error' in data, "Response should contain error"
 
 
 if __name__ == "__main__":
