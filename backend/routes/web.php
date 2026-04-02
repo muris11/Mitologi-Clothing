@@ -57,6 +57,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/kontak', [\App\Http\Controllers\Admin\SiteSettingController::class, 'kontak'])->name('kontak.index');
     Route::put('/kontak', [\App\Http\Controllers\Admin\SiteSettingController::class, 'updateKontak'])->name('kontak.update');
 
+    // App Configuration (Environment Variables)
+    Route::get('/app-configuration', [\App\Http\Controllers\Admin\AppConfigurationController::class, 'index'])->name('app-configuration.index');
+    Route::put('/app-configuration/{group}', [\App\Http\Controllers\Admin\AppConfigurationController::class, 'update'])->name('app-configuration.update');
+    Route::post('/app-configuration/test/{service}', [\App\Http\Controllers\Admin\AppConfigurationController::class, 'test'])->name('app-configuration.test');
+
     // === Beranda Sub-Resources ===
     Route::prefix('beranda')->name('beranda.')->group(function () {
         Route::resource('hero-slides', \App\Http\Controllers\Admin\HeroSlideController::class);
