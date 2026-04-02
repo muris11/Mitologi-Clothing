@@ -8,6 +8,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/order_provider.dart';
 import '../../widgets/animations/shimmer_button.dart';
 import 'package:intl/intl.dart';
+import '../../utils/responsive_helper.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -47,12 +48,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget _buildGuestBody() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(ResponsiveHelper.horizontalPadding(context)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(
+                ResponsiveHelper.horizontalPadding(context),
+              ),
               decoration: const BoxDecoration(
                 color: AppTheme.slate50,
                 shape: BoxShape.circle,
@@ -142,7 +145,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           padding: const EdgeInsets.symmetric(vertical: 10),
           itemCount: notifications.length,
           separatorBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(
+              horizontal: ResponsiveHelper.horizontalPadding(context),
+            ),
             child: Divider(color: AppTheme.slate100, height: 1),
           ),
           itemBuilder: (context, index) {
@@ -152,8 +157,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
               child: ListTile(
                 onTap: () =>
                     context.push('/shop/account/orders/${item.orderNumber}'),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: ResponsiveHelper.horizontalPadding(context),
                   vertical: 12,
                 ),
                 leading: Container(

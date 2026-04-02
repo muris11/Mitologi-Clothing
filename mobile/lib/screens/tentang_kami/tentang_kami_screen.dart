@@ -5,6 +5,7 @@ import '../../models/tentang_kami/site_settings_model.dart';
 import '../../models/tentang_kami/team_member_model.dart';
 import '../../models/tentang_kami/facility_model.dart';
 import '../../utils/navigation_helper.dart';
+import '../../utils/responsive_helper.dart';
 import 'widgets/hero_section.dart';
 import 'widgets/about_history_section.dart';
 import 'widgets/founder_story_section.dart';
@@ -163,12 +164,16 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
         ),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(
+              ResponsiveHelper.horizontalPadding(context),
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(24),
+                  padding: EdgeInsets.all(
+                    ResponsiveHelper.horizontalPadding(context),
+                  ),
                   decoration: BoxDecoration(
                     color: AppTheme.error.withValues(alpha: 0.1),
                     shape: BoxShape.circle,

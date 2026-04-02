@@ -10,6 +10,7 @@ import '../../widgets/animations/blur_fade.dart';
 import '../../widgets/animations/shimmer_button.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 import '../../widgets/skeleton/skeleton.dart';
+import '../../utils/responsive_helper.dart';
 
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
@@ -116,7 +117,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
                     }
 
                     return GridView.builder(
-                      padding: const EdgeInsets.all(16),
+                      padding: EdgeInsets.all(
+                        ResponsiveHelper.horizontalPadding(context),
+                      ),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: crossAxisCount,
                         childAspectRatio: childAspectRatio,
@@ -145,7 +148,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
   Widget _buildGuestView(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(
+          ResponsiveHelper.horizontalPadding(context) * 2,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
