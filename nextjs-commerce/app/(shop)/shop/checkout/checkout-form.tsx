@@ -223,20 +223,25 @@ export default function CheckoutForm({
         <section className="lg:col-span-7">
           <form onSubmit={handleCheckout} className="space-y-8">
             {/* Address Selection Section */}
-            <div className="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-sm">
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-6 pb-5 border-b border-slate-100">
                 <div className="flex items-center gap-4">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-mitologi-navy text-white font-sans text-sm font-bold shadow-sm">
-                    1
-                  </span>
-                  <h2 className="text-xl font-sans font-extrabold text-mitologi-navy">
-                    Pilih Alamat Pengiriman
-                  </h2>
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-mitologi-navy text-white font-sans text-sm font-bold shadow-md">
+                    <MapPinIcon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-sans font-bold text-mitologi-navy">
+                      Alamat Pengiriman
+                    </h2>
+                    <p className="text-sm font-sans text-slate-400 mt-0.5">
+                      Pilih alamat untuk pengiriman pesanan
+                    </p>
+                  </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => router.push("/shop/account")}
-                  className="text-sm font-sans font-bold text-mitologi-navy hover:text-mitologi-gold transition-colors flex items-center gap-2"
+                  className="text-sm font-sans font-semibold text-mitologi-navy hover:text-mitologi-gold transition-colors flex items-center gap-1.5 px-4 py-2 rounded-xl hover:bg-slate-50 border border-slate-200 hover:border-slate-300"
                 >
                   <PlusIcon className="w-4 h-4" />
                   Tambah Alamat
@@ -252,9 +257,9 @@ export default function CheckoutForm({
                   <button
                     type="button"
                     onClick={() => router.push("/shop/account")}
-                    className="bg-mitologi-navy text-white px-6 py-3 rounded-full font-sans font-bold hover:bg-mitologi-navy/90 transition-colors"
+                    className="bg-mitologi-navy text-white px-6 py-3 rounded-xl font-sans font-semibold hover:bg-mitologi-navy/90 transition-colors shadow-md"
                   >
-                    Tambah Alamat Baru
+                    Tambah Alamat
                   </button>
                 </div>
               ) : (
@@ -262,10 +267,10 @@ export default function CheckoutForm({
                   {addresses.map((address) => (
                     <label
                       key={address.id}
-                      className={`relative flex items-start p-5 rounded-2xl border-2 cursor-pointer transition-all ${
+                      className={`relative flex items-start p-5 md:p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 overflow-hidden ${
                         selectedAddressId === address.id
-                          ? "border-mitologi-navy bg-mitologi-navy/5"
-                          : "border-slate-200 hover:border-slate-300"
+                          ? "border-mitologi-navy bg-white shadow-md"
+                          : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm"
                       }`}
                     >
                       <input
@@ -276,36 +281,54 @@ export default function CheckoutForm({
                         onChange={() => setSelectedAddressId(address.id)}
                         className="sr-only"
                       />
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
+                      <div className="flex-1 min-w-0">
+                        {/* Badge and Selection Indicator */}
+                        <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2">
-                            <span className="font-sans font-bold text-mitologi-navy">
-                              {address.label}
-                            </span>
-                            {address.isPrimary && (
-                              <span className="text-xs font-sans font-bold bg-mitologi-gold text-mitologi-navy px-2 py-1 rounded-full">
+                            {address.isPrimary ? (
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-sans font-bold bg-mitologi-navy text-white shadow-sm">
+                                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
                                 Utama
                               </span>
-                            )}
-                            {selectedAddressId === address.id && (
-                              <CheckCircleIcon className="w-5 h-5 text-mitologi-navy" />
+                            ) : (
+                              <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-sans font-bold bg-amber-100 text-amber-700">
+                                {address.label}
+                              </span>
                             )}
                           </div>
+                          {selectedAddressId === address.id && (
+                            <div className="flex items-center gap-1 text-mitologi-navy">
+                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                              <span className="text-sm font-sans font-semibold">Dipilih</span>
+                            </div>
+                          )}
                         </div>
-                        <p className="font-sans font-bold text-slate-900 mb-1">
+                        
+                        {/* Recipient Info */}
+                        <p className="font-sans font-bold text-lg text-slate-900 mb-1">
                           {address.recipientName}
                         </p>
-                        <p className="font-sans text-sm text-slate-600 mb-1">
+                        <p className="font-sans text-sm text-slate-600 mb-3">
                           {address.phone}
                         </p>
-                        <p className="font-sans text-sm text-slate-600">
-                          {address.addressLine1}
-                          {address.addressLine2 && `, ${address.addressLine2}`}
-                        </p>
-                        <p className="font-sans text-sm text-slate-600">
-                          {address.city}, {address.province}{" "}
-                          {address.postalCode}
-                        </p>
+                        
+                        {/* Address with icon */}
+                        <div className="flex items-start gap-2 text-sm text-slate-600">
+                          <MapPinIcon className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+                          <div className="space-y-0.5">
+                            <p className="font-sans">
+                              {address.addressLine1}
+                              {address.addressLine2 && `, ${address.addressLine2}`}
+                            </p>
+                            <p className="font-sans">
+                              {address.city}, {address.province} {address.postalCode}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </label>
                   ))}
@@ -314,14 +337,19 @@ export default function CheckoutForm({
 
               {/* Selected Address Summary */}
               {selectedAddress && (
-                <div className="mt-6 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
-                  <p className="text-sm font-sans font-bold text-emerald-700 mb-2">
-                    Alamat yang dipilih:
-                  </p>
-                  <p className="text-sm font-sans text-emerald-600">
+                <div className="mt-6 p-5 bg-emerald-50 rounded-xl border border-emerald-200">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg className="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-sm font-sans font-bold text-emerald-700">
+                      Alamat yang dipilih
+                    </p>
+                  </div>
+                  <p className="text-sm font-sans text-emerald-600 ml-7">
                     {selectedAddress.recipientName} • {selectedAddress.phone}
                   </p>
-                  <p className="text-sm font-sans text-emerald-600">
+                  <p className="text-sm font-sans text-emerald-600 ml-7">
                     {selectedAddress.addressLine1}, {selectedAddress.city}
                   </p>
                 </div>
