@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../config/theme.dart';
 import '../../providers/auth_provider.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/animations/text_blur_reveal.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -120,7 +121,10 @@ class _SplashScreenState extends State<SplashScreen>
                               color: AppTheme.surfaceContainerLowest,
                               shape: BoxShape.circle,
                             ),
-                            padding: const EdgeInsets.all(28),
+                            padding: EdgeInsets.all(
+                              ResponsiveHelper.horizontalPadding(context) *
+                                  1.75,
+                            ),
                             child: Image.asset(
                               'assets/images/logo.png',
                               fit: BoxFit.contain,

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../config/theme.dart';
+import '../../utils/responsive_helper.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -138,7 +139,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Align(
                     alignment: Alignment.topRight,
                     child: Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: EdgeInsets.all(
+                        ResponsiveHelper.horizontalPadding(context),
+                      ),
                       child: TextButton(
                         onPressed: _skip,
                         child: Text(
@@ -162,7 +165,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   // Bottom section
                   Container(
-                    padding: const EdgeInsets.all(32),
+                    padding: EdgeInsets.all(
+                      ResponsiveHelper.horizontalPadding(context) * 2,
+                    ),
                     child: Column(
                       children: [
                         // Dot indicators
@@ -223,7 +228,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildPage(_OnboardingData data) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
+      padding: EdgeInsets.symmetric(
+        horizontal: ResponsiveHelper.horizontalPadding(context) * 2.5,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
