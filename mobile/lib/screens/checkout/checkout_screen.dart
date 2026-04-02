@@ -7,6 +7,7 @@ import '../../providers/order_provider.dart';
 import '../../config/theme.dart';
 import '../../utils/price_formatter.dart';
 import '../../utils/navigation_helper.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/checkout/checkout_step_card.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 import '../../widgets/animations/blur_fade.dart';
@@ -207,7 +208,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         borderRadius: AppTheme.radius16,
         borderSide: const BorderSide(color: AppTheme.accent, width: 2),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: ResponsiveHelper.horizontalPadding(context),
+        vertical: 16,
+      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/mitologi_page_shell.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 
@@ -156,7 +157,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                             borderRadius: BorderRadius.circular(4),
                             border: Border.all(color: const Color(0xFFE2E8F0)),
                           ),
@@ -246,8 +247,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                           ...values.map((v) => _buildTableCell('$v cm')),
                         ],
                       );
-                    })
-                    .toList(),
+                    }),
               ],
             ),
           ),
@@ -293,7 +293,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(color: const Color(0xFFE2E8F0)),
                     ),
@@ -341,8 +341,8 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                 // Category header
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: ResponsiveHelper.horizontalPadding(context),
                     vertical: 12,
                   ),
                   decoration: const BoxDecoration(
@@ -391,13 +391,13 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                           _buildSmallTableCell('${cat['tinggi'][i]} cm'),
                         ],
                       );
-                    }).toList(),
+                    }),
                   ],
                 ),
               ],
             ),
           );
-        }).toList(),
+        }),
         const SizedBox(height: 8),
         Text(
           '* Toleransi ukuran ±1-2 cm. Semua ukuran dalam centimeter (cm).',
@@ -433,7 +433,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
               margin: const EdgeInsets.only(right: 8),
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.1),
+                color: AppTheme.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Text(
@@ -510,7 +510,9 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
           itemBuilder: (context, index) {
             final guide = measureGuide[index];
             return Container(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(
+                ResponsiveHelper.horizontalPadding(context),
+              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
@@ -586,7 +588,9 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
         ...tips.asMap().entries.map((entry) {
           return Container(
             margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(
+              ResponsiveHelper.horizontalPadding(context),
+            ),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
@@ -631,7 +635,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
               ],
             ),
           );
-        }).toList(),
+        }),
       ],
     );
   }
@@ -732,7 +736,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: AppTheme.primary.withOpacity(0.3),
+                        color: AppTheme.primary.withValues(alpha: 0.3),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
@@ -960,5 +964,5 @@ class ShirtPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

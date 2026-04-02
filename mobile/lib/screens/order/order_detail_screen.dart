@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../providers/order_provider.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
+import '../../utils/responsive_helper.dart';
 import '../../models/order.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 import '../../widgets/order/order_status_banner.dart';
@@ -241,7 +242,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     }
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(ResponsiveHelper.horizontalPadding(context)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -269,7 +270,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
     if (_order!.status == 'UNPAID' || _order!.status == 'PENDING') {
       return Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(ResponsiveHelper.horizontalPadding(context)),
         decoration: const BoxDecoration(color: AppTheme.surfaceContainerLowest),
         child: ElevatedButton(
           onPressed: _payOrder,
@@ -288,7 +289,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       );
     } else if (_order!.status == 'COMPLETED') {
       return Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(ResponsiveHelper.horizontalPadding(context)),
         decoration: const BoxDecoration(color: AppTheme.surfaceContainerLowest),
         child: ElevatedButton(
           onPressed: _showRefundDialog,

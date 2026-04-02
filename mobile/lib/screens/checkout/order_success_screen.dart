@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../config/theme.dart';
+import '../../utils/responsive_helper.dart';
 
 import '../../widgets/animations/celebrate_effect.dart';
 
@@ -36,7 +37,9 @@ class OrderSuccessScreen extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(
+                      ResponsiveHelper.horizontalPadding(context),
+                    ),
                     decoration: const BoxDecoration(
                       color: AppTheme.success,
                       shape: BoxShape.circle,

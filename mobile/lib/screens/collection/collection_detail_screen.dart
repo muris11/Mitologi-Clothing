@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:go_router/go_router.dart';
-import '../../widgets/skeleton/skeleton.dart';
 import '../../providers/collection_provider.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/product/product_card.dart';
 import '../../widgets/common/loading_shimmer.dart';
 import '../../widgets/animations/blur_fade.dart';
@@ -50,9 +49,11 @@ class _CollectionDetailScreenState extends State<CollectionDetailScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
+              Padding(
+                padding: EdgeInsets.all(
+                  ResponsiveHelper.horizontalPadding(context),
+                ),
+                child: const Text(
                   'Urutkan Berdasarkan',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
@@ -158,7 +159,9 @@ class _CollectionDetailScreenState extends State<CollectionDetailScreen> {
                     }
                     return GridView.builder(
                       // Loading Shimmer
-                      padding: const EdgeInsets.all(16),
+                      padding: EdgeInsets.all(
+                        ResponsiveHelper.horizontalPadding(context),
+                      ),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: crossAxisCount,
                         childAspectRatio: childAspectRatio,
@@ -212,7 +215,9 @@ class _CollectionDetailScreenState extends State<CollectionDetailScreen> {
                         childAspectRatio = 0.62;
                       }
                       return GridView.builder(
-                        padding: const EdgeInsets.all(16),
+                        padding: EdgeInsets.all(
+                          ResponsiveHelper.horizontalPadding(context),
+                        ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: crossAxisCount,
                           childAspectRatio: childAspectRatio,

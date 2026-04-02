@@ -7,6 +7,7 @@ import '../../../utils/navigation_helper.dart';
 import '../../providers/order_provider.dart';
 import '../../config/theme.dart';
 import '../../utils/price_formatter.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/animated_empty_state.dart';
 import '../../widgets/animations/blur_fade.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
@@ -101,7 +102,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
           return RefreshIndicator(
             onRefresh: () => provider.fetchOrders(),
             child: ListView.separated(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(
+                ResponsiveHelper.horizontalPadding(context),
+              ),
               itemCount: provider.orders.length,
               separatorBuilder: (context, index) => const SizedBox(height: 16),
               itemBuilder: (context, index) {
@@ -146,7 +149,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
                       context.push('/shop/account/orders/${order.orderNumber}');
                     },
                     child: Container(
-                      padding: const EdgeInsets.all(16),
+                      padding: EdgeInsets.all(
+                        ResponsiveHelper.horizontalPadding(context),
+                      ),
                       decoration: BoxDecoration(
                         color: AppTheme.surfaceContainerLowest,
                         borderRadius: AppTheme.radius16,

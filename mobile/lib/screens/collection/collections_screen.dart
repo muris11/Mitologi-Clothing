@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
-import '../../widgets/skeleton/skeleton.dart';
 import '../../providers/collection_provider.dart';
 import '../../config/theme.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/loading_shimmer.dart';
 import '../../widgets/animations/blur_fade.dart';
 import '../../widgets/animations/neon_glow_card.dart';
@@ -45,7 +45,9 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
                 }
 
                 return GridView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(
+                    ResponsiveHelper.horizontalPadding(context),
+                  ),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: crossAxisCount,
                     crossAxisSpacing: 16,
@@ -104,7 +106,9 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
                 }
 
                 return GridView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(
+                    ResponsiveHelper.horizontalPadding(context),
+                  ),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: crossAxisCount,
                     crossAxisSpacing: 16,
