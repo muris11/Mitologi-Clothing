@@ -128,6 +128,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                 controller: _passwordController,
                 obscureText: _obscurePassword,
                 suffixIcon: IconButton(
+                  tooltip: _obscurePassword ? 'Show password' : 'Hide password',
                   icon: Icon(
                     _obscurePassword ? Icons.visibility_off : Icons.visibility,
                     size: 20,
@@ -154,6 +155,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                 controller: _confirmPasswordController,
                 obscureText: _obscureConfirmPassword,
                 suffixIcon: IconButton(
+                  tooltip: _obscureConfirmPassword
+                      ? 'Show password'
+                      : 'Hide password',
                   icon: Icon(
                     _obscureConfirmPassword
                         ? Icons.visibility_off

@@ -74,6 +74,7 @@ class KebijakanPrivasiScreen extends StatelessWidget {
       subtitle: 'Informasi perlindungan data pengguna',
       showLogo: false,
       leading: IconButton(
+        tooltip: 'Back',
         icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
         onPressed: () => context.popOrGoHome(),
       ),

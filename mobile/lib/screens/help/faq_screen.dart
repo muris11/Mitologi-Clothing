@@ -154,6 +154,7 @@ class _FaqScreenState extends State<FaqScreen> {
       subtitle: 'Pertanyaan yang Sering Diajukan',
       showLogo: false,
       leading: IconButton(
+        tooltip: 'Back',
         icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
         onPressed: () => context.popOrGoHome(),
       ),

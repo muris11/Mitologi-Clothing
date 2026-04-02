@@ -155,6 +155,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
       subtitle: 'Informasi pengembalian barang',
       showLogo: false,
       leading: IconButton(
+        tooltip: 'Back',
         icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
         onPressed: () => context.popOrGoHome(),
       ),

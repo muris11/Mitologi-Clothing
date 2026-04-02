@@ -74,6 +74,7 @@ class SyaratKetentuanScreen extends StatelessWidget {
       subtitle: 'Ketentuan layanan Mitologi Clothing',
       showLogo: false,
       leading: IconButton(
+        tooltip: 'Back',
         icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
         onPressed: () => context.popOrGoHome(),
       ),

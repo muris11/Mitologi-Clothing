@@ -133,6 +133,7 @@ class _CollectionDetailScreenState extends State<CollectionDetailScreen> {
           showLogo: false,
           bodyPadding: EdgeInsets.zero,
           leading: IconButton(
+            tooltip: 'Back',
             icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
             onPressed: () {
               provider.clearCurrentCollection();
@@ -141,6 +142,7 @@ class _CollectionDetailScreenState extends State<CollectionDetailScreen> {
           ),
           actions: [
             IconButton(
+              tooltip: 'Sort',
               icon: const Icon(Icons.sort, color: AppTheme.primary),
               onPressed: _showSortSheet,
             ),

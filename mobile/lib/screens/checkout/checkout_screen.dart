@@ -41,6 +41,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           'Lengkapi alamat, ringkasan, dan pembayaran dengan alur yang lebih rapi.',
       showLogo: false,
       leading: IconButton(
+        tooltip: 'Back',
         icon: const Icon(Icons.arrow_back, color: AppTheme.onSurface),
         onPressed: () => context.popOrGoShop(),
       ),

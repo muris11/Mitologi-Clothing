@@ -207,6 +207,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   boxShadow: AppTheme.shadowSoft,
                                 ),
                                 child: IconButton(
+                                  tooltip: 'Change photo',
                                   icon: const Icon(
                                     Icons.camera_alt,
                                     color: Colors.white,

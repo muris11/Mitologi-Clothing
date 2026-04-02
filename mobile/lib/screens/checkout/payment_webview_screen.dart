@@ -110,6 +110,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
         foregroundColor: AppTheme.primary,
         elevation: 0,
         leading: IconButton(
+          tooltip: 'Close',
           icon: const Icon(Icons.close),
           onPressed: () {
             // Confirmation dialog before exiting payment

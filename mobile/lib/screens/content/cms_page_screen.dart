@@ -37,6 +37,7 @@ class _CMSPageScreenState extends State<CMSPageScreen> {
               'Konten informasi dan kebijakan yang mengikuti gaya shop shell.',
           showLogo: false,
           leading: IconButton(
+            tooltip: 'Back',
             icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
             onPressed: () => context.popOrGoHome(),
           ),

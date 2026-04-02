@@ -76,6 +76,7 @@ class _ChatbotScreenState extends State<ChatbotScreen>
       showLogo: false,
       bodyPadding: EdgeInsets.zero,
       leading: IconButton(
+        tooltip: 'Back',
         icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
         onPressed: () => Navigator.pop(context),
       ),
