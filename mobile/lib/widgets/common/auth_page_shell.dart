@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../utils/navigation_helper.dart';
+import '../../../utils/responsive_helper.dart';
 import '../../config/theme.dart';
 import '../../config/auth_styles.dart';
+import '../../utils/navigation_helper.dart';
 
 class AuthPageShell extends StatelessWidget {
   const AuthPageShell({
@@ -29,7 +29,7 @@ class AuthPageShell extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) => SingleChildScrollView(
             padding: EdgeInsets.symmetric(
-              horizontal: AuthStyles.pagePadding,
+              horizontal: ResponsiveHelper.horizontalPadding(context),
               vertical: 32,
             ),
             child: Center(
@@ -51,16 +51,18 @@ class AuthPageShell extends StatelessWidget {
                       ),
                     if (showBack) const SizedBox(height: 8),
                     Container(
-                      padding: EdgeInsets.all(AuthStyles.cardPadding),
+                      padding: EdgeInsets.all(
+                        ResponsiveHelper.horizontalPadding(context),
+                      ),
                       decoration: AuthStyles.cardDecoration,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          _buildHeader(),
+                          _buildHeader(context),
                           const SizedBox(height: AuthStyles.fieldSpacing),
                           child,
                           const SizedBox(height: 32),
-                          _buildFooter(),
+                          _buildFooter(context),
                         ],
                       ),
                     ),
@@ -74,9 +76,11 @@ class AuthPageShell extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 24),
+      padding: EdgeInsets.only(
+        bottom: ResponsiveHelper.horizontalPadding(context),
+      ),
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: AppTheme.slate100, width: 1)),
       ),
@@ -106,11 +110,13 @@ class AuthPageShell extends StatelessWidget {
     );
   }
 
-  Widget _buildFooter() {
+  Widget _buildFooter(BuildContext context) {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.only(top: 24),
+          padding: EdgeInsets.only(
+            top: ResponsiveHelper.horizontalPadding(context),
+          ),
           decoration: const BoxDecoration(
             border: Border(top: BorderSide(color: AppTheme.slate100, width: 1)),
           ),
