@@ -72,12 +72,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <x-input-label for="mail_mailer" :value="__('Mail Driver')" />
-                        <select id="mail_mailer" name="MAIL_MAILER" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-mitologi-gold focus:ring-mitologi-gold shadow-sm">
-                            <option value="smtp" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'smtp' ? 'selected' : '' }}>SMTP</option>
-                            <option value="sendmail" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'sendmail' ? 'selected' : '' }}>Sendmail</option>
-                            <option value="mailgun" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'mailgun' ? 'selected' : '' }}>Mailgun</option>
-                            <option value="ses" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'ses' ? 'selected' : '' }}>Amazon SES</option>
-                        </select>
+                        <div class="relative mt-1">
+                            <select id="mail_mailer" name="MAIL_MAILER" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 appearance-none cursor-pointer">
+                                <option value="smtp" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'smtp' ? 'selected' : '' }}>SMTP</option>
+                                <option value="sendmail" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'sendmail' ? 'selected' : '' }}>Sendmail</option>
+                                <option value="mailgun" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'mailgun' ? 'selected' : '' }}>Mailgun</option>
+                                <option value="ses" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'ses' ? 'selected' : '' }}>Amazon SES</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
                     </div>
                     
                     <div>
@@ -92,11 +97,16 @@
                     
                     <div>
                         <x-input-label for="mail_encryption" :value="__('Encryption')" />
-                        <select id="mail_encryption" name="MAIL_ENCRYPTION" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-mitologi-gold focus:ring-mitologi-gold shadow-sm">
-                            <option value="tls" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'tls' ? 'selected' : '' }}>TLS</option>
-                            <option value="ssl" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'ssl' ? 'selected' : '' }}>SSL</option>
-                            <option value="null" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'null' ? 'selected' : '' }}>None</option>
-                        </select>
+                        <div class="relative mt-1">
+                            <select id="mail_encryption" name="MAIL_ENCRYPTION" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 appearance-none cursor-pointer">
+                                <option value="tls" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'tls' ? 'selected' : '' }}>TLS</option>
+                                <option value="ssl" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'ssl' ? 'selected' : '' }}>SSL</option>
+                                <option value="null" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'null' ? 'selected' : '' }}>None</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
                     </div>
                     
                     <div>
@@ -147,10 +157,15 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="md:col-span-2">
                         <x-input-label for="midtrans_env" :value="__('Environment')" />
-                        <select id="midtrans_env" name="MIDTRANS_IS_PRODUCTION" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-mitologi-gold focus:ring-mitologi-gold shadow-sm">
-                            <option value="false" {{ ($configs['midtrans']['MIDTRANS_IS_PRODUCTION'] ?? '') === 'false' ? 'selected' : '' }}>Sandbox (Testing)</option>
-                            <option value="true" {{ ($configs['midtrans']['MIDTRANS_IS_PRODUCTION'] ?? '') === 'true' ? 'selected' : '' }}>Production (Live)</option>
-                        </select>
+                        <div class="relative mt-1">
+                            <select id="midtrans_env" name="MIDTRANS_IS_PRODUCTION" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 appearance-none cursor-pointer">
+                                <option value="false" {{ ($configs['midtrans']['MIDTRANS_IS_PRODUCTION'] ?? '') === 'false' ? 'selected' : '' }}>Sandbox (Testing)</option>
+                                <option value="true" {{ ($configs['midtrans']['MIDTRANS_IS_PRODUCTION'] ?? '') === 'true' ? 'selected' : '' }}>Production (Live)</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
                         <p class="mt-1 text-xs text-amber-600 flex items-center">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                             Gunakan Sandbox untuk testing. Switch ke Production saat sudah siap.
