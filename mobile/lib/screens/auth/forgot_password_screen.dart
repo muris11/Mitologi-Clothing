@@ -7,6 +7,7 @@ import '../../config/auth_styles.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/common/auth_page_shell.dart';
 import '../../widgets/auth/auth_button.dart';
+import '../../utils/responsive_helper.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -124,8 +125,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                 size: 20,
                 color: AppTheme.onSurfaceVariant,
               ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: ResponsiveHelper.horizontalPadding(context),
                 vertical: 14,
               ),
               border: OutlineInputBorder(
