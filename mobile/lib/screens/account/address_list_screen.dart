@@ -133,31 +133,30 @@ class _AddressListScreenState extends State<AddressListScreen> {
   @override
   Widget build(BuildContext context) {
     return MitologiScaffold(
-      title: 'Daftar Alamat',
-      subtitle: 'Kelola alamat pengiriman untuk memudahkan proses checkout.',
+      title: 'Alamat Pengiriman',
+      subtitle: 'Kelola alamat untuk pengiriman pesanan',
       showLogo: false,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        tooltip: 'Back',
-        onPressed: () => Navigator.pop(context),
-      ),
       bodyPadding: EdgeInsets.zero,
       body: _buildBody(),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: ResponsiveHelper.horizontalPadding(context),
-        ),
-        child: FloatingActionButton.extended(
-          onPressed: _isLoading ? null : _navigateToAddAddress,
-          backgroundColor: AppTheme.accent,
-          foregroundColor: Colors.white,
-          icon: const Icon(Icons.add),
-          label: const Text(
-            'Tambah Alamat Baru',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
+      floatingActionButton: _addresses.isEmpty
+          ? null
+          : Padding(
+              padding: EdgeInsets.only(
+                bottom: ResponsiveHelper.horizontalPadding(context),
+                right: ResponsiveHelper.horizontalPadding(context),
+              ),
+              child: FloatingActionButton.extended(
+                onPressed: _isLoading ? null : _navigateToAddAddress,
+                backgroundColor: AppTheme.primary,
+                foregroundColor: Colors.white,
+                elevation: 2,
+                icon: const Icon(Icons.add, size: 20),
+                label: const Text(
+                  'Tambah Alamat',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                ),
+              ),
+            ),
     );
   }
 
@@ -214,9 +213,10 @@ class _AddressListScreenState extends State<AddressListScreen> {
     if (_addresses.isEmpty) {
       return AnimatedEmptyState(
         icon: Icons.location_off_outlined,
-        title: 'Belum ada alamat',
-        subtitle: 'Tambahkan alamat untuk keperluan pengiriman.',
-        buttonText: 'Tambah Alamat Baru',
+        title: 'Belum Ada Alamat',
+        subtitle:
+            'Tambahkan alamat pengiriman untuk memudahkan proses checkout.',
+        buttonText: 'Tambah Alamat',
         onAction: _navigateToAddAddress,
       );
     }
@@ -236,124 +236,178 @@ class _AddressListScreenState extends State<AddressListScreen> {
 
   Widget _buildAddressCard(Address address) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceContainerLowest,
+        color: Colors.white,
         borderRadius: AppTheme.radius16,
-        border: Border.all(color: AppTheme.outlineLight),
+        border: Border.all(
+          color: address.isPrimary
+              ? AppTheme.primary.withValues(alpha: 0.3)
+              : AppTheme.outline,
+          width: address.isPrimary ? 2 : 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.slate900.withValues(alpha: 0.04),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: Padding(
-        padding: EdgeInsets.all(ResponsiveHelper.horizontalPadding(context)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      address.label,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                        color: AppTheme.slate500,
-                      ),
-                    ),
-                    if (address.isPrimary) ...[
-                      const SizedBox(width: 8),
+      child: ClipRRect(
+        borderRadius: AppTheme.radius16,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () => _navigateToEditAddress(address),
+            child: Padding(
+              padding: EdgeInsets.all(
+                ResponsiveHelper.horizontalPadding(context),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header row with label and actions
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Label badge
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 2,
+                          horizontal: 12,
+                          vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: AppTheme.primary.withValues(alpha: 0.1),
+                          color: address.isPrimary
+                              ? AppTheme.primary
+                              : AppTheme.accent.withValues(alpha: 0.1),
                           borderRadius: AppTheme.radius8,
                         ),
-                        child: const Text(
-                          'Utama',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700,
-                            color: AppTheme.primary,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (address.isPrimary) ...[
+                              const Icon(
+                                Icons.star,
+                                size: 14,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 4),
+                            ],
+                            Text(
+                              address.isPrimary ? 'Utama' : address.label,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                color: address.isPrimary
+                                    ? Colors.white
+                                    : AppTheme.accent,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Action buttons
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () => _navigateToEditAddress(address),
+                            icon: Icon(
+                              Icons.edit_outlined,
+                              size: 20,
+                              color: AppTheme.slate500,
+                            ),
+                            tooltip: 'Edit',
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(
+                              minWidth: 36,
+                              minHeight: 36,
+                            ),
                           ),
+                          IconButton(
+                            onPressed: () => _deleteAddress(address),
+                            icon: Icon(
+                              Icons.delete_outline,
+                              size: 20,
+                              color: AppTheme.error,
+                            ),
+                            tooltip: 'Hapus',
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(
+                              minWidth: 36,
+                              minHeight: 36,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  // Recipient info
+                  Text(
+                    address.recipientName,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.slate900,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    address.phone,
+                    style: TextStyle(fontSize: 14, color: AppTheme.slate600),
+                  ),
+                  const SizedBox(height: 12),
+                  // Address details with icon
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.location_on_outlined,
+                        size: 16,
+                        color: AppTheme.slate400,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              address.addressLine1,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppTheme.slate700,
+                                height: 1.5,
+                              ),
+                            ),
+                            if (address.addressLine2 != null &&
+                                address.addressLine2!.isNotEmpty)
+                              Text(
+                                address.addressLine2!,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppTheme.slate700,
+                                  height: 1.5,
+                                ),
+                              ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '${address.city}, ${address.province} ${address.postalCode}',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppTheme.slate700,
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
-                  ],
-                ),
-                PopupMenuButton<String>(
-                  onSelected: (value) {
-                    if (value == 'edit') {
-                      _navigateToEditAddress(address);
-                    } else if (value == 'delete') {
-                      _deleteAddress(address);
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 'edit',
-                      child: Row(
-                        children: [
-                          Icon(Icons.edit, size: 20),
-                          SizedBox(width: 8),
-                          Text('Edit'),
-                        ],
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: 'delete',
-                      child: Row(
-                        children: [
-                          Icon(Icons.delete, size: 20, color: AppTheme.error),
-                          SizedBox(width: 8),
-                          Text(
-                            'Hapus',
-                            style: TextStyle(color: AppTheme.error),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              address.recipientName,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: AppTheme.primary,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 4),
-            Text(
-              address.phone,
-              style: const TextStyle(fontSize: 14, color: AppTheme.slate700),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              address.addressLine1,
-              style: const TextStyle(fontSize: 14, color: AppTheme.slate700),
-            ),
-            if (address.addressLine2 != null &&
-                address.addressLine2!.isNotEmpty)
-              Text(
-                address.addressLine2!,
-                style: const TextStyle(fontSize: 14, color: AppTheme.slate700),
-              ),
-            const SizedBox(height: 4),
-            Text(
-              '${address.city}, ${address.province}',
-              style: const TextStyle(fontSize: 14, color: AppTheme.slate700),
-            ),
-            Text(
-              address.postalCode,
-              style: const TextStyle(fontSize: 14, color: AppTheme.slate700),
-            ),
-          ],
+          ),
         ),
       ),
     );
