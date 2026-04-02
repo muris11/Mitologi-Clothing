@@ -101,12 +101,12 @@ class CheckoutService
 
             // Create shipping address
             $order->shippingAddress()->create([
-                'name' => $shippingData['shipping_name'],
-                'phone' => $shippingData['shipping_phone'],
-                'address' => $shippingData['shipping_address'],
-                'city' => $shippingData['shipping_city'],
-                'province' => $shippingData['shipping_province'],
-                'postal_code' => $shippingData['shipping_postal_code'],
+                'name' => $shippingData['shippingName'],
+                'phone' => $shippingData['shippingPhone'],
+                'address' => $shippingData['shippingAddress'],
+                'city' => $shippingData['shippingCity'],
+                'province' => $shippingData['shippingProvince'],
+                'postal_code' => $shippingData['shippingPostalCode'],
             ]);
 
             $order->load(['items', 'shippingAddress', 'user']);

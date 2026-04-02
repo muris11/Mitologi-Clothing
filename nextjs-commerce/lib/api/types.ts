@@ -547,12 +547,12 @@ export type CheckoutResponse = {
 };
 
 export type CheckoutPayload = {
-  shipping_name: string;
-  shipping_phone: string;
-  shipping_address: string;
-  shipping_city: string;
-  shipping_province: string;
-  shipping_postal_code: string;
+  shippingName: string;
+  shippingPhone: string;
+  shippingAddress: string;
+  shippingCity: string;
+  shippingProvince: string;
+  shippingPostalCode: string;
   notes?: string;
 };
 

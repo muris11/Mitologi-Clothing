@@ -21,12 +21,12 @@ class CheckoutTest extends TestCase
     public function test_checkout_requires_authentication(): void
     {
         $response = $this->postJson('/api/checkout', [
-            'shipping_name' => 'John Doe',
-            'shipping_phone' => '081234567890',
-            'shipping_address' => 'Jl. Test No. 1',
-            'shipping_city' => 'Bandung',
-            'shipping_province' => 'Jawa Barat',
-            'shipping_postal_code' => '40132',
+            'shippingName' => 'John Doe',
+            'shippingPhone' => '081234567890',
+            'shippingAddress' => 'Jl. Test No. 1',
+            'shippingCity' => 'Bandung',
+            'shippingProvince' => 'Jawa Barat',
+            'shippingPostalCode' => '40132',
         ]);
 
         $response->assertUnauthorized();
@@ -38,24 +38,24 @@ class CheckoutTest extends TestCase
             ->postJson('/api/checkout', []);
 
         $response->assertUnprocessable()
-            ->assertJsonPath('error.details.shipping_name', fn ($errors) => is_array($errors) && count($errors) > 0)
-            ->assertJsonPath('error.details.shipping_phone', fn ($errors) => is_array($errors) && count($errors) > 0)
-            ->assertJsonPath('error.details.shipping_address', fn ($errors) => is_array($errors) && count($errors) > 0)
-            ->assertJsonPath('error.details.shipping_city', fn ($errors) => is_array($errors) && count($errors) > 0)
-            ->assertJsonPath('error.details.shipping_province', fn ($errors) => is_array($errors) && count($errors) > 0)
-            ->assertJsonPath('error.details.shipping_postal_code', fn ($errors) => is_array($errors) && count($errors) > 0);
+            ->assertJsonPath('error.details.shippingName', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.shippingPhone', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.shippingAddress', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.shippingCity', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.shippingProvince', fn ($errors) => is_array($errors) && count($errors) > 0)
+            ->assertJsonPath('error.details.shippingPostalCode', fn ($errors) => is_array($errors) && count($errors) > 0);
     }
 
     public function test_checkout_rejects_empty_cart(): void
     {
         $response = $this->actingAs($this->customer, 'sanctum')
             ->postJson('/api/checkout', [
-                'shipping_name' => 'Test Customer',
-                'shipping_phone' => '081234567890',
-                'shipping_address' => 'Jl. Test No. 1',
-                'shipping_city' => 'Bandung',
-                'shipping_province' => 'Jawa Barat',
-                'shipping_postal_code' => '40132',
+                'shippingName' => 'Test Customer',
+                'shippingPhone' => '081234567890',
+                'shippingAddress' => 'Jl. Test No. 1',
+                'shippingCity' => 'Bandung',
+                'shippingProvince' => 'Jawa Barat',
+                'shippingPostalCode' => '40132',
             ]);
 
         // Empty cart should return error

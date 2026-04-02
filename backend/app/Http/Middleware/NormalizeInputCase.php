@@ -44,7 +44,7 @@ class NormalizeInputCase
         // Order fields
         'order_number' => 'orderNumber',
         'shipping_cost' => 'shippingCost',
-        'shipping_address' => 'shippingAddress',
+        // 'shipping_address' => 'shippingAddress',  // REMOVED - keep snake_case for checkout
         'product_title' => 'productTitle',
         'variant_title' => 'variantTitle',
 

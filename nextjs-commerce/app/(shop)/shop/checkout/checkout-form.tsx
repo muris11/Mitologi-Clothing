@@ -70,16 +70,16 @@ export default function CheckoutForm({
 
     try {
       const payload = {
-        shipping_name: selectedAddress.recipientName,
-        shipping_phone: selectedAddress.phone,
-        shipping_address:
+        shippingName: selectedAddress.recipientName,
+        shippingPhone: selectedAddress.phone,
+        shippingAddress:
           selectedAddress.addressLine1 +
           (selectedAddress.addressLine2
             ? `, ${selectedAddress.addressLine2}`
             : ""),
-        shipping_city: selectedAddress.city,
-        shipping_province: selectedAddress.province,
-        shipping_postal_code: selectedAddress.postalCode,
+        shippingCity: selectedAddress.city,
+        shippingProvince: selectedAddress.province,
+        shippingPostalCode: selectedAddress.postalCode,
         notes: "",
       };
 
