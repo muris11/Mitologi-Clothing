@@ -350,6 +350,31 @@ export default function OrderDetailPage(props: {
             </div>
           </div>
 
+          {/* Tracking Number */}
+          {order.trackingNumber && (
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl shadow-xl shadow-amber-900/5 border-2 border-amber-200 p-6 md:p-8 h-full flex flex-col">
+              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-amber-200/50">
+                <div className="w-10 h-10 rounded-xl bg-amber-100 shadow-sm border border-amber-200 flex items-center justify-center">
+                  <TruckIcon className="h-5 w-5 text-amber-700" />
+                </div>
+                <h3 className="font-sans font-extrabold text-amber-800 text-lg">
+                  Resi Pengiriman
+                </h3>
+              </div>
+              <div className="text-center py-4">
+                <p className="text-sm font-sans text-amber-700 mb-2">
+                  Nomor Resi
+                </p>
+                <p className="text-2xl font-sans font-bold text-amber-900 tracking-wider">
+                  {order.trackingNumber}
+                </p>
+                <p className="text-xs font-sans text-amber-600 mt-3">
+                  Pesanan sedang dalam perjalanan
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Payment Summary */}
           <div className="bg-white rounded-3xl shadow-xl shadow-mitologi-navy/5 border border-slate-100 p-6 md:p-8 h-full flex flex-col">
             <div className="flex items-center gap-3 mb-6 pb-6 border-b border-slate-100">

@@ -13,6 +13,7 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'orderNumber' => $this->order_number,
             'status' => $this->status,
+            'trackingNumber' => $this->tracking_number,
             'total' => (float) $this->total,
             'subtotal' => (float) $this->subtotal,
             'items' => OrderItemResource::collection($this->items),

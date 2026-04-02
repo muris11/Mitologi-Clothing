@@ -202,6 +202,7 @@ export type Order = {
     | "completed"
     | "cancelled"
     | "refunded";
+  trackingNumber?: string;
   paymentStatus?: string;
   total: number;
   subtotal: number;
