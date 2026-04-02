@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/mitologi_page_shell.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 
@@ -186,7 +187,11 @@ class _FaqScreenState extends State<FaqScreen> {
                         });
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: ResponsiveHelper.horizontalPadding(
+                            context,
+                          ),
+                        ),
                         decoration: BoxDecoration(
                           color: isActive
                               ? AppTheme.primary
