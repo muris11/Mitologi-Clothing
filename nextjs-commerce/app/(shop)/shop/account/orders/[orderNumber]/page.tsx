@@ -3,6 +3,7 @@
 import {
   ArrowLeftIcon,
   CreditCardIcon,
+  HomeIcon,
   MapPinIcon,
   TruckIcon,
 } from "@heroicons/react/24/outline";
@@ -380,7 +381,7 @@ export default function OrderDetailPage(props: {
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0">
-                      <span className="text-2xl">🏠</span>
+                      <HomeIcon className="h-6 w-6 text-slate-600" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-sans font-semibold text-slate-900 text-base">
