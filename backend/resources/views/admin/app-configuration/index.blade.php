@@ -1,54 +1,65 @@
 <x-admin-layout>
-    <x-slot name="header">
-        App Configuration
-    </x-slot>
+    <x-admin-header 
+        title="Konfigurasi Aplikasi" 
+        :breadcrumbs="[
+            ['title' => 'Admin', 'url' => route('admin.dashboard')],
+            ['title' => 'Konfigurasi Aplikasi']
+        ]" 
+    />
 
-    <div class="max-w-7xl mx-auto">
-    <!-- Header -->
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Application Configuration</h1>
-        <p class="mt-2 text-gray-600">Manage environment variables and third-party service settings.</p>
-    </div>
-    
     @if(session('success'))
-        <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
-            {{ session('success') }}
+        <div class="mb-6 bg-green-50 border-l-4 border-green-500 text-green-700 px-4 py-3 rounded-r-lg shadow-sm">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                {{ session('success') }}
+            </div>
         </div>
     @endif
     
     @if(session('error'))
-        <div class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            {{ session('error') }}
+        <div class="mb-6 bg-red-50 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-r-lg shadow-sm">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                {{ session('error') }}
+            </div>
         </div>
     @endif
     
-    <!-- Tabs -->
-    <div class="bg-white shadow-sm rounded-lg overflow-hidden">
-        <div class="border-b border-gray-200">
-            <nav class="flex -mb-px">
-                <button onclick="switchTab('email')" id="tab-email" class="tab-btn px-6 py-4 text-sm font-medium border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
-                    Email (SMTP)
-                </button>
-                <button onclick="switchTab('midtrans')" id="tab-midtrans" class="tab-btn px-6 py-4 text-sm font-medium border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
-                    Midtrans (Payment)
-                </button>
-                <button onclick="switchTab('groq')" id="tab-groq" class="tab-btn px-6 py-4 text-sm font-medium border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
-                    Groq (AI)
-                </button>
-                <button onclick="switchTab('general')" id="tab-general" class="tab-btn px-6 py-4 text-sm font-medium border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
-                    General
-                </button>
-                <button onclick="switchTab('audit')" id="tab-audit" class="tab-btn px-6 py-4 text-sm font-medium border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
-                    Audit Log
-                </button>
-            </nav>
-        </div>
-        
-        <!-- Email Tab -->
-        <div id="content-email" class="tab-content p-6 hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-semibold text-gray-900">Email Configuration (SMTP)</h2>
-                <button onclick="testService('email')" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    <!-- Tabs Navigation -->
+    <div class="mb-6 border-b border-gray-200">
+        <nav class="flex -mb-px space-x-1">
+            <button onclick="switchTab('email')" id="tab-email" class="tab-btn group inline-flex items-center px-6 py-4 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-mitologi-navy hover:border-gray-300 transition-colors duration-200">
+                <svg class="w-5 h-5 mr-2 text-gray-400 group-hover:text-mitologi-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                Email (SMTP)
+            </button>
+            <button onclick="switchTab('midtrans')" id="tab-midtrans" class="tab-btn group inline-flex items-center px-6 py-4 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-mitologi-navy hover:border-gray-300 transition-colors duration-200">
+                <svg class="w-5 h-5 mr-2 text-gray-400 group-hover:text-mitologi-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                Midtrans
+            </button>
+            <button onclick="switchTab('groq')" id="tab-groq" class="tab-btn group inline-flex items-center px-6 py-4 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-mitologi-navy hover:border-gray-300 transition-colors duration-200">
+                <svg class="w-5 h-5 mr-2 text-gray-400 group-hover:text-mitologi-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                Groq AI
+            </button>
+            <button onclick="switchTab('general')" id="tab-general" class="tab-btn group inline-flex items-center px-6 py-4 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-mitologi-navy hover:border-gray-300 transition-colors duration-200">
+                <svg class="w-5 h-5 mr-2 text-gray-400 group-hover:text-mitologi-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                General
+            </button>
+            <button onclick="switchTab('audit')" id="tab-audit" class="tab-btn group inline-flex items-center px-6 py-4 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-mitologi-navy hover:border-gray-300 transition-colors duration-200">
+                <svg class="w-5 h-5 mr-2 text-gray-400 group-hover:text-mitologi-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                Audit Log
+            </button>
+        </nav>
+    </div>
+    
+    <!-- Email Tab -->
+    <div id="content-email" class="tab-content hidden">
+        <x-admin-card>
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+                <div>
+                    <h3 class="text-xl font-display font-semibold text-mitologi-navy">Konfigurasi Email (SMTP)</h3>
+                    <p class="text-sm text-gray-500 mt-1">Pengaturan server email untuk notifikasi dan transaksi.</p>
+                </div>
+                <button onclick="testService('email')" class="inline-flex items-center px-4 py-2 bg-mitologi-navy text-white rounded-lg hover:bg-mitologi-navy-light transition-colors shadow-sm">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                     Test Email
                 </button>
@@ -60,26 +71,28 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Mail Driver</label>
-                        <select name="MAIL_MAILER" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <x-input-label for="mail_mailer" :value="__('Mail Driver')" />
+                        <select id="mail_mailer" name="MAIL_MAILER" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-mitologi-gold focus:ring-mitologi-gold shadow-sm">
                             <option value="smtp" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'smtp' ? 'selected' : '' }}>SMTP</option>
                             <option value="sendmail" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'sendmail' ? 'selected' : '' }}>Sendmail</option>
+                            <option value="mailgun" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'mailgun' ? 'selected' : '' }}>Mailgun</option>
+                            <option value="ses" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'ses' ? 'selected' : '' }}>Amazon SES</option>
                         </select>
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Mail Host</label>
-                        <input type="text" name="MAIL_HOST" value="{{ $configs['email']['MAIL_HOST'] ?? '' }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" placeholder="smtp.gmail.com">
+                        <x-input-label for="mail_host" :value="__('Mail Host')" />
+                        <x-text-input id="mail_host" class="mt-1 block w-full" type="text" name="MAIL_HOST" :value="$configs['email']['MAIL_HOST'] ?? ''" placeholder="smtp.gmail.com" />
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Port</label>
-                        <input type="number" name="MAIL_PORT" value="{{ $configs['email']['MAIL_PORT'] ?? '587' }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <x-input-label for="mail_port" :value="__('Port')" />
+                        <x-text-input id="mail_port" class="mt-1 block w-full" type="number" name="MAIL_PORT" :value="$configs['email']['MAIL_PORT'] ?? '587'" />
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Encryption</label>
-                        <select name="MAIL_ENCRYPTION" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <x-input-label for="mail_encryption" :value="__('Encryption')" />
+                        <select id="mail_encryption" name="MAIL_ENCRYPTION" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-mitologi-gold focus:ring-mitologi-gold shadow-sm">
                             <option value="tls" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'tls' ? 'selected' : '' }}>TLS</option>
                             <option value="ssl" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'ssl' ? 'selected' : '' }}>SSL</option>
                             <option value="null" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'null' ? 'selected' : '' }}>None</option>
@@ -87,37 +100,43 @@
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
-                        <input type="email" name="MAIL_USERNAME" value="{{ $configs['email']['MAIL_USERNAME'] ?? '' }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" placeholder="your@email.com">
+                        <x-input-label for="mail_username" :value="__('Username')" />
+                        <x-text-input id="mail_username" class="mt-1 block w-full" type="email" name="MAIL_USERNAME" :value="$configs['email']['MAIL_USERNAME'] ?? ''" placeholder="your@email.com" />
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                        <input type="password" name="MAIL_PASSWORD" value="{{ $configs['email']['MAIL_PASSWORD'] ?? '' }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                        <p class="mt-1 text-xs text-gray-500">For Gmail, use App Password, not login password.</p>
+                        <x-input-label for="mail_password" :value="__('Password')" />
+                        <x-text-input id="mail_password" class="mt-1 block w-full" type="password" name="MAIL_PASSWORD" :value="$configs['email']['MAIL_PASSWORD'] ?? ''" />
+                        <p class="mt-1 text-xs text-gray-500">Untuk Gmail, gunakan App Password, bukan password login.</p>
                     </div>
                     
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">From Address</label>
-                        <input type="email" name="MAIL_FROM_ADDRESS" value="{{ $configs['email']['MAIL_FROM_ADDRESS'] ?? '' }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" placeholder="noreply@yourdomain.com">
+                        <x-input-label for="mail_from_address" :value="__('From Address')" />
+                        <x-text-input id="mail_from_address" class="mt-1 block w-full" type="email" name="MAIL_FROM_ADDRESS" :value="$configs['email']['MAIL_FROM_ADDRESS'] ?? ''" placeholder="noreply@yourdomain.com" />
                     </div>
                 </div>
                 
-                <div class="mt-6 flex justify-end">
-                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
-                        Save Email Settings
-                    </button>
+                <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+                    <x-primary-button class="px-6 py-3">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Simpan Pengaturan Email
+                    </x-primary-button>
                 </div>
             </form>
-        </div>
-        
-        <!-- Midtrans Tab -->
-        <div id="content-midtrans" class="tab-content p-6 hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-semibold text-gray-900">Midtrans Configuration (Payment Gateway)</h2>
-                <button onclick="testService('midtrans')" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+        </x-admin-card>
+    </div>
+    
+    <!-- Midtrans Tab -->
+    <div id="content-midtrans" class="tab-content hidden">
+        <x-admin-card>
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+                <div>
+                    <h3 class="text-xl font-display font-semibold text-mitologi-navy">Konfigurasi Midtrans (Payment Gateway)</h3>
+                    <p class="text-sm text-gray-500 mt-1">Integrasi pembayaran online.</p>
+                </div>
+                <button onclick="testService('midtrans')" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-sm">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Test Connection
+                    Test Koneksi
                 </button>
             </div>
             
@@ -127,44 +146,56 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Environment</label>
-                        <select name="MIDTRANS_IS_PRODUCTION" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <x-input-label for="midtrans_env" :value="__('Environment')" />
+                        <select id="midtrans_env" name="MIDTRANS_IS_PRODUCTION" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-mitologi-gold focus:ring-mitologi-gold shadow-sm">
                             <option value="false" {{ ($configs['midtrans']['MIDTRANS_IS_PRODUCTION'] ?? '') === 'false' ? 'selected' : '' }}>Sandbox (Testing)</option>
                             <option value="true" {{ ($configs['midtrans']['MIDTRANS_IS_PRODUCTION'] ?? '') === 'true' ? 'selected' : '' }}>Production (Live)</option>
                         </select>
-                        <p class="mt-1 text-xs text-gray-500">⚠️ Use Sandbox for testing only. Switch to Production when ready.</p>
+                        <p class="mt-1 text-xs text-amber-600 flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            Gunakan Sandbox untuk testing. Switch ke Production saat sudah siap.
+                        </p>
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Merchant ID</label>
-                        <input type="text" name="MIDTRANS_MERCHANT_ID" value="{{ $configs['midtrans']['MIDTRANS_MERCHANT_ID'] ?? '' }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <x-input-label for="midtrans_merchant" :value="__('Merchant ID')" />
+                        <x-text-input id="midtrans_merchant" class="mt-1 block w-full" type="text" name="MIDTRANS_MERCHANT_ID" :value="$configs['midtrans']['MIDTRANS_MERCHANT_ID'] ?? ''" />
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Client Key</label>
-                        <input type="text" name="MIDTRANS_CLIENT_KEY" value="{{ $configs['midtrans']['MIDTRANS_CLIENT_KEY'] ?? '' }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" placeholder="SB-Mid-client-xxx">
+                        <x-input-label for="midtrans_client" :value="__('Client Key')" />
+                        <x-text-input id="midtrans_client" class="mt-1 block w-full" type="text" name="MIDTRANS_CLIENT_KEY" :value="$configs['midtrans']['MIDTRANS_CLIENT_KEY'] ?? ''" placeholder="SB-Mid-client-xxx" />
                     </div>
                     
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Server Key</label>
-                        <input type="password" name="MIDTRANS_SERVER_KEY" value="{{ $configs['midtrans']['MIDTRANS_SERVER_KEY'] ?? '' }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" placeholder="SB-Mid-server-xxx">
-                        <p class="mt-1 text-xs text-red-500">🔒 Keep this secret! Never share or expose in frontend.</p>
+                        <x-input-label for="midtrans_server" :value="__('Server Key')" />
+                        <x-text-input id="midtrans_server" class="mt-1 block w-full" type="password" name="MIDTRANS_SERVER_KEY" :value="$configs['midtrans']['MIDTRANS_SERVER_KEY'] ?? ''" placeholder="SB-Mid-server-xxx" />
+                        <p class="mt-1 text-xs text-red-600 flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            Rahasia! Jangan pernah membagikan atau mengekspos di frontend.
+                        </p>
                     </div>
                 </div>
                 
-                <div class="mt-6 flex justify-end">
-                    <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
-                        Save Midtrans Settings
-                    </button>
+                <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+                    <x-primary-button class="px-6 py-3 bg-green-600 hover:bg-green-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Simpan Pengaturan Midtrans
+                    </x-primary-button>
                 </div>
             </form>
-        </div>
-        
-        <!-- Groq Tab -->
-        <div id="content-groq" class="tab-content p-6 hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-semibold text-gray-900">Groq Configuration (AI Service)</h2>
-                <button onclick="testService('groq')" class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+        </x-admin-card>
+    </div>
+    
+    <!-- Groq Tab -->
+    <div id="content-groq" class="tab-content hidden">
+        <x-admin-card>
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+                <div>
+                    <h3 class="text-xl font-display font-semibold text-mitologi-navy">Konfigurasi Groq (AI Service)</h3>
+                    <p class="text-sm text-gray-500 mt-1">Integrasi AI untuk fitur chatbot dan rekomendasi.</p>
+                </div>
+                <button onclick="testService('groq')" class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-sm">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     Test API
                 </button>
@@ -175,22 +206,28 @@
                 @method('PUT')
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">API Keys</label>
-                    <textarea name="GROQ_API_KEYS" rows="3" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 font-mono text-sm" placeholder="gsk_xxx,gsk_yyy">{{ $configs['groq']['GROQ_API_KEYS'] ?? '' }}</textarea>
-                    <p class="mt-1 text-xs text-gray-500">Enter comma-separated API keys for rotation. First key is primary.</p>
+                    <x-input-label for="groq_keys" :value="__('API Keys')" />
+                    <x-textarea-input id="groq_keys" name="GROQ_API_KEYS" rows="3" class="mt-1 block w-full font-mono text-sm" placeholder="gsk_xxx,gsk_yyy">{{ $configs['groq']['GROQ_API_KEYS'] ?? '' }}</x-textarea-input>
+                    <p class="mt-1 text-xs text-gray-500">Masukkan API key yang dipisahkan koma untuk rotasi. Key pertama adalah utama.</p>
                 </div>
                 
-                <div class="mt-6 flex justify-end">
-                    <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium">
-                        Save Groq Settings
-                    </button>
+                <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+                    <x-primary-button class="px-6 py-3 bg-purple-600 hover:bg-purple-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Simpan Pengaturan Groq
+                    </x-primary-button>
                 </div>
             </form>
-        </div>
-        
-        <!-- General Tab -->
-        <div id="content-general" class="tab-content p-6 hidden">
-            <h2 class="text-xl font-semibold text-gray-900 mb-6">General Settings</h2>
+        </x-admin-card>
+    </div>
+    
+    <!-- General Tab -->
+    <div id="content-general" class="tab-content hidden">
+        <x-admin-card>
+            <div class="mb-6 pb-4 border-b border-gray-100">
+                <h3 class="text-xl font-display font-semibold text-mitologi-navy">Pengaturan Umum</h3>
+                <p class="text-sm text-gray-500 mt-1">Konfigurasi URL dan layanan eksternal.</p>
+            </div>
             
             <form action="{{ route('admin.app-configuration.update', 'general') }}" method="POST">
                 @csrf
@@ -198,61 +235,71 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Frontend URL</label>
-                        <input type="url" name="FRONTEND_URL" value="{{ $configs['general']['FRONTEND_URL'] ?? '' }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" placeholder="http://localhost:3000">
+                        <x-input-label for="frontend_url" :value="__('Frontend URL')" />
+                        <x-text-input id="frontend_url" class="mt-1 block w-full" type="url" name="FRONTEND_URL" :value="$configs['general']['FRONTEND_URL'] ?? ''" placeholder="http://localhost:3000" />
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">AI Service URL</label>
-                        <input type="url" name="AI_SERVICE_URL" value="{{ $configs['general']['AI_SERVICE_URL'] ?? '' }}" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" placeholder="http://127.0.0.1:8001/api">
+                        <x-input-label for="ai_service_url" :value="__('AI Service URL')" />
+                        <x-text-input id="ai_service_url" class="mt-1 block w-full" type="url" name="AI_SERVICE_URL" :value="$configs['general']['AI_SERVICE_URL'] ?? ''" placeholder="http://127.0.0.1:8001/api" />
                     </div>
                 </div>
                 
-                <div class="mt-6 flex justify-end">
-                    <button type="submit" class="px-6 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition font-medium">
-                        Save General Settings
-                    </button>
+                <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+                    <x-primary-button class="px-6 py-3">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Simpan Pengaturan Umum
+                    </x-primary-button>
                 </div>
             </form>
-        </div>
-        
-        <!-- Audit Log Tab -->
-        <div id="content-audit" class="tab-content p-6 hidden">
-            <h2 class="text-xl font-semibold text-gray-900 mb-6">Configuration Change History</h2>
+        </x-admin-card>
+    </div>
+    
+    <!-- Audit Log Tab -->
+    <div id="content-audit" class="tab-content hidden">
+        <x-admin-card>
+            <div class="mb-6 pb-4 border-b border-gray-100">
+                <h3 class="text-xl font-display font-semibold text-mitologi-navy">Riwayat Perubahan Konfigurasi</h3>
+                <p class="text-sm text-gray-500 mt-1">Log audit perubahan environment variables.</p>
+            </div>
             
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto rounded-lg border border-gray-200">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Group</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Key</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP Address</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Tanggal</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">User</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Grup</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Key</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">IP Address</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @forelse($auditLogs as $log)
-                        <tr>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $log->created_at->format('Y-m-d H:i') }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $log->user->name ?? 'Unknown' }}</td>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $log->created_at->format('d M Y H:i') }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900 font-medium">{{ $log->user->name ?? 'Unknown' }}</td>
                             <td class="px-6 py-4 text-sm">
-                                <span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">{{ $log->group }}</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-mitologi-cream text-mitologi-navy border border-mitologi-gold/30">
+                                    {{ $log->group }}
+                                </span>
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $log->key }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-500">{{ $log->ip_address }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900 font-mono text-xs">{{ $log->key }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 font-mono text-xs">{{ $log->ip_address }}</td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-sm text-gray-500 text-center">No changes recorded yet.</td>
+                            <td colspan="5" class="px-6 py-8 text-sm text-gray-500 text-center">
+                                <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                Belum ada perubahan yang tercatat.
+                            </td>
                         </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
-        </div>
+        </x-admin-card>
     </div>
-</div>
 
 <script>
 function switchTab(tabName) {
@@ -261,8 +308,14 @@ function switchTab(tabName) {
     
     // Remove active class from all tabs
     document.querySelectorAll('.tab-btn').forEach(el => {
-        el.classList.remove('border-blue-500', 'text-blue-600');
-        el.classList.add('border-transparent');
+        el.classList.remove('border-mitologi-gold', 'text-mitologi-navy');
+        el.classList.add('border-transparent', 'text-gray-500');
+        // Reset icon color
+        const icon = el.querySelector('svg');
+        if (icon) {
+            icon.classList.remove('text-mitologi-gold');
+            icon.classList.add('text-gray-400');
+        }
     });
     
     // Show selected content
@@ -270,8 +323,14 @@ function switchTab(tabName) {
     
     // Activate selected tab
     const tabBtn = document.getElementById('tab-' + tabName);
-    tabBtn.classList.remove('border-transparent');
-    tabBtn.classList.add('border-blue-500', 'text-blue-600');
+    tabBtn.classList.remove('border-transparent', 'text-gray-500');
+    tabBtn.classList.add('border-mitologi-gold', 'text-mitologi-navy');
+    // Set icon color
+    const icon = tabBtn.querySelector('svg');
+    if (icon) {
+        icon.classList.remove('text-gray-400');
+        icon.classList.add('text-mitologi-gold');
+    }
     
     // Save to localStorage
     localStorage.setItem('config-active-tab', tabName);
