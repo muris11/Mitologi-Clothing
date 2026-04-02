@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:go_router/go_router.dart';
 import 'dart:io';
 import '../../../utils/navigation_helper.dart';
 import '../../config/theme.dart';
 import '../../providers/profile_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 import '../../widgets/skeleton/skeleton.dart';
 import '../../widgets/animations/blur_fade.dart';
@@ -133,7 +133,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: provider.isLoading
           ? const EditProfileSkeleton()
           : SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(
+                ResponsiveHelper.horizontalPadding(context),
+              ),
               child: FadeInUp(
                 child: Form(
                   key: _formKey,
@@ -222,7 +224,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       const SizedBox(height: 32),
                       if (provider.error != null)
                         Container(
-                          padding: const EdgeInsets.all(16),
+                          padding: EdgeInsets.all(
+                            ResponsiveHelper.horizontalPadding(context),
+                          ),
                           margin: const EdgeInsets.only(bottom: 16),
                           decoration: BoxDecoration(
                             color: AppTheme.error.withValues(alpha: 0.1),

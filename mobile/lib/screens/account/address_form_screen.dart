@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../config/theme.dart';
 import '../../models/address.dart';
 import '../../services/address_service.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 import '../../widgets/skeleton/skeleton.dart';
 import '../../widgets/animations/blur_fade.dart';
@@ -109,7 +110,9 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
       body: _isLoading
           ? const AddressFormSkeleton()
           : SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(
+                ResponsiveHelper.horizontalPadding(context),
+              ),
               child: FadeInUp(
                 child: Form(
                   key: _formKey,
@@ -205,9 +208,11 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                           activeTrackColor: AppTheme.primary.withValues(
                             alpha: 0.3,
                           ),
-                          activeColor: AppTheme.primary,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
+                          activeThumbColor: AppTheme.primary,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: ResponsiveHelper.horizontalPadding(
+                              context,
+                            ),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: AppTheme.radius16,

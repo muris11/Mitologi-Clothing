@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../config/theme.dart';
 import '../../models/address.dart';
 import '../../services/address_service.dart';
+import '../../utils/responsive_helper.dart';
 import '../../widgets/common/mitologi_scaffold.dart';
 import '../../widgets/common/animated_empty_state.dart';
 import '../../widgets/skeleton/skeleton.dart';
@@ -142,7 +143,9 @@ class _AddressListScreenState extends State<AddressListScreen> {
       bodyPadding: EdgeInsets.zero,
       body: _buildBody(),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 16),
+        padding: EdgeInsets.only(
+          bottom: ResponsiveHelper.horizontalPadding(context),
+        ),
         child: FloatingActionButton.extended(
           onPressed: _isLoading ? null : _navigateToAddAddress,
           backgroundColor: AppTheme.accent,
@@ -169,7 +172,9 @@ class _AddressListScreenState extends State<AddressListScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(24),
+                padding: EdgeInsets.all(
+                  ResponsiveHelper.horizontalPadding(context),
+                ),
                 decoration: BoxDecoration(
                   color: AppTheme.errorLight,
                   borderRadius: AppTheme.radius22,
@@ -216,7 +221,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(ResponsiveHelper.horizontalPadding(context)),
       itemCount: _addresses.length,
       itemBuilder: (context, index) {
         final address = _addresses[index];
@@ -237,7 +242,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
         border: Border.all(color: AppTheme.outlineLight),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(ResponsiveHelper.horizontalPadding(context)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
