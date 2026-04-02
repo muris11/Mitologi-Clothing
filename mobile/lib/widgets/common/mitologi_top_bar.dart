@@ -59,6 +59,7 @@ class MitologiTopBar extends StatelessWidget implements PreferredSizeWidget {
                   color: AppTheme.onSurface,
                 ),
               ),
+              tooltip: 'Notifications',
               onPressed: () => context.push('/notifications'),
             ),
           ),

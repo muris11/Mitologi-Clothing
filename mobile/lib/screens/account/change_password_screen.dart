@@ -208,6 +208,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     : Icons.visibility_outlined,
                 color: AppTheme.slate400,
               ),
+              tooltip: obscureText ? 'Show password' : 'Hide password',
               onPressed: onToggleObscure,
             ),
           ),

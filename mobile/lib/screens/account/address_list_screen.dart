@@ -138,6 +138,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
       showLogo: false,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
+        tooltip: 'Back',
         onPressed: () => Navigator.pop(context),
       ),
       bodyPadding: EdgeInsets.zero,

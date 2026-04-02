@@ -59,6 +59,7 @@ class ProductPurchasePanel extends StatelessWidget {
                   ),
                   child: IconButton(
                     onPressed: onChatTap,
+                    tooltip: 'Chat',
                     icon: const Icon(
                       Icons.chat_bubble_outline,
                       color: AppTheme.onSurface,

@@ -43,6 +43,7 @@ class AuthPageShell extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: IconButton(
                           onPressed: () => context.popOrGoHome(),
+                          tooltip: 'Back',
                           icon: const Icon(
                             Icons.arrow_back,
                             color: AppTheme.onSurface,
