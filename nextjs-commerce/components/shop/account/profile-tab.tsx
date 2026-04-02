@@ -454,7 +454,7 @@ export function ProfileTab({
 
         <div className="flex items-center justify-between mb-6 pb-5 border-b border-slate-100 relative z-10">
           <div className="flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-slate-50 text-slate-500 border border-slate-100 group-hover:bg-mitologi-navy group-hover:text-white group-hover:border-mitologi-navy transition-all duration-300 shadow-sm">
+            <div className="p-3 rounded-xl bg-mitologi-navy text-white shadow-md">
               <MapPinIcon className="h-5 w-5" />
             </div>
             <div>
@@ -469,7 +469,7 @@ export function ProfileTab({
           <Button
             onClick={openAddAddress}
             variant="secondary"
-            className="text-sm shadow-sm rounded-xl"
+            className="text-sm shadow-sm rounded-xl border-slate-200 hover:bg-slate-50 hover:border-slate-300"
           >
             <PlusIcon className="h-4 w-4 mr-2" />
             Tambah Alamat
@@ -480,8 +480,8 @@ export function ProfileTab({
         <div className="space-y-4 relative z-10">
           {isLoadingAddresses ? (
             <div className="animate-pulse space-y-4">
-              <div className="h-24 bg-slate-100 rounded-xl"></div>
-              <div className="h-24 bg-slate-100 rounded-xl"></div>
+              <div className="h-32 bg-slate-100 rounded-2xl"></div>
+              <div className="h-32 bg-slate-100 rounded-2xl"></div>
             </div>
           ) : addresses.length === 0 ? (
             <div className="text-center py-12 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
@@ -495,77 +495,87 @@ export function ProfileTab({
                 className="rounded-xl"
               >
                 <PlusIcon className="h-4 w-4 mr-2" />
-                Tambah Alamat Baru
+                Tambah Alamat
               </Button>
             </div>
           ) : (
             addresses.map((address) => (
               <div
                 key={address.id}
-                className={`p-5 rounded-xl border-2 transition-all relative ${
+                className={`p-5 md:p-6 rounded-2xl border-2 transition-all duration-300 relative overflow-hidden ${
                   address.isPrimary
-                    ? "border-mitologi-navy bg-mitologi-navy/5"
-                    : "border-slate-200 hover:border-slate-300"
+                    ? "border-mitologi-navy bg-white shadow-md"
+                    : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm"
                 }`}
               >
-                {/* Primary Badge */}
-                {address.isPrimary && (
-                  <div className="absolute -top-3 left-4">
-                    <span className="text-xs font-sans font-bold bg-mitologi-gold text-mitologi-navy px-3 py-1 rounded-full flex items-center gap-1">
-                      <StarIcon className="w-3 h-3" />
-                      Utama
-                    </span>
-                  </div>
-                )}
-
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-sans font-bold text-mitologi-navy">
-                        {address.label}
-                      </span>
+                <div className="flex justify-between items-start gap-4">
+                  <div className="flex-1 min-w-0">
+                    {/* Badge and Label */}
+                    <div className="flex items-center gap-2 mb-3">
+                      {address.isPrimary ? (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-sans font-bold bg-mitologi-navy text-white shadow-sm">
+                          <StarIcon className="w-3 h-3" />
+                          Utama
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-sans font-bold bg-amber-100 text-amber-700">
+                          {address.label}
+                        </span>
+                      )}
                     </div>
-                    <p className="font-sans font-bold text-slate-900 mb-1">
+                    
+                    {/* Recipient Info */}
+                    <p className="font-sans font-bold text-lg text-slate-900 mb-1">
                       {address.recipientName}
                     </p>
-                    <p className="font-sans text-sm text-slate-600 mb-1">
+                    <p className="font-sans text-sm text-slate-600 mb-3">
                       {address.phone}
                     </p>
-                    <p className="font-sans text-sm text-slate-600">
-                      {address.addressLine1}
-                      {address.addressLine2 && `, ${address.addressLine2}`}
-                    </p>
-                    <p className="font-sans text-sm text-slate-600">
-                      {address.city}, {address.province} {address.postalCode}
-                    </p>
-                    {address.country && address.country !== "Indonesia" && (
-                      <p className="font-sans text-sm text-slate-500 mt-1">
-                        {address.country}
-                      </p>
-                    )}
+                    
+                    {/* Address */}
+                    <div className="flex items-start gap-2 text-sm text-slate-600">
+                      <MapPinIcon className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+                      <div className="space-y-0.5">
+                        <p className="font-sans">
+                          {address.addressLine1}
+                          {address.addressLine2 && `, ${address.addressLine2}`}
+                        </p>
+                        <p className="font-sans">
+                          {address.city}, {address.province} {address.postalCode}
+                        </p>
+                        {address.country && address.country !== "Indonesia" && (
+                          <p className="font-sans text-slate-500">
+                            {address.country}
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col gap-2">
+                  {/* Actions */}
+                  <div className="flex flex-col items-end gap-2 flex-shrink-0">
                     {!address.isPrimary && (
                       <button
                         onClick={() => handleSetPrimary(address.id)}
-                        className="text-xs font-sans font-bold text-mitologi-navy hover:text-mitologi-gold transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-100"
+                        className="text-xs font-sans font-semibold text-mitologi-navy hover:text-mitologi-gold transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-100 whitespace-nowrap"
                       >
                         Jadikan Utama
                       </button>
                     )}
-                    <div className="flex gap-2">
+                    <div className="flex gap-1">
                       <button
                         onClick={() => openEditAddress(address)}
-                        className="p-2 text-slate-500 hover:text-mitologi-navy hover:bg-slate-100 rounded-lg transition-colors"
+                        className="p-2 text-slate-400 hover:text-mitologi-navy hover:bg-slate-100 rounded-lg transition-all"
+                        title="Edit"
                       >
-                        <PencilSquareIcon className="h-4 w-4" />
+                        <PencilSquareIcon className="h-5 w-5" />
                       </button>
                       <button
                         onClick={() => handleDeleteAddress(address.id)}
-                        className="p-2 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                        title="Hapus"
                       >
-                        <TrashIcon className="h-4 w-4" />
+                        <TrashIcon className="h-5 w-5" />
                       </button>
                     </div>
                   </div>
