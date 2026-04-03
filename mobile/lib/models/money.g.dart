@@ -7,7 +7,7 @@ part of 'money.dart';
 // **************************************************************************
 
 Money _$MoneyFromJson(Map<String, dynamic> json) => Money(
-  amount: (json['amount'] as num).toDouble(),
+  amount: json['amount'] as String,
   currencyCode: json['currencyCode'] as String,
 );
 

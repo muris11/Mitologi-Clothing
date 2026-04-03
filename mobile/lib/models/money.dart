@@ -4,7 +4,8 @@ part 'money.g.dart';
 
 @JsonSerializable()
 class Money {
-  final double amount;
+  // Keep as String for backward compatibility
+  final String amount;
   final String currencyCode;
 
   const Money({required this.amount, required this.currencyCode});
@@ -14,6 +15,8 @@ class Money {
   Map<String, dynamic> toJson() => _$MoneyToJson(this);
 
   @override
-  String toString() =>
-      '${currencyCode == 'IDR' ? 'Rp' : currencyCode} ${amount.toStringAsFixed(0)}';
+  String toString() {
+    final value = double.tryParse(amount) ?? 0.0;
+    return '${currencyCode == 'IDR' ? 'Rp' : currencyCode} ${value.toStringAsFixed(0)}';
+  }
 }

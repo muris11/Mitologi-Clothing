@@ -44,7 +44,7 @@ class FakeCartService implements CartService {
       merchandiseId: variantId,
       title: 'Test Product',
       quantity: quantity,
-      price: const Money(amount: 100000.0, currencyCode: 'IDR'),
+      price: const Money(amount: '100000', currencyCode: 'IDR'),
       imageUrl: null,
       variantTitle: null,
     );
@@ -56,16 +56,20 @@ class FakeCartService implements CartService {
     );
     final totalAmount = lines.fold<double>(
       0.0,
-      (sum, item) => sum + (item.price.amount * item.quantity),
+      (sum, item) =>
+          sum + ((double.tryParse(item.price.amount) ?? 0.0) * item.quantity),
     );
 
     _cart = Cart(
       id: _cart?.id ?? 'test-cart',
       checkoutUrl: '',
       cost: CartCost(
-        subtotalAmount: Money(amount: totalAmount, currencyCode: 'IDR'),
-        totalAmount: Money(amount: totalAmount, currencyCode: 'IDR'),
-        totalTaxAmount: const Money(amount: 0.0, currencyCode: 'IDR'),
+        subtotalAmount: Money(
+          amount: totalAmount.toString(),
+          currencyCode: 'IDR',
+        ),
+        totalAmount: Money(amount: totalAmount.toString(), currencyCode: 'IDR'),
+        totalTaxAmount: const Money(amount: '0', currencyCode: 'IDR'),
       ),
       lines: lines,
       totalQuantity: totalQuantity,
@@ -103,16 +107,20 @@ class FakeCartService implements CartService {
     );
     final totalAmount = updatedLines.fold<double>(
       0.0,
-      (sum, item) => sum + (item.price.amount * item.quantity),
+      (sum, item) =>
+          sum + ((double.tryParse(item.price.amount) ?? 0.0) * item.quantity),
     );
 
     _cart = Cart(
       id: _cart!.id,
       checkoutUrl: _cart!.checkoutUrl,
       cost: CartCost(
-        subtotalAmount: Money(amount: totalAmount, currencyCode: 'IDR'),
-        totalAmount: Money(amount: totalAmount, currencyCode: 'IDR'),
-        totalTaxAmount: const Money(amount: 0.0, currencyCode: 'IDR'),
+        subtotalAmount: Money(
+          amount: totalAmount.toString(),
+          currencyCode: 'IDR',
+        ),
+        totalAmount: Money(amount: totalAmount.toString(), currencyCode: 'IDR'),
+        totalTaxAmount: const Money(amount: '0', currencyCode: 'IDR'),
       ),
       lines: updatedLines,
       totalQuantity: totalQuantity,
@@ -139,16 +147,20 @@ class FakeCartService implements CartService {
     );
     final totalAmount = updatedLines.fold<double>(
       0.0,
-      (sum, item) => sum + (item.price.amount * item.quantity),
+      (sum, item) =>
+          sum + ((double.tryParse(item.price.amount) ?? 0.0) * item.quantity),
     );
 
     _cart = Cart(
       id: _cart!.id,
       checkoutUrl: _cart!.checkoutUrl,
       cost: CartCost(
-        subtotalAmount: Money(amount: totalAmount, currencyCode: 'IDR'),
-        totalAmount: Money(amount: totalAmount, currencyCode: 'IDR'),
-        totalTaxAmount: const Money(amount: 0.0, currencyCode: 'IDR'),
+        subtotalAmount: Money(
+          amount: totalAmount.toString(),
+          currencyCode: 'IDR',
+        ),
+        totalAmount: Money(amount: totalAmount.toString(), currencyCode: 'IDR'),
+        totalTaxAmount: const Money(amount: '0', currencyCode: 'IDR'),
       ),
       lines: updatedLines,
       totalQuantity: totalQuantity,
@@ -169,9 +181,9 @@ class FakeCartService implements CartService {
       id: 'test-cart',
       checkoutUrl: '',
       cost: CartCost(
-        subtotalAmount: const Money(amount: 0.0, currencyCode: 'IDR'),
-        totalAmount: const Money(amount: 0.0, currencyCode: 'IDR'),
-        totalTaxAmount: const Money(amount: 0.0, currencyCode: 'IDR'),
+        subtotalAmount: const Money(amount: '0', currencyCode: 'IDR'),
+        totalAmount: const Money(amount: '0', currencyCode: 'IDR'),
+        totalTaxAmount: const Money(amount: '0', currencyCode: 'IDR'),
       ),
       lines: [],
       totalQuantity: 0,
