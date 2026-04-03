@@ -1,17 +1,19 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'money.g.dart';
+
+@JsonSerializable()
 class Money {
-  final String amount;
+  final double amount;
   final String currencyCode;
 
-  Money({required this.amount, required this.currencyCode});
+  const Money({required this.amount, required this.currencyCode});
 
-  factory Money.fromJson(Map<String, dynamic> json) {
-    return Money(
-      amount: json['amount']?.toString() ?? '0',
-      currencyCode: json['currencyCode']?.toString() ?? 'IDR',
-    );
-  }
+  factory Money.fromJson(Map<String, dynamic> json) => _$MoneyFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {'amount': amount, 'currencyCode': currencyCode};
-  }
+  Map<String, dynamic> toJson() => _$MoneyToJson(this);
+
+  @override
+  String toString() =>
+      '${currencyCode == 'IDR' ? 'Rp' : currencyCode} ${amount.toStringAsFixed(0)}';
 }

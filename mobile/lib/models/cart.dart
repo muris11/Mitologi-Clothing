@@ -1,6 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'money.dart';
 import 'cart_item.dart';
 
+part 'cart.g.dart';
+
+@JsonSerializable()
 class CartCost {
   final Money subtotalAmount;
   final Money totalAmount;
@@ -12,15 +16,13 @@ class CartCost {
     required this.totalTaxAmount,
   });
 
-  factory CartCost.fromJson(Map<String, dynamic> json) {
-    return CartCost(
-      subtotalAmount: Money.fromJson(json['subtotalAmount'] ?? {}),
-      totalAmount: Money.fromJson(json['totalAmount'] ?? {}),
-      totalTaxAmount: Money.fromJson(json['totalTaxAmount'] ?? {}),
-    );
-  }
+  factory CartCost.fromJson(Map<String, dynamic> json) =>
+      _$CartCostFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CartCostToJson(this);
 }
 
+@JsonSerializable()
 class Cart {
   final String? id;
   final String? sessionId;
@@ -38,20 +40,7 @@ class Cart {
     required this.totalQuantity,
   });
 
-  factory Cart.fromJson(Map<String, dynamic> json) {
-    return Cart(
-      id: json['id']?.toString(),
-      sessionId: json['sessionId']?.toString(),
-      checkoutUrl: json['checkoutUrl'] ?? '',
-      cost: CartCost.fromJson(json['cost'] ?? {}),
-      lines:
-          (json['lines'] as List<dynamic>?)
-              ?.map((e) => CartItem.fromJson(e))
-              .toList() ??
-          [],
-      totalQuantity: json['totalQuantity'] == null
-          ? 0
-          : int.tryParse(json['totalQuantity'].toString()) ?? 0,
-    );
-  }
+  factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CartToJson(this);
 }
