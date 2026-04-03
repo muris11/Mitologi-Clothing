@@ -6,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// - iOS: Keychain
 /// - Android: EncryptedSharedPreferences
 class SecureStorageService {
-  static const _storage = FlutterSecureStorage(
+  static FlutterSecureStorage _storage = const FlutterSecureStorage(
     aOptions: AndroidOptions(encryptedSharedPreferences: true),
     iOptions: IOSOptions(
       accessibility: KeychainAccessibility.first_unlock_this_device,
@@ -15,6 +15,11 @@ class SecureStorageService {
 
   static const _authTokenKey = 'auth_token';
   static const _cartSessionIdKey = 'cart_session_id';
+
+  /// Initialize with a custom storage implementation (for testing)
+  static void initializeForTest(FlutterSecureStorage storage) {
+    _storage = storage;
+  }
 
   /// Save auth token securely
   static Future<void> saveAuthToken(String token) async {

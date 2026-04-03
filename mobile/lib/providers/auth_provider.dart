@@ -4,7 +4,7 @@ import '../services/auth_service.dart';
 import '../services/secure_storage_service.dart';
 
 class AuthProvider extends ChangeNotifier {
-  final AuthService _authService = AuthService();
+  final AuthService _authService;
 
   User? _user;
   String? _token;
@@ -17,7 +17,8 @@ class AuthProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  AuthProvider() {
+  AuthProvider({AuthService? authService})
+    : _authService = authService ?? AuthService() {
     loadUserFromStorage();
   }
 
@@ -75,7 +76,12 @@ class AuthProvider extends ChangeNotifier {
       _setLoading(false);
       return true;
     } catch (e) {
-      _setError(e.toString().replaceAll('ApiException: ', ''));
+      _setError(
+        e
+            .toString()
+            .replaceAll('ApiException: ', '')
+            .replaceAll('Exception: ', ''),
+      );
       _setLoading(false);
       return false;
     }
@@ -112,7 +118,12 @@ class AuthProvider extends ChangeNotifier {
       _setLoading(false);
       return true;
     } catch (e) {
-      _setError(e.toString().replaceAll('ApiException: ', ''));
+      _setError(
+        e
+            .toString()
+            .replaceAll('ApiException: ', '')
+            .replaceAll('Exception: ', ''),
+      );
       _setLoading(false);
       return false;
     }
@@ -140,7 +151,12 @@ class AuthProvider extends ChangeNotifier {
       _setLoading(false);
       return true;
     } catch (e) {
-      _setError(e.toString().replaceAll('ApiException: ', ''));
+      _setError(
+        e
+            .toString()
+            .replaceAll('ApiException: ', '')
+            .replaceAll('Exception: ', ''),
+      );
       _setLoading(false);
       return false;
     }
@@ -164,7 +180,12 @@ class AuthProvider extends ChangeNotifier {
       _setLoading(false);
       return true;
     } catch (e) {
-      _setError(e.toString().replaceAll('ApiException: ', ''));
+      _setError(
+        e
+            .toString()
+            .replaceAll('ApiException: ', '')
+            .replaceAll('Exception: ', ''),
+      );
       _setLoading(false);
       return false;
     }
