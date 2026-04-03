@@ -47,14 +47,11 @@ class ApiService {
     Map<String, dynamic>? queryParams,
     bool requiresAuth = false,
   }) async {
-    Uri url = Uri.parse('${ApiConfig.baseUrl}$endpoint');
-    if (queryParams != null) {
-      url = url.replace(
-        queryParameters: queryParams.map(
-          (key, value) => MapEntry(key, value.toString()),
-        ),
-      );
-    }
+    // Use proper URI construction with encoding
+    final queryParameters = queryParams?.map(
+      (key, value) => MapEntry(key, value.toString()),
+    );
+    final url = ApiConfig.buildUri(endpoint, queryParams: queryParameters);
     final headers = await _getHeaders(requiresAuth: requiresAuth);
 
     try {
@@ -75,7 +72,7 @@ class ApiService {
     Map<String, dynamic>? body,
     bool requiresAuth = false,
   }) async {
-    final url = Uri.parse('${ApiConfig.baseUrl}$endpoint');
+    final url = ApiConfig.buildUri(endpoint);
     final headers = await _getHeaders(requiresAuth: requiresAuth);
 
     try {
@@ -100,7 +97,7 @@ class ApiService {
     Map<String, dynamic>? body,
     bool requiresAuth = false,
   }) async {
-    final url = Uri.parse('${ApiConfig.baseUrl}$endpoint');
+    final url = ApiConfig.buildUri(endpoint);
     final headers = await _getHeaders(requiresAuth: requiresAuth);
 
     try {
@@ -121,7 +118,7 @@ class ApiService {
   }
 
   Future<dynamic> delete(String endpoint, {bool requiresAuth = false}) async {
-    final url = Uri.parse('${ApiConfig.baseUrl}$endpoint');
+    final url = ApiConfig.buildUri(endpoint);
     final headers = await _getHeaders(requiresAuth: requiresAuth);
 
     try {
@@ -144,7 +141,7 @@ class ApiService {
     Map<String, String>? fields,
     bool requiresAuth = false,
   }) async {
-    final url = Uri.parse('${ApiConfig.baseUrl}$endpoint');
+    final url = ApiConfig.buildUri(endpoint);
     final headers = await _getHeaders(requiresAuth: requiresAuth);
     // Remove content-type as multipart request sets its own boundary
     headers.remove('Content-Type');
@@ -192,7 +189,7 @@ class ApiService {
       dynamic errors;
 
       if (jsonResponse is Map<String, dynamic>) {
-        message = jsonResponse['message'] ?? message;
+        message = (jsonResponse['message'] as String?) ?? message;
         errors = jsonResponse['errors'];
       }
 
