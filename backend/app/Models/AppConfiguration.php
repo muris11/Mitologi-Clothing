@@ -157,21 +157,46 @@ class AppConfiguration
         $serverKey = env('MIDTRANS_SERVER_KEY');
         $isProduction = env('MIDTRANS_IS_PRODUCTION') === 'true';
 
+        // Debug: Check if key exists
+        if (empty($serverKey)) {
+            return ['success' => false, 'message' => 'Server Key tidak ditemukan di .env'];
+        }
+
+        // Use transactions endpoint to test authentication
         $url = $isProduction
-            ? 'https://api.midtrans.com/v2/ping'
-            : 'https://api.sandbox.midtrans.com/v2/ping';
+            ? 'https://api.midtrans.com/v2/transactions'
+            : 'https://api.sandbox.midtrans.com/v2/transactions';
 
         try {
+            // Try to get transactions list (will return error without valid order_id, 
+            // but 401/403 means auth failed, 400 means auth success but bad request)
             $response = \Illuminate\Support\Facades\Http::withBasicAuth($serverKey, '')
-                ->get($url);
+                ->get($url . '/nonexistent-test-id');
 
+            $status = $response->status();
+            
+            // 401 or 403 = Invalid key
+            if ($status === 401 || $status === 403) {
+                return ['success' => false, 'message' => 'Server Key tidak valid atau tidak aktif'];
+            }
+            
+            // 404 = Key valid (transaction not found, but auth passed)
+            if ($status === 404) {
+                return ['success' => true, 'message' => 'Server Key valid! Midtrans API terhubung'];
+            }
+            
+            // Other success codes
             if ($response->successful()) {
                 return ['success' => true, 'message' => 'Midtrans API connected'];
             }
 
-            return ['success' => false, 'message' => 'Invalid credentials or API error'];
+            // Other errors
+            $body = $response->json();
+            $errorMsg = $body['error_messages'][0] ?? $response->body() ?? 'Unknown error';
+            
+            return ['success' => false, 'message' => "HTTP {$status}: {$errorMsg}"];
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
         }
     }
 
