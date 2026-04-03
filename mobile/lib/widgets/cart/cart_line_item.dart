@@ -37,32 +37,38 @@ class CartLineItem extends StatelessWidget {
             child: SizedBox(
               width: 90,
               height: 90,
-              child: CachedNetworkImage(
-                imageUrl: StorageUrl.format(
-                  item.merchandise.product.featuredImage,
-                ),
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: AppTheme.surfaceContainerLow,
-                  child: const Center(
-                    child: SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: AppTheme.secondary,
+              child: item.imageUrl != null
+                  ? CachedNetworkImage(
+                      imageUrl: StorageUrl.format(item.imageUrl!),
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        color: AppTheme.surfaceContainerLow,
+                        child: const Center(
+                          child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: AppTheme.secondary,
+                            ),
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, err) => Container(
+                        color: AppTheme.surfaceContainerLow,
+                        child: const Icon(
+                          Icons.image_not_supported,
+                          color: AppTheme.surfaceContainerHigh,
+                        ),
+                      ),
+                    )
+                  : Container(
+                      color: AppTheme.surfaceContainerLow,
+                      child: const Icon(
+                        Icons.image_not_supported,
+                        color: AppTheme.surfaceContainerHigh,
                       ),
                     ),
-                  ),
-                ),
-                errorWidget: (context, url, err) => Container(
-                  color: AppTheme.surfaceContainerLow,
-                  child: const Icon(
-                    Icons.image_not_supported,
-                    color: AppTheme.surfaceContainerHigh,
-                  ),
-                ),
-              ),
             ),
           ),
           const SizedBox(width: 16),
@@ -75,7 +81,7 @@ class CartLineItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        item.merchandise.product.title,
+                        item.title,
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
@@ -98,8 +104,7 @@ class CartLineItem extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 6),
-                if (item.merchandise.selectedOptions.isNotEmpty &&
-                    item.merchandise.selectedOptions.first.name != 'Title')
+                if (item.variantTitle != null && item.variantTitle!.isNotEmpty)
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
@@ -110,9 +115,7 @@ class CartLineItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      item.merchandise.selectedOptions
-                          .map((o) => o.value)
-                          .join(' • '),
+                      item.variantTitle!,
                       style: const TextStyle(
                         color: AppTheme.onSurfaceVariant,
                         fontSize: 11,
@@ -128,9 +131,7 @@ class CartLineItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        PriceFormatter.formatStringIDR(
-                          item.cost.totalAmount.amount,
-                        ),
+                        PriceFormatter.formatStringIDR(item.price.amount),
                         style: const TextStyle(
                           fontWeight: FontWeight.w800,
                           color: AppTheme.onSurface,

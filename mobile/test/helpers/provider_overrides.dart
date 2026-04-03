@@ -85,8 +85,8 @@ class FakeWishlistProvider extends WishlistProvider {
 
 class FakeProductProvider extends ProductProvider {
   FakeProductProvider({List<Product>? products, List<Category>? categories})
-      : _products = products ?? [buildTestProduct()],
-        _categories = categories ?? [buildTestCategory()];
+    : _products = products ?? [buildTestProduct()],
+      _categories = categories ?? [buildTestCategory()];
 
   final List<Product> _products;
   final List<Category> _categories;
@@ -121,8 +121,8 @@ class FakeProductProvider extends ProductProvider {
 
 class FakeOrderProvider extends OrderProvider {
   FakeOrderProvider({List<Order>? orders, Order? currentOrder})
-      : _orders = orders ?? [buildTestOrder()],
-        _currentOrder = currentOrder;
+    : _orders = orders ?? [buildTestOrder()],
+      _currentOrder = currentOrder;
 
   final List<Order> _orders;
   final Order? _currentOrder;
@@ -157,13 +157,13 @@ class FakeProfileProvider extends ProfileProvider {}
 class FakeChatbotProvider extends ChatbotProvider {}
 
 class FakeCollectionProvider extends CollectionProvider {
-  FakeCollectionProvider(
-      {List<Collection>? collections,
-      Collection? currentCollection,
-      List<Product>? currentProducts})
-      : _collections = collections ?? [buildTestCollection()],
-        _currentCollection = currentCollection,
-        _currentProducts = currentProducts ?? [buildTestProduct()];
+  FakeCollectionProvider({
+    List<Collection>? collections,
+    Collection? currentCollection,
+    List<Product>? currentProducts,
+  }) : _collections = collections ?? [buildTestCollection()],
+       _currentCollection = currentCollection,
+       _currentProducts = currentProducts ?? [buildTestProduct()];
 
   final List<Collection> _collections;
   final Collection? _currentCollection;
@@ -194,8 +194,11 @@ class FakeCollectionProvider extends CollectionProvider {
   Future<void> fetchCollections() async {}
 
   @override
-  Future<void> fetchCollectionDetails(String handle,
-      {String sortKey = 'RELEVANCE', bool reverse = false}) async {}
+  Future<void> fetchCollectionDetails(
+    String handle, {
+    String sortKey = 'RELEVANCE',
+    bool reverse = false,
+  }) async {}
 }
 
 User buildTestUser() {
@@ -214,7 +217,11 @@ User buildTestUser() {
 
 Category buildTestCategory() {
   return Category(
-      id: 1, name: 'Outerwear', slug: 'outerwear', handle: 'outerwear');
+    id: 1,
+    name: 'Outerwear',
+    slug: 'outerwear',
+    handle: 'outerwear',
+  );
 }
 
 Product buildTestProduct() {
@@ -226,7 +233,7 @@ Product buildTestProduct() {
     description: 'Produk uji untuk widget test.',
     descriptionHtml: '<p>Produk uji untuk widget test.</p>',
     options: [
-      ProductOption(id: 'opt-1', name: 'Size', values: ['M'])
+      ProductOption(id: 'opt-1', name: 'Size', values: ['M']),
     ],
     priceRange: PriceRange(
       maxVariantPrice: Money(amount: '349000', currencyCode: 'IDR'),
@@ -290,20 +297,12 @@ Cart buildTestCart() {
     lines: [
       CartItem(
         id: 'line-1',
+        merchandiseId: 'merch-1',
+        title: 'Jaket Mitologi Signature',
         quantity: 1,
-        cost: CartItemCost(
-            totalAmount: Money(amount: '349000', currencyCode: 'IDR')),
-        merchandise: Merchandise(
-          id: 'merch-1',
-          title: 'Jaket Mitologi Signature',
-          selectedOptions: [SelectedOption(name: 'Size', value: 'M')],
-          product: CartProduct(
-            id: 'prod-1',
-            handle: 'jaket-mitologi',
-            title: 'Jaket Mitologi Signature',
-            featuredImage: 'https://example.com/product.jpg',
-          ),
-        ),
+        price: Money(amount: '349000', currencyCode: 'IDR'),
+        imageUrl: 'https://example.com/product.jpg',
+        variantTitle: 'Size: M',
       ),
     ],
   );
