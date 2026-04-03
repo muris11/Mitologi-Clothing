@@ -3,7 +3,10 @@ import '../models/cart.dart';
 import '../services/cart_service.dart';
 
 class CartProvider extends ChangeNotifier {
-  final CartService _cartService = CartService();
+  final CartService _cartService;
+
+  CartProvider({CartService? cartService})
+    : _cartService = cartService ?? CartService();
 
   Cart? _cart;
   bool _isLoading = false;

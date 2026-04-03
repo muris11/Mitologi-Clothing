@@ -1,6 +1,7 @@
 import 'package:mobile/models/cart.dart';
 import 'package:mobile/models/cart_item.dart';
 import 'package:mobile/models/money.dart';
+import 'package:mobile/services/api_service.dart';
 import 'package:mobile/services/cart_service.dart';
 
 /// Fake cart service for testing
@@ -27,7 +28,7 @@ class FakeCartService implements CartService {
   @override
   Future<Cart> getCart() async {
     if (shouldThrowError) {
-      throw Exception(errorMessage);
+      throw ApiException(errorMessage, 500);
     }
     return _cart ?? _createEmptyCart();
   }
@@ -35,7 +36,7 @@ class FakeCartService implements CartService {
   @override
   Future<Cart> addToCart(String variantId, int quantity) async {
     if (shouldThrowError) {
-      throw Exception(errorMessage);
+      throw ApiException(errorMessage, 500);
     }
     // Simulate adding item
     final item = CartItem(
@@ -75,7 +76,7 @@ class FakeCartService implements CartService {
   @override
   Future<Cart> updateItemQuantity(String itemId, int quantity) async {
     if (shouldThrowError) {
-      throw Exception(errorMessage);
+      throw ApiException(errorMessage, 500);
     }
     if (_cart == null) {
       return _createEmptyCart();
@@ -122,7 +123,7 @@ class FakeCartService implements CartService {
   @override
   Future<Cart> removeItem(String itemId) async {
     if (shouldThrowError) {
-      throw Exception(errorMessage);
+      throw ApiException(errorMessage, 500);
     }
 
     if (_cart == null) {
@@ -158,7 +159,7 @@ class FakeCartService implements CartService {
   @override
   Future<void> clearCart() async {
     if (shouldThrowError) {
-      throw Exception(errorMessage);
+      throw ApiException(errorMessage, 500);
     }
     _cart = _createEmptyCart();
   }
