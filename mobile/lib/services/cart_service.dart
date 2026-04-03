@@ -1,7 +1,6 @@
 import '../models/cart.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'api_service.dart';
+import 'secure_storage_service.dart';
 
 class CartService {
   final ApiService _api = ApiService();
@@ -10,8 +9,7 @@ class CartService {
     final sessionId = cart.sessionId ?? cart.id;
     if (sessionId == null || sessionId.isEmpty) return;
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('cart_session_id', sessionId);
+    await SecureStorageService.saveCartSessionId(sessionId);
   }
 
   Future<Cart> _createCart() async {

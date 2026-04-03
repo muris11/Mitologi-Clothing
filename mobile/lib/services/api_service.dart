@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import '../config/api_config.dart';
+import 'secure_storage_service.dart';
 
 class ApiException implements Exception {
   final String message;
@@ -23,18 +23,16 @@ class ApiService {
       'Accept': 'application/json',
     };
 
-    final prefs = await SharedPreferences.getInstance();
-
     // Auth token
     if (requiresAuth) {
-      final token = prefs.getString('auth_token');
+      final token = await SecureStorageService.getAuthToken();
       if (token != null) {
         headers['Authorization'] = 'Bearer $token';
       }
     }
 
     // Cart session ID for guest cart operations
-    final cartSessionId = prefs.getString('cart_session_id');
+    final cartSessionId = await SecureStorageService.getCartSessionId();
     if (cartSessionId != null) {
       headers['X-Cart-Id'] = cartSessionId;
     }

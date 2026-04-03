@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
 import '../services/auth_service.dart';
+import '../services/secure_storage_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -34,8 +34,7 @@ class AuthProvider extends ChangeNotifier {
   Future<void> loadUserFromStorage() async {
     _setLoading(true);
     try {
-      final prefs = await SharedPreferences.getInstance();
-      _token = prefs.getString('auth_token');
+      _token = await SecureStorageService.getAuthToken();
 
       if (_token != null) {
         // Fetch fresh user data
@@ -45,8 +44,7 @@ class AuthProvider extends ChangeNotifier {
       // Token might be invalid or expired
       _token = null;
       _user = null;
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('auth_token');
+      await SecureStorageService.deleteAuthToken();
     } finally {
       _setLoading(false);
     }
@@ -56,8 +54,7 @@ class AuthProvider extends ChangeNotifier {
     _setLoading(true);
     _setError(null);
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final cartSessionId = prefs.getString('cart_session_id');
+      final cartSessionId = await SecureStorageService.getCartSessionId();
 
       final response = await _authService.login(
         email,
@@ -68,11 +65,11 @@ class AuthProvider extends ChangeNotifier {
       _token = response.token;
       _user = response.user;
 
-      await prefs.setString('auth_token', _token!);
+      await SecureStorageService.saveAuthToken(_token!);
 
       // If a new cart was returned/merged, update it in storage
       if (response.cartId != null) {
-        await prefs.setString('cart_session_id', response.cartId!);
+        await SecureStorageService.saveCartSessionId(response.cartId!);
       }
 
       _setLoading(false);
@@ -93,8 +90,7 @@ class AuthProvider extends ChangeNotifier {
     _setLoading(true);
     _setError(null);
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final cartSessionId = prefs.getString('cart_session_id');
+      final cartSessionId = await SecureStorageService.getCartSessionId();
 
       final response = await _authService.register(
         name,
@@ -107,10 +103,10 @@ class AuthProvider extends ChangeNotifier {
       _token = response.token;
       _user = response.user;
 
-      await prefs.setString('auth_token', _token!);
+      await SecureStorageService.saveAuthToken(_token!);
 
       if (response.cartId != null) {
-        await prefs.setString('cart_session_id', response.cartId!);
+        await SecureStorageService.saveCartSessionId(response.cartId!);
       }
 
       _setLoading(false);
@@ -131,8 +127,7 @@ class AuthProvider extends ChangeNotifier {
     } finally {
       _token = null;
       _user = null;
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('auth_token');
+      await SecureStorageService.deleteAuthToken();
       _setLoading(false);
     }
   }
