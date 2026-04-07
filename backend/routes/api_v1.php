@@ -84,6 +84,7 @@ Route::prefix('cart')->group(function () {
     Route::post('/items', [CartController::class, 'addItem']);
     Route::put('/items/{id}', [CartController::class, 'updateItem']);
     Route::delete('/items/{id}', [CartController::class, 'removeItem']);
+    Route::delete('/clear', [CartController::class, 'clear']);
 });
 
 /*

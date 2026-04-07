@@ -176,4 +176,27 @@ class CartController extends Controller
             'Item dihapus dari keranjang'
         );
     }
+
+    /**
+     * Clear all items from the cart.
+     */
+    public function clear(Request $request): JsonResponse
+    {
+        $userId = auth('sanctum')->id();
+        $sessionId = $request->header('X-Cart-Id', $request->cookie('cartSessionId'));
+        $cart = $this->cartService->getOrCreateCart($userId, $sessionId);
+
+        if ($userId && $cart->user_id && $cart->user_id !== $userId) {
+            return $this->forbiddenResponse('Tidak diizinkan mengakses keranjang ini.');
+        }
+
+        $cart->items()->delete();
+
+        $cart->refresh();
+
+        return $this->successResponse(
+            $this->cartService->formatCartResponse($cart),
+            'Cart cleared successfully'
+        );
+    }
 }
