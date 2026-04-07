@@ -2,27 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 
-/// API Configuration for Mitologi Clothing Mobile App
-///
-/// Configuration uses dart-define for environment-specific values:
-/// --dart-define=MITOLOGI_API_BASE_URL=http://127.0.0.1:8000
 class ApiConfig {
   ApiConfig._();
-
-  /// ENVIRONMENT VARIABLE OVERRIDES (highest priority)
-  /// Use these when running on physical devices or custom setups:
-  ///
-  /// Android Emulator: flutter run
-  ///    (auto-uses 10.0.2.2:8000 internally)
-  ///
-  /// iOS Simulator: flutter run
-  ///    (auto-uses localhost:8000)
-  ///
-  /// Physical Device: flutter run --dart-define=MITOLOGI_API_BASE_URL=http://YOUR-LAN-IP:8000
-  ///
-  /// Examples:
-  ///   flutter run --dart-define=MITOLOGI_API_BASE_URL=http://192.168.1.100:8000
-  ///   flutter run --dart-define=MITOLOGI_API_BASE_URL=http://192.168.2.50:8000
 
   static const String _apiBaseOverride = String.fromEnvironment(
     'MITOLOGI_API_BASE_URL',
@@ -42,21 +23,26 @@ class ApiConfig {
 
   static String get _defaultBackendOrigin {
     // TIPS: Use 'ipconfig' on Windows to find your IPv4 if using physical device.
-    // const String physicalDeviceIp = 'http://192.168.1.XX:8000';
+    // const String physicalDeviceIp = 'http://192.168.1.XX:8011';
 
-    if (kIsWeb) return 'http://localhost:8000';
+    if (kIsWeb) {
+      // For web, use localhost or override via dart-define
+      const webOverride = String.fromEnvironment('MITOLOGI_WEB_API_URL');
+      if (webOverride.isNotEmpty) return webOverride;
+      return 'http://localhost:8011';
+    }
 
     if (Platform.isAndroid) {
       // 10.0.2.2 is the special alias for the host machine in Android Emulator
-      return 'http://10.0.2.2:8000';
+      return 'http://10.0.2.2:8011';
     }
 
     if (Platform.isIOS) {
       // iOS Simulator shares the host's localhost
-      return 'http://localhost:8000';
+      return 'http://localhost:8011';
     }
 
-    return 'http://localhost:8000';
+    return 'http://localhost:8011';
   }
 
   /// Base URL from dart-define or platform default
@@ -119,18 +105,8 @@ class ApiConfig {
     return normalizedBase;
   }
 
-  /// Timeout duration for API requests in milliseconds
-  static const int timeoutDuration = 30000; // 30 seconds
+  static const int timeoutDuration = 30000;
 
-  /// Construct a URI for API endpoint
-  ///
-  /// Use this instead of string concatenation for proper encoding
-  ///
-  /// Example:
-  /// ```dart
-  /// final uri = ApiConfig.buildUri('/products');
-  /// final uriWithParams = ApiConfig.buildUri('/products', queryParams: {'page': '1'});
-  /// ```
   static Uri buildUri(String endpoint, {Map<String, String>? queryParams}) {
     // Remove leading slash from endpoint to avoid double slashes
     final cleanEndpoint = endpoint.startsWith('/')
