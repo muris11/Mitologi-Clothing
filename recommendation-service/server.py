@@ -13,7 +13,7 @@ def run_scheduler():
         time.sleep(60)
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8001))
+    port = int(os.environ.get('PORT', 5011))
     
     # Schedule the autonomous training job every day at midnight (00:00)
     schedule.every().day.at("00:00").do(run_train_job)

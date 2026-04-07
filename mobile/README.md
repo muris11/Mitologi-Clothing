@@ -16,8 +16,8 @@ Example for Android emulator:
 
 ```bash
 flutter run \
-  --dart-define=MITOLOGI_API_BASE_URL=http://10.0.2.2:8000 \
-  --dart-define=MITOLOGI_STORAGE_BASE_URL=http://10.0.2.2:8000 \
+  --dart-define=MITOLOGI_API_BASE_URL=http://10.0.2.2:8011 \
+  --dart-define=MITOLOGI_STORAGE_BASE_URL=http://10.0.2.2:8011 \
   --dart-define=MITOLOGI_MIDTRANS_CLIENT_KEY=your-midtrans-client-key
 ```
 
@@ -25,8 +25,8 @@ Example for iOS simulator / macOS / Windows local dev:
 
 ```bash
 flutter run \
-  --dart-define=MITOLOGI_API_BASE_URL=http://127.0.0.1:8000 \
-  --dart-define=MITOLOGI_STORAGE_BASE_URL=http://127.0.0.1:8000 \
+  --dart-define=MITOLOGI_API_BASE_URL=http://127.0.0.1:8011 \
+  --dart-define=MITOLOGI_STORAGE_BASE_URL=http://127.0.0.1:8011 \
   --dart-define=MITOLOGI_MIDTRANS_CLIENT_KEY=your-midtrans-client-key
 ```
 
@@ -34,8 +34,8 @@ Example for physical device on LAN:
 
 ```bash
 flutter run \
-  --dart-define=MITOLOGI_API_BASE_URL=http://YOUR-LAN-IP:8000 \
-  --dart-define=MITOLOGI_STORAGE_BASE_URL=http://YOUR-LAN-IP:8000 \
+  --dart-define=MITOLOGI_API_BASE_URL=http://YOUR-LAN-IP:8011 \
+  --dart-define=MITOLOGI_STORAGE_BASE_URL=http://YOUR-LAN-IP:8011 \
   --dart-define=MITOLOGI_MIDTRANS_CLIENT_KEY=your-midtrans-client-key
 ```
 

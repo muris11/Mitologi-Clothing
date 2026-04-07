@@ -14,8 +14,8 @@ Frontend Next.js untuk Mitologi Clothing, platform e-commerce clothing brand.
 
 Frontend ini terintegrasi dengan:
 
-- **Laravel Backend API** (port 8000) - Products, orders, users, cart, checkout
-- **Python Recommendation Service** (port 8001) - ML-based product recommendations
+- **Laravel Backend API** (port 8011) - Products, orders, users, cart, checkout
+- **Python Recommendation Service** (port 5011) - ML-based product recommendations
 - **Midtrans** - Payment gateway
 
 ## Running Locally
@@ -44,10 +44,10 @@ cp .env.example .env
 ```env
 COMPANY_NAME="Mitologi Clothing"
 SITE_NAME="Mitologi"
-NEXT_PUBLIC_API_URL="http://localhost:8000/api"
+NEXT_PUBLIC_API_URL="http://localhost:8011/api"
 NEXT_PUBLIC_MIDTRANS_CLIENT_KEY="your-client-key"
 NEXT_PUBLIC_MIDTRANS_SNAP_URL="https://app.sandbox.midtrans.com/snap/snap.js"
-NEXT_PUBLIC_AI_SERVICE_URL="http://localhost:8001"
+NEXT_PUBLIC_AI_SERVICE_URL="http://localhost:5011"
 ```
 
 4. Start development server:
@@ -56,7 +56,7 @@ NEXT_PUBLIC_AI_SERVICE_URL="http://localhost:8001"
 pnpm dev
 ```
 
-App akan berjalan di [http://localhost:3000](http://localhost:3000/).
+App akan berjalan di [http://localhost:3011](http://localhost:3011/).
 
 ## Development Commands
 

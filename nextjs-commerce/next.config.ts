@@ -1,7 +1,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const defaultApiUrl = "http://localhost:8000/api";
+const defaultApiUrl = "http://localhost:8011/api";
 const publicApiUrl = process.env.NEXT_PUBLIC_API_URL || defaultApiUrl;
 const internalApiUrl =
   process.env.INTERNAL_API_URL || publicApiUrl || defaultApiUrl;
