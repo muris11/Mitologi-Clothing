@@ -3,7 +3,7 @@ import '../models/collection.dart';
 import '../models/product.dart';
 import '../services/collection_service.dart';
 
-class CollectionProvider with ChangeNotifier {
+class CollectionProvider extends ChangeNotifier {
   final CollectionService _service = CollectionService();
 
   List<Collection> _collections = [];

@@ -6,7 +6,7 @@ import '../models/material.dart' as material_model;
 import '../models/order_step.dart';
 import '../services/content_service.dart';
 
-class ContentProvider with ChangeNotifier {
+class ContentProvider extends ChangeNotifier {
   final ContentService _service = ContentService();
 
   // Landing Page

@@ -13,7 +13,7 @@ class ChatMessage {
   });
 }
 
-class ChatbotProvider with ChangeNotifier {
+class ChatbotProvider extends ChangeNotifier {
   final ChatbotService _service = ChatbotService();
 
   final List<ChatMessage> _messages = [];

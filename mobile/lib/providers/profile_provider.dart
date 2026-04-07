@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import '../models/user.dart';
 import '../services/profile_service.dart';
 
-class ProfileProvider with ChangeNotifier {
+class ProfileProvider extends ChangeNotifier {
   final ProfileService _profileService = ProfileService();
 
   User? _user;
