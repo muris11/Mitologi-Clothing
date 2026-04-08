@@ -49,7 +49,7 @@ class MitologiPageShell extends StatelessWidget {
                 eyebrow: eyebrow,
                 action: action,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppTheme.contentGap),
               MitologiSurfaceCard(child: child),
             ],
           ),

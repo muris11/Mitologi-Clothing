@@ -26,8 +26,10 @@ class MitologiSurfaceCard extends StatelessWidget {
       margin: margin,
       padding: padding,
       decoration: BoxDecoration(
-        color: backgroundColor ?? AppTheme.surfaceContainerLowest,
-        borderRadius: radius ?? AppTheme.radius19,
+        color: backgroundColor ?? AppTheme.sectionBackground,
+        borderRadius: radius ?? AppTheme.radius24,
+        border: Border.all(color: AppTheme.outlineLight, width: 1),
+        boxShadow: AppTheme.shadowSoft,
       ),
       child: child,
     );

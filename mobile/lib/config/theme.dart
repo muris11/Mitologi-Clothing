@@ -42,6 +42,22 @@ class AppTheme {
   static const Color secondary = accent;
 
   // ===========================================================================
+  // SEMANTIC ALIASES - For design consistency across screens
+  // ===========================================================================
+
+  /// Page-level background (cream for premium feel)
+  static const Color pageBackground = cream;
+
+  /// Section/card surface background
+  static const Color sectionBackground = surfaceContainerLowest;
+
+  /// Muted/subtle section background
+  static const Color sectionMuted = muted;
+
+  /// Standard content gap/spacing for page sections
+  static const double contentGap = 24;
+
+  // ===========================================================================
   // BACKGROUND COLORS
   // ===========================================================================
 

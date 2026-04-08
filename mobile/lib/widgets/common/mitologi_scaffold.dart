@@ -61,7 +61,7 @@ class MitologiScaffold extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppTheme.surface,
+      backgroundColor: AppTheme.pageBackground,
       appBar: MitologiTopBar(
         title: title,
         subtitle: subtitle,
@@ -70,16 +70,7 @@ class MitologiScaffold extends StatelessWidget {
         showLogo: showLogo,
         showNotification: showNotification,
       ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [AppTheme.surface, AppTheme.surfaceContainerLow],
-          ),
-        ),
-        child: content,
-      ),
+      body: content,
       bottomNavigationBar: bottomNavigationBar,
       bottomSheet: bottomSheet,
       floatingActionButton: floatingActionButton,
