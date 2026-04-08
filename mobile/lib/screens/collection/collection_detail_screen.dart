@@ -39,7 +39,7 @@ class _CollectionDetailScreenState extends State<CollectionDetailScreen> {
   }
 
   void _showSortSheet() {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),

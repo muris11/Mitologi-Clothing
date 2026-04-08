@@ -265,7 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHeroSlider(List slides) {
+  Widget _buildHeroSlider(List<dynamic> slides) {
     final heroHeight = ResponsiveHelper.heroHeight(context);
 
     return Stack(
@@ -876,7 +876,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildMaterialsSection(List materials) {
+  Widget _buildMaterialsSection(List<dynamic> materials) {
     final horizontalPadding = ResponsiveHelper.horizontalPadding(context);
 
     return Column(
@@ -942,7 +942,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildTestimonialsSection(List testimonials) {
+  Widget _buildTestimonialsSection(List<dynamic> testimonials) {
     final horizontalPadding = ResponsiveHelper.horizontalPadding(context);
 
     return Container(

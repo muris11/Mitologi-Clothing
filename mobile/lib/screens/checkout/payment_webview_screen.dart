@@ -114,7 +114,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
           icon: const Icon(Icons.close),
           onPressed: () {
             // Confirmation dialog before exiting payment
-            showDialog(
+            showDialog<bool>(
               context: context,
               builder: (context) => AlertDialog(
                 title: const Text('Batalkan Pembayaran?'),

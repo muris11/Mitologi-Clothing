@@ -135,24 +135,19 @@ class _CartScreenState extends State<CartScreen> {
       item: item,
       onRemove: () {
         HapticFeedback.lightImpact();
-        if (item.id != null) {
-          _confirmRemove(context, provider, item.id!);
-        }
+        _confirmRemove(context, provider, item.id);
       },
       onDecrease: () {
         HapticFeedback.selectionClick();
-        if (item.id == null) return;
         if (item.quantity > 1) {
-          provider.updateQuantity(item.id!, item.quantity - 1);
+          provider.updateQuantity(item.id, item.quantity - 1);
         } else {
-          _confirmRemove(context, provider, item.id!);
+          _confirmRemove(context, provider, item.id);
         }
       },
       onIncrease: () {
         HapticFeedback.selectionClick();
-        if (item.id != null) {
-          provider.updateQuantity(item.id!, item.quantity + 1);
-        }
+        provider.updateQuantity(item.id, item.quantity + 1);
       },
     );
   }
@@ -162,7 +157,7 @@ class _CartScreenState extends State<CartScreen> {
     CartProvider provider,
     String itemId,
   ) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text(

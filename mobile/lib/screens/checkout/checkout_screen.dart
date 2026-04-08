@@ -194,7 +194,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   InputDecoration _inputDecoration(String label) {
     return InputDecoration(
       labelText: label,
-      labelStyle: const TextStyle(color: AppTheme.onSurfaceVariant, fontSize: 14),
+      labelStyle: const TextStyle(
+        color: AppTheme.onSurfaceVariant,
+        fontSize: 14,
+      ),
       filled: true,
       fillColor: AppTheme.surfaceContainerLow,
       border: OutlineInputBorder(
@@ -314,7 +317,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Subtotal', style: TextStyle(color: AppTheme.onSurfaceVariant)),
+            const Text(
+              'Subtotal',
+              style: TextStyle(color: AppTheme.onSurfaceVariant),
+            ),
             Text(
               PriceFormatter.formatIDR(subtotal),
               style: const TextStyle(
@@ -445,7 +451,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       return;
     }
 
-    showDialog(
+    showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (_) => const Center(

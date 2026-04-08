@@ -65,7 +65,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   Future<void> _payOrder() async {
     if (_order == null) return;
 
-    showDialog(
+    showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (_) => const Center(
@@ -100,7 +100,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   void _showRefundDialog() {
     final reasonController = TextEditingController();
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Ajukan Pengembalian'),
@@ -124,7 +124,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
               Navigator.pop(context);
 
-              showDialog(
+              showDialog<void>(
                 context: context,
                 barrierDismissible: false,
                 builder: (_) => const Center(

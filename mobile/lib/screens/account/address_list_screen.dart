@@ -53,9 +53,9 @@ class _AddressListScreenState extends State<AddressListScreen> {
   }
 
   void _navigateToAddAddress() async {
-    final result = await Navigator.push(
+    final result = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(builder: (context) => const AddressFormScreen()),
+      MaterialPageRoute<bool>(builder: (context) => const AddressFormScreen()),
     );
 
     if (result == true) {
@@ -64,9 +64,9 @@ class _AddressListScreenState extends State<AddressListScreen> {
   }
 
   void _navigateToEditAddress(Address address) async {
-    final result = await Navigator.push(
+    final result = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<bool>(
         builder: (context) => AddressFormScreen(address: address),
       ),
     );
@@ -355,7 +355,10 @@ class _AddressListScreenState extends State<AddressListScreen> {
                   const SizedBox(height: 4),
                   Text(
                     address.phone,
-                    style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppTheme.onSurfaceVariant,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   // Address details with icon

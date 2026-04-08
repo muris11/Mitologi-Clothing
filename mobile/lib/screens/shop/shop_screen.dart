@@ -408,7 +408,7 @@ class _ShopScreenState extends State<ShopScreen> {
   void _showSortBottomSheet() {
     final provider = context.read<ProductProvider>();
 
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
