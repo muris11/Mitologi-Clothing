@@ -339,7 +339,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               'Gagal memuat gambar',
                               style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(color: AppTheme.slate500),
+                                  ?.copyWith(color: AppTheme.onSurfaceVariant),
                             ),
                           ],
                         ),
@@ -474,7 +474,7 @@ class _HomeScreenState extends State<HomeScreen> {
         icon: Icons.info_outline,
         label: 'Tentang Kami',
         onTap: () => context.push('/shop/tentang-kami'),
-        color: AppTheme.slate500,
+        color: AppTheme.onSurfaceVariant,
       ),
     ];
 
@@ -656,13 +656,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Column(
         children: [
-          Icon(Icons.inventory_2_outlined, size: 48, color: AppTheme.slate300),
+          Icon(Icons.inventory_2_outlined, size: 48, color: AppTheme.muted),
           const SizedBox(height: 16),
           Text(
             'Belum ada produk',
             style: Theme.of(
               context,
-            ).textTheme.titleMedium?.copyWith(color: AppTheme.slate500),
+            ).textTheme.titleMedium?.copyWith(color: AppTheme.onSurfaceVariant),
           ),
         ],
       ),
