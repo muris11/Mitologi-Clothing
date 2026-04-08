@@ -102,7 +102,7 @@ class FounderStorySection extends StatelessWidget {
                                         fit: BoxFit.cover,
                                         placeholder: (context, url) =>
                                             Container(
-                                              color: AppTheme.slate200,
+                                              color: AppTheme.muted,
                                               child: const Center(
                                                 child:
                                                     CircularProgressIndicator(
@@ -113,7 +113,7 @@ class FounderStorySection extends StatelessWidget {
                                             ),
                                         errorWidget: (context, url, error) =>
                                             Container(
-                                              color: AppTheme.slate200,
+                                              color: AppTheme.muted,
                                               child: Center(
                                                 child: Text(
                                                   founderName
@@ -131,7 +131,7 @@ class FounderStorySection extends StatelessWidget {
                                             ),
                                       )
                                     : Container(
-                                        color: AppTheme.slate200,
+                                        color: AppTheme.muted,
                                         child: Center(
                                           child: Text(
                                             founderName
@@ -265,7 +265,7 @@ class FounderStorySection extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 60,
                                     fontWeight: FontWeight.w300,
-                                    color: AppTheme.slate200,
+                                    color: AppTheme.muted,
                                     height: 0.8,
                                   ),
                                 ),
@@ -305,7 +305,7 @@ class FounderStorySection extends StatelessWidget {
                             decoration: BoxDecoration(
                               border: Border(
                                 top: BorderSide(
-                                  color: AppTheme.slate200.withValues(
+                                  color: AppTheme.muted.withValues(
                                     alpha: 0.5,
                                   ),
                                 ),

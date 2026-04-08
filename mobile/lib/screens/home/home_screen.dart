@@ -294,7 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fit: BoxFit.cover,
                       alignment: Alignment.topCenter,
                       placeholder: (context, url) => Container(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         child: const Center(
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
@@ -303,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       errorWidget: (context, url, error) => Container(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

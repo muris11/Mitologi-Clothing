@@ -81,7 +81,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
               return Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppTheme.slate200),
+                  border: Border.all(color: AppTheme.muted),
                 ),
                 clipBehavior: Clip.antiAlias,
                 child: Stack(

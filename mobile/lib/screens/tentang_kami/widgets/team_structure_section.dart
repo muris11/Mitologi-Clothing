@@ -79,7 +79,7 @@ class TeamStructureSection extends StatelessWidget {
                   errorWidget: (context, url, error) => Container(
                     width: shouldShowLarge ? 140 : 100,
                     height: shouldShowLarge ? 140 : 100,
-                    color: AppTheme.slate50,
+                    color: AppTheme.sectionBackground,
                     child: Center(
                       child: Text(
                         initials,
@@ -95,7 +95,7 @@ class TeamStructureSection extends StatelessWidget {
               : Container(
                   width: shouldShowLarge ? 140 : 100,
                   height: shouldShowLarge ? 140 : 100,
-                  color: AppTheme.slate50,
+                  color: AppTheme.sectionBackground,
                   child: Center(
                     child: Text(
                       initials,

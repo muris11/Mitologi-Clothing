@@ -28,14 +28,14 @@ class ProductGallery extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          color: AppTheme.slate50,
+          color: AppTheme.sectionBackground,
           height: isWide ? MediaQuery.of(context).size.height : double.infinity,
           width: double.infinity,
           child: images.isEmpty
               ? const Icon(
                   Icons.inventory_2_outlined,
                   size: 64,
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                 )
               : PageView.builder(
                   controller: pageController,
@@ -46,7 +46,7 @@ class ProductGallery extends StatelessWidget {
                       imageUrl: StorageUrl.format(images[index].url),
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Container(
-                        color: AppTheme.slate50,
+                        color: AppTheme.sectionBackground,
                         child: const Center(
                           child: SizedBox(
                             width: 24,
@@ -60,7 +60,7 @@ class ProductGallery extends StatelessWidget {
                       ),
                       errorWidget: (context, url, error) => const Icon(
                         Icons.error_outline,
-                        color: AppTheme.slate300,
+                        color: AppTheme.muted,
                       ),
                     );
 

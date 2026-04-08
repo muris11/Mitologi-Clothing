@@ -61,7 +61,7 @@ class AboutHistorySection extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: AppTheme.slate200),
+                    border: Border.all(color: AppTheme.muted),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withValues(alpha: 0.03),
@@ -120,7 +120,7 @@ class AboutHistorySection extends StatelessWidget {
                               offset: const Offset(8, 8),
                             ),
                             BoxShadow(
-                              color: AppTheme.slate200.withValues(alpha: 0.5),
+                              color: AppTheme.muted.withValues(alpha: 0.5),
                               blurRadius: 0,
                               offset: const Offset(-8, -8),
                             ),
@@ -281,7 +281,7 @@ class AboutHistorySection extends StatelessWidget {
                 color: Colors.white,
                 border: Border(
                   top: BorderSide(
-                    color: AppTheme.slate200.withValues(alpha: 0.5),
+                    color: AppTheme.muted.withValues(alpha: 0.5),
                   ),
                 ),
               ),
@@ -358,7 +358,7 @@ class AboutHistorySection extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppTheme.slate200),
+                          border: Border.all(color: AppTheme.muted),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withValues(alpha: 0.03),
@@ -396,7 +396,7 @@ class AboutHistorySection extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w900,
-                                    color: AppTheme.slate200,
+                                    color: AppTheme.muted,
                                   ),
                                 ),
                               ],

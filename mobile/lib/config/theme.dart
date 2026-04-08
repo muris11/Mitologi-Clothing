@@ -680,11 +680,11 @@ class AppTheme {
 
       // Chip Theme
       chipTheme: ChipThemeData(
-        backgroundColor: slate100,
+        backgroundColor: muted,
         selectedColor: primary,
-        disabledColor: slate100,
+        disabledColor: muted,
         labelStyle: jakartaTextTheme.labelMedium?.copyWith(
-          color: slate700,
+          color: onSurface,
           fontWeight: FontWeight.w600,
         ),
         secondaryLabelStyle: jakartaTextTheme.labelMedium?.copyWith(
@@ -809,7 +809,7 @@ class AppTheme {
 
       // Tooltip Theme
       tooltipTheme: TooltipThemeData(
-        decoration: BoxDecoration(color: slate800, borderRadius: radius8),
+        decoration: BoxDecoration(color: onSurface, borderRadius: radius8),
         textStyle: jakartaTextTheme.bodySmall?.copyWith(color: onPrimary),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         margin: const EdgeInsets.all(8),

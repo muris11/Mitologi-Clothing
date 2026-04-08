@@ -310,7 +310,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             color: AppTheme.onSurface,
           ),
         ),
-        const Divider(height: 32, color: AppTheme.slate100),
+        const Divider(height: 32, color: AppTheme.muted),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -360,7 +360,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 8),
-          child: Divider(color: AppTheme.slate100),
+          child: Divider(color: AppTheme.muted),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -40,7 +40,7 @@ class AuthStyles {
   static Color get subtitleColor => AppTheme.onSurfaceVariant;
   static Color get labelColor => AppTheme.onSurfaceVariant;
   static Color get inputBgColor => AppTheme.cream;
-  static Color get inputBorderColor => AppTheme.slate200;
+  static Color get inputBorderColor => AppTheme.muted;
   static Color get inputFocusBorderColor => AppTheme.primary;
 
   // Text Styles

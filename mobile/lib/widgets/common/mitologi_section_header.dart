@@ -43,7 +43,7 @@ class MitologiSectionHeader extends StatelessWidget {
                 Text(
                   subtitle!,
                   style: textTheme.bodyMedium?.copyWith(
-                    color: AppTheme.slate500,
+                    color: AppTheme.onSurfaceVariant,
                     height: 1.45,
                   ),
                 ),

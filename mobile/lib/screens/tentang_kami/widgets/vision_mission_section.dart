@@ -61,7 +61,7 @@ class VisionMissionSection extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppTheme.slate200),
+                      border: Border.all(color: AppTheme.muted),
                     ),
                     child: const Text(
                       'VISI KAMI',
@@ -182,7 +182,7 @@ class VisionMissionSection extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: AppTheme.slate200),
+                            border: Border.all(color: AppTheme.muted),
                           ),
                           child: missions.isEmpty
                               ? Text(
@@ -296,7 +296,7 @@ class VisionMissionSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppTheme.slate200),
+                    border: Border.all(color: AppTheme.muted),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
