@@ -46,12 +46,9 @@ class MitologiTopBar extends StatelessWidget implements PreferredSizeWidget {
               icon: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppTheme.cream,
-                  borderRadius: AppTheme.radius11,
-                  border: Border.all(
-                    color: AppTheme.slate200.withValues(alpha: 0.5),
-                    width: 1,
-                  ),
+                  color: AppTheme.pageBackground,
+                  borderRadius: AppTheme.radius12,
+                  border: Border.all(color: AppTheme.outline, width: 1),
                 ),
                 child: Icon(
                   Icons.notifications_none_outlined,
@@ -110,19 +107,7 @@ class MitologiTopBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
-      flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.white.withValues(alpha: 0.98),
-              Colors.white.withValues(alpha: 0.95),
-            ],
-          ),
-        ),
-      ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppTheme.pageBackground,
       foregroundColor: AppTheme.onSurface,
       surfaceTintColor: Colors.transparent,
       shadowColor: AppTheme.primary.withValues(alpha: 0.04),
@@ -132,23 +117,13 @@ class MitologiTopBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buildLogo() {
     return Container(
-      width: 44,
-      height: 44,
-      padding: const EdgeInsets.all(8),
+      width: 40,
+      height: 40,
+      padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
-        color: AppTheme.cream,
-        borderRadius: AppTheme.radius15,
-        border: Border.all(
-          color: AppTheme.accent.withValues(alpha: 0.3),
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppTheme.accent.withValues(alpha: 0.1),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        color: AppTheme.pageBackground,
+        borderRadius: AppTheme.radius12,
+        border: Border.all(color: AppTheme.outline, width: 1),
       ),
       child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
     );
