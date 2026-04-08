@@ -22,8 +22,10 @@ class AccountHeaderCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 28, top: 40),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(28),
+        color: AppTheme.sectionBackground,
+        borderRadius: AppTheme.radius24,
+        border: Border.all(color: AppTheme.outlineLight, width: 1),
+        boxShadow: AppTheme.shadowSoft,
       ),
       child: Column(
         children: [

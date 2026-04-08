@@ -44,74 +44,63 @@ class AccountQuickActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Card(
-          elevation: 0,
-          color: AppTheme.surfaceContainerLowest,
-          shape: RoundedRectangleBorder(borderRadius: AppTheme.radius19),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Pesanan Saya',
+        // Orders Card
+        _buildCard(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Pesanan Saya',
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                  ),
+                  TextButton(
+                    onPressed: onOrderHistory,
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: const Text(
+                      'Lihat Riwayat',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        color: AppTheme.primary,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                    TextButton(
-                      onPressed: onOrderHistory,
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        minimumSize: Size.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      child: const Text(
-                        'Lihat Riwayat',
-                        style: TextStyle(
-                          color: AppTheme.primary,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(height: 28),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _StatusItem(
-                      Icons.payment_outlined,
-                      'Belum Bayar',
-                      count: pendingCount,
-                    ),
-                    _StatusItem(
-                      Icons.inventory_2_outlined,
-                      'Dikemas',
-                      count: packedCount,
-                    ),
-                    _StatusItem(
-                      Icons.local_shipping_outlined,
-                      'Dikirim',
-                      count: shippedCount,
-                    ),
-                    const _StatusItem(Icons.chat_bubble_outline, 'Bantuan'),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              const Divider(height: 28),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _StatusItem(
+                    Icons.payment_outlined,
+                    'Belum Bayar',
+                    count: pendingCount,
+                  ),
+                  _StatusItem(
+                    Icons.inventory_2_outlined,
+                    'Dikemas',
+                    count: packedCount,
+                  ),
+                  _StatusItem(
+                    Icons.local_shipping_outlined,
+                    'Dikirim',
+                    count: shippedCount,
+                  ),
+                  const _StatusItem(Icons.chat_bubble_outline, 'Bantuan'),
+                ],
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 16),
-        Container(
-          decoration: BoxDecoration(
-            color: AppTheme.surfaceContainerLowest,
-            borderRadius: AppTheme.radius19,
-          ),
+        // Account Settings Card
+        _buildCard(
           child: Column(
             children: [
               _SettingsTile(Icons.person_outline, 'Edit Profil', onEditProfile),
@@ -131,26 +120,24 @@ class AccountQuickActions extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
+        // Info Section Label
         const Padding(
-          padding: EdgeInsets.only(left: 8, bottom: 8),
+          padding: EdgeInsets.only(left: 4, bottom: 12),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'Info & Kebijakan',
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
                 fontSize: 14,
-                color: AppTheme.slate500,
+                color: AppTheme.onSurfaceVariant,
               ),
             ),
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-            color: AppTheme.surfaceContainerLowest,
-            borderRadius: AppTheme.radius19,
-          ),
+        // Info & Policy Card
+        _buildCard(
           child: Column(
             children: [
               _SettingsTile(Icons.help_outline, 'FAQ', onFaq),
@@ -179,6 +166,19 @@ class AccountQuickActions extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildCard({required Widget child}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppTheme.sectionBackground,
+        borderRadius: AppTheme.radius24,
+        border: Border.all(color: AppTheme.outlineLight, width: 1),
+        boxShadow: AppTheme.shadowSoft,
+      ),
+      padding: const EdgeInsets.all(20),
+      child: child,
     );
   }
 }
@@ -246,24 +246,25 @@ class _SettingsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: EdgeInsets.zero,
       leading: Container(
         width: 36,
         height: 36,
         decoration: BoxDecoration(
-          color: AppTheme.slate50,
-          borderRadius: BorderRadius.circular(12),
+          color: AppTheme.muted,
+          borderRadius: AppTheme.radius12,
         ),
-        child: Icon(icon, color: AppTheme.slate500, size: 18),
+        child: Icon(icon, color: AppTheme.onSurfaceVariant, size: 18),
       ),
       title: Text(
         label,
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: AppTheme.slate800,
+          color: AppTheme.onSurface,
         ),
       ),
-      trailing: const Icon(Icons.chevron_right, color: AppTheme.slate200),
+      trailing: const Icon(Icons.chevron_right, color: AppTheme.outline),
       onTap: onTap,
     );
   }
