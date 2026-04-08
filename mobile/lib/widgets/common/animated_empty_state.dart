@@ -60,33 +60,27 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
                 return Transform.translate(
                   offset: Offset(0, _floatAnimation.value),
                   child: Container(
-                    padding: const EdgeInsets.all(32),
+                    padding: const EdgeInsets.all(28),
                     decoration: BoxDecoration(
-                      color: AppTheme.slate50,
+                      color: AppTheme.sectionBackground,
                       shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.primary.withValues(alpha: 0.08),
-                          blurRadius: 24,
-                          spreadRadius: 6,
-                        ),
-                      ],
+                      border: Border.all(
+                        color: AppTheme.outlineLight,
+                        width: 1,
+                      ),
+                      boxShadow: AppTheme.shadowSoft,
                     ),
-                    child: Icon(
-                      widget.icon,
-                      size: 80,
-                      color: AppTheme.primary.withValues(alpha: 0.8),
-                    ),
+                    child: Icon(widget.icon, size: 64, color: AppTheme.primary),
                   ),
                 );
               },
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 40),
             Text(
               widget.title,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: AppTheme.primary,
+                color: AppTheme.onSurface,
                 letterSpacing: -0.5,
               ),
             ),
@@ -94,9 +88,9 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
             Text(
               widget.subtitle,
               textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppTheme.slate500),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppTheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 32),
             SizedBox(
@@ -108,7 +102,7 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 18),
                   shape: RoundedRectangleBorder(
-                    borderRadius: AppTheme.radius11,
+                    borderRadius: AppTheme.radius12,
                   ),
                   elevation: 0,
                 ),

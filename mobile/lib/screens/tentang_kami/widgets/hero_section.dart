@@ -17,18 +17,21 @@ class HeroSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
-      decoration: const BoxDecoration(color: AppTheme.primary),
+      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
+      decoration: BoxDecoration(
+        color: AppTheme.sectionBackground,
+        border: Border(
+          bottom: BorderSide(color: AppTheme.outlineLight, width: 1),
+        ),
+      ),
       child: Column(
         children: [
           if (title != null && title!.isNotEmpty)
             Text(
               title!,
-              style: const TextStyle(
-                fontSize: 26,
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w800,
-                color: Colors.white,
-                letterSpacing: -0.5,
+                color: AppTheme.onSurface,
               ),
               textAlign: TextAlign.center,
             ),
@@ -40,9 +43,8 @@ class HeroSection extends StatelessWidget {
           if (subtitle != null && subtitle!.isNotEmpty)
             Text(
               subtitle!,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.white.withValues(alpha: 0.7),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppTheme.onSurfaceVariant,
                 height: 1.5,
               ),
               textAlign: TextAlign.center,

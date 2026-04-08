@@ -119,20 +119,15 @@ class AuthStyles {
   }
 
   static BoxDecoration get cardDecoration => BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(cardRadius),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black.withValues(alpha: 0.06),
-        blurRadius: 40,
-        offset: const Offset(0, 4),
-      ),
-    ],
+    color: AppTheme.sectionBackground,
+    borderRadius: AppTheme.radius24,
+    border: Border.all(color: AppTheme.outlineLight, width: 1),
+    boxShadow: AppTheme.shadowSoft,
   );
 
   static BoxDecoration get logoDecoration => BoxDecoration(
-    color: AppTheme.cream,
+    color: AppTheme.pageBackground,
     borderRadius: BorderRadius.circular(AuthStyles.logoRadius),
-    border: Border.all(color: AppTheme.accent.withValues(alpha: 0.3), width: 1),
+    border: Border.all(color: AppTheme.outline, width: 1),
   );
 }
