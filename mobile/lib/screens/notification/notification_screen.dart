@@ -56,14 +56,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
               padding: EdgeInsets.all(
                 ResponsiveHelper.horizontalPadding(context),
               ),
-              decoration: const BoxDecoration(
-                color: AppTheme.slate50,
+              decoration: BoxDecoration(
+                color: AppTheme.sectionBackground,
                 shape: BoxShape.circle,
+                border: Border.all(color: AppTheme.outlineLight, width: 1),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.notifications_none,
                 size: 64,
-                color: AppTheme.slate300,
+                color: AppTheme.onSurfaceMuted,
               ),
             ),
             const SizedBox(height: 24),
@@ -81,7 +82,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: AppTheme.slate500,
+                color: AppTheme.onSurfaceVariant,
                 height: 1.5,
               ),
             ),
@@ -119,17 +120,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.notifications_none,
-                  size: 64,
-                  color: AppTheme.slate200,
-                ),
+                Icon(Icons.notifications_none, size: 64, color: AppTheme.muted),
                 const SizedBox(height: 16),
                 const Text(
                   'Belum ada notifikasi',
                   style: TextStyle(
                     fontSize: 16,
-                    color: AppTheme.slate400,
+                    color: AppTheme.onSurfaceMuted,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -148,7 +145,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: ResponsiveHelper.horizontalPadding(context),
             ),
-            child: Divider(color: AppTheme.slate100, height: 1),
+            child: Divider(color: AppTheme.muted, height: 1),
           ),
           itemBuilder: (context, index) {
             final item = notifications[index];
@@ -184,19 +181,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     const SizedBox(height: 4),
                     Text(
                       item.body,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
-                        color: AppTheme.slate600,
+                        color: AppTheme.onSurfaceVariant,
                         height: 1.4,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       item.time,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
-                        color: AppTheme.slate400,
+                        color: AppTheme.onSurfaceMuted,
                       ),
                     ),
                   ],
@@ -216,8 +213,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
       String title = '';
       String body = '';
       IconData icon = Icons.notifications_none;
-      Color iconColor = AppTheme.slate400;
-      Color bgColor = AppTheme.slate50;
+      Color iconColor = AppTheme.onSurfaceMuted;
+      Color bgColor = AppTheme.muted;
 
       final status = order.status.toLowerCase();
 

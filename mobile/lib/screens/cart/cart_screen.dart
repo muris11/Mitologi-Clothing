@@ -58,7 +58,7 @@ class _CartScreenState extends State<CartScreen> {
                     provider.error!,
                     style: const TextStyle(
                       fontSize: 16,
-                      color: AppTheme.slate800,
+                      color: AppTheme.onSurface,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -180,7 +180,7 @@ class _CartScreenState extends State<CartScreen> {
             child: const Text(
               'Batal',
               style: TextStyle(
-                color: AppTheme.slate500,
+                color: AppTheme.onSurfaceVariant,
                 fontWeight: FontWeight.w600,
               ),
             ),

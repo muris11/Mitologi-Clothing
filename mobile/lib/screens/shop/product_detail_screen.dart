@@ -872,7 +872,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 onPressed: isAvailable ? _addToCart : null,
                 backgroundColor: isAvailable
                     ? AppTheme.primary
-                    : AppTheme.slate300,
+                    : AppTheme.outline,
                 foregroundColor: AppTheme.onPrimary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Row(

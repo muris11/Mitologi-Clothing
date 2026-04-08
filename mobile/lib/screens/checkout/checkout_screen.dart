@@ -57,12 +57,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   const Icon(
                     Icons.shopping_bag_outlined,
                     size: 64,
-                    color: AppTheme.slate300,
+                    color: AppTheme.muted,
                   ),
                   const SizedBox(height: 16),
                   const Text(
                     'Keranjang kosong',
-                    style: TextStyle(color: AppTheme.slate500),
+                    style: TextStyle(color: AppTheme.onSurfaceVariant),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
@@ -194,7 +194,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   InputDecoration _inputDecoration(String label) {
     return InputDecoration(
       labelText: label,
-      labelStyle: const TextStyle(color: AppTheme.slate500, fontSize: 14),
+      labelStyle: const TextStyle(color: AppTheme.onSurfaceVariant, fontSize: 14),
       filled: true,
       fillColor: AppTheme.surfaceContainerLow,
       border: OutlineInputBorder(
@@ -307,19 +307,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           '${provider.itemCount} Produk Terpilih',
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            color: AppTheme.slate800,
+            color: AppTheme.onSurface,
           ),
         ),
         const Divider(height: 32, color: AppTheme.slate100),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Subtotal', style: TextStyle(color: AppTheme.slate500)),
+            const Text('Subtotal', style: TextStyle(color: AppTheme.onSurfaceVariant)),
             Text(
               PriceFormatter.formatIDR(subtotal),
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
-                color: AppTheme.slate800,
+                color: AppTheme.onSurface,
               ),
             ),
           ],
@@ -330,13 +330,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           children: [
             const Text(
               'Ongkos Kirim',
-              style: TextStyle(color: AppTheme.slate500),
+              style: TextStyle(color: AppTheme.onSurfaceVariant),
             ),
             Text(
               PriceFormatter.formatIDR(shipping),
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
-                color: AppTheme.slate800,
+                color: AppTheme.onSurface,
               ),
             ),
           ],
@@ -347,13 +347,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           children: [
             const Text(
               'Pajak PPN (Termasuk)',
-              style: TextStyle(color: AppTheme.slate500),
+              style: TextStyle(color: AppTheme.onSurfaceVariant),
             ),
             Text(
               PriceFormatter.formatIDR(totalTax),
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
-                color: AppTheme.slate800,
+                color: AppTheme.onSurface,
               ),
             ),
           ],
@@ -413,7 +413,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   'Pembayaran Aman Terverifikasi',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.slate800,
+                    color: AppTheme.onSurface,
                   ),
                 ),
               ),
