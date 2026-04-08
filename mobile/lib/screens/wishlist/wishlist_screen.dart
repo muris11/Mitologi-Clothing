@@ -156,10 +156,18 @@ class _WishlistScreenState extends State<WishlistScreen> {
           children: [
             BlurFade(
               delay: const Duration(milliseconds: 0),
-              child: const Icon(
-                Icons.favorite_border,
-                size: 80,
-                color: AppTheme.slate300,
+              child: Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: AppTheme.sectionBackground,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppTheme.outlineLight, width: 1),
+                ),
+                child: Icon(
+                  Icons.favorite_border,
+                  size: 56,
+                  color: AppTheme.onSurfaceMuted,
+                ),
               ),
             ),
             const SizedBox(height: 24),
@@ -168,8 +176,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
               child: Text(
                 'Belum Login',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.primary,
+                  fontWeight: FontWeight.w700,
+                  color: AppTheme.onSurface,
                 ),
               ),
             ),
@@ -179,9 +187,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
               child: Text(
                 'Silahkan login untuk melihat dan mengelola produk favorit Anda.',
                 textAlign: TextAlign.center,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(color: AppTheme.slate500),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppTheme.onSurfaceVariant,
+                ),
               ),
             ),
             const SizedBox(height: 32),
