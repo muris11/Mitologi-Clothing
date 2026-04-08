@@ -189,7 +189,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 'Silahkan login atau daftar untuk mengakses profil dan pesanan Anda.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppTheme.slate500,
+                  color: AppTheme.onSurfaceVariant,
                   fontSize: 14,
                   height: 1.5,
                 ),

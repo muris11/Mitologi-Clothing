@@ -287,7 +287,7 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
       decoration: InputDecoration(
         labelText: label,
         hintText: hintText,
-        labelStyle: const TextStyle(color: AppTheme.slate500),
+        labelStyle: const TextStyle(color: AppTheme.onSurfaceVariant),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,

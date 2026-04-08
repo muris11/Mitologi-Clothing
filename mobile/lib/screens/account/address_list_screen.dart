@@ -315,7 +315,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                             icon: Icon(
                               Icons.edit_outlined,
                               size: 20,
-                              color: AppTheme.slate500,
+                              color: AppTheme.onSurfaceVariant,
                             ),
                             tooltip: 'Edit',
                             padding: EdgeInsets.zero,
