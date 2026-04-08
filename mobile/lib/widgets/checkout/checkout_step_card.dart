@@ -21,8 +21,10 @@ class CheckoutStepCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(20),
+        color: AppTheme.sectionBackground,
+        borderRadius: AppTheme.radius24,
+        border: Border.all(color: AppTheme.outlineLight, width: 1),
+        boxShadow: AppTheme.shadowSoft,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -20,15 +20,10 @@ class CartSummaryPanel extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            offset: const Offset(0, -8),
-            blurRadius: 24,
-          ),
-        ],
+        color: AppTheme.sectionBackground,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+        border: Border(top: BorderSide(color: AppTheme.outlineLight, width: 1)),
+        boxShadow: AppTheme.shadowFloating,
       ),
       child: SafeArea(
         child: Row(

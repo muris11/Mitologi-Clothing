@@ -153,9 +153,13 @@ class _OrderListScreenState extends State<OrderListScreen> {
                         ResponsiveHelper.horizontalPadding(context),
                       ),
                       decoration: BoxDecoration(
-                        color: AppTheme.surfaceContainerLowest,
-                        borderRadius: AppTheme.radius16,
-                        border: Border.all(color: AppTheme.outlineLight),
+                        color: AppTheme.sectionBackground,
+                        borderRadius: AppTheme.radius24,
+                        border: Border.all(
+                          color: AppTheme.outlineLight,
+                          width: 1,
+                        ),
+                        boxShadow: AppTheme.shadowSoft,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
