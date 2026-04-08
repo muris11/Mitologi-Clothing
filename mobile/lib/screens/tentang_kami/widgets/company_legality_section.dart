@@ -122,7 +122,7 @@ class CompanyLegalitySection extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: const Color(0xFFF8FAFC), // slate-50
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppTheme.slate100),
+                  border: Border.all(color: AppTheme.muted),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

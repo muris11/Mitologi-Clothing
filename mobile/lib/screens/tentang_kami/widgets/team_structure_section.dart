@@ -35,7 +35,7 @@ class TeamStructureSection extends StatelessWidget {
             border: Border.all(
               color: isRoot
                   ? AppTheme.primary.withValues(alpha: 0.2)
-                  : AppTheme.slate100,
+                  : AppTheme.muted,
               width: 1,
             ),
             boxShadow: isRoot
@@ -64,7 +64,7 @@ class TeamStructureSection extends StatelessWidget {
                   placeholder: (context, url) => Container(
                     width: shouldShowLarge ? 140 : 100,
                     height: shouldShowLarge ? 140 : 100,
-                    color: AppTheme.slate100,
+                    color: AppTheme.muted,
                     child: Center(
                       child: SizedBox(
                         width: 24,
@@ -126,7 +126,7 @@ class TeamStructureSection extends StatelessWidget {
           style: TextStyle(
             fontSize: shouldShowLarge ? 11 : 9,
             fontWeight: FontWeight.w600,
-            color: isRoot ? AppTheme.accent : AppTheme.slate500,
+            color: isRoot ? AppTheme.accent : AppTheme.onSurfaceVariant,
             letterSpacing: 1.5,
           ),
         ),

@@ -172,14 +172,14 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                   const Icon(
                                     Icons.shopping_bag_outlined,
                                     size: 16,
-                                    color: AppTheme.slate500,
+                                    color: AppTheme.onSurfaceVariant,
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
                                     dateStr,
                                     style: const TextStyle(
                                       fontSize: 12,
-                                      color: AppTheme.slate500,
+                                      color: AppTheme.onSurfaceVariant,
                                     ),
                                   ),
                                 ],
@@ -211,12 +211,12 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                 width: 60,
                                 height: 60,
                                 decoration: BoxDecoration(
-                                  color: AppTheme.slate100,
+                                  color: AppTheme.muted,
                                   borderRadius: AppTheme.radius12,
                                 ),
                                 child: const Icon(
                                   Icons.inventory_2_outlined,
-                                  color: AppTheme.slate500,
+                                  color: AppTheme.onSurfaceVariant,
                                 ),
                               ),
                               const SizedBox(width: 16),
@@ -237,7 +237,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                       '$totalItems Produk',
                                       style: const TextStyle(
                                         fontSize: 12,
-                                        color: AppTheme.slate500,
+                                        color: AppTheme.onSurfaceVariant,
                                       ),
                                     ),
                                   ],
@@ -253,7 +253,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                 'Total Belanja',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: AppTheme.slate500,
+                                  color: AppTheme.onSurfaceVariant,
                                 ),
                               ),
                               Text(

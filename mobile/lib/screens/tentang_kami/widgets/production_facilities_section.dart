@@ -50,7 +50,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   height: 1.6,
-                  color: AppTheme.slate500,
+                  color: AppTheme.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -111,7 +111,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                             child: Icon(
                               Icons.image_outlined,
                               size: 32,
-                              color: AppTheme.slate300,
+                              color: AppTheme.muted,
                             ),
                           ),
                         ),

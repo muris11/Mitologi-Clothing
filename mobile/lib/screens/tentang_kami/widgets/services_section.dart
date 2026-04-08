@@ -68,7 +68,7 @@ class ServicesSection extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,
-                            color: AppTheme.slate800,
+                            color: AppTheme.onSurface,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -109,7 +109,7 @@ class ServicesSection extends StatelessWidget {
         placeholder: (context, url) => Container(
           width: 80,
           height: 80,
-          color: AppTheme.slate100,
+          color: AppTheme.muted,
           child: const Center(
             child: SizedBox(
               width: 20,
@@ -124,8 +124,8 @@ class ServicesSection extends StatelessWidget {
         errorWidget: (context, url, error) => Container(
           width: 80,
           height: 80,
-          color: AppTheme.slate100,
-          child: const Icon(Icons.image_outlined, color: AppTheme.slate300),
+          color: AppTheme.muted,
+          child: const Icon(Icons.image_outlined, color: AppTheme.muted),
         ),
       ),
     );

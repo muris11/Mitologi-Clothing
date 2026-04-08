@@ -427,7 +427,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 height: 4,
                 margin: const EdgeInsets.only(bottom: 24),
                 decoration: BoxDecoration(
-                  color: AppTheme.slate300,
+                  color: AppTheme.muted,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),

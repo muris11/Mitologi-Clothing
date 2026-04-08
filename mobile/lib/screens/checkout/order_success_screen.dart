@@ -70,7 +70,7 @@ class OrderSuccessScreen extends StatelessWidget {
                   'Terima kasih telah berbelanja di Mitologi Clothing.\nPesanan Anda sedang kami proses dan akan segera kami kemas untuk pengiriman.',
                   style: TextStyle(
                     fontSize: 15,
-                    color: AppTheme.slate500,
+                    color: AppTheme.onSurfaceVariant,
                     height: 1.6,
                   ),
                   textAlign: TextAlign.center,

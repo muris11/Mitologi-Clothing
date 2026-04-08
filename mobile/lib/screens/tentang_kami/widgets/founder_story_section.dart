@@ -188,7 +188,7 @@ class FounderStorySection extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w700,
-                                          color: AppTheme.slate500,
+                                          color: AppTheme.onSurfaceVariant,
                                           letterSpacing: 1.5,
                                         ),
                                       ),

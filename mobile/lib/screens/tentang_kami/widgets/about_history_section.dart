@@ -134,7 +134,7 @@ class AboutHistorySection extends StatelessWidget {
                             child: _imageUrl.isEmpty
                                 ? Container(
                                     height: 200,
-                                    color: AppTheme.slate100,
+                                    color: AppTheme.muted,
                                     child: Image.asset(
                                       'assets/images/logo.png',
                                       fit: BoxFit.contain,
@@ -147,7 +147,7 @@ class AboutHistorySection extends StatelessWidget {
                                     fit: BoxFit.contain,
                                     placeholder: (context, url) => Container(
                                       height: 200,
-                                      color: AppTheme.slate100,
+                                      color: AppTheme.muted,
                                       child: const Center(
                                         child: CircularProgressIndicator(
                                           strokeWidth: 2,
@@ -158,7 +158,7 @@ class AboutHistorySection extends StatelessWidget {
                                     errorWidget: (context, url, error) =>
                                         Container(
                                           height: 200,
-                                          color: AppTheme.slate100,
+                                          color: AppTheme.muted,
                                           child: Image.asset(
                                             'assets/images/logo.png',
                                             fit: BoxFit.contain,
@@ -180,7 +180,7 @@ class AboutHistorySection extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: AppTheme.slate100),
+                              border: Border.all(color: AppTheme.muted),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withValues(alpha: 0.08),
@@ -260,7 +260,7 @@ class AboutHistorySection extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   height: 1.7,
-                                  color: AppTheme.slate500,
+                                  color: AppTheme.onSurfaceVariant,
                                 ),
                                 textAlign: TextAlign.justify,
                               ),
@@ -318,7 +318,7 @@ class AboutHistorySection extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           height: 1.6,
-                          color: AppTheme.slate500,
+                          color: AppTheme.onSurfaceVariant,
                         ),
                       ),
                     ],

@@ -334,7 +334,7 @@ class VisionMissionSection extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 12,
                               height: 1.4,
-                              color: AppTheme.slate500,
+                              color: AppTheme.onSurfaceVariant,
                             ),
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
