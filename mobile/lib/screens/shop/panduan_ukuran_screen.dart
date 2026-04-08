@@ -523,7 +523,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                 children: [
                   Container(
                     padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppTheme.sectionBackground,
                       shape: BoxShape.circle,
                     ),
@@ -552,7 +552,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                   Text(
                     guide['desc']!,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       color: AppTheme.onSurfaceVariant,
                       height: 1.5,
@@ -624,7 +624,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
                       entry.value,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: AppTheme.onSurfaceVariant,
                         height: 1.6,

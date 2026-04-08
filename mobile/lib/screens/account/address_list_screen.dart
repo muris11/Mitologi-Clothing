@@ -82,7 +82,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
       builder: (context) => AlertDialog(
         title: const Text(
           'Hapus Alamat?',
-          style: TextStyle(fontWeight: FontWeight.w700),
+          style: const TextStyle(fontWeight: FontWeight.w700),
         ),
         content: const Text('Apakah Anda yakin ingin menghapus alamat ini?'),
         shape: RoundedRectangleBorder(borderRadius: AppTheme.radius22),
@@ -153,7 +153,10 @@ class _AddressListScreenState extends State<AddressListScreen> {
                 icon: const Icon(Icons.add, size: 20),
                 label: const Text(
                   'Tambah Alamat',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
                 ),
               ),
             ),
@@ -312,7 +315,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                         children: [
                           IconButton(
                             onPressed: () => _navigateToEditAddress(address),
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.edit_outlined,
                               size: 20,
                               color: AppTheme.onSurfaceVariant,
@@ -326,7 +329,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                           ),
                           IconButton(
                             onPressed: () => _deleteAddress(address),
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.delete_outline,
                               size: 20,
                               color: AppTheme.error,
@@ -355,7 +358,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                   const SizedBox(height: 4),
                   Text(
                     address.phone,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: AppTheme.onSurfaceVariant,
                     ),
@@ -365,7 +368,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.location_on_outlined,
                         size: 16,
                         color: AppTheme.onSurfaceMuted,
@@ -377,7 +380,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                           children: [
                             Text(
                               address.addressLine1,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: AppTheme.onSurface,
                                 height: 1.5,
@@ -387,7 +390,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                                 address.addressLine2!.isNotEmpty)
                               Text(
                                 address.addressLine2!,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 14,
                                   color: AppTheme.onSurface,
                                   height: 1.5,
@@ -396,7 +399,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                             const SizedBox(height: 4),
                             Text(
                               '${address.city}, ${address.province} ${address.postalCode}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: AppTheme.onSurface,
                                 height: 1.5,

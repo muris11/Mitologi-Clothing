@@ -235,7 +235,8 @@ class VisionMissionSection extends StatelessWidget {
                                               style: const TextStyle(
                                                 fontSize: 14,
                                                 height: 1.5,
-                                                color: AppTheme.onSurfaceVariant,
+                                                color:
+                                                    AppTheme.onSurfaceVariant,
                                               ),
                                             ),
                                           ),
@@ -331,7 +332,7 @@ class VisionMissionSection extends StatelessWidget {
                         Expanded(
                           child: Text(
                             value.description,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               height: 1.4,
                               color: AppTheme.onSurfaceVariant,

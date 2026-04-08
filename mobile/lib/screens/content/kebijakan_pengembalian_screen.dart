@@ -82,7 +82,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 6, right: 12),
             child: Icon(Icons.circle, size: 6, color: AppTheme.onSurfaceMuted),
           ),
@@ -457,7 +457,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                   right: ResponsiveHelper.horizontalPadding(context) / 2,
                   bottom: 24,
                 ),
-                child: Text(
+                child: const Text(
                   'Jika Anda memilih untuk menukar produk (misalnya tukar ukuran atau warna), proses pengiriman produk pengganti akan dilakukan setelah barang asli diterima dan diverifikasi. Biaya pengiriman produk pengganti ditanggung oleh Mitologi Clothing jika penukaran disebabkan oleh kesalahan kami.',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,

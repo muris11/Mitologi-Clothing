@@ -120,7 +120,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
               ),
               filled: true,
               fillColor: AppTheme.cream,
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.email_outlined,
                 size: 20,
                 color: AppTheme.onSurfaceVariant,

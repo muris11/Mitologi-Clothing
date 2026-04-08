@@ -68,18 +68,18 @@ class CompanyLegalitySection extends StatelessWidget {
                     color: AppTheme.primary.withValues(alpha: 0.1),
                   ),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.account_balance_outlined,
                   size: 28,
                   color: AppTheme.primary,
                 ),
               ),
               const SizedBox(width: 16),
-              Expanded(
+              const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'INFORMASI LEGAL',
                       style: TextStyle(
                         fontSize: 11,
@@ -88,8 +88,8 @@ class CompanyLegalitySection extends StatelessWidget {
                         letterSpacing: 0.5,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    const Text(
+                    SizedBox(height: 4),
+                    Text(
                       'Legalitas Perusahaan',
                       style: TextStyle(
                         fontSize: 22,
@@ -130,7 +130,7 @@ class CompanyLegalitySection extends StatelessWidget {
                   children: [
                     Text(
                       item['label'] as String,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w800,
                         color: AppTheme.onSurfaceMuted,

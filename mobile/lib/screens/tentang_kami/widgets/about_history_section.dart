@@ -257,7 +257,7 @@ class AboutHistorySection extends StatelessWidget {
                               padding: const EdgeInsets.only(bottom: 12),
                               child: Text(
                                 paragraph,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 14,
                                   height: 1.7,
                                   color: AppTheme.onSurfaceVariant,
@@ -280,9 +280,7 @@ class AboutHistorySection extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(
-                  top: BorderSide(
-                    color: AppTheme.muted.withValues(alpha: 0.5),
-                  ),
+                  top: BorderSide(color: AppTheme.muted.withValues(alpha: 0.5)),
                 ),
               ),
               child: Column(
@@ -315,7 +313,7 @@ class AboutHistorySection extends StatelessWidget {
                         siteName != null && siteName!.isNotEmpty
                             ? 'Setiap elemen visual dirancang dengan kebanggaan untuk membentuk cerita "$siteName" sebagai identitas seragam yang konsisten dan profesional.'
                             : 'Setiap elemen visual dirancang dengan kebanggaan untuk membentuk identitas seragam yang konsisten dan profesional.',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           height: 1.6,
                           color: AppTheme.onSurfaceVariant,
@@ -393,7 +391,7 @@ class AboutHistorySection extends StatelessWidget {
                                 ),
                                 Text(
                                   order,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w900,
                                     color: AppTheme.muted,

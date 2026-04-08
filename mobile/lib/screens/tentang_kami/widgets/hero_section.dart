@@ -18,7 +18,7 @@ class HeroSection extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppTheme.sectionBackground,
         border: Border(
           bottom: BorderSide(color: AppTheme.outlineLight, width: 1),

@@ -74,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               FadeInUp(
-                delay: const Duration(milliseconds: 0),
+                delay: Duration.zero,
                 child: AuthTextField(
                   label: 'Nama Lengkap',
                   hintText: 'Masukkan nama lengkap',
@@ -160,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Sudah punya akun?',
                       style: TextStyle(
                         color: AppTheme.onSurfaceVariant,
@@ -169,10 +169,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     TextButton(
                       onPressed: () => context.popOrGoHome(),
-                      child: Text(
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppTheme.accent,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: const Text(
                         'Masuk',
                         style: TextStyle(
-                          color: AppTheme.accent,
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                         ),

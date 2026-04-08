@@ -134,6 +134,7 @@ class _LoginScreenState extends State<LoginScreen>
                       size: 20,
                       color: AppTheme.onSurfaceVariant,
                     ),
+                    padding: EdgeInsets.zero,
                     onPressed: () {
                       setState(() {
                         _obscurePassword = !_obscurePassword;
@@ -155,10 +156,18 @@ class _LoginScreenState extends State<LoginScreen>
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () => context.push('/shop/forgot-password'),
-                    child: Text(
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppTheme.accent,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: const Text(
                       'Lupa Password?',
                       style: TextStyle(
-                        color: AppTheme.accent,
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),
@@ -185,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Belum punya akun?',
                       style: TextStyle(
                         color: AppTheme.onSurfaceVariant,
@@ -194,10 +203,18 @@ class _LoginScreenState extends State<LoginScreen>
                     ),
                     TextButton(
                       onPressed: () => context.push('/shop/register'),
-                      child: Text(
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppTheme.accent,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: const Text(
                         'Daftar',
                         style: TextStyle(
-                          color: AppTheme.accent,
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                         ),

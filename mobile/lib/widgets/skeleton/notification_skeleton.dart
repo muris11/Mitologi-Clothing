@@ -36,7 +36,7 @@ class NotificationSkeleton extends StatelessWidget {
           Container(
             width: 48,
             height: 48,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppTheme.muted,
               shape: BoxShape.circle,
             ),

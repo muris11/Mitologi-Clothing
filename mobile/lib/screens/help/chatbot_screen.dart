@@ -141,7 +141,7 @@ class _ChatbotScreenState extends State<ChatbotScreen>
             Container(
               margin: const EdgeInsets.only(right: 12),
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppTheme.primary,
                 shape: BoxShape.circle,
               ),
@@ -180,7 +180,7 @@ class _ChatbotScreenState extends State<ChatbotScreen>
             Container(
               margin: const EdgeInsets.only(left: 12),
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppTheme.accent,
                 shape: BoxShape.circle,
               ),
@@ -202,7 +202,7 @@ class _ChatbotScreenState extends State<ChatbotScreen>
           Container(
             margin: const EdgeInsets.only(right: 12),
             padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppTheme.primary,
               shape: BoxShape.circle,
             ),

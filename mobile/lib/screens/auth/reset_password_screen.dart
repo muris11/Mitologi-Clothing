@@ -134,6 +134,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                     size: 20,
                     color: AppTheme.onSurfaceVariant,
                   ),
+                  padding: EdgeInsets.zero,
                   onPressed: () =>
                       setState(() => _obscurePassword = !_obscurePassword),
                 ),
@@ -165,6 +166,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                     size: 20,
                     color: AppTheme.onSurfaceVariant,
                   ),
+                  padding: EdgeInsets.zero,
                   onPressed: () => setState(
                     () => _obscureConfirmPassword = !_obscureConfirmPassword,
                   ),
@@ -196,13 +198,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
               child: Center(
                 child: TextButton(
                   onPressed: () => context.go('/shop/login'),
-                  child: Text(
-                    'Kembali ke Login',
-                    style: TextStyle(
-                      color: AppTheme.accent,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
+                  style: TextButton.styleFrom(
+                    foregroundColor: AppTheme.accent,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
                     ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: const Text(
+                    'Kembali ke Login',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                   ),
                 ),
               ),

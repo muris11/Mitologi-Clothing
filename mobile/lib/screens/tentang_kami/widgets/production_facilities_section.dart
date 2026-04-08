@@ -23,9 +23,9 @@ class ProductionFacilitiesSection extends StatelessWidget {
       child: Column(
         children: [
           // Header
-          Column(
+          const Column(
             children: [
-              const Text(
+              Text(
                 'BENGKEL KREATIVITAS',
                 style: TextStyle(
                   fontSize: 11,
@@ -34,8 +34,8 @@ class ProductionFacilitiesSection extends StatelessWidget {
                   letterSpacing: 0.5,
                 ),
               ),
-              const SizedBox(height: 12),
-              const Text(
+              SizedBox(height: 12),
+              Text(
                 'Fasilitas Produksi Terpadu',
                 style: TextStyle(
                   fontSize: 26,
@@ -44,7 +44,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Text(
                 'Pusat dari setiap mahakarya. Didukung mesin berteknologi mutakhir dan tenaga ahli berpengalaman untuk memastikan setiap produk memenuhi standar tertinggi.',
                 style: TextStyle(
@@ -107,7 +107,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                         ),
                         errorWidget: (context, url, error) => Container(
                           color: AppTheme.primary.withValues(alpha: 0.05),
-                          child: Center(
+                          child: const Center(
                             child: Icon(
                               Icons.image_outlined,
                               size: 32,
@@ -119,7 +119,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                     else
                       Container(
                         color: AppTheme.primary.withValues(alpha: 0.05),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             'NO IMAGE',
                             style: TextStyle(

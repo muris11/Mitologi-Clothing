@@ -24,7 +24,7 @@ class EditProfileSkeleton extends StatelessWidget {
               child: Container(
                 width: 96,
                 height: 96,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppTheme.muted,
                   shape: BoxShape.circle,
                 ),

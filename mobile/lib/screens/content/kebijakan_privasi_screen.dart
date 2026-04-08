@@ -47,7 +47,7 @@ class KebijakanPrivasiScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 6, right: 12),
             child: Icon(Icons.circle, size: 6, color: AppTheme.onSurfaceMuted),
           ),

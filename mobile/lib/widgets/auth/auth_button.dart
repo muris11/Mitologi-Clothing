@@ -27,7 +27,7 @@ class AuthButton extends StatelessWidget {
               ? null
               : isSecondary
               ? null
-              : LinearGradient(
+              : const LinearGradient(
                   colors: [AppTheme.accent, AppTheme.accentLight],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,

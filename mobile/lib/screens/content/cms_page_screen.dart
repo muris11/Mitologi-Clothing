@@ -121,7 +121,7 @@ class _CMSPageScreenState extends State<CMSPageScreen> {
                         "body": Style(
                           fontSize: FontSize(14),
                           color: AppTheme.onSurfaceVariant,
-                          lineHeight: LineHeight(1.6),
+                          lineHeight: const LineHeight(1.6),
                         ),
                         "h1": Style(
                           fontSize: FontSize(24),

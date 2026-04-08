@@ -43,7 +43,7 @@ class OrderListSkeleton extends StatelessWidget {
                   Container(
                     width: 16,
                     height: 16,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppTheme.muted,
                       shape: BoxShape.circle,
                     ),
@@ -91,11 +91,7 @@ class OrderListSkeleton extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           // Divider
-          Container(
-            width: double.infinity,
-            height: 1,
-            color: AppTheme.muted,
-          ),
+          Container(width: double.infinity, height: 1, color: AppTheme.muted),
           const SizedBox(height: 16),
           // Total row
           Row(

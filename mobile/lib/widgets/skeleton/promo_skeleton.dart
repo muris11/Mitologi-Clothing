@@ -74,7 +74,7 @@ class PromoSkeleton extends StatelessWidget {
               Container(
                 width: 28,
                 height: 28,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppTheme.muted,
                   shape: BoxShape.circle,
                 ),

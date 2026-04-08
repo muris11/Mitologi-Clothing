@@ -124,7 +124,8 @@ class FounderStorySection extends StatelessWidget {
                                                   style: const TextStyle(
                                                     fontSize: 32,
                                                     fontWeight: FontWeight.bold,
-                                                    color: AppTheme.onSurfaceMuted,
+                                                    color:
+                                                        AppTheme.onSurfaceMuted,
                                                   ),
                                                 ),
                                               ),
@@ -169,11 +170,11 @@ class FounderStorySection extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  child: Column(
+                                  child: const Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text(
+                                      Text(
                                         '10+',
                                         style: TextStyle(
                                           fontSize: 24,
@@ -182,7 +183,7 @@ class FounderStorySection extends StatelessWidget {
                                           height: 1,
                                         ),
                                       ),
-                                      const SizedBox(height: 4),
+                                      SizedBox(height: 4),
                                       Text(
                                         'Tahun\nPengalaman',
                                         style: TextStyle(
@@ -237,27 +238,27 @@ class FounderStorySection extends StatelessWidget {
                             ),
                           ),
                           RichText(
-                            text: TextSpan(
-                              style: const TextStyle(
+                            text: const TextSpan(
+                              style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w900,
                                 color: AppTheme.primary,
                                 height: 1.2,
                               ),
                               children: [
-                                const TextSpan(text: 'Standar '),
+                                TextSpan(text: 'Standar '),
                                 TextSpan(
                                   text: 'Kualitas',
                                   style: TextStyle(color: AppTheme.accent),
                                 ),
-                                const TextSpan(text: '.'),
+                                TextSpan(text: '.'),
                               ],
                             ),
                           ),
                           const SizedBox(height: 20),
                           Stack(
                             children: [
-                              Positioned(
+                              const Positioned(
                                 top: -10,
                                 left: -8,
                                 child: Text(
@@ -305,9 +306,7 @@ class FounderStorySection extends StatelessWidget {
                             decoration: BoxDecoration(
                               border: Border(
                                 top: BorderSide(
-                                  color: AppTheme.muted.withValues(
-                                    alpha: 0.5,
-                                  ),
+                                  color: AppTheme.muted.withValues(alpha: 0.5),
                                 ),
                               ),
                             ),
@@ -325,7 +324,7 @@ class FounderStorySection extends StatelessWidget {
                                 const SizedBox(height: 4),
                                 Text(
                                   founderRole ?? 'Founder & CEO',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w800,
                                     color: AppTheme.accent,

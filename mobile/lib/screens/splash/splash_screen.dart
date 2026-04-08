@@ -154,7 +154,7 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                       const SizedBox(height: 60),
                       // Luxury minimal loader
-                      SizedBox(
+                      const SizedBox(
                         width: 24,
                         height: 24,
                         child: CircularProgressIndicator(

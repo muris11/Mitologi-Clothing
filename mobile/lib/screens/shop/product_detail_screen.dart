@@ -315,9 +315,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             child: FadeInUp(
               child: Container(
                 padding: EdgeInsets.all(horizontalPadding),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppTheme.surface,
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(AppTheme.radiusBottomSheet),
                     topRight: Radius.circular(AppTheme.radiusBottomSheet),
                   ),
@@ -671,7 +671,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.rate_review_outlined,
                   color: AppTheme.onSurfaceMuted,
                   size: 32,

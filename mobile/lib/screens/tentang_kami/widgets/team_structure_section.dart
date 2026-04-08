@@ -65,7 +65,7 @@ class TeamStructureSection extends StatelessWidget {
                     width: shouldShowLarge ? 140 : 100,
                     height: shouldShowLarge ? 140 : 100,
                     color: AppTheme.muted,
-                    child: Center(
+                    child: const Center(
                       child: SizedBox(
                         width: 24,
                         height: 24,
@@ -236,7 +236,7 @@ class TeamStructureSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          Text(
+          const Text(
             'Kenali tim profesional di balik setiap produk\nberkualitas dari perusahaan kami.',
             textAlign: TextAlign.center,
             style: TextStyle(
