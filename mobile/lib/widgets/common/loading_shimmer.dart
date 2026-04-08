@@ -41,26 +41,26 @@ class ProductCardShimmer extends StatelessWidget {
         color: AppTheme.surfaceContainerLowest,
         borderRadius: AppTheme.radius11,
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Expanded(
+          Expanded(
             child: LoadingShimmer(
               width: double.infinity,
               height: double.infinity,
               borderRadius: 16,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(12),
+          const Padding(
+            padding: EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const LoadingShimmer(width: 100, height: 16),
-                const SizedBox(height: 8),
-                const LoadingShimmer(width: double.infinity, height: 20),
-                const SizedBox(height: 12),
-                const LoadingShimmer(width: 80, height: 16),
+                LoadingShimmer(width: 100, height: 16),
+                SizedBox(height: 8),
+                LoadingShimmer(width: double.infinity, height: 20),
+                SizedBox(height: 12),
+                LoadingShimmer(width: 80, height: 16),
               ],
             ),
           ),
