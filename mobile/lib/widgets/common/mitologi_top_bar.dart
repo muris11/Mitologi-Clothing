@@ -50,7 +50,7 @@ class MitologiTopBar extends StatelessWidget implements PreferredSizeWidget {
                   borderRadius: AppTheme.radius12,
                   border: Border.all(color: AppTheme.outline, width: 1),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.notifications_none_outlined,
                   size: 20,
                   color: AppTheme.onSurface,

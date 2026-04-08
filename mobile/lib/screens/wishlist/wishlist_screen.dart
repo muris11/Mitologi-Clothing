@@ -163,7 +163,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   shape: BoxShape.circle,
                   border: Border.all(color: AppTheme.outlineLight, width: 1),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.favorite_border,
                   size: 56,
                   color: AppTheme.onSurfaceMuted,

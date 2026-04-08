@@ -250,7 +250,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           child: Row(
             children: [
-              Icon(Icons.search, color: AppTheme.onSurfaceVariant, size: 22),
+              const Icon(
+                Icons.search,
+                color: AppTheme.onSurfaceVariant,
+                size: 22,
+              ),
               const SizedBox(width: 12),
               Text(
                 'Cari produk...',
@@ -633,7 +637,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Column(
         children: [
-          Icon(Icons.inventory_2_outlined, size: 48, color: AppTheme.muted),
+          const Icon(
+            Icons.inventory_2_outlined,
+            size: 48,
+            color: AppTheme.muted,
+          ),
           const SizedBox(height: 16),
           Text(
             'Belum ada produk',

@@ -61,7 +61,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 shape: BoxShape.circle,
                 border: Border.all(color: AppTheme.outlineLight, width: 1),
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.notifications_none,
                 size: 64,
                 color: AppTheme.onSurfaceMuted,
@@ -116,7 +116,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         }
 
         if (orderProvider.orders.isEmpty) {
-          return Center(
+          return const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -145,7 +145,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: ResponsiveHelper.horizontalPadding(context),
             ),
-            child: Divider(color: AppTheme.muted, height: 1),
+            child: const Divider(color: AppTheme.muted, height: 1),
           ),
           itemBuilder: (context, index) {
             final item = notifications[index];
@@ -181,7 +181,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     const SizedBox(height: 4),
                     Text(
                       item.body,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: AppTheme.onSurfaceVariant,
                         height: 1.4,
@@ -190,7 +190,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     const SizedBox(height: 8),
                     Text(
                       item.time,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
                         color: AppTheme.onSurfaceMuted,

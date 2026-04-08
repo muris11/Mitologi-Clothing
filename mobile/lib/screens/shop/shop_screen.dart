@@ -410,7 +410,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
     showModalBottomSheet<void>(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(AppTheme.radiusBottomSheet),
         ),
