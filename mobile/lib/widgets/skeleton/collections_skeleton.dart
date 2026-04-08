@@ -12,8 +12,8 @@ class CollectionsSkeleton extends StatelessWidget {
     final padding = ResponsiveHelper.horizontalPadding(context);
 
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: LayoutBuilder(
         builder: (context, constraints) {
           int crossAxisCount = 2;
@@ -34,7 +34,7 @@ class CollectionsSkeleton extends StatelessWidget {
             itemCount: 6,
             itemBuilder: (_, index) => Container(
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: AppTheme.radius22,
               ),
             ),

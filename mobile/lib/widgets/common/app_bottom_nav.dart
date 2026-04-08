@@ -85,7 +85,7 @@ class AppBottomNav extends StatelessWidget {
                 ),
                 border: Border(
                   top: BorderSide(
-                    color: AppTheme.slate200.withValues(alpha: 0.6),
+                    color: AppTheme.muted.withValues(alpha: 0.6),
                     width: 1,
                   ),
                 ),
@@ -214,7 +214,7 @@ class AppBottomNav extends StatelessWidget {
                         size: isSmallScreen ? 22 : 24,
                         color: isSelected
                             ? AppTheme.primary
-                            : AppTheme.slate500,
+                            : AppTheme.onSurfaceVariant,
                       ),
                       if (badgeCount > 0)
                         Positioned(
@@ -264,7 +264,7 @@ class AppBottomNav extends StatelessWidget {
                   style: TextStyle(
                     fontSize: isSmallScreen ? 10 : 11,
                     fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                    color: isSelected ? AppTheme.primary : AppTheme.slate500,
+                    color: isSelected ? AppTheme.primary : AppTheme.onSurfaceVariant,
                     height: 1.2,
                   ),
                   maxLines: 1,

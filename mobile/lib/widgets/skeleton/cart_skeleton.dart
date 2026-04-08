@@ -14,8 +14,8 @@ class CartSkeleton extends StatelessWidget {
     final padding = ResponsiveHelper.horizontalPadding(context);
 
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: Column(
         children: [
           // Cart items
@@ -48,7 +48,7 @@ class CartSkeleton extends StatelessWidget {
                       width: 80,
                       height: 16,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -56,7 +56,7 @@ class CartSkeleton extends StatelessWidget {
                       width: 100,
                       height: 20,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -71,7 +71,7 @@ class CartSkeleton extends StatelessWidget {
                       width: 80,
                       height: 16,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -79,7 +79,7 @@ class CartSkeleton extends StatelessWidget {
                       width: 100,
                       height: 20,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -87,7 +87,7 @@ class CartSkeleton extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 // Divider
-                Container(height: 1, color: AppTheme.slate200),
+                Container(height: 1, color: AppTheme.muted),
                 const SizedBox(height: 16),
                 // Total row
                 Row(
@@ -97,7 +97,7 @@ class CartSkeleton extends StatelessWidget {
                       width: 60,
                       height: 20,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -105,7 +105,7 @@ class CartSkeleton extends StatelessWidget {
                       width: 120,
                       height: 24,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -116,7 +116,7 @@ class CartSkeleton extends StatelessWidget {
                 Container(
                   height: 56,
                   decoration: BoxDecoration(
-                    color: AppTheme.slate200,
+                    color: AppTheme.muted,
                     borderRadius: AppTheme.radius16,
                   ),
                 ),
@@ -147,7 +147,7 @@ class _CartItemSkeleton extends StatelessWidget {
             width: 90,
             height: 90,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: AppTheme.radius12,
             ),
           ),
@@ -162,7 +162,7 @@ class _CartItemSkeleton extends StatelessWidget {
                   width: double.infinity,
                   height: 18,
                   decoration: BoxDecoration(
-                    color: AppTheme.slate200,
+                    color: AppTheme.muted,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -172,7 +172,7 @@ class _CartItemSkeleton extends StatelessWidget {
                   width: 100,
                   height: 14,
                   decoration: BoxDecoration(
-                    color: AppTheme.slate200,
+                    color: AppTheme.muted,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -185,7 +185,7 @@ class _CartItemSkeleton extends StatelessWidget {
                       width: 100,
                       height: 20,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -193,7 +193,7 @@ class _CartItemSkeleton extends StatelessWidget {
                       width: 100,
                       height: 36,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: AppTheme.radius8,
                       ),
                     ),

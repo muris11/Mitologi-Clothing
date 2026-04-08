@@ -36,7 +36,7 @@ class CartSummaryPanel extends StatelessWidget {
                   const Text(
                     'Total Belanja',
                     style: TextStyle(
-                      color: AppTheme.slate500,
+                      color: AppTheme.onSurfaceVariant,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.2,

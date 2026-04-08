@@ -12,8 +12,8 @@ class PromoSkeleton extends StatelessWidget {
     final padding = ResponsiveHelper.horizontalPadding(context);
 
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: SingleChildScrollView(
         padding: EdgeInsets.all(padding),
         child: Column(
@@ -24,7 +24,7 @@ class PromoSkeleton extends StatelessWidget {
               width: 200,
               height: 24,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -41,7 +41,7 @@ class PromoSkeleton extends StatelessWidget {
               width: 150,
               height: 24,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -62,7 +62,7 @@ class PromoSkeleton extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppTheme.slate200,
+        color: AppTheme.muted,
         borderRadius: AppTheme.radius16,
       ),
       child: Column(
@@ -75,7 +75,7 @@ class PromoSkeleton extends StatelessWidget {
                 width: 28,
                 height: 28,
                 decoration: BoxDecoration(
-                  color: AppTheme.slate300,
+                  color: AppTheme.muted,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -83,7 +83,7 @@ class PromoSkeleton extends StatelessWidget {
                 width: 80,
                 height: 24,
                 decoration: BoxDecoration(
-                  color: AppTheme.slate300,
+                  color: AppTheme.muted,
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
@@ -94,7 +94,7 @@ class PromoSkeleton extends StatelessWidget {
             width: 200,
             height: 20,
             decoration: BoxDecoration(
-              color: AppTheme.slate300,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -103,7 +103,7 @@ class PromoSkeleton extends StatelessWidget {
             width: double.infinity,
             height: 14,
             decoration: BoxDecoration(
-              color: AppTheme.slate300,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -117,7 +117,7 @@ class PromoSkeleton extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.slate200,
+        color: AppTheme.muted,
         borderRadius: AppTheme.radius16,
       ),
       child: Row(
@@ -126,7 +126,7 @@ class PromoSkeleton extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: AppTheme.slate300,
+              color: AppTheme.muted,
               borderRadius: AppTheme.radius12,
             ),
           ),
@@ -139,7 +139,7 @@ class PromoSkeleton extends StatelessWidget {
                   width: 150,
                   height: 18,
                   decoration: BoxDecoration(
-                    color: AppTheme.slate300,
+                    color: AppTheme.muted,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -148,7 +148,7 @@ class PromoSkeleton extends StatelessWidget {
                   width: double.infinity,
                   height: 14,
                   decoration: BoxDecoration(
-                    color: AppTheme.slate300,
+                    color: AppTheme.muted,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),

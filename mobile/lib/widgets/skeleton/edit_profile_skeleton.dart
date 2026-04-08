@@ -12,8 +12,8 @@ class EditProfileSkeleton extends StatelessWidget {
     final padding = ResponsiveHelper.horizontalPadding(context);
 
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: SingleChildScrollView(
         padding: EdgeInsets.all(padding),
         child: Column(
@@ -25,7 +25,7 @@ class EditProfileSkeleton extends StatelessWidget {
                 width: 96,
                 height: 96,
                 decoration: BoxDecoration(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -45,7 +45,7 @@ class EditProfileSkeleton extends StatelessWidget {
               width: double.infinity,
               height: 56,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: AppTheme.radius16,
               ),
             ),
@@ -64,7 +64,7 @@ class EditProfileSkeleton extends StatelessWidget {
           width: 100,
           height: 14,
           decoration: BoxDecoration(
-            color: AppTheme.slate200,
+            color: AppTheme.muted,
             borderRadius: BorderRadius.circular(4),
           ),
         ),
@@ -74,7 +74,7 @@ class EditProfileSkeleton extends StatelessWidget {
           width: double.infinity,
           height: 56,
           decoration: BoxDecoration(
-            color: AppTheme.slate200,
+            color: AppTheme.muted,
             borderRadius: AppTheme.radius16,
           ),
         ),

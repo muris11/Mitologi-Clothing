@@ -12,8 +12,8 @@ class AddressListSkeleton extends StatelessWidget {
     final padding = ResponsiveHelper.horizontalPadding(context);
 
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: ListView.builder(
         padding: EdgeInsets.all(padding),
         itemCount: 3,
@@ -42,7 +42,7 @@ class AddressListSkeleton extends StatelessWidget {
                 width: 80,
                 height: 14,
                 decoration: BoxDecoration(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -50,7 +50,7 @@ class AddressListSkeleton extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -62,7 +62,7 @@ class AddressListSkeleton extends StatelessWidget {
             width: 150,
             height: 18,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -72,7 +72,7 @@ class AddressListSkeleton extends StatelessWidget {
             width: 120,
             height: 14,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -82,7 +82,7 @@ class AddressListSkeleton extends StatelessWidget {
             width: double.infinity,
             height: 14,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -91,7 +91,7 @@ class AddressListSkeleton extends StatelessWidget {
             width: double.infinity,
             height: 14,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -100,7 +100,7 @@ class AddressListSkeleton extends StatelessWidget {
             width: 200,
             height: 14,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),

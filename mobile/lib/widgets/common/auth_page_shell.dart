@@ -83,7 +83,7 @@ class AuthPageShell extends StatelessWidget {
         bottom: ResponsiveHelper.horizontalPadding(context),
       ),
       decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppTheme.slate100, width: 1)),
+        border: Border(bottom: BorderSide(color: AppTheme.muted, width: 1)),
       ),
       child: Column(
         children: [
@@ -119,7 +119,7 @@ class AuthPageShell extends StatelessWidget {
             top: ResponsiveHelper.horizontalPadding(context),
           ),
           decoration: const BoxDecoration(
-            border: Border(top: BorderSide(color: AppTheme.slate100, width: 1)),
+            border: Border(top: BorderSide(color: AppTheme.muted, width: 1)),
           ),
           child: Text(
             '© ${DateTime.now().year} Mitologi Clothing. Hak cipta dilindungi.',

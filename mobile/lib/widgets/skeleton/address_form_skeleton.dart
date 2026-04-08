@@ -12,8 +12,8 @@ class AddressFormSkeleton extends StatelessWidget {
     final padding = ResponsiveHelper.horizontalPadding(context);
 
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: SingleChildScrollView(
         padding: EdgeInsets.all(padding),
         child: Column(
@@ -24,7 +24,7 @@ class AddressFormSkeleton extends StatelessWidget {
               width: 120,
               height: 20,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -44,7 +44,7 @@ class AddressFormSkeleton extends StatelessWidget {
               width: 120,
               height: 20,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -68,7 +68,7 @@ class AddressFormSkeleton extends StatelessWidget {
               width: double.infinity,
               height: 56,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: AppTheme.radius16,
               ),
             ),
@@ -80,7 +80,7 @@ class AddressFormSkeleton extends StatelessWidget {
               width: double.infinity,
               height: 56,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: AppTheme.radius16,
               ),
             ),
@@ -95,7 +95,7 @@ class AddressFormSkeleton extends StatelessWidget {
       width: double.infinity,
       height: 56,
       decoration: BoxDecoration(
-        color: AppTheme.slate200,
+        color: AppTheme.muted,
         borderRadius: AppTheme.radius16,
       ),
     );

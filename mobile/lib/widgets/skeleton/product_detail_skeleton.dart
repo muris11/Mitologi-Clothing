@@ -10,8 +10,8 @@ class ProductDetailSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: CustomScrollView(
         slivers: [
           // App bar
@@ -26,7 +26,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
@@ -35,7 +35,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
@@ -48,12 +48,12 @@ class ProductDetailSkeleton extends StatelessWidget {
           SliverToBoxAdapter(
             child: Container(
               height: MediaQuery.of(context).size.height * 0.5,
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               child: const Center(
                 child: Icon(
                   Icons.image_outlined,
                   size: 64,
-                  color: AppTheme.slate300,
+                  color: AppTheme.muted,
                 ),
               ),
             ),
@@ -73,7 +73,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                     width: 100,
                     height: 20,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -83,7 +83,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                     width: double.infinity,
                     height: 28,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -93,7 +93,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.6,
                     height: 28,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -103,7 +103,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                     width: 140,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -115,7 +115,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                         width: 120,
                         height: 20,
                         decoration: BoxDecoration(
-                          color: AppTheme.slate200,
+                          color: AppTheme.muted,
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -124,7 +124,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                         width: 60,
                         height: 20,
                         decoration: BoxDecoration(
-                          color: AppTheme.slate200,
+                          color: AppTheme.muted,
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -136,7 +136,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                     width: double.infinity,
                     height: 16,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -145,7 +145,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                     width: double.infinity,
                     height: 16,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -154,7 +154,7 @@ class ProductDetailSkeleton extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.7,
                     height: 16,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),

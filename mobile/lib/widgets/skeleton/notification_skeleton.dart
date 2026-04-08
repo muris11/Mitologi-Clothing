@@ -12,8 +12,8 @@ class NotificationSkeleton extends StatelessWidget {
     final padding = ResponsiveHelper.horizontalPadding(context);
 
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: ListView.separated(
         padding: EdgeInsets.all(padding),
         itemCount: 6,
@@ -37,7 +37,7 @@ class NotificationSkeleton extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               shape: BoxShape.circle,
             ),
           ),
@@ -50,7 +50,7 @@ class NotificationSkeleton extends StatelessWidget {
                   width: double.infinity,
                   height: 16,
                   decoration: BoxDecoration(
-                    color: AppTheme.slate200,
+                    color: AppTheme.muted,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -59,7 +59,7 @@ class NotificationSkeleton extends StatelessWidget {
                   width: 150,
                   height: 14,
                   decoration: BoxDecoration(
-                    color: AppTheme.slate200,
+                    color: AppTheme.muted,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),

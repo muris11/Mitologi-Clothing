@@ -10,8 +10,8 @@ class HomeSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +52,7 @@ class _HeroSkeleton extends StatelessWidget {
 
     return Container(
       height: height,
-      color: AppTheme.slate200,
+      color: AppTheme.muted,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +61,7 @@ class _HeroSkeleton extends StatelessWidget {
               width: 200,
               height: 32,
               decoration: BoxDecoration(
-                color: AppTheme.slate300,
+                color: AppTheme.muted,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -70,7 +70,7 @@ class _HeroSkeleton extends StatelessWidget {
               width: 280,
               height: 48,
               decoration: BoxDecoration(
-                color: AppTheme.slate300,
+                color: AppTheme.muted,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -101,7 +101,7 @@ class _SectionSkeleton extends StatelessWidget {
                 width: 140,
                 height: 24,
                 decoration: BoxDecoration(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -109,7 +109,7 @@ class _SectionSkeleton extends StatelessWidget {
                 width: 60,
                 height: 20,
                 decoration: BoxDecoration(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -152,7 +152,7 @@ class _CategoriesSkeleton extends StatelessWidget {
             width: 120,
             height: 24,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -168,7 +168,7 @@ class _CategoriesSkeleton extends StatelessWidget {
             itemBuilder: (_, index) => Container(
               width: 100,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: AppTheme.radius16,
               ),
             ),
@@ -193,7 +193,7 @@ class _TestimonialsSkeleton extends StatelessWidget {
             width: 200,
             height: 24,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -201,7 +201,7 @@ class _TestimonialsSkeleton extends StatelessWidget {
           Container(
             height: 200,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: AppTheme.radius22,
             ),
           ),
@@ -230,7 +230,7 @@ class _ProductCardSkeleton extends StatelessWidget {
                 topLeft: Radius.circular(AppTheme.radiusProductCard),
                 topRight: Radius.circular(AppTheme.radiusProductCard),
               ),
-              child: Container(color: AppTheme.slate200),
+              child: Container(color: AppTheme.muted),
             ),
           ),
           Expanded(
@@ -244,7 +244,7 @@ class _ProductCardSkeleton extends StatelessWidget {
                     width: 60,
                     height: 16,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -253,7 +253,7 @@ class _ProductCardSkeleton extends StatelessWidget {
                     width: double.infinity,
                     height: 14,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -262,7 +262,7 @@ class _ProductCardSkeleton extends StatelessWidget {
                     width: 80,
                     height: 18,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),

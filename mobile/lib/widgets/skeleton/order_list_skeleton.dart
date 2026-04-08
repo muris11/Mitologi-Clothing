@@ -12,8 +12,8 @@ class OrderListSkeleton extends StatelessWidget {
     final padding = ResponsiveHelper.horizontalPadding(context);
 
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: ListView.separated(
         padding: EdgeInsets.all(padding),
         itemCount: 4,
@@ -44,7 +44,7 @@ class OrderListSkeleton extends StatelessWidget {
                     width: 16,
                     height: 16,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -53,7 +53,7 @@ class OrderListSkeleton extends StatelessWidget {
                     width: 100,
                     height: 14,
                     decoration: BoxDecoration(
-                      color: AppTheme.slate200,
+                      color: AppTheme.muted,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -63,7 +63,7 @@ class OrderListSkeleton extends StatelessWidget {
                 width: 80,
                 height: 28,
                 decoration: BoxDecoration(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   borderRadius: AppTheme.radius8,
                 ),
               ),
@@ -75,7 +75,7 @@ class OrderListSkeleton extends StatelessWidget {
             width: 150,
             height: 16,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -85,7 +85,7 @@ class OrderListSkeleton extends StatelessWidget {
             width: 120,
             height: 14,
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -94,7 +94,7 @@ class OrderListSkeleton extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 1,
-            color: AppTheme.slate200,
+            color: AppTheme.muted,
           ),
           const SizedBox(height: 16),
           // Total row
@@ -105,7 +105,7 @@ class OrderListSkeleton extends StatelessWidget {
                 width: 80,
                 height: 14,
                 decoration: BoxDecoration(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -113,7 +113,7 @@ class OrderListSkeleton extends StatelessWidget {
                 width: 100,
                 height: 20,
                 decoration: BoxDecoration(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),

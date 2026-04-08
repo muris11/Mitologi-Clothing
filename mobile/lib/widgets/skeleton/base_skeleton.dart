@@ -25,14 +25,14 @@ class Skeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: baseColor ?? AppTheme.slate200,
-      highlightColor: highlightColor ?? AppTheme.slate100,
+      baseColor: baseColor ?? AppTheme.muted,
+      highlightColor: highlightColor ?? AppTheme.muted,
       child: Container(
         width: width,
         height: height,
         margin: margin,
         decoration: BoxDecoration(
-          color: AppTheme.slate200,
+          color: AppTheme.muted,
           borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
         ),
       ),
@@ -66,8 +66,8 @@ class SkeletonCard extends StatelessWidget {
       effectiveRadius = 22.0;
     }
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: Container(
         width: width,
         height: height,

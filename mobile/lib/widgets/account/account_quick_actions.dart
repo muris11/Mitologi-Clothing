@@ -198,14 +198,14 @@ class _StatusItem extends StatelessWidget {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: AppTheme.slate500, size: 28),
+            Icon(icon, color: AppTheme.onSurfaceVariant, size: 28),
             const SizedBox(height: 8),
             Text(
               label,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 12,
-                color: AppTheme.slate500,
+                color: AppTheme.onSurfaceVariant,
                 fontWeight: FontWeight.w600,
               ),
             ),

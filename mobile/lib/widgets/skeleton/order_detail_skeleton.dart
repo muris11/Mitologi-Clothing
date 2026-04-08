@@ -9,8 +9,8 @@ class OrderDetailSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -21,7 +21,7 @@ class OrderDetailSkeleton extends StatelessWidget {
               width: double.infinity,
               height: 80,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: AppTheme.radius16,
               ),
             ),
@@ -31,7 +31,7 @@ class OrderDetailSkeleton extends StatelessWidget {
               width: double.infinity,
               height: 120,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: AppTheme.radius16,
               ),
             ),
@@ -41,7 +41,7 @@ class OrderDetailSkeleton extends StatelessWidget {
               width: double.infinity,
               height: 200,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: AppTheme.radius16,
               ),
             ),
@@ -51,7 +51,7 @@ class OrderDetailSkeleton extends StatelessWidget {
               width: double.infinity,
               height: 150,
               decoration: BoxDecoration(
-                color: AppTheme.slate200,
+                color: AppTheme.muted,
                 borderRadius: AppTheme.radius16,
               ),
             ),

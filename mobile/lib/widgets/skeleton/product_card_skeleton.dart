@@ -11,8 +11,8 @@ class ProductCardSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: Container(
         decoration: BoxDecoration(
           color: AppTheme.surface,
@@ -31,11 +31,11 @@ class ProductCardSkeleton extends StatelessWidget {
                   topRight: Radius.circular(AppTheme.radiusProductCard),
                 ),
                 child: Container(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   child: const Center(
                     child: Icon(
                       Icons.image_outlined,
-                      color: AppTheme.slate300,
+                      color: AppTheme.muted,
                       size: 40,
                     ),
                   ),
@@ -55,7 +55,7 @@ class ProductCardSkeleton extends StatelessWidget {
                       width: 60,
                       height: 16,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -65,7 +65,7 @@ class ProductCardSkeleton extends StatelessWidget {
                       width: double.infinity,
                       height: 14,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -75,7 +75,7 @@ class ProductCardSkeleton extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.3,
                       height: 14,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -85,7 +85,7 @@ class ProductCardSkeleton extends StatelessWidget {
                       width: 80,
                       height: 18,
                       decoration: BoxDecoration(
-                        color: AppTheme.slate200,
+                        color: AppTheme.muted,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),

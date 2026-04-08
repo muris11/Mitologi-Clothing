@@ -12,8 +12,8 @@ class WishlistSkeleton extends StatelessWidget {
     final padding = ResponsiveHelper.horizontalPadding(context);
 
     return Shimmer.fromColors(
-      baseColor: AppTheme.slate200,
-      highlightColor: AppTheme.slate100,
+      baseColor: AppTheme.muted,
+      highlightColor: AppTheme.muted,
       child: LayoutBuilder(
         builder: (context, constraints) {
           int crossAxisCount = 2;
@@ -47,7 +47,7 @@ class WishlistSkeleton extends StatelessWidget {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-              color: AppTheme.slate200,
+              color: AppTheme.muted,
               borderRadius: AppTheme.radius22,
             ),
           ),
@@ -58,7 +58,7 @@ class WishlistSkeleton extends StatelessWidget {
           width: double.infinity,
           height: 16,
           decoration: BoxDecoration(
-            color: AppTheme.slate200,
+            color: AppTheme.muted,
             borderRadius: BorderRadius.circular(4),
           ),
         ),
@@ -68,7 +68,7 @@ class WishlistSkeleton extends StatelessWidget {
           width: 80,
           height: 18,
           decoration: BoxDecoration(
-            color: AppTheme.slate200,
+            color: AppTheme.muted,
             borderRadius: BorderRadius.circular(4),
           ),
         ),

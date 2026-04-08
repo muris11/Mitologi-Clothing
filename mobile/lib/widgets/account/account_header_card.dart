@@ -128,9 +128,9 @@ class AccountHeaderCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _StatItem(label: 'Pesanan', value: '$orderCount'),
-              Container(width: 1, height: 30, color: AppTheme.slate200),
+              Container(width: 1, height: 30, color: AppTheme.muted),
               _StatItem(label: 'Wishlist', value: '$wishlistCount'),
-              Container(width: 1, height: 30, color: AppTheme.slate200),
+              Container(width: 1, height: 30, color: AppTheme.muted),
               _StatItem(label: 'Alamat', value: '$addressCount'),
             ],
           ),
