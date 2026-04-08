@@ -91,21 +91,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppTheme.pageBackground,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: Stack(
           children: [
-            // Background gradient
-            Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppTheme.surface, AppTheme.surfaceContainerLow],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-            ),
+            // Subtle cream background
+            Container(color: AppTheme.pageBackground),
             // Decorative circles
             Positioned(
               top: -100,
@@ -234,19 +226,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Icon container with gradient background
+          // Icon container with premium styling
           Container(
-            width: 160,
-            height: 160,
+            width: 140,
+            height: 140,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [AppTheme.primary, AppTheme.accent],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(48),
+              color: AppTheme.sectionBackground,
+              borderRadius: AppTheme.radius24,
+              border: Border.all(color: AppTheme.outlineLight, width: 1),
+              boxShadow: AppTheme.shadowSoft,
             ),
-            child: Icon(data.icon, size: 64, color: Colors.white),
+            child: Icon(data.icon, size: 56, color: AppTheme.primary),
           ),
           const SizedBox(height: 60),
           // Title
