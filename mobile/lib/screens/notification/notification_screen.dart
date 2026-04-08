@@ -121,8 +121,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.notifications_none, size: 64, color: AppTheme.muted),
-                const SizedBox(height: 16),
-                const Text(
+                SizedBox(height: 16),
+                Text(
                   'Belum ada notifikasi',
                   style: TextStyle(
                     fontSize: 16,

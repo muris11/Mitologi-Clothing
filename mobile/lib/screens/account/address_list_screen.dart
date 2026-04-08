@@ -82,7 +82,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
       builder: (context) => AlertDialog(
         title: const Text(
           'Hapus Alamat?',
-          style: const TextStyle(fontWeight: FontWeight.w700),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
         content: const Text('Apakah Anda yakin ingin menghapus alamat ini?'),
         shape: RoundedRectangleBorder(borderRadius: AppTheme.radius22),
@@ -153,10 +153,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                 icon: const Icon(Icons.add, size: 20),
                 label: const Text(
                   'Tambah Alamat',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                 ),
               ),
             ),

@@ -51,7 +51,7 @@ class ProductCardShimmer extends StatelessWidget {
               borderRadius: 16,
             ),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
