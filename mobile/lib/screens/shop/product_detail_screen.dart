@@ -450,7 +450,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     if (images.isEmpty) {
       return Container(
-        color: AppTheme.slate200,
+        color: AppTheme.muted,
         child: const Center(
           child: Icon(
             Icons.image_not_supported_outlined,
@@ -478,7 +478,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
                 return Container(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   child: Center(
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
@@ -493,7 +493,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               },
               errorBuilder: (context, error, stackTrace) {
                 return Container(
-                  color: AppTheme.slate200,
+                  color: AppTheme.muted,
                   child: const Center(
                     child: Icon(
                       Icons.image_not_supported_outlined,
