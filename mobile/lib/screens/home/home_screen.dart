@@ -309,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             const Icon(
                               Icons.image_not_supported_outlined,
-                              color: AppTheme.slate400,
+                              color: AppTheme.onSurfaceMuted,
                               size: 40,
                             ),
                             const SizedBox(height: 8),

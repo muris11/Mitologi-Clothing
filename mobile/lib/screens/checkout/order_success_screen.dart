@@ -92,13 +92,13 @@ class OrderSuccessScreen extends StatelessWidget {
                       children: [
                         const Text(
                           'No. Pesanan: ',
-                          style: TextStyle(color: AppTheme.slate600),
+                          style: TextStyle(color: AppTheme.onSurfaceVariant),
                         ),
                         Text(
                           orderNumber!,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: AppTheme.slate900,
+                            color: AppTheme.onSurface,
                           ),
                         ),
                       ],

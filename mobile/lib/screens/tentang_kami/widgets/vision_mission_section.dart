@@ -105,7 +105,7 @@ class VisionMissionSection extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
-                            color: AppTheme.slate700,
+                            color: AppTheme.onSurface,
                             height: 1.5,
                           ),
                           textAlign: TextAlign.center,
@@ -190,7 +190,7 @@ class VisionMissionSection extends StatelessWidget {
                                   style: const TextStyle(
                                     fontSize: 14,
                                     height: 1.6,
-                                    color: AppTheme.slate600,
+                                    color: AppTheme.onSurfaceVariant,
                                   ),
                                 )
                               : Column(
@@ -235,7 +235,7 @@ class VisionMissionSection extends StatelessWidget {
                                               style: const TextStyle(
                                                 fontSize: 14,
                                                 height: 1.5,
-                                                color: AppTheme.slate600,
+                                                color: AppTheme.onSurfaceVariant,
                                               ),
                                             ),
                                           ),

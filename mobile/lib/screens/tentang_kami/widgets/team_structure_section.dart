@@ -242,7 +242,7 @@ class TeamStructureSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               height: 1.6,
-              color: AppTheme.slate600,
+              color: AppTheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: 48),

@@ -73,7 +73,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                           'Gagal memuat wishlist: ${provider.error}',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(color: AppTheme.slate700),
+                              ?.copyWith(color: AppTheme.onSurface),
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton.icon(

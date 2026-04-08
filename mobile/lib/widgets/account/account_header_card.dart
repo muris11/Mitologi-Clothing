@@ -67,7 +67,7 @@ class AccountHeaderCard extends StatelessWidget {
                       child: const Icon(
                         Icons.camera_alt,
                         size: 14,
-                        color: AppTheme.slate600,
+                        color: AppTheme.onSurfaceVariant,
                       ),
                     ),
                   ),

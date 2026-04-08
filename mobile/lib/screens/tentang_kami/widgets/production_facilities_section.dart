@@ -124,7 +124,7 @@ class ProductionFacilitiesSection extends StatelessWidget {
                             'NO IMAGE',
                             style: TextStyle(
                               fontSize: 10,
-                              color: AppTheme.slate400,
+                              color: AppTheme.onSurfaceMuted,
                               letterSpacing: 2,
                             ),
                           ),

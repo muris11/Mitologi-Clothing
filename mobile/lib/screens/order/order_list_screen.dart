@@ -68,7 +68,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                     Text(
                       'Gagal memuat pesanan: ${provider.error}',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: AppTheme.slate700),
+                      style: const TextStyle(color: AppTheme.onSurface),
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton.icon(

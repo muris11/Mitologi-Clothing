@@ -58,7 +58,7 @@ class CartSummaryPanel extends StatelessWidget {
             SizedBox(
               height: 54,
               child: ShimmerButton(
-                background: isLoading ? AppTheme.slate400 : AppTheme.primary,
+                background: isLoading ? AppTheme.onSurfaceMuted : AppTheme.primary,
                 borderRadius: 16,
                 onPressed: isLoading ? null : onCheckout,
                 child: isLoading

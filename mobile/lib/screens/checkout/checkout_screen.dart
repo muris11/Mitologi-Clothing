@@ -423,7 +423,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           const Text(
             'Setelah menekan tombol Bayar Sekarang, Anda akan diarahkan ke sistem pembayaran aman Midtrans untuk memilih metode pembayaran (Transfer Bank, e-Wallet, Kartu Kredit, dll).',
             style: TextStyle(
-              color: AppTheme.slate600,
+              color: AppTheme.onSurfaceVariant,
               height: 1.5,
               fontSize: 13,
             ),

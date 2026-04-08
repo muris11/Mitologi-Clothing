@@ -248,7 +248,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
         ),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.slate900.withValues(alpha: 0.04),
+            color: AppTheme.onSurface.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -349,13 +349,13 @@ class _AddressListScreenState extends State<AddressListScreen> {
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      color: AppTheme.slate900,
+                      color: AppTheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     address.phone,
-                    style: TextStyle(fontSize: 14, color: AppTheme.slate600),
+                    style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
                   ),
                   const SizedBox(height: 12),
                   // Address details with icon
@@ -365,7 +365,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                       Icon(
                         Icons.location_on_outlined,
                         size: 16,
-                        color: AppTheme.slate400,
+                        color: AppTheme.onSurfaceMuted,
                       ),
                       const SizedBox(width: 8),
                       Expanded(
@@ -376,7 +376,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                               address.addressLine1,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: AppTheme.slate700,
+                                color: AppTheme.onSurface,
                                 height: 1.5,
                               ),
                             ),
@@ -386,7 +386,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                                 address.addressLine2!,
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: AppTheme.slate700,
+                                  color: AppTheme.onSurface,
                                   height: 1.5,
                                 ),
                               ),
@@ -395,7 +395,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
                               '${address.city}, ${address.province} ${address.postalCode}',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: AppTheme.slate700,
+                                color: AppTheme.onSurface,
                                 height: 1.5,
                               ),
                             ),

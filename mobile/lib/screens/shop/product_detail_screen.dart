@@ -455,7 +455,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           child: Icon(
             Icons.image_not_supported_outlined,
             size: 64,
-            color: AppTheme.slate400,
+            color: AppTheme.onSurfaceMuted,
           ),
         ),
       );
@@ -498,7 +498,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     child: Icon(
                       Icons.image_not_supported_outlined,
                       size: 64,
-                      color: AppTheme.slate400,
+                      color: AppTheme.onSurfaceMuted,
                     ),
                   ),
                 );
@@ -673,7 +673,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               children: [
                 Icon(
                   Icons.rate_review_outlined,
-                  color: AppTheme.slate400,
+                  color: AppTheme.onSurfaceMuted,
                   size: 32,
                 ),
                 const SizedBox(width: 16),

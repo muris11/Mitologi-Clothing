@@ -76,7 +76,7 @@ class ServicesSection extends StatelessWidget {
                           service.description,
                           style: const TextStyle(
                             fontSize: 13,
-                            color: AppTheme.slate600,
+                            color: AppTheme.onSurfaceVariant,
                             height: 1.5,
                           ),
                         ),

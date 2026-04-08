@@ -133,7 +133,7 @@ class CompanyLegalitySection extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w800,
-                        color: AppTheme.slate400,
+                        color: AppTheme.onSurfaceMuted,
                         letterSpacing: 0.5,
                       ),
                     ),

@@ -125,7 +125,7 @@ class AuthPageShell extends StatelessWidget {
             '© ${DateTime.now().year} Mitologi Clothing. Hak cipta dilindungi.',
             style: const TextStyle(
               fontSize: 12,
-              color: AppTheme.slate400,
+              color: AppTheme.onSurfaceMuted,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,

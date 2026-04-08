@@ -197,7 +197,7 @@ class AboutHistorySection extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 9,
                                     fontWeight: FontWeight.w800,
-                                    color: AppTheme.slate400,
+                                    color: AppTheme.onSurfaceMuted,
                                     letterSpacing: 0.5,
                                   ),
                                 ),
@@ -243,7 +243,7 @@ class AboutHistorySection extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 14,
                                   height: 1.7,
-                                  color: AppTheme.slate600,
+                                  color: AppTheme.onSurfaceVariant,
                                 ),
                                 textAlign: TextAlign.justify,
                               ),
@@ -408,7 +408,7 @@ class AboutHistorySection extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 13,
                                   height: 1.5,
-                                  color: AppTheme.slate600,
+                                  color: AppTheme.onSurfaceVariant,
                                   fontWeight: FontWeight.w500,
                                 ),
                                 maxLines: 4,

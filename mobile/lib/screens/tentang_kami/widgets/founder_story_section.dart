@@ -124,7 +124,7 @@ class FounderStorySection extends StatelessWidget {
                                                   style: const TextStyle(
                                                     fontSize: 32,
                                                     fontWeight: FontWeight.bold,
-                                                    color: AppTheme.slate400,
+                                                    color: AppTheme.onSurfaceMuted,
                                                   ),
                                                 ),
                                               ),
@@ -142,7 +142,7 @@ class FounderStorySection extends StatelessWidget {
                                             style: const TextStyle(
                                               fontSize: 32,
                                               fontWeight: FontWeight.bold,
-                                              color: AppTheme.slate400,
+                                              color: AppTheme.onSurfaceMuted,
                                             ),
                                           ),
                                         ),
@@ -289,7 +289,7 @@ class FounderStorySection extends StatelessWidget {
                                             style: const TextStyle(
                                               fontSize: 14,
                                               height: 1.7,
-                                              color: AppTheme.slate700,
+                                              color: AppTheme.onSurface,
                                             ),
                                           ),
                                         );

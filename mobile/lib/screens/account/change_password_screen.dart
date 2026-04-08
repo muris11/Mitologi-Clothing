@@ -177,7 +177,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           label,
           style: const TextStyle(
             fontWeight: FontWeight.w600,
-            color: AppTheme.slate600,
+            color: AppTheme.onSurfaceVariant,
             fontSize: 14,
           ),
         ),
@@ -206,7 +206,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 obscureText
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
-                color: AppTheme.slate400,
+                color: AppTheme.onSurfaceMuted,
               ),
               tooltip: obscureText ? 'Show password' : 'Hide password',
               onPressed: onToggleObscure,

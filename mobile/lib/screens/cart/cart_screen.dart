@@ -171,7 +171,7 @@ class _CartScreenState extends State<CartScreen> {
         ),
         content: const Text(
           'Apakah Anda yakin ingin menghapus produk ini dari keranjang?',
-          style: TextStyle(color: AppTheme.slate600),
+          style: TextStyle(color: AppTheme.onSurfaceVariant),
         ),
         shape: RoundedRectangleBorder(borderRadius: AppTheme.radius22),
         actions: [
