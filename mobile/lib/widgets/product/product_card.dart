@@ -44,12 +44,14 @@ class ProductCard extends StatelessWidget {
         (product.totalStock ?? 0) > 0 && (product.totalStock ?? 0) <= 5;
 
     return InkWell(
-      borderRadius: AppTheme.radius15,
+      borderRadius: AppTheme.radius22,
       onTap: () => context.push('/shop/product/${product.handle}'),
       child: Ink(
         decoration: BoxDecoration(
-          color: AppTheme.surfaceContainerLowest,
-          borderRadius: AppTheme.radius15,
+          color: AppTheme.sectionBackground,
+          borderRadius: AppTheme.radius22,
+          border: Border.all(color: AppTheme.outlineLight, width: 1),
+          boxShadow: AppTheme.shadowSoft,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +62,7 @@ class ProductCard extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.vertical(
-                      top: AppTheme.radius15.topLeft,
+                      top: AppTheme.radius22.topLeft,
                     ),
                     child: CachedNetworkImage(
                       imageUrl: imageUrl,
@@ -126,16 +128,20 @@ class ProductCard extends StatelessWidget {
                           product.id.toString(),
                         );
                         return InkWell(
-                          borderRadius: AppTheme.radius19,
+                          borderRadius: AppTheme.radius12,
                           onTap: () => wishlistProvider.toggleWishlist(product),
                           child: Ink(
                             width: 36,
                             height: 36,
                             decoration: BoxDecoration(
-                              color: AppTheme.surfaceContainerLowest.withValues(
-                                alpha: 0.92,
+                              color: AppTheme.sectionBackground.withValues(
+                                alpha: 0.95,
                               ),
-                              shape: BoxShape.circle,
+                              borderRadius: AppTheme.radius12,
+                              border: Border.all(
+                                color: AppTheme.outlineLight,
+                                width: 1,
+                              ),
                             ),
                             child: Icon(
                               isWishlisted
@@ -261,16 +267,16 @@ class ProductCard extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 30,
-                        height: 30,
+                        width: 28,
+                        height: 28,
                         decoration: BoxDecoration(
-                          color: AppTheme.surfaceContainerLow,
-                          borderRadius: AppTheme.radius15,
+                          color: AppTheme.muted,
+                          borderRadius: AppTheme.radius8,
                         ),
                         child: const Icon(
-                          Icons.arrow_outward,
+                          Icons.arrow_forward,
                           color: AppTheme.onSurface,
-                          size: 16,
+                          size: 14,
                         ),
                       ),
                     ],
@@ -299,10 +305,10 @@ class _Badge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: AppTheme.radius11,
+        borderRadius: AppTheme.radius8,
       ),
       child: Text(
         label,
