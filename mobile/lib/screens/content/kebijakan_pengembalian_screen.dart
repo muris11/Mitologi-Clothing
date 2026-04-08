@@ -66,7 +66,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
         style: const TextStyle(
           fontWeight: FontWeight.w800,
           fontSize: 18,
-          color: AppTheme.slate800,
+          color: AppTheme.onSurface,
         ),
       ),
     );
@@ -84,7 +84,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(top: 6, right: 12),
-            child: Icon(Icons.circle, size: 6, color: AppTheme.slate400),
+            child: Icon(Icons.circle, size: 6, color: AppTheme.onSurfaceMuted),
           ),
           Expanded(
             child: Text(
@@ -92,7 +92,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
-                color: AppTheme.slate600,
+                color: AppTheme.onSurfaceVariant,
                 height: 1.6,
               ),
             ),
@@ -118,7 +118,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
-                    color: AppTheme.slate600,
+                    color: AppTheme.onSurfaceVariant,
                   ),
                 ),
               ),
@@ -128,7 +128,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
-                    color: AppTheme.slate600,
+                    color: AppTheme.onSurfaceVariant,
                     height: 1.6,
                   ),
                 ),
@@ -193,7 +193,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 13,
-                              color: AppTheme.slate500,
+                              color: AppTheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -254,7 +254,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                           style: const TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 13,
-                            color: AppTheme.slate800,
+                            color: AppTheme.onSurface,
                           ),
                         ),
                         const SizedBox(height: 6),
@@ -266,7 +266,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 11,
-                            color: AppTheme.slate500,
+                            color: AppTheme.onSurfaceVariant,
                             height: 1.4,
                           ),
                         ),
@@ -278,7 +278,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
 
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 32),
-                child: Divider(color: AppTheme.slate100, thickness: 1),
+                child: Divider(color: AppTheme.muted, thickness: 1),
               ),
 
               // Main Content
@@ -340,7 +340,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 margin: const EdgeInsets.only(bottom: 24),
                 decoration: BoxDecoration(
-                  color: AppTheme.slate50,
+                  color: AppTheme.sectionBackground,
                   borderRadius: AppTheme.radius16,
                   boxShadow: [
                     BoxShadow(
@@ -368,7 +368,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                       ),
                       child: const Icon(
                         Icons.sync,
-                        color: AppTheme.slate500,
+                        color: AppTheme.onSurfaceVariant,
                         size: 20,
                       ),
                     ),
@@ -382,7 +382,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w800,
                               fontSize: 16,
-                              color: AppTheme.slate800,
+                              color: AppTheme.onSurface,
                             ),
                           ),
                           SizedBox(height: 8),
@@ -391,7 +391,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 13,
-                              color: AppTheme.slate600,
+                              color: AppTheme.onSurfaceVariant,
                               height: 1.6,
                             ),
                           ),
@@ -462,7 +462,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
-                    color: AppTheme.slate600,
+                    color: AppTheme.onSurfaceVariant,
                     height: 1.6,
                   ),
                 ),
@@ -470,7 +470,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
 
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 32),
-                child: Divider(color: AppTheme.slate100, thickness: 1),
+                child: Divider(color: AppTheme.muted, thickness: 1),
               ),
 
               // Mini FAQ
@@ -502,7 +502,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 13,
-                              color: AppTheme.slate500,
+                              color: AppTheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -535,7 +535,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                         style: const TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 15,
-                          color: AppTheme.slate800,
+                          color: AppTheme.onSurface,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -544,7 +544,7 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 13,
-                          color: AppTheme.slate600,
+                          color: AppTheme.onSurfaceVariant,
                           height: 1.5,
                         ),
                       ),

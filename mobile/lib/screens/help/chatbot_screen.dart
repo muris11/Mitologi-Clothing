@@ -169,7 +169,7 @@ class _ChatbotScreenState extends State<ChatbotScreen>
               child: Text(
                 message.text,
                 style: TextStyle(
-                  color: message.isUser ? Colors.white : AppTheme.slate800,
+                  color: message.isUser ? Colors.white : AppTheme.onSurface,
                   fontSize: 14,
                   height: 1.4,
                 ),
@@ -224,7 +224,7 @@ class _ChatbotScreenState extends State<ChatbotScreen>
               ),
             ),
             child: const BouncingDotsIndicator(
-              color: AppTheme.slate400,
+              color: AppTheme.onSurfaceMuted,
               dotSize: 8.0,
             ),
           ),
@@ -249,7 +249,7 @@ class _ChatbotScreenState extends State<ChatbotScreen>
               style: const TextStyle(fontSize: 14),
               decoration: InputDecoration(
                 hintText: 'Ketik pesan Anda...',
-                hintStyle: const TextStyle(color: AppTheme.slate400),
+                hintStyle: const TextStyle(color: AppTheme.onSurfaceMuted),
                 filled: true,
                 fillColor: AppTheme.surfaceContainerLow,
                 contentPadding: const EdgeInsets.symmetric(
@@ -329,7 +329,7 @@ class _DotIndicatorState extends State<_DotIndicator>
             width: 6,
             height: 6,
             decoration: const BoxDecoration(
-              color: AppTheme.slate400,
+              color: AppTheme.onSurfaceMuted,
               shape: BoxShape.circle,
             ),
           ),

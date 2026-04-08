@@ -132,7 +132,7 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
               SizedBox(height: 16),
               Text(
                 'Memuat data...',
-                style: TextStyle(color: AppTheme.slate500, fontSize: 14),
+                style: TextStyle(color: AppTheme.onSurfaceVariant, fontSize: 14),
               ),
             ],
           ),
@@ -190,7 +190,7 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.slate800,
+                    color: AppTheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -199,7 +199,7 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 15,
-                    color: AppTheme.slate500,
+                    color: AppTheme.onSurfaceVariant,
                     height: 1.5,
                   ),
                 ),

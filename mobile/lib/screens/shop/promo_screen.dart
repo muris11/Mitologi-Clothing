@@ -101,7 +101,7 @@ class PromoScreen extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 13,
-                              color: AppTheme.slate500,
+                              color: AppTheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -159,7 +159,7 @@ class PromoScreen extends StatelessWidget {
                         style: const TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 18,
-                          color: AppTheme.slate800,
+                          color: AppTheme.onSurface,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -168,7 +168,7 @@ class PromoScreen extends StatelessWidget {
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 13,
-                          color: AppTheme.slate600,
+                          color: AppTheme.onSurfaceVariant,
                           height: 1.6,
                         ),
                       ),
@@ -179,7 +179,7 @@ class PromoScreen extends StatelessWidget {
 
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 32),
-                child: Divider(color: AppTheme.slate100, thickness: 1),
+                child: Divider(color: AppTheme.muted, thickness: 1),
               ),
 
               // Benefits
@@ -211,7 +211,7 @@ class PromoScreen extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 13,
-                              color: AppTheme.slate500,
+                              color: AppTheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -235,7 +235,7 @@ class PromoScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: const BoxDecoration(
-                          color: AppTheme.slate50,
+                          color: AppTheme.sectionBackground,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
@@ -254,7 +254,7 @@ class PromoScreen extends StatelessWidget {
                               style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 fontSize: 16,
-                                color: AppTheme.slate800,
+                                color: AppTheme.onSurface,
                               ),
                             ),
                             const SizedBox(height: 6),
@@ -263,7 +263,7 @@ class PromoScreen extends StatelessWidget {
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 13,
-                                color: AppTheme.slate600,
+                                color: AppTheme.onSurfaceVariant,
                                 height: 1.5,
                               ),
                             ),

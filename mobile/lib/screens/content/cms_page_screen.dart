@@ -85,7 +85,7 @@ class _CMSPageScreenState extends State<CMSPageScreen> {
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 14,
-                            color: AppTheme.slate500,
+                            color: AppTheme.onSurfaceVariant,
                             height: 1.5,
                           ),
                         ),
@@ -120,7 +120,7 @@ class _CMSPageScreenState extends State<CMSPageScreen> {
                       style: {
                         "body": Style(
                           fontSize: FontSize(14),
-                          color: AppTheme.slate600,
+                          color: AppTheme.onSurfaceVariant,
                           lineHeight: LineHeight(1.6),
                         ),
                         "h1": Style(
@@ -136,7 +136,7 @@ class _CMSPageScreenState extends State<CMSPageScreen> {
                         "h3": Style(
                           fontSize: FontSize(18),
                           fontWeight: FontWeight.bold,
-                          color: AppTheme.slate800,
+                          color: AppTheme.onSurface,
                         ),
                         "a": Style(
                           color: AppTheme.primary,

@@ -16,7 +16,7 @@ class KebijakanPrivasiScreen extends StatelessWidget {
         style: const TextStyle(
           fontWeight: FontWeight.w800,
           fontSize: 18,
-          color: AppTheme.slate800,
+          color: AppTheme.onSurface,
         ),
       ),
     );
@@ -30,7 +30,7 @@ class KebijakanPrivasiScreen extends StatelessWidget {
         style: const TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 14,
-          color: AppTheme.slate600,
+          color: AppTheme.onSurfaceVariant,
           height: 1.6,
         ),
       ),
@@ -49,7 +49,7 @@ class KebijakanPrivasiScreen extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(top: 6, right: 12),
-            child: Icon(Icons.circle, size: 6, color: AppTheme.slate400),
+            child: Icon(Icons.circle, size: 6, color: AppTheme.onSurfaceMuted),
           ),
           Expanded(
             child: Text(
@@ -57,7 +57,7 @@ class KebijakanPrivasiScreen extends StatelessWidget {
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
-                color: AppTheme.slate600,
+                color: AppTheme.onSurfaceVariant,
                 height: 1.6,
               ),
             ),

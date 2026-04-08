@@ -191,7 +191,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
         const SizedBox(height: 4),
         Text(
           kaosJerseyData['description'],
-          style: TextStyle(fontSize: 14, color: AppTheme.slate500),
+          style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
         ),
         const SizedBox(height: 16),
         // Table
@@ -255,7 +255,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
         const SizedBox(height: 8),
         Text(
           '* Toleransi ukuran ±1-2 cm. Semua ukuran dalam centimeter (cm).',
-          style: TextStyle(fontSize: 12, color: AppTheme.slate400),
+          style: TextStyle(fontSize: 12, color: AppTheme.onSurfaceMuted),
         ),
       ],
     );
@@ -324,7 +324,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
         const SizedBox(height: 4),
         Text(
           'Ukuran untuk kemeja seragam dari TK hingga Dewasa.',
-          style: TextStyle(fontSize: 14, color: AppTheme.slate500),
+          style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
         ),
         const SizedBox(height: 16),
         // Category tables in grid
@@ -401,7 +401,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
         const SizedBox(height: 8),
         Text(
           '* Toleransi ukuran ±1-2 cm. Semua ukuran dalam centimeter (cm).',
-          style: TextStyle(fontSize: 12, color: AppTheme.slate400),
+          style: TextStyle(fontSize: 12, color: AppTheme.onSurfaceMuted),
         ),
       ],
     );
@@ -450,7 +450,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
             style: TextStyle(
               fontSize: 12,
               fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
-              color: isHeader ? AppTheme.primary : AppTheme.slate600,
+              color: isHeader ? AppTheme.primary : AppTheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -472,8 +472,8 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
           fontSize: 12,
           fontWeight: isHeader || isBold ? FontWeight.bold : FontWeight.normal,
           color: isHeader
-              ? AppTheme.slate600
-              : (isBold ? AppTheme.primary : AppTheme.slate600),
+              ? AppTheme.onSurfaceVariant
+              : (isBold ? AppTheme.primary : AppTheme.onSurfaceVariant),
         ),
       ),
     );
@@ -494,7 +494,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
         const SizedBox(height: 4),
         Text(
           'Ikuti panduan berikut agar ukuran yang dipilih sesuai.',
-          style: TextStyle(fontSize: 14, color: AppTheme.slate500),
+          style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
         ),
         const SizedBox(height: 16),
         GridView.builder(
@@ -524,7 +524,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppTheme.slate50,
+                      color: AppTheme.sectionBackground,
                       shape: BoxShape.circle,
                     ),
                     child: Text(
@@ -532,7 +532,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: AppTheme.slate400,
+                        color: AppTheme.onSurfaceMuted,
                       ),
                     ),
                   ),
@@ -545,7 +545,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.slate800,
+                      color: AppTheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -554,7 +554,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 12,
-                      color: AppTheme.slate500,
+                      color: AppTheme.onSurfaceVariant,
                       height: 1.5,
                     ),
                   ),
@@ -582,7 +582,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
         const SizedBox(height: 4),
         Text(
           'Beberapa hal penting yang perlu diperhatikan.',
-          style: TextStyle(fontSize: 14, color: AppTheme.slate500),
+          style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
         ),
         const SizedBox(height: 16),
         ...tips.asMap().entries.map((entry) {
@@ -603,7 +603,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppTheme.slate50,
+                    color: AppTheme.sectionBackground,
                     shape: BoxShape.circle,
                     border: Border.all(color: const Color(0xFFE2E8F0)),
                   ),
@@ -626,7 +626,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                       entry.value,
                       style: TextStyle(
                         fontSize: 14,
-                        color: AppTheme.slate600,
+                        color: AppTheme.onSurfaceVariant,
                         height: 1.6,
                       ),
                     ),
@@ -668,7 +668,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
           Text(
             'Konsultasikan langsung dengan tim kami untuk rekomendasi ukuran yang tepat.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, color: AppTheme.slate500),
+            style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
           ),
           const SizedBox(height: 20),
           ElevatedButton.icon(
@@ -744,7 +744,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                   ),
                   indicatorSize: TabBarIndicatorSize.tab,
                   labelColor: Colors.white,
-                  unselectedLabelColor: AppTheme.slate500,
+                  unselectedLabelColor: AppTheme.onSurfaceVariant,
                   labelStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,

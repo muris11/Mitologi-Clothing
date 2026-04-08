@@ -211,7 +211,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               const SizedBox(height: 16),
               Text(
                 'Gagal memuat: $_error',
-                style: const TextStyle(color: AppTheme.slate700),
+                style: const TextStyle(color: AppTheme.onSurface),
               ),
               const SizedBox(height: 16),
               ElevatedButton.icon(
@@ -236,7 +236,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       return const Center(
         child: Text(
           'Pesanan tidak ditemukan',
-          style: TextStyle(color: AppTheme.slate500),
+          style: TextStyle(color: AppTheme.onSurfaceVariant),
         ),
       );
     }

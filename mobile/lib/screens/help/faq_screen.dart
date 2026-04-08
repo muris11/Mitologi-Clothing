@@ -205,7 +205,7 @@ class _FaqScreenState extends State<FaqScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
-                            color: isActive ? Colors.white : AppTheme.slate600,
+                            color: isActive ? Colors.white : AppTheme.onSurfaceVariant,
                           ),
                         ),
                       ),
@@ -250,11 +250,11 @@ class _FaqScreenState extends State<FaqScreen> {
                             fontSize: 14,
                             color: isExpanded
                                 ? AppTheme.primary
-                                : AppTheme.slate800,
+                                : AppTheme.onSurface,
                           ),
                         ),
                         iconColor: AppTheme.primary,
-                        collapsedIconColor: AppTheme.slate400,
+                        collapsedIconColor: AppTheme.onSurfaceMuted,
                         tilePadding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 4,
@@ -270,7 +270,7 @@ class _FaqScreenState extends State<FaqScreen> {
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 13,
-                              color: AppTheme.slate600,
+                              color: AppTheme.onSurfaceVariant,
                               height: 1.6,
                             ),
                           ),
@@ -307,7 +307,7 @@ class _FaqScreenState extends State<FaqScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 13,
-                        color: AppTheme.slate500,
+                        color: AppTheme.onSurfaceVariant,
                         height: 1.5,
                       ),
                       textAlign: TextAlign.center,
