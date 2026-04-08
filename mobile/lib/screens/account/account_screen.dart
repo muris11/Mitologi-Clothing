@@ -171,9 +171,9 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            FadeInUp(
-              delay: const Duration(milliseconds: 100),
-              child: const Text(
+            const FadeInUp(
+              delay: Duration(milliseconds: 100),
+              child: Text(
                 'Belum Login',
                 style: TextStyle(
                   fontSize: 24,
@@ -183,9 +183,9 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             const SizedBox(height: 12),
-            FadeInUp(
-              delay: const Duration(milliseconds: 200),
-              child: const Text(
+            const FadeInUp(
+              delay: Duration(milliseconds: 200),
+              child: Text(
                 'Silahkan login atau daftar untuk mengakses profil dan pesanan Anda.',
                 textAlign: TextAlign.center,
                 style: TextStyle(

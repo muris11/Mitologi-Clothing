@@ -22,7 +22,9 @@ class CartSummaryPanel extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.sectionBackground,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-        border: Border(top: BorderSide(color: AppTheme.outlineLight, width: 1)),
+        border: const Border(
+          top: BorderSide(color: AppTheme.outlineLight, width: 1),
+        ),
         boxShadow: AppTheme.shadowFloating,
       ),
       child: SafeArea(
@@ -58,7 +60,9 @@ class CartSummaryPanel extends StatelessWidget {
             SizedBox(
               height: 54,
               child: ShimmerButton(
-                background: isLoading ? AppTheme.onSurfaceMuted : AppTheme.primary,
+                background: isLoading
+                    ? AppTheme.onSurfaceMuted
+                    : AppTheme.primary,
                 borderRadius: 16,
                 onPressed: isLoading ? null : onCheckout,
                 child: isLoading
