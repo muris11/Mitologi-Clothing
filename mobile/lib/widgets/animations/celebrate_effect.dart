@@ -34,7 +34,7 @@ class ParticleShapeFactory {
 
       case ParticleShape.star:
         final path = Path();
-        final points = 5;
+        const points = 5;
         final innerRadius = size * 0.4;
         final outerRadius = size;
 
