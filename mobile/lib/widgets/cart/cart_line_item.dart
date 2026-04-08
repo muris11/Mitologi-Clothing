@@ -26,8 +26,10 @@ class CartLineItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceContainerLowest,
-        borderRadius: AppTheme.radius19,
+        color: AppTheme.sectionBackground,
+        borderRadius: AppTheme.radius22,
+        border: Border.all(color: AppTheme.outlineLight, width: 1),
+        boxShadow: AppTheme.shadowSoft,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
