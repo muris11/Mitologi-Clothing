@@ -94,77 +94,77 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.pageBackground,
       body: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
           // Subtle pulse based on time or scale
           final pulse = (1.0 + (_controller.value * 0.1));
-          return Container(
-            color: AppTheme.surface,
-            child: Center(
-              child: Transform.translate(
-                offset: Offset(0, _slideAnimation.value),
-                child: Opacity(
-                  opacity: _opacityAnimation.value,
-                  child: Transform.scale(
-                    scale: _scaleAnimation.value,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Premium logo display
-                        Hero(
-                          tag: 'startup-logo',
-                          child: Container(
-                            width: 140,
-                            height: 140,
-                            decoration: const BoxDecoration(
-                              color: AppTheme.surfaceContainerLowest,
-                              shape: BoxShape.circle,
+          return Center(
+            child: Transform.translate(
+              offset: Offset(0, _slideAnimation.value),
+              child: Opacity(
+                opacity: _opacityAnimation.value,
+                child: Transform.scale(
+                  scale: _scaleAnimation.value,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Premium logo display
+                      Hero(
+                        tag: 'startup-logo',
+                        child: Container(
+                          width: 140,
+                          height: 140,
+                          decoration: BoxDecoration(
+                            color: AppTheme.sectionBackground,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: AppTheme.outlineLight,
+                              width: 1,
                             ),
-                            padding: EdgeInsets.all(
-                              ResponsiveHelper.horizontalPadding(context) *
-                                  1.75,
-                            ),
-                            child: Image.asset(
-                              'assets/images/logo.png',
-                              fit: BoxFit.contain,
-                            ),
+                            boxShadow: AppTheme.shadowSoft,
+                          ),
+                          padding: EdgeInsets.all(
+                            ResponsiveHelper.horizontalPadding(context) * 1.75,
+                          ),
+                          child: Image.asset(
+                            'assets/images/logo.png',
+                            fit: BoxFit.contain,
                           ),
                         ),
-                        const SizedBox(height: 48),
-                        // Brand Typography
-                        TextBlurReveal(
-                          text: 'MITOLOGI',
-                          style:
-                              Theme.of(
-                                context,
-                              ).textTheme.displayLarge?.copyWith(
-                                fontSize: 34,
-                                letterSpacing: 8 * pulse, // slight expand
-                              ) ??
-                              const TextStyle(),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          'PREMIUM MENSWEAR',
-                          style: Theme.of(
-                            context,
-                          ).textTheme.labelSmall?.copyWith(letterSpacing: 4),
-                        ),
-                        const SizedBox(height: 60),
-                        // Luxury minimal loader
-                        SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                              AppTheme.primary,
-                            ),
-                            strokeWidth: 2,
+                      ),
+                      const SizedBox(height: 48),
+                      // Brand Typography
+                      TextBlurReveal(
+                        text: 'MITOLOGI',
+                        style:
+                            Theme.of(context).textTheme.displayLarge?.copyWith(
+                              fontSize: 34,
+                              letterSpacing: 8 * pulse, // slight expand
+                            ) ??
+                            const TextStyle(),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'PREMIUM MENSWEAR',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.labelSmall?.copyWith(letterSpacing: 4),
+                      ),
+                      const SizedBox(height: 60),
+                      // Luxury minimal loader
+                      SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                            AppTheme.primary,
                           ),
+                          strokeWidth: 2,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
