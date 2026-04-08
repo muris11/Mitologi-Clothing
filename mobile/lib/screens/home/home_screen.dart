@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart' show Consumer2;
 import 'package:go_router/go_router.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../models/collection.dart';
-import '../../providers/content_provider.dart';
-import '../../providers/auth_provider.dart';
 import '../../models/product.dart';
-import '../../services/collection_service.dart';
-import '../../services/product_service.dart';
+import '../../providers/content_provider.dart';
+import '../../providers/product_provider.dart';
+import '../../providers/auth_provider.dart';
 import '../../config/theme.dart';
 import '../../widgets/animations/animations.dart';
 import '../../widgets/skeleton/skeleton.dart';
@@ -33,43 +33,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentCarouselIndex = 0;
-  bool _isLoading = true;
-  List<Product> _newArrivals = [];
-  List<Product> _bestSellers = [];
-  List<Collection> _collections = [];
 
   @override
   void initState() {
     super.initState();
-    _loadData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProductProvider>().loadHomeData();
       context.read<ContentProvider>().fetchLandingPage();
     });
   }
 
-  Future<void> _loadData() async {
-    setState(() => _isLoading = true);
-
-    try {
-      final results = await Future.wait([
-        ProductService().getNewArrivals(limit: 6),
-        ProductService().getBestSellers(limit: 6),
-        CollectionService().getCollections(),
-      ]);
-
-      setState(() {
-        _newArrivals = results[0] as List<Product>;
-        _bestSellers = results[1] as List<Product>;
-        _collections = results[2] as List<Collection>;
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() => _isLoading = false);
-    }
-  }
-
   Future<void> _handleRefresh() async {
-    await _loadData();
+    context.read<ProductProvider>().loadHomeData();
     if (mounted) {
       await context.read<ContentProvider>().fetchLandingPage();
     }
@@ -91,24 +66,25 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () => context.push('/chatbot'),
         ),
       ],
-      body: Consumer<ContentProvider>(
-        builder: (context, provider, child) {
+      body: Consumer2<ContentProvider, ProductProvider>(
+        builder: (context, contentProvider, productProvider, child) {
           // Show skeleton while loading
-          if (provider.isLoadingLanding || _isLoading) {
+          if (contentProvider.isLoadingLanding ||
+              productProvider.isLoadingHomeData) {
             return const HomeSkeleton();
           }
 
-          if (provider.landingError != null) {
-            return _buildErrorState(provider);
+          if (contentProvider.landingError != null) {
+            return _buildErrorState(contentProvider);
           }
 
-          final data = provider.landingPage;
+          final data = contentProvider.landingPage;
           if (data == null) return const SizedBox.shrink();
 
           return RefreshIndicator(
             onRefresh: _handleRefresh,
             color: AppTheme.primary,
-            backgroundColor: AppTheme.surface,
+            backgroundColor: AppTheme.pageBackground,
             strokeWidth: 2.5,
             child: CustomScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -149,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: _buildProductSection(
                           title: 'Produk Baru',
                           subtitle: 'Koleksi terbaru dari Mitologi',
-                          products: _newArrivals,
+                          products: productProvider.newArrivals,
                           onSeeAll: () => context.push('/shop?sort=latest'),
                         ),
                       ),
@@ -162,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: _buildProductSection(
                           title: 'Best Sellers',
                           subtitle: 'Produk paling populer minggu ini',
-                          products: _bestSellers,
+                          products: productProvider.bestSellers,
                           onSeeAll: () =>
                               context.push('/shop?sort=best-selling'),
                         ),
@@ -171,10 +147,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(height: ResponsiveHelper.sectionGap(context)),
 
                       // Collections
-                      if (_collections.isNotEmpty)
+                      if (productProvider.collections.isNotEmpty)
                         FadeInUp(
                           delay: const Duration(milliseconds: 250),
-                          child: _buildCollectionsSection(),
+                          child: _buildCollectionsSection(
+                            productProvider.collections,
+                          ),
                         ),
 
                       SizedBox(height: ResponsiveHelper.sectionGap(context)),
@@ -669,7 +647,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCollectionsSection() {
+  Widget _buildCollectionsSection(List<Collection> collections) {
     final horizontalPadding = ResponsiveHelper.horizontalPadding(context);
     final sectionGap = ResponsiveHelper.sectionGap(context);
 
@@ -705,10 +683,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-            itemCount: _collections.length,
+            itemCount: collections.length,
             separatorBuilder: (_, index) => const SizedBox(width: 16),
             itemBuilder: (context, index) {
-              final collection = _collections[index];
+              final collection = collections[index];
               return FadeInUp(
                 delay: Duration(milliseconds: index * 80),
                 child: _buildCollectionCard(collection),
@@ -855,7 +833,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 280,
             child: FutureBuilder<List<Product>>(
-              future: ProductService().getRecommendations(),
+              future: context.read<ProductProvider>().getRecommendations(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(

@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import '../models/collection.dart';
 import '../models/product.dart';
 import '../models/category.dart';
 import '../models/pagination.dart';
+import '../services/collection_service.dart';
 import '../services/product_service.dart';
 import '../models/review.dart';
 
 class ProductProvider extends ChangeNotifier {
   final ProductService _productService = ProductService();
+  final CollectionService _collectionService = CollectionService();
 
   // State
   List<Product> _products = [];
   List<Category> _categories = [];
+  List<Collection> _collections = [];
+  List<Product> _newArrivals = [];
+  List<Product> _bestSellers = [];
+  Product? _currentProduct;
+  List<ReviewItem> _currentProductReviews = [];
+  List<Product> _currentProductRelated = [];
+  bool _isLoadingProductDetail = false;
   Pagination _pagination = Pagination(
     currentPage: 1,
     lastPage: 1,
@@ -20,6 +30,7 @@ class ProductProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   bool _isLoadingMore = false;
+  bool _isLoadingHomeData = false;
   String? _error;
 
   // Filters
@@ -32,8 +43,16 @@ class ProductProvider extends ChangeNotifier {
   // Getters
   List<Product> get products => _products;
   List<Category> get categories => _categories;
+  List<Collection> get collections => _collections;
+  List<Product> get newArrivals => _newArrivals;
+  List<Product> get bestSellers => _bestSellers;
+  Product? get currentProduct => _currentProduct;
+  List<ReviewItem> get currentProductReviews => _currentProductReviews;
+  List<Product> get currentProductRelated => _currentProductRelated;
   bool get isLoading => _isLoading;
   bool get isLoadingMore => _isLoadingMore;
+  bool get isLoadingHomeData => _isLoadingHomeData;
+  bool get isLoadingProductDetail => _isLoadingProductDetail;
   String? get error => _error;
   bool get hasNextPage => _pagination.hasNextPage;
 
@@ -114,7 +133,7 @@ class ProductProvider extends ChangeNotifier {
       );
 
       final newProducts = response.productsData
-          .map((json) => Product.fromJson(json))
+          .map((json) => Product.fromJson(json as Map<String, dynamic>))
           .toList();
 
       if (_pagination.currentPage == 1) {
@@ -211,6 +230,66 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       // Rethrow for UI handling
       rethrow;
+    }
+  }
+
+  // Home Screen Data Loading
+  Future<void> loadHomeData() async {
+    _isLoadingHomeData = true;
+    _setError(null);
+    notifyListeners();
+
+    try {
+      final results = await Future.wait([
+        _productService.getNewArrivals(limit: 6),
+        _productService.getBestSellers(limit: 6),
+        _collectionService.getCollections(),
+      ]);
+
+      _newArrivals = results[0] as List<Product>;
+      _bestSellers = results[1] as List<Product>;
+      _collections = results[2] as List<Collection>;
+    } catch (e) {
+      _setError(e.toString().replaceAll('ApiException: ', ''));
+    } finally {
+      _isLoadingHomeData = false;
+      notifyListeners();
+    }
+  }
+
+  // Product Detail Loading
+  Future<void> loadProductDetail(String handle) async {
+    _isLoadingProductDetail = true;
+    _currentProduct = null;
+    _currentProductReviews = [];
+    _currentProductRelated = [];
+    _setError(null);
+    notifyListeners();
+
+    try {
+      _currentProduct = await _productService.getProductDetail(handle);
+
+      // Load related data in parallel
+      final results = await Future.wait([
+        _productService.getProductReviews(handle),
+        _productService.getRelatedProducts(handle),
+      ]);
+
+      _currentProductReviews = results[0] as List<ReviewItem>;
+      _currentProductRelated = results[1] as List<Product>;
+    } catch (e) {
+      _setError(e.toString().replaceAll('ApiException: ', ''));
+    } finally {
+      _isLoadingProductDetail = false;
+      notifyListeners();
+    }
+  }
+
+  Future<List<Product>> getRecommendations() async {
+    try {
+      return await _productService.getRecommendations();
+    } catch (e) {
+      return [];
     }
   }
 }
