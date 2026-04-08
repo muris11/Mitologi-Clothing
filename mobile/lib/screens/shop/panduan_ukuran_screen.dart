@@ -191,7 +191,10 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
         const SizedBox(height: 4),
         Text(
           kaosJerseyData['description'],
-          style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
+          style: const TextStyle(
+            fontSize: 14,
+            color: AppTheme.onSurfaceVariant,
+          ),
         ),
         const SizedBox(height: 16),
         // Table
@@ -253,7 +256,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
           ),
         ),
         const SizedBox(height: 8),
-        Text(
+        const Text(
           '* Toleransi ukuran ±1-2 cm. Semua ukuran dalam centimeter (cm).',
           style: TextStyle(fontSize: 12, color: AppTheme.onSurfaceMuted),
         ),
@@ -322,7 +325,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
           ),
         ),
         const SizedBox(height: 4),
-        Text(
+        const Text(
           'Ukuran untuk kemeja seragam dari TK hingga Dewasa.',
           style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
         ),
@@ -399,7 +402,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
           );
         }),
         const SizedBox(height: 8),
-        Text(
+        const Text(
           '* Toleransi ukuran ±1-2 cm. Semua ukuran dalam centimeter (cm).',
           style: TextStyle(fontSize: 12, color: AppTheme.onSurfaceMuted),
         ),
@@ -492,7 +495,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
           ),
         ),
         const SizedBox(height: 4),
-        Text(
+        const Text(
           'Ikuti panduan berikut agar ukuran yang dipilih sesuai.',
           style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
         ),
@@ -580,7 +583,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
           ),
         ),
         const SizedBox(height: 4),
-        Text(
+        const Text(
           'Beberapa hal penting yang perlu diperhatikan.',
           style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),
         ),
@@ -665,7 +668,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
             ),
           ),
           const SizedBox(height: 8),
-          Text(
+          const Text(
             'Konsultasikan langsung dengan tim kami untuk rekomendasi ukuran yang tepat.',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceVariant),

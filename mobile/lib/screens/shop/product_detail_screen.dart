@@ -612,7 +612,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             'body': Style(
               fontSize: FontSize(14),
               color: AppTheme.onSurfaceVariant,
-              lineHeight: LineHeight(1.6),
+              lineHeight: const LineHeight(1.6),
             ),
             'p': Style(margin: Margins.only(bottom: 12)),
             'h1, h2, h3, h4, h5, h6': Style(
