@@ -208,8 +208,8 @@
                              <div 
                                 x-show="open" 
                                 @click.away="open = false" 
-                                class="absolute right-[-80px] sm:right-0 mt-3 w-[calc(100vw-32px)] sm:w-80 bg-white rounded-2xl shadow-2xl py-2 z-50 border border-gray-100 overflow-hidden transform origin-top-right"
-                                style="display: none; max-width: 360px;"
+                                class="fixed inset-x-4 top-[76px] md:absolute md:inset-auto md:right-0 md:top-full md:mt-3 md:w-80 bg-white rounded-2xl shadow-2xl py-2 z-50 border border-gray-100 overflow-hidden transform origin-top md:origin-top-right transition-all"
+                                style="display: none;"
                                 x-transition:enter="transition ease-out duration-200"
                                 x-transition:enter-start="opacity-0 scale-95"
                                 x-transition:enter-end="opacity-100 scale-100"
