@@ -1004,7 +1004,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: AppTheme.radius16,
                   image: DecorationImage(
                     image: CachedNetworkImageProvider(
-                      StorageUrl.format(material.image),
+                      StorageUrl.format(material.icon),
                     ),
                     fit: BoxFit.cover,
                   ),

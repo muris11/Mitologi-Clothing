@@ -6,12 +6,13 @@ class ChatbotService {
 
   final ApiService _api;
 
-  Future<String> sendMessage(String message, {List<Map<String, String>> history = const []}) async {
+  Future<String> sendMessage(
+    String message, {
+    List<Map<String, String>> history = const [],
+  }) async {
     try {
-      final body = {
-        'message': message,
-      };
-      
+      final body = <String, dynamic>{'message': message};
+
       if (history.isNotEmpty) {
         body['history'] = history;
       }
@@ -23,7 +24,7 @@ class ChatbotService {
       final data = response is Map<String, dynamic>
           ? (response['data'] ?? response)
           : response;
-          
+
       if (data is Map<String, dynamic>) {
         return (data['reply'] ??
                 data['response'] ??

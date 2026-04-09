@@ -30,7 +30,7 @@ class ContentProvider extends ChangeNotifier {
   String? _menuError;
 
   // Materials (Backend: MaterialController)
-  List<material_model.Material> _materials = [];
+  List<material_model.MaterialInfo> _materials = [];
   bool _isLoadingMaterials = false;
   String? _materialsError;
 
@@ -56,7 +56,7 @@ class ContentProvider extends ChangeNotifier {
   bool get isLoadingMenu => _isLoadingMenu;
   String? get menuError => _menuError;
 
-  List<material_model.Material> get materials => _materials;
+  List<material_model.MaterialInfo> get materials => _materials;
   bool get isLoadingMaterials => _isLoadingMaterials;
   String? get materialsError => _materialsError;
 

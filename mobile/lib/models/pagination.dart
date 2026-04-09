@@ -71,7 +71,7 @@ class ProductListResponse {
       productsList = json['products'] as List<dynamic>;
       if (json['pagination'] is Map) {
         paging = Pagination.fromJson(
-          Map<String, dynamic>.from(json['pagination']),
+          Map<String, dynamic>.from(json['pagination'] as Map),
         );
       }
     }

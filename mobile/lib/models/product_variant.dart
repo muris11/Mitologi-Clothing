@@ -41,14 +41,17 @@ class ProductVariant {
     return ProductVariant(
       id: json['id']?.toString() ?? '',
       title: json['title']?.toString() ?? '',
-      availableForSale: json['availableForSale'] == true || json['available_for_sale'] == true,
+      availableForSale:
+          json['availableForSale'] == true ||
+          json['available_for_sale'] == true,
       selectedOptions:
-          (json['selectedOptions'] ?? json['selected_options'] as List<dynamic>?)
-              ?.map(
-                (e) => SelectedOption.fromJson(
+          ((json['selectedOptions'] ?? json['selected_options'])
+                  as List<dynamic>?)
+              ?.map((e) {
+                return SelectedOption.fromJson(
                   Map<String, dynamic>.from(e as Map),
-                ),
-              )
+                );
+              })
               .toList() ??
           [],
       price: Money.fromJson(

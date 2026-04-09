@@ -194,7 +194,9 @@ class ContentService {
       if (response is List) {
         // Direct list response
         allSteps.addAll(
-          response.whereType<Map<String, dynamic>>().map((e) => OrderStep.fromJson(e)),
+          response.whereType<Map<String, dynamic>>().map(
+            (e) => OrderStep.fromJson(e),
+          ),
         );
       } else if (response is Map<String, dynamic> && grouped) {
         // Handle grouped response
@@ -203,9 +205,9 @@ class ContentService {
           wrapped.forEach((key, value) {
             if (value is List) {
               allSteps.addAll(
-                value
-                    .whereType<Map<String, dynamic>>()
-                    .map((e) => OrderStep.fromJson(e)),
+                value.whereType<Map<String, dynamic>>().map(
+                  (e) => OrderStep.fromJson(e),
+                ),
               );
             }
           });
@@ -214,7 +216,9 @@ class ContentService {
         // Try standard {data: [...]} format
         final data = _safeToList(response, dataKey: 'data');
         allSteps.addAll(
-          data.whereType<Map<String, dynamic>>().map((e) => OrderStep.fromJson(e)),
+          data.whereType<Map<String, dynamic>>().map(
+            (e) => OrderStep.fromJson(e),
+          ),
         );
       }
 
