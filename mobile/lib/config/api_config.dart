@@ -29,12 +29,13 @@ class ApiConfig {
       // For web, use localhost or override via dart-define
       const webOverride = String.fromEnvironment('MITOLOGI_WEB_API_URL');
       if (webOverride.isNotEmpty) return webOverride;
-      return 'http://192.168.2.100:8011';
+      return 'http://localhost:8011';
     }
 
     if (Platform.isAndroid) {
       // 10.0.2.2 is the special alias for the host machine in Android Emulator
-      return 'http://192.168.2.100:8011';
+      // For physical device, use your computer's IP address
+      return 'http://10.0.2.2:8011'; // Emulator default
     }
 
     if (Platform.isIOS) {

@@ -71,8 +71,9 @@ class ProductProvider extends ChangeNotifier {
     try {
       _categories = await _productService.getCategories();
       notifyListeners();
-    } on Exception {
-      // Silently handle category fetch errors
+    } on Exception catch (e) {
+      debugPrint('Error fetching categories: $e');
+      // Categories are not critical, silently fail but log
     }
   }
 

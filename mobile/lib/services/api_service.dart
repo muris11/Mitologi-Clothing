@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../config/api_config.dart';
+import '../utils/debug_logger.dart';
 import 'secure_storage_service.dart';
 
 class ApiException implements Exception {
@@ -54,14 +56,19 @@ class ApiService {
     final headers = await _getHeaders(requiresAuth: requiresAuth);
 
     try {
+      DebugLogger.api(
+        'GET $endpoint',
+        request: {'headers': headers, 'query': queryParams},
+      );
       final response = await _client
           .get(url, headers: headers)
           .timeout(const Duration(milliseconds: ApiConfig.timeoutDuration));
 
-      return _processResponse(response);
+      return _processResponse(response, endpoint);
     } on ApiException {
       rethrow;
     } on Exception catch (e) {
+      DebugLogger.error('GET $endpoint failed', error: e, source: 'API');
       throw ApiException('Network Error: $e', 0);
     }
   }
@@ -75,6 +82,10 @@ class ApiService {
     final headers = await _getHeaders(requiresAuth: requiresAuth);
 
     try {
+      DebugLogger.api(
+        'POST $endpoint',
+        request: {'headers': headers, 'body': body},
+      );
       final response = await _client
           .post(
             url,
@@ -83,10 +94,11 @@ class ApiService {
           )
           .timeout(const Duration(milliseconds: ApiConfig.timeoutDuration));
 
-      return _processResponse(response);
+      return _processResponse(response, endpoint);
     } on ApiException {
       rethrow;
     } on Exception catch (e) {
+      DebugLogger.error('POST $endpoint failed', error: e, source: 'API');
       throw ApiException('Network Error: $e', 0);
     }
   }
@@ -100,6 +112,10 @@ class ApiService {
     final headers = await _getHeaders(requiresAuth: requiresAuth);
 
     try {
+      DebugLogger.api(
+        'PUT $endpoint',
+        request: {'headers': headers, 'body': body},
+      );
       final response = await _client
           .put(
             url,
@@ -108,10 +124,11 @@ class ApiService {
           )
           .timeout(const Duration(milliseconds: ApiConfig.timeoutDuration));
 
-      return _processResponse(response);
+      return _processResponse(response, endpoint);
     } on ApiException {
       rethrow;
     } on Exception catch (e) {
+      DebugLogger.error('PUT $endpoint failed', error: e, source: 'API');
       throw ApiException('Network Error: $e', 0);
     }
   }
@@ -121,14 +138,16 @@ class ApiService {
     final headers = await _getHeaders(requiresAuth: requiresAuth);
 
     try {
+      DebugLogger.api('DELETE $endpoint', request: {'headers': headers});
       final response = await _client
           .delete(url, headers: headers)
           .timeout(const Duration(milliseconds: ApiConfig.timeoutDuration));
 
-      return _processResponse(response);
+      return _processResponse(response, endpoint);
     } on ApiException {
       rethrow;
     } on Exception catch (e) {
+      DebugLogger.error('DELETE $endpoint failed', error: e, source: 'API');
       throw ApiException('Network Error: $e', 0);
     }
   }
@@ -146,6 +165,10 @@ class ApiService {
     headers.remove('Content-Type');
 
     try {
+      DebugLogger.api(
+        'MULTIPART POST $endpoint',
+        request: {'headers': headers, 'fields': fields},
+      );
       final request = http.MultipartRequest('POST', url);
       request.headers.addAll(headers);
 
@@ -160,21 +183,27 @@ class ApiService {
       );
       final response = await http.Response.fromStream(streamedResponse);
 
-      return _processResponse(response);
+      return _processResponse(response, endpoint);
     } on ApiException {
       rethrow;
     } on Exception catch (e) {
+      DebugLogger.error(
+        'MULTIPART POST $endpoint failed',
+        error: e,
+        source: 'API',
+      );
       throw ApiException('Network Error: $e', 0);
     }
   }
 
-  dynamic _processResponse(http.Response response) {
+  dynamic _processResponse(http.Response response, String endpoint) {
     if (response.body.isEmpty) return null;
 
     dynamic jsonResponse;
     try {
       jsonResponse = json.decode(response.body);
-    } on Exception {
+    } on Exception catch (e) {
+      DebugLogger.error('Invalid JSON Response', error: e, source: 'API');
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return response.body;
       }
@@ -182,6 +211,7 @@ class ApiService {
     }
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
+      DebugLogger.api(endpoint, response: jsonResponse);
       return jsonResponse;
     } else {
       String message = 'Something went wrong';
@@ -196,6 +226,12 @@ class ApiService {
             message;
         errors = jsonResponse['errors'];
       }
+
+      DebugLogger.error(
+        'API Error: $endpoint',
+        error: 'Status ${response.statusCode}: $message',
+        source: 'API',
+      );
 
       throw ApiException(message, response.statusCode, errors);
     }
