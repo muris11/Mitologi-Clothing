@@ -310,15 +310,10 @@ export default async function ProductPage(props: {
             <ProductReviews handle={product.handle} />
           </div>
 
-          {/* Related Products */}
-          <div className="mt-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">
-              PRODUK LAIN DARI TOKO INI
-            </h2>
-            <Suspense fallback={null}>
-              <RelatedProducts id={product.id} />
-            </Suspense>
-          </div>
+          {/* Related Products - Now has its own styled header */}
+          <Suspense fallback={null}>
+            <RelatedProducts id={product.id} />
+          </Suspense>
         </div>
       </div>
     </>
