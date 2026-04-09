@@ -28,7 +28,7 @@ class ProfileProvider extends ChangeNotifier {
     _setError(null);
     try {
       _user = await _profileService.getProfile();
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString());
     } finally {
       _setLoading(false);
@@ -58,7 +58,7 @@ class ProfileProvider extends ChangeNotifier {
       );
       _setLoading(false);
       return true;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString());
       _setLoading(false);
       return false;
@@ -78,7 +78,7 @@ class ProfileProvider extends ChangeNotifier {
       }
       _setLoading(false);
       return true;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString());
       _setLoading(false);
       return false;
@@ -103,7 +103,7 @@ class ProfileProvider extends ChangeNotifier {
       }
       _setLoading(false);
       return success;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString());
       _setLoading(false);
       return false;

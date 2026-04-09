@@ -55,7 +55,7 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
           final siteSettingsData =
               landingData['site_settings'] as Map<String, dynamic>;
           settings = SiteSettings.fromJson(siteSettingsData);
-        } catch (e) {
+        } on Exception {
           // Error parsing site settings
         }
       }
@@ -63,9 +63,14 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
       // Parse team members
       if (landingData.containsKey('team_members')) {
         try {
-          final List<dynamic> teamData = landingData['team_members'] ?? [];
-          members = teamData.map((m) => TeamMember.fromJson(m)).toList();
-        } catch (e) {
+          final teamData =
+              (landingData['team_members'] as List?) ?? <dynamic>[];
+          members = teamData
+              .map(
+                (m) => TeamMember.fromJson(Map<String, dynamic>.from(m as Map)),
+              )
+              .toList();
+        } on Exception {
           // Error parsing team members
         }
       }
@@ -73,9 +78,14 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
       // Parse facilities
       if (landingData.containsKey('facilities')) {
         try {
-          final List<dynamic> facilitiesData = landingData['facilities'] ?? [];
-          facilities = facilitiesData.map((f) => Facility.fromJson(f)).toList();
-        } catch (e) {
+          final facilitiesData =
+              (landingData['facilities'] as List?) ?? <dynamic>[];
+          facilities = facilitiesData
+              .map(
+                (f) => Facility.fromJson(Map<String, dynamic>.from(f as Map)),
+              )
+              .toList();
+        } on Exception {
           // Error parsing facilities
         }
       }
@@ -84,7 +94,7 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
       if (settings == null) {
         try {
           settings = await _service.getSiteSettings();
-        } catch (e) {
+        } on Exception {
           // Site settings endpoint failed
         }
       }
@@ -92,7 +102,7 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
       if (members.isEmpty) {
         try {
           members = await _service.getTeamMembers();
-        } catch (e) {
+        } on Exception {
           // Team members endpoint failed
         }
       }
@@ -105,7 +115,7 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
           _isLoading = false;
         });
       }
-    } catch (e) {
+    } on Exception {
       // Error in _loadData
       if (mounted) {
         setState(() {
@@ -132,7 +142,10 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
               SizedBox(height: 16),
               Text(
                 'Memuat data...',
-                style: TextStyle(color: AppTheme.onSurfaceVariant, fontSize: 14),
+                style: TextStyle(
+                  color: AppTheme.onSurfaceVariant,
+                  fontSize: 14,
+                ),
               ),
             ],
           ),
@@ -284,6 +297,37 @@ class _TentangKamiScreenState extends State<TentangKamiScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppTheme.surfaceContainerLowest,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppTheme.outlineLight),
+              ),
+              child: const Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.auto_stories_outlined,
+                    color: AppTheme.primary,
+                    size: 18,
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'Halaman ini merangkum cerita, nilai, tim, dan fondasi Mitologi agar lebih mudah dipahami dalam sekali lihat.',
+                      style: TextStyle(
+                        color: AppTheme.onSurfaceVariant,
+                        fontSize: 12,
+                        height: 1.45,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
             // 1. Hero Section - data dari API
             HeroSection(
               title: settings?.siteName?.isNotEmpty ?? false

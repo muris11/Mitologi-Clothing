@@ -11,50 +11,50 @@ class KebijakanPengembalianScreen extends StatelessWidget {
   final List<Map<String, dynamic>> steps = const [
     {
       'icon': Icons.chat_bubble_outline,
-      'title': "Hubungi CS",
+      'title': 'Hubungi CS',
       'description':
-          "Hubungi customer service kami melalui WhatsApp atau email untuk mengajukan pengembalian.",
+          'Hubungi customer service kami melalui WhatsApp atau email untuk mengajukan pengembalian.',
     },
     {
       'icon': Icons.local_shipping_outlined,
-      'title': "Kirim Barang",
+      'title': 'Kirim Barang',
       'description':
-          "Kemas barang dengan rapi dan kirimkan ke alamat workshop kami menggunakan jasa pengiriman.",
+          'Kemas barang dengan rapi dan kirimkan ke alamat workshop kami menggunakan jasa pengiriman.',
     },
     {
       'icon': Icons.verified_outlined,
-      'title': "Verifikasi",
+      'title': 'Verifikasi',
       'description':
-          "Tim kami akan memeriksa kondisi barang dalam 1-3 hari kerja setelah barang diterima.",
+          'Tim kami akan memeriksa kondisi barang dalam 1-3 hari kerja setelah barang diterima.',
     },
     {
       'icon': Icons.attach_money_outlined,
-      'title': "Refund / Tukar",
+      'title': 'Refund / Tukar',
       'description':
-          "Dana akan dikembalikan atau produk pengganti dikirimkan dalam 5-14 hari kerja.",
+          'Dana akan dikembalikan atau produk pengganti dikirimkan dalam 5-14 hari kerja.',
     },
   ];
 
   final List<Map<String, String>> faqs = const [
     {
-      'q': "Berapa lama batas waktu pengajuan pengembalian?",
+      'q': 'Berapa lama batas waktu pengajuan pengembalian?',
       'a':
-          "Anda memiliki waktu 7 hari kalender setelah barang diterima untuk mengajukan pengembalian. Pengajuan yang melewati batas waktu tersebut tidak dapat diproses.",
+          'Anda memiliki waktu 7 hari kalender setelah barang diterima untuk mengajukan pengembalian. Pengajuan yang melewati batas waktu tersebut tidak dapat diproses.',
     },
     {
-      'q': "Apakah biaya pengiriman pengembalian ditanggung Mitologi?",
+      'q': 'Apakah biaya pengiriman pengembalian ditanggung Mitologi?',
       'a':
-          "Jika pengembalian disebabkan oleh kesalahan kami (barang cacat, salah produk, salah ukuran dari sisi produksi), biaya pengiriman kami tanggung. Untuk alasan lain, biaya menjadi tanggung jawab pembeli.",
+          'Jika pengembalian disebabkan oleh kesalahan kami (barang cacat, salah produk, salah ukuran dari sisi produksi), biaya pengiriman kami tanggung. Untuk alasan lain, biaya menjadi tanggung jawab pembeli.',
     },
     {
-      'q': "Bagaimana proses refund dilakukan?",
+      'q': 'Bagaimana proses refund dilakukan?',
       'a':
-          "Refund akan dilakukan melalui Transfer Bank ke rekening yang Anda informasikan. Proses memakan waktu 5-14 hari kerja setelah verifikasi selesai. Kami akan menginformasikan progress melalui WhatsApp atau email.",
+          'Refund akan dilakukan melalui Transfer Bank ke rekening yang Anda informasikan. Proses memakan waktu 5-14 hari kerja setelah verifikasi selesai. Kami akan menginformasikan progress melalui WhatsApp atau email.',
     },
     {
-      'q': "Apakah bisa tukar produk saja tanpa refund?",
+      'q': 'Apakah bisa tukar produk saja tanpa refund?',
       'a':
-          "Ya, kami menyediakan opsi penukaran produk (misalnya tukar ukuran atau warna). Penukaran akan diproses setelah barang asli diterima dan diverifikasi oleh tim kami.",
+          'Ya, kami menyediakan opsi penukaran produk (misalnya tukar ukuran atau warna). Penukaran akan diproses setelah barang asli diterima dan diverifikasi oleh tim kami.',
     },
   ];
 

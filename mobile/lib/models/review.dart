@@ -24,28 +24,35 @@ class ReviewItem {
   });
 
   factory ReviewItem.fromJson(Map<String, dynamic> json) {
+    int parseInt(dynamic value, int fallback) {
+      if (value is int) return value;
+      return int.tryParse(value?.toString() ?? '') ?? fallback;
+    }
+
+    String parseString(dynamic value, [String fallback = '']) {
+      if (value is String) return value;
+      return value?.toString() ?? fallback;
+    }
+
     return ReviewItem(
-      id: json['id'] is int
-          ? json['id']
-          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
-      productId: json['product_id'] is int
-          ? json['product_id']
-          : int.tryParse(json['product_id']?.toString() ?? '0') ?? 0,
-      userId: json['user_id'] is int
-          ? json['user_id']
-          : int.tryParse(json['user_id']?.toString() ?? '0') ?? 0,
-      userName: json['user_name'] ?? json['user']?['name'] ?? '',
+      id: parseInt(json['id'], 0),
+      productId: parseInt(json['product_id'] ?? json['productId'], 0),
+      userId: parseInt(json['user_id'] ?? json['userId'], 0),
+      userName: parseString(
+        json['user_name'] ?? json['userName'] ?? json['user']?['name'],
+      ),
       userAvatar:
-          json['user_avatar'] ??
-          json['user']?['avatar_url'] ??
-          json['user']?['avatar'],
-      rating: json['rating'] is int
-          ? json['rating']
-          : int.tryParse(json['rating']?.toString() ?? '5') ?? 5,
-      comment: json['comment'] ?? '',
-      adminReply: json['admin_reply'],
-      adminRepliedAt: json['admin_replied_at'],
-      createdAt: json['created_at'] ?? '',
+          (json['user_avatar'] ??
+                  json['userAvatar'] ??
+                  json['user']?['avatar_url'] ??
+                  json['user']?['avatar'])
+              ?.toString(),
+      rating: parseInt(json['rating'], 5),
+      comment: parseString(json['comment']),
+      adminReply: (json['admin_reply'] ?? json['adminReply'])?.toString(),
+      adminRepliedAt: (json['admin_replied_at'] ?? json['adminRepliedAt'])
+          ?.toString(),
+      createdAt: parseString(json['created_at'] ?? json['createdAt']),
     );
   }
 }
@@ -62,20 +69,28 @@ class ReviewSummary {
   });
 
   factory ReviewSummary.fromJson(Map<String, dynamic> json) {
-    Map<String, int> breakdown = {};
-    if (json['rating_breakdown'] != null) {
-      json['rating_breakdown'].forEach((key, value) {
+    final Map<String, int> breakdown = {};
+    final rawBreakdown = json['rating_breakdown'] ?? json['ratingBreakdown'];
+    if (rawBreakdown is Map) {
+      rawBreakdown.forEach((key, value) {
         breakdown[key.toString()] = int.tryParse(value.toString()) ?? 0;
       });
     }
 
     return ReviewSummary(
-      averageRating: json['average_rating'] == null
+      averageRating: (json['average_rating'] ?? json['averageRating']) == null
           ? 0.0
-          : double.tryParse(json['average_rating'].toString()) ?? 0.0,
-      totalReviews: json['total_reviews'] is int
-          ? json['total_reviews']
-          : int.tryParse(json['total_reviews']?.toString() ?? '0') ?? 0,
+          : double.tryParse(
+                  (json['average_rating'] ?? json['averageRating']).toString(),
+                ) ??
+                0.0,
+      totalReviews: (json['total_reviews'] ?? json['totalReviews']) is int
+          ? (json['total_reviews'] ?? json['totalReviews']) as int
+          : int.tryParse(
+                  (json['total_reviews'] ?? json['totalReviews'])?.toString() ??
+                      '0',
+                ) ??
+                0,
       ratingBreakdown: breakdown,
     );
   }

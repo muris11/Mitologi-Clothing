@@ -1,14 +1,14 @@
 <x-admin-layout>
-    <x-admin-header 
-        title="Daftar Pelanggan" 
-        :breadcrumbs="[['title' => 'Beranda', 'url' => route('admin.beranda.index')], ['title' => 'Pelanggan']]"
-        action_text="Tambah Pelanggan" 
+    <x-admin-header
+        title="Daftar Pelanggan"
+        :breadcrumbs="[['title' => 'Toko Online', 'url' => '#'], ['title' => 'Pelanggan']]"
+        action_text="Tambah Pelanggan"
         :action_url="route('admin.customers.create')"
     />
 
-    <div class="admin-panel overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium overflow-hidden border border-gray-100 dark:border-gray-700">
         <!-- Search Bar -->
-        <div class="p-5 border-b border-gray-200/80 bg-[#f8f4ed] flex justify-between items-center">
+        <div class="p-5 border-b border-gray-200/80 bg-gray-50/80 flex justify-between items-center">
             <div class="relative w-full max-w-md">
                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -20,7 +20,7 @@
         <!-- Desktop Table -->
         <div class="hidden md:block overflow-x-auto">
             <table class="w-full text-left text-sm text-gray-600 dark:text-gray-400">
-                <thead class="bg-[#f8f4ed] uppercase font-bold text-[11px] text-gray-500 tracking-[0.16em]">
+                <thead class="bg-gray-50/80 dark:bg-gray-700/50 uppercase font-bold text-xs text-gray-500 dark:text-gray-300 tracking-wider">
                     <tr>
                         <th class="px-6 py-4">Nama Pelanggan</th>
                         <th class="px-6 py-4">Kontak</th>
@@ -31,7 +31,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
                     @forelse($customers as $customer)
-                    <tr class="hover:bg-[#faf7f1] transition-colors group">
+                    <tr class="hover:bg-mitologi-cream/30 dark:hover:bg-gray-700/30 transition-colors group">
                         <td class="px-6 py-4">
                             <div class="flex items-center">
                                     <div class="h-10 w-10 flex-shrink-0 mr-3">
@@ -45,7 +45,7 @@
                                     </div>
                                 <div>
                                     <div class="flex items-center gap-2">
-                                        <span class="font-bold text-mitologi-navy dark:text-white">{{ $customer->name }}</span>
+                                        <span class="font-bold text-mitologi-navy dark:text-white group-hover:text-mitologi-gold transition-colors">{{ $customer->name }}</span>
                                         @if($customer->role === 'admin')
                                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-mitologi-gold/20 text-mitologi-gold border border-mitologi-gold/30">ADMIN</span>
                                         @else

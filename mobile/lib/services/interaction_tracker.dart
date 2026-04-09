@@ -98,7 +98,7 @@ class InteractionTracker {
         batch,
         isAuthenticated: isAuthenticated,
       );
-    } catch (e) {
+    } on Exception {
       // Jika gagal, kembalikan ke queue untuk retry
       _queue.insertAll(0, batch);
     }

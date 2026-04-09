@@ -50,37 +50,58 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id']?.toString() ?? '',
-      handle: json['handle'] ?? '',
-      availableForSale: json['availableForSale'] ?? false,
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
-      descriptionHtml: json['descriptionHtml'] ?? '',
+      handle: json['handle']?.toString() ?? '',
+      availableForSale: json['availableForSale'] == true,
+      title: json['title']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
+      descriptionHtml: json['descriptionHtml']?.toString() ?? '',
       options:
           (json['options'] as List<dynamic>?)
-              ?.map((e) => ProductOption.fromJson(e))
+              ?.map(
+                (e) =>
+                    ProductOption.fromJson(Map<String, dynamic>.from(e as Map)),
+              )
               .toList() ??
           [],
-      priceRange: PriceRange.fromJson(json['priceRange'] ?? {}),
+      priceRange: PriceRange.fromJson(
+        json['priceRange'] is Map<String, dynamic>
+            ? json['priceRange'] as Map<String, dynamic>
+            : <String, dynamic>{},
+      ),
       variants:
           (json['variants'] as List<dynamic>?)
-              ?.map((e) => ProductVariant.fromJson(e))
+              ?.map(
+                (e) => ProductVariant.fromJson(
+                  Map<String, dynamic>.from(e as Map),
+                ),
+              )
               .toList() ??
           [],
-      featuredImage: ImageModel.fromJson(json['featuredImage'] ?? {}),
+      featuredImage: ImageModel.fromJson(
+        json['featuredImage'] is Map<String, dynamic>
+            ? json['featuredImage'] as Map<String, dynamic>
+            : <String, dynamic>{},
+      ),
       images:
           (json['images'] as List<dynamic>?)
-              ?.map((e) => ImageModel.fromJson(e))
+              ?.map(
+                (e) => ImageModel.fromJson(Map<String, dynamic>.from(e as Map)),
+              )
               .toList() ??
           [],
-      seo: SEO.fromJson(json['seo'] ?? {}),
+      seo: SEO.fromJson(
+        json['seo'] is Map<String, dynamic>
+            ? json['seo'] as Map<String, dynamic>
+            : <String, dynamic>{},
+      ),
       tags:
           (json['tags'] as List<dynamic>?)?.map((e) => e.toString()).toList() ??
           [],
       totalStock: json['totalStock'] == null
           ? null
           : int.tryParse(json['totalStock'].toString()),
-      updatedAt: json['updatedAt'] ?? '',
-      isWishlisted: json['isWishlisted'],
+      updatedAt: json['updatedAt']?.toString() ?? '',
+      isWishlisted: json['isWishlisted'] as bool?,
       averageRating: json['averageRating'] == null
           ? null
           : double.tryParse(json['averageRating'].toString()),

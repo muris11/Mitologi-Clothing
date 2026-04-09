@@ -26,19 +26,34 @@ class Address {
   });
 
   factory Address.fromJson(Map<String, dynamic> json) {
+    int parseInt(dynamic value, int fallback) {
+      if (value is int) return value;
+      return int.tryParse(value?.toString() ?? '') ?? fallback;
+    }
+
+    String parseString(dynamic value, String fallback) {
+      if (value is String) return value;
+      return value?.toString() ?? fallback;
+    }
+
     return Address(
-      id: json['id'] is int
-          ? json['id']
-          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
-      label: json['label'] ?? '',
-      recipientName: json['recipient_name'] ?? json['recipientName'] ?? '',
-      phone: json['phone'] ?? '',
-      addressLine1: json['address_line_1'] ?? json['addressLine1'] ?? '',
-      addressLine2: json['address_line_2'] ?? json['addressLine2'],
-      city: json['city'] ?? '',
-      province: json['province'] ?? '',
-      postalCode: json['postal_code'] ?? json['postalCode'] ?? '',
-      country: json['country'] ?? 'Indonesia',
+      id: parseInt(json['id'], 0),
+      label: parseString(json['label'], ''),
+      recipientName: parseString(
+        json['recipient_name'] ?? json['recipientName'],
+        '',
+      ),
+      phone: parseString(json['phone'], ''),
+      addressLine1: parseString(
+        json['address_line_1'] ?? json['addressLine1'],
+        '',
+      ),
+      addressLine2: (json['address_line_2'] ?? json['addressLine2'])
+          ?.toString(),
+      city: parseString(json['city'], ''),
+      province: parseString(json['province'], ''),
+      postalCode: parseString(json['postal_code'] ?? json['postalCode'], ''),
+      country: parseString(json['country'], 'Indonesia'),
       isPrimary: json['is_primary'] == 1 || json['isPrimary'] == true,
     );
   }

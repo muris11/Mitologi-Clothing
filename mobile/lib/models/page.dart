@@ -23,14 +23,18 @@ class PageData {
 
   factory PageData.fromJson(Map<String, dynamic> json) {
     return PageData(
-      id: json['id'] ?? '',
-      title: json['title'] ?? '',
-      handle: json['handle'] ?? '',
-      body: json['body'] ?? '',
-      bodySummary: json['bodySummary'] ?? '',
-      seo: SEO.fromJson(json['seo'] ?? {}),
-      createdAt: json['createdAt'] ?? '',
-      updatedAt: json['updatedAt'] ?? '',
+      id: json['id']?.toString() ?? '',
+      title: json['title']?.toString() ?? '',
+      handle: json['handle']?.toString() ?? '',
+      body: json['body']?.toString() ?? '',
+      bodySummary: json['bodySummary']?.toString() ?? '',
+      seo: SEO.fromJson(
+        json['seo'] is Map<String, dynamic>
+            ? json['seo'] as Map<String, dynamic>
+            : <String, dynamic>{},
+      ),
+      createdAt: json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt']?.toString() ?? '',
     );
   }
 }

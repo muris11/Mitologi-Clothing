@@ -23,11 +23,36 @@ class LandingPageData {
     final materials = (json['materials'] as List?);
 
     return LandingPageData(
-      heroSlides: heroSlides?.map((x) => HeroSlide.fromJson(x)).toList() ?? [],
-      features: features?.map((x) => Feature.fromJson(x)).toList() ?? [],
+      heroSlides:
+          heroSlides
+              ?.map(
+                (x) => HeroSlide.fromJson(Map<String, dynamic>.from(x as Map)),
+              )
+              .toList() ??
+          [],
+      features:
+          features
+              ?.map(
+                (x) => Feature.fromJson(Map<String, dynamic>.from(x as Map)),
+              )
+              .toList() ??
+          [],
       testimonials:
-          testimonials?.map((x) => Testimonial.fromJson(x)).toList() ?? [],
-      materials: materials?.map((x) => MaterialInfo.fromJson(x)).toList() ?? [],
+          testimonials
+              ?.map(
+                (x) =>
+                    Testimonial.fromJson(Map<String, dynamic>.from(x as Map)),
+              )
+              .toList() ??
+          [],
+      materials:
+          materials
+              ?.map(
+                (x) =>
+                    MaterialInfo.fromJson(Map<String, dynamic>.from(x as Map)),
+              )
+              .toList() ??
+          [],
     );
   }
 }
@@ -48,11 +73,16 @@ class HeroSlide {
   });
 
   factory HeroSlide.fromJson(Map<String, dynamic> json) => HeroSlide(
-    title: json['title'] ?? '',
-    subtitle: json['subtitle'] ?? '',
-    image: json['image'] ?? json['image_url'] ?? '',
-    linkText: json['link_text'] ?? json['linkText'] ?? json['cta_text'] ?? '',
-    target: json['target'] ?? json['link_url'] ?? json['cta_link'] ?? '',
+    title: json['title']?.toString() ?? '',
+    subtitle: json['subtitle']?.toString() ?? '',
+    image: (json['image'] ?? json['image_url'])?.toString() ?? '',
+    linkText:
+        (json['link_text'] ?? json['linkText'] ?? json['cta_text'])
+            ?.toString() ??
+        '',
+    target:
+        (json['target'] ?? json['link_url'] ?? json['cta_link'])?.toString() ??
+        '',
   );
 }
 
@@ -64,9 +94,9 @@ class Feature {
   Feature({required this.title, required this.description, required this.icon});
 
   factory Feature.fromJson(Map<String, dynamic> json) => Feature(
-    title: json['title'] ?? '',
-    description: json['description'] ?? '',
-    icon: json['icon'] ?? '',
+    title: json['title']?.toString() ?? '',
+    description: json['description']?.toString() ?? '',
+    icon: json['icon']?.toString() ?? '',
   );
 }
 
@@ -84,21 +114,25 @@ class Testimonial {
   });
 
   factory Testimonial.fromJson(Map<String, dynamic> json) => Testimonial(
-    name: json['name'] ?? '',
-    role: json['role'] ?? '',
-    content: json['content'] ?? '',
-    rating: (json['rating'] ?? 5).toDouble(),
+    name: json['name']?.toString() ?? '',
+    role: json['role']?.toString() ?? '',
+    content: json['content']?.toString() ?? '',
+    rating: (json['rating'] is num)
+        ? (json['rating'] as num).toDouble()
+        : double.tryParse(json['rating']?.toString() ?? '') ?? 5,
   );
 }
 
 class MaterialInfo {
   final String name;
   final String description;
+  final String? image;
 
-  MaterialInfo({required this.name, required this.description});
+  MaterialInfo({required this.name, required this.description, this.image});
 
   factory MaterialInfo.fromJson(Map<String, dynamic> json) => MaterialInfo(
-    name: json['name'] ?? '',
-    description: json['description'] ?? '',
+    name: json['name']?.toString() ?? '',
+    description: json['description']?.toString() ?? '',
+    image: json['image']?.toString(),
   );
 }

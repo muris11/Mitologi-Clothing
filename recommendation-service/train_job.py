@@ -5,7 +5,7 @@ from datetime import datetime
 from app import recommender
 
 # Use environment variables if available, otherwise default to localhost
-LARAVEL_API_URL = os.environ.get('LARAVEL_URL', 'http://127.0.0.1:8000')
+LARAVEL_API_URL = os.environ.get('LARAVEL_URL', 'http://127.0.0.1:8011')
 EXPORT_ENDPOINT = f"{LARAVEL_API_URL}/api/ml/export-data"
 
 def run_train_job():

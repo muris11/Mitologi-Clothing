@@ -20,12 +20,20 @@ class OrderItem {
   });
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
+    int parseInt(dynamic value, int fallback) {
+      if (value is int) return value;
+      return int.tryParse(value?.toString() ?? '') ?? fallback;
+    }
+
+    String parseString(dynamic value, [String fallback = '']) {
+      if (value is String) return value;
+      return value?.toString() ?? fallback;
+    }
+
     return OrderItem(
-      id: json['id'] is int
-          ? json['id']
-          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
-      productTitle: json['product_title'] ?? '',
-      variantTitle: json['variant_title'] ?? '',
+      id: parseInt(json['id'], 0),
+      productTitle: parseString(json['product_title'] ?? json['productTitle']),
+      variantTitle: parseString(json['variant_title'] ?? json['variantTitle']),
       price: json['price'] == null
           ? 0.0
           : double.tryParse(json['price'].toString()) ?? 0.0,
@@ -35,8 +43,9 @@ class OrderItem {
       total: json['total'] == null
           ? 0.0
           : double.tryParse(json['total'].toString()) ?? 0.0,
-      productHandle: json['product_handle'],
-      productImage: json['product_image'],
+      productHandle: (json['product_handle'] ?? json['productHandle'])
+          ?.toString(),
+      productImage: (json['product_image'] ?? json['productImage'])?.toString(),
     );
   }
 }

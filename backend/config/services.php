@@ -37,7 +37,7 @@ return [
 
     'ai' => [
         'url' => env('AI_SERVICE_URL', 'http://localhost:8001/api'),
-        'key' => env('RECOMMENDER_API_KEY', 'mitologi-secret-key'),
+        'key' => env('RECOMMENDER_API_KEY'),
     ],
 
     'groq' => [
@@ -46,7 +46,7 @@ return [
 
     'nextjs' => [
         'url' => env('NEXTJS_URL', 'http://localhost:3000'),
-        'revalidation_secret' => env('NEXTJS_REVALIDATION_SECRET', 'mitologi-secret-key'),
+        'revalidation_secret' => env('NEXTJS_REVALIDATION_SECRET'),
     ],
 
 ];

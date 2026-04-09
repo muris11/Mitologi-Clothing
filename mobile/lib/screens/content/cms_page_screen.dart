@@ -118,27 +118,27 @@ class _CMSPageScreenState extends State<CMSPageScreen> {
                     child: Html(
                       data: page.body,
                       style: {
-                        "body": Style(
+                        'body': Style(
                           fontSize: FontSize(14),
                           color: AppTheme.onSurfaceVariant,
                           lineHeight: const LineHeight(1.6),
                         ),
-                        "h1": Style(
+                        'h1': Style(
                           fontSize: FontSize(24),
                           fontWeight: FontWeight.bold,
                           color: AppTheme.primary,
                         ),
-                        "h2": Style(
+                        'h2': Style(
                           fontSize: FontSize(20),
                           fontWeight: FontWeight.bold,
                           color: AppTheme.primary,
                         ),
-                        "h3": Style(
+                        'h3': Style(
                           fontSize: FontSize(18),
                           fontWeight: FontWeight.bold,
                           color: AppTheme.onSurface,
                         ),
-                        "a": Style(
+                        'a': Style(
                           color: AppTheme.primary,
                           textDecoration: TextDecoration.underline,
                         ),

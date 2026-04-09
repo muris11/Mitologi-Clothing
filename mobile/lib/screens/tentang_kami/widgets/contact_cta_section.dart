@@ -32,7 +32,7 @@ class ContactCTASection extends StatelessWidget {
           );
         }
       }
-    } catch (e) {
+    } on Exception {
       // Error handled silently in production
     }
   }

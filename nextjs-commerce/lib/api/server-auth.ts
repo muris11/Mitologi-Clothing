@@ -9,13 +9,13 @@ export async function getUser(): Promise<User | null> {
   if (!token) return null;
 
   try {
-    const response = await apiFetch<{ user: User }>(ENDPOINTS.AUTH_USER, {
+    const response = await apiFetch<User>(ENDPOINTS.AUTH_USER, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
       cache: "no-store", // Ensure we don't cache user data
     });
-    return response.user; // Extract user from wrapper
+    return response;
   } catch (error) {
     return null;
   }

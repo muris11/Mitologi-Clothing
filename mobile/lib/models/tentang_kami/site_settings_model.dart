@@ -57,48 +57,106 @@ class SiteSettings {
   });
 
   factory SiteSettings.fromJson(Map<String, dynamic> json) {
+    String? asString(dynamic value) => value?.toString();
+
     // Parse nested general settings
-    final general = json['general'] as Map<String, dynamic>?;
-    final about = json['about'] as Map<String, dynamic>?;
-    final visionMission = json['vision_mission'] as Map<String, dynamic>?;
-    final legalityData = json['legality'] as Map<String, dynamic>?;
+    final general = json['general'] is Map
+        ? Map<String, dynamic>.from(json['general'] as Map)
+        : null;
+    final about = json['about'] is Map
+        ? Map<String, dynamic>.from(json['about'] as Map)
+        : null;
+    final visionMission = json['vision_mission'] is Map
+        ? Map<String, dynamic>.from(json['vision_mission'] as Map)
+        : null;
+    final legalityData = json['legality'] is Map
+        ? Map<String, dynamic>.from(json['legality'] as Map)
+        : null;
+    final servicesData = json['services_data'] ?? json['servicesData'];
+    final companyValuesData =
+        json['company_values_data'] ?? json['companyValuesData'];
 
     return SiteSettings(
       // General
-      siteName: general?['site_name'],
-      siteTagline: general?['site_tagline'],
-      siteDescription: general?['site_description'],
-      companyFoundedYear:
-          general?['company_founded_year'] ?? about?['company_founded_year'],
+      siteName: asString(general?['site_name'] ?? json['siteName']),
+      siteTagline: asString(general?['site_tagline'] ?? json['siteTagline']),
+      siteDescription: asString(
+        general?['site_description'] ?? json['siteDescription'],
+      ),
+      companyFoundedYear: asString(
+        general?['company_founded_year'] ??
+            about?['company_founded_year'] ??
+            json['companyFoundedYear'],
+      ),
 
       // About
-      aboutHeadline: about?['about_headline'],
-      aboutDescription1: about?['about_description_1'],
-      aboutDescription2: about?['about_description_2'],
-      aboutImage: about?['about_image'],
-      aboutShortHistory: about?['about_short_history'],
-      aboutLogoMeaning: about?['about_logo_meaning'],
+      aboutHeadline: asString(
+        about?['about_headline'] ?? json['aboutHeadline'],
+      ),
+      aboutDescription1: asString(
+        about?['about_description_1'] ?? json['aboutDescription1'],
+      ),
+      aboutDescription2: asString(
+        about?['about_description_2'] ?? json['aboutDescription2'],
+      ),
+      aboutImage: asString(about?['about_image'] ?? json['aboutImage']),
+      aboutShortHistory: asString(
+        about?['about_short_history'] ?? json['aboutShortHistory'],
+      ),
+      aboutLogoMeaning: asString(
+        about?['about_logo_meaning'] ?? json['aboutLogoMeaning'],
+      ),
 
       // Founder (can be in about or root)
-      founderName: json['founder_name'] ?? about?['founder_name'],
-      founderRole: json['founder_role'] ?? about?['founder_role'],
-      founderStory: json['founder_story'] ?? about?['founder_story'],
-      founderPhoto: json['founder_photo'] ?? about?['founder_photo'],
+      founderName: asString(
+        json['founder_name'] ?? json['founderName'] ?? about?['founder_name'],
+      ),
+      founderRole: asString(
+        json['founder_role'] ?? json['founderRole'] ?? about?['founder_role'],
+      ),
+      founderStory: asString(
+        json['founder_story'] ??
+            json['founderStory'] ??
+            about?['founder_story'],
+      ),
+      founderPhoto: asString(
+        json['founder_photo'] ??
+            json['founderPhoto'] ??
+            about?['founder_photo'],
+      ),
 
       // Vision & Mission
-      visionText: visionMission?['vision_text'] ?? about?['vision_text'],
-      missionText: visionMission?['mission_text'] ?? about?['mission_text'],
-      valuesText: visionMission?['values_text'] ?? about?['values_text'],
+      visionText: asString(
+        visionMission?['vision_text'] ??
+            about?['vision_text'] ??
+            json['visionText'],
+      ),
+      missionText: asString(
+        visionMission?['mission_text'] ??
+            about?['mission_text'] ??
+            json['missionText'],
+      ),
+      valuesText: asString(
+        visionMission?['values_text'] ??
+            about?['values_text'] ??
+            json['valuesText'],
+      ),
 
       // Contact
-      whatsappNumber: json['whatsapp_number'] ?? json['wa_number'],
+      whatsappNumber: asString(
+        json['whatsapp_number'] ?? json['whatsappNumber'] ?? json['wa_number'],
+      ),
 
       // Data arrays
-      servicesData: (json['services_data'] as List?)
-          ?.map((s) => ServiceData.fromJson(s))
+      servicesData: (servicesData as List?)
+          ?.map(
+            (s) => ServiceData.fromJson(Map<String, dynamic>.from(s as Map)),
+          )
           .toList(),
-      companyValues: (json['company_values_data'] as List?)
-          ?.map((v) => CompanyValue.fromJson(v))
+      companyValues: (companyValuesData as List?)
+          ?.map(
+            (v) => CompanyValue.fromJson(Map<String, dynamic>.from(v as Map)),
+          )
           .toList(),
       legality: legalityData != null
           ? LegalityInfo.fromJson(legalityData)
@@ -124,11 +182,11 @@ class ServiceData {
 
   factory ServiceData.fromJson(Map<String, dynamic> json) {
     return ServiceData(
-      title: json['title'] ?? '',
-      desc: json['desc'] ?? '',
-      image: json['image'] ?? '',
-      materials: json['materials'],
-      keunggulan: json['keunggulan'],
+      title: json['title']?.toString() ?? '',
+      desc: json['desc']?.toString() ?? '',
+      image: json['image']?.toString() ?? '',
+      materials: json['materials']?.toString(),
+      keunggulan: json['keunggulan']?.toString(),
     );
   }
 
@@ -157,8 +215,8 @@ class CompanyValue {
 
   factory CompanyValue.fromJson(Map<String, dynamic> json) {
     return CompanyValue(
-      title: json['title'] ?? '',
-      description: json['desc'] ?? json['description'] ?? '',
+      title: json['title']?.toString() ?? '',
+      description: (json['desc'] ?? json['description'])?.toString() ?? '',
     );
   }
 }
@@ -182,12 +240,12 @@ class LegalityInfo {
 
   factory LegalityInfo.fromJson(Map<String, dynamic> json) {
     return LegalityInfo(
-      legalCompanyName: json['legal_company_name'],
-      legalAddress: json['legal_address'],
-      legalBusinessField: json['legal_business_field'],
-      legalNpwp: json['legal_npwp'],
-      legalNib: json['legal_nib'],
-      legalNmid: json['legal_nmid'],
+      legalCompanyName: json['legal_company_name']?.toString(),
+      legalAddress: json['legal_address']?.toString(),
+      legalBusinessField: json['legal_business_field']?.toString(),
+      legalNpwp: json['legal_npwp']?.toString(),
+      legalNib: json['legal_nib']?.toString(),
+      legalNmid: json['legal_nmid']?.toString(),
     );
   }
 }

@@ -1,14 +1,14 @@
 <x-admin-layout>
-    <x-admin-header 
-        title="Manajemen Pesanan" 
-        :breadcrumbs="[['title' => 'Beranda', 'url' => route('admin.beranda.index')], ['title' => 'Pesanan']]"
-        action_text="" 
+    <x-admin-header
+        title="Manajemen Pesanan"
+        :breadcrumbs="[['title' => 'Toko Online', 'url' => '#'], ['title' => 'Pesanan']]"
+        action_text=""
         :action_url="''"
     />
 
-    <div class="admin-panel overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium overflow-hidden border border-gray-100 dark:border-gray-700">
         <!-- Search/Filter Bar -->
-        <div class="p-5 border-b border-gray-200/80 bg-[#f8f4ed] flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="p-5 border-b border-gray-200/80 bg-gray-50/80 flex flex-col md:flex-row justify-between items-center gap-4">
              <form action="{{ route('admin.orders.index') }}" method="GET" class="relative w-full md:w-64">
                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -37,7 +37,7 @@
         <!-- Desktop Table -->
         <div class="hidden md:block overflow-x-auto">
             <table class="w-full text-left text-sm text-gray-600 dark:text-gray-400">
-                <thead class="bg-[#f8f4ed] uppercase font-bold text-[11px] text-gray-500 tracking-[0.16em]">
+                <thead class="bg-gray-50/80 dark:bg-gray-700/50 uppercase font-bold text-xs text-gray-500 dark:text-gray-300 tracking-wider">
                     <tr>
                         <th class="px-6 py-4">ID Pesanan</th>
                         <th class="px-6 py-4">Tanggal</th>
@@ -49,7 +49,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
                     @forelse($orders as $order)
-                    <tr class="hover:bg-[#faf7f1] transition-colors group">
+                    <tr class="hover:bg-mitologi-cream/30 dark:hover:bg-gray-700/30 transition-colors group">
                         <td class="px-6 py-4">
                             <span class="font-bold text-mitologi-navy dark:text-white">#{{ $order->order_number ?? $order->id }}</span>
                         </td>
@@ -80,6 +80,15 @@
                                     'cancelled' => 'bg-red-100 text-red-800 border-red-200',
                                     default => 'bg-gray-100 text-gray-800 border-gray-200'
                                 } }}">
+                                <span class="w-1.5 h-1.5 mr-1.5 rounded-full
+                                    {{ match($order->status) {
+                                        'paid', 'completed', 'shipped' => 'bg-green-600',
+                                        'pending' => 'bg-yellow-600',
+                                        'processing' => 'bg-blue-600',
+                                        'refunded' => 'bg-purple-600',
+                                        'cancelled' => 'bg-red-600',
+                                        default => 'bg-gray-600'
+                                    } }}"></span>
                                 {{ ucfirst($order->status) }}
                             </span>
                         </td>

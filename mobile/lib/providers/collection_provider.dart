@@ -31,7 +31,7 @@ class CollectionProvider extends ChangeNotifier {
 
     try {
       _collections = await _service.getCollections();
-    } catch (e) {
+    } on Exception catch (e) {
       _collectionsError = e.toString();
     } finally {
       _isLoadingCollections = false;
@@ -55,7 +55,7 @@ class CollectionProvider extends ChangeNotifier {
         sortKey: sortKey,
         reverse: reverse,
       );
-    } catch (e) {
+    } on Exception catch (e) {
       _collectionDetailsError = e.toString();
     } finally {
       _isLoadingCollectionDetails = false;

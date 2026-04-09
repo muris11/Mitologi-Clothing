@@ -115,7 +115,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
                 try {
                   final dt = DateTime.parse(order.createdAt);
                   dateStr = DateFormat('dd MMM yyyy').format(dt);
-                } catch (_) {}
+                } on Exception {
+                  dateStr = order.createdAt;
+                }
 
                 // Status formatting
                 Color statusColor = AppTheme.primary;
@@ -138,7 +140,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                 }
 
                 int totalItems = 0;
-                for (var item in order.items) {
+                for (final item in order.items) {
                   totalItems += item.quantity;
                 }
 

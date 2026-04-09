@@ -73,7 +73,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
       // Load related data in parallel
       _loadRelatedData(product);
-    } catch (e) {
+    } on Exception catch (e) {
       setState(() {
         _error = 'Gagal memuat produk: $e';
         _isLoading = false;
@@ -89,7 +89,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     try {
       final related = await ProductService().getRelatedProducts(widget.handle);
       setState(() => _relatedProducts = related);
-    } catch (e) {
+    } on Exception {
       // Silently fail for related products
     }
   }
@@ -103,7 +103,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         _reviews = reviews;
         _isLoadingReviews = false;
       });
-    } catch (e) {
+    } on Exception {
       setState(() => _isLoadingReviews = false);
     }
   }

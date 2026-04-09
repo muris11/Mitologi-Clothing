@@ -32,7 +32,7 @@ class CartProvider extends ChangeNotifier {
     _setError(null);
     try {
       _cart = await _cartService.getCart();
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString().replaceAll('ApiException: ', ''));
     } finally {
       _setLoading(false);
@@ -45,7 +45,7 @@ class CartProvider extends ChangeNotifier {
     try {
       _cart = await _cartService.addToCart(variantId, quantity);
       return true;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString().replaceAll('ApiException: ', ''));
       return false;
     } finally {
@@ -63,7 +63,7 @@ class CartProvider extends ChangeNotifier {
     try {
       _cart = await _cartService.updateItemQuantity(itemId, quantity);
       return true;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString().replaceAll('ApiException: ', ''));
       return false;
     } finally {
@@ -77,7 +77,7 @@ class CartProvider extends ChangeNotifier {
     try {
       _cart = await _cartService.removeItem(itemId);
       return true;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString().replaceAll('ApiException: ', ''));
       return false;
     } finally {
@@ -91,7 +91,7 @@ class CartProvider extends ChangeNotifier {
     try {
       await _cartService.clearCart();
       _cart = null;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString().replaceAll('ApiException: ', ''));
     } finally {
       _setLoading(false);

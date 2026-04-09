@@ -14,12 +14,19 @@ class Facility {
   });
 
   factory Facility.fromJson(Map<String, dynamic> json) {
+    int parseInt(dynamic value, int fallback) {
+      if (value is int) return value;
+      return int.tryParse(value?.toString() ?? '') ?? fallback;
+    }
+
     return Facility(
-      id: json['id'] ?? 0,
-      name: json['name'] ?? '',
-      description: json['description'],
-      image: json['image'],
-      sortOrder: json['sort_order'] as int?,
+      id: parseInt(json['id'], 0),
+      name: json['name']?.toString() ?? '',
+      description: json['description']?.toString(),
+      image: json['image']?.toString(),
+      sortOrder: json['sort_order'] == null
+          ? null
+          : parseInt(json['sort_order'], 0),
     );
   }
 }

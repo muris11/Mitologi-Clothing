@@ -18,7 +18,7 @@ class DateUtils {
       final DateTime date = DateTime.parse(isoDate).toLocal();
       final formatter = DateFormat('dd MMM yyyy, HH:mm', 'id_ID');
       return formatter.format(date);
-    } catch (e) {
+    } on Exception {
       return isoDate;
     }
   }
@@ -29,7 +29,7 @@ class DateUtils {
       final DateTime date = DateTime.parse(isoDate).toLocal();
       final formatter = DateFormat('dd MMM yyyy', 'id_ID');
       return formatter.format(date);
-    } catch (e) {
+    } on Exception {
       return isoDate;
     }
   }

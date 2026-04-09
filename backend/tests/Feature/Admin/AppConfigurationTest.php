@@ -85,6 +85,10 @@ class AppConfigurationTest extends TestCase
 
         File::shouldReceive('put')
             ->once()
+            ->withArgs(function ($path, $content) {
+                return $path === base_path('.env')
+                    && str_contains($content, 'MAIL_SCHEME=tls');
+            })
             ->andReturn(true);
 
         // Mock Artisan to avoid config:clear calls
@@ -259,6 +263,120 @@ class AppConfigurationTest extends TestCase
         $response->assertRedirect(route('admin.app-configuration.index'));
     }
 
+    public function test_email_update_syncs_mail_scheme_with_encryption(): void
+    {
+        File::shouldReceive('get')
+            ->once()
+            ->andReturn("MAIL_SCHEME=smtp\nMAIL_ENCRYPTION=tls\n");
+
+        File::shouldReceive('copy')
+            ->once()
+            ->andReturn(true);
+
+        File::shouldReceive('put')
+            ->once()
+            ->withArgs(function ($path, $content) {
+                return $path === base_path('.env')
+                    && str_contains($content, 'MAIL_ENCRYPTION=tls')
+                    && str_contains($content, 'MAIL_SCHEME=tls');
+            })
+            ->andReturn(true);
+
+        Artisan::shouldReceive('call')
+            ->once()
+            ->with('config:clear');
+
+        $response = $this->actingAs($this->admin)
+            ->put(route('admin.app-configuration.update', ['group' => 'email']), [
+                'MAIL_MAILER' => 'smtp',
+                'MAIL_HOST' => 'smtp.gmail.com',
+                'MAIL_PORT' => '587',
+                'MAIL_USERNAME' => 'test@example.com',
+                'MAIL_PASSWORD' => 'secretpassword',
+                'MAIL_ENCRYPTION' => 'tls',
+                'MAIL_FROM_ADDRESS' => 'test@example.com',
+            ]);
+
+        $response->assertRedirect(route('admin.app-configuration.index'));
+    }
+
+    public function test_admin_can_restore_existing_env_backup(): void
+    {
+        $backupFile = base_path('.env.backup.2026-04-09-140719');
+
+        File::shouldReceive('exists')
+            ->once()
+            ->with($backupFile)
+            ->andReturn(true);
+
+        File::shouldReceive('copy')
+            ->once()
+            ->with(base_path('.env'), \Mockery::pattern('/\.env\.backup\.\d{4}-\d{2}-\d{2}-\d{6}$/'))
+            ->andReturn(true);
+
+        File::shouldReceive('copy')
+            ->once()
+            ->with($backupFile, base_path('.env'))
+            ->andReturn(true);
+
+        Artisan::shouldReceive('call')
+            ->once()
+            ->with('config:clear');
+
+        $response = $this->actingAs($this->admin)
+            ->post(route('admin.app-configuration.restore'), [
+                'backup' => '.env.backup.2026-04-09-140719',
+            ]);
+
+        $response->assertRedirect(route('admin.app-configuration.index'));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('config_audit_logs', [
+            'user_id' => $this->admin->id,
+            'group' => 'backup',
+            'key' => 'restore',
+        ]);
+    }
+
+    public function test_admin_can_delete_existing_env_backup(): void
+    {
+        $backupFile = base_path('.env.backup.2026-04-09-140719');
+
+        File::shouldReceive('exists')
+            ->once()
+            ->with($backupFile)
+            ->andReturn(true);
+
+        File::shouldReceive('delete')
+            ->once()
+            ->with($backupFile)
+            ->andReturn(true);
+
+        $response = $this->actingAs($this->admin)
+            ->delete(route('admin.app-configuration.destroy-backup'), [
+                'backup' => '.env.backup.2026-04-09-140719',
+            ]);
+
+        $response->assertRedirect(route('admin.app-configuration.index'));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('config_audit_logs', [
+            'user_id' => $this->admin->id,
+            'group' => 'backup',
+            'key' => 'delete',
+        ]);
+    }
+
+    public function test_restore_backup_rejects_invalid_backup_name(): void
+    {
+        $response = $this->actingAs($this->admin)
+            ->post(route('admin.app-configuration.restore'), [
+                'backup' => '../.env',
+            ]);
+
+        $response->assertSessionHasErrors('backup');
+    }
+
     /**
      * Test that test endpoints return JSON responses.
      */
@@ -274,6 +392,23 @@ class AppConfigurationTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonStructure(['success', 'message']);
+    }
+
+    public function test_email_test_endpoint_returns_helpful_message_for_authentication_required(): void
+    {
+        Mail::shouldReceive('raw')
+            ->once()
+            ->andThrow(new \Exception('Expected response code "250" but got code "530", with message "530 Authentication required".'));
+
+        $response = $this->actingAs($this->admin)
+            ->post(route('admin.app-configuration.test', ['service' => 'email']));
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => false,
+        ]);
+        $this->assertStringContainsString('Authentication required', $response->json('message'));
+        $this->assertStringContainsString('username', strtolower($response->json('message')));
     }
 
     /**

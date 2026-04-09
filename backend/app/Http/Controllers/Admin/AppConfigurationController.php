@@ -24,12 +24,13 @@ class AppConfigurationController extends Controller
     public function index(): View
     {
         $configs = $this->config->getAll();
+        $backups = $this->config->listBackups();
         $auditLogs = ConfigAuditLog::with('user')
             ->latest()
             ->take(20)
             ->get();
 
-        return view('admin.app-configuration.index', compact('configs', 'auditLogs'));
+        return view('admin.app-configuration.index', compact('configs', 'auditLogs', 'backups'));
     }
 
     public function update(Request $request, string $group): RedirectResponse
@@ -37,7 +38,8 @@ class AppConfigurationController extends Controller
         $validated = $this->validateGroup($request, $group);
 
         try {
-            $this->config->update($validated, $group, (int) auth()->id());
+            $userId = (int) $request->user()?->id;
+            $this->config->update($validated, $group, $userId);
 
             return redirect()
                 ->route('admin.app-configuration.index')
@@ -59,6 +61,78 @@ class AppConfigurationController extends Controller
         };
 
         return response()->json($result);
+    }
+
+    public function restoreBackup(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'backup' => ['required', 'regex:/^\.env\.backup\.\d{4}-\d{2}-\d{2}-\d{6}$/'],
+        ]);
+
+        try {
+            $userId = (int) $request->user()?->id;
+            $this->config->restoreBackup($validated['backup'], $userId, (string) $request->ip());
+
+            return redirect()
+                ->route('admin.app-configuration.index')
+                ->with('success', 'Backup berhasil digunakan kembali.');
+        } catch (\Throwable $e) {
+            return redirect()
+                ->route('admin.app-configuration.index')
+                ->with('error', 'Gagal memulihkan backup: '.$e->getMessage());
+        }
+    }
+
+    public function destroyBackup(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'backup' => ['required', 'regex:/^\.env\.backup\.\d{4}-\d{2}-\d{2}-\d{6}$/'],
+        ]);
+
+        try {
+            $userId = (int) $request->user()?->id;
+            $this->config->deleteBackup($validated['backup'], $userId, (string) $request->ip());
+
+            return redirect()
+                ->route('admin.app-configuration.index')
+                ->with('success', 'Backup berhasil dihapus.');
+        } catch (\Throwable $e) {
+            return redirect()
+                ->route('admin.app-configuration.index')
+                ->with('error', 'Gagal menghapus backup: '.$e->getMessage());
+        }
+    }
+
+    public function destroyAuditLog(Request $request, int $id): RedirectResponse
+    {
+        try {
+            $log = ConfigAuditLog::findOrFail($id);
+            $log->delete();
+
+            return redirect()
+                ->route('admin.app-configuration.index')
+                ->with('success', 'Log audit berhasil dihapus.');
+        } catch (\Throwable $e) {
+            return redirect()
+                ->route('admin.app-configuration.index')
+                ->with('error', 'Gagal menghapus log audit: '.$e->getMessage());
+        }
+    }
+
+    public function destroyAllAuditLogs(Request $request): RedirectResponse
+    {
+        try {
+            $count = ConfigAuditLog::count();
+            ConfigAuditLog::truncate();
+
+            return redirect()
+                ->route('admin.app-configuration.index')
+                ->with('success', "{$count} log audit berhasil dihapus.");
+        } catch (\Throwable $e) {
+            return redirect()
+                ->route('admin.app-configuration.index')
+                ->with('error', 'Gagal menghapus log audit: '.$e->getMessage());
+        }
     }
 
     private function validateGroup(Request $request, string $group): array

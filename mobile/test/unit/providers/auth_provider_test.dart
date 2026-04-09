@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/models/user.dart';
 import 'package:mobile/providers/auth_provider.dart';
 import 'package:mobile/services/secure_storage_service.dart';
 
@@ -23,7 +22,7 @@ void main() {
       provider = AuthProvider(authService: fakeService);
 
       // Wait for initial load to complete
-      await Future.delayed(const Duration(milliseconds: 50));
+      await Future<void>.delayed(const Duration(milliseconds: 50));
     });
 
     tearDown(() async {

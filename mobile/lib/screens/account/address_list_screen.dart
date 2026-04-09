@@ -42,7 +42,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
         _addresses = addresses;
         _isLoading = false;
       });
-    } catch (e) {
+    } on Exception catch (e) {
       if (mounted) {
         setState(() {
           _error = e.toString().replaceAll('ApiException: ', '');
@@ -117,7 +117,7 @@ class _AddressListScreenState extends State<AddressListScreen> {
             const SnackBar(content: Text('Alamat berhasil dihapus')),
           );
         }
-      } catch (e) {
+      } on Exception catch (e) {
         if (mounted) {
           setState(() {
             _isLoading = false;

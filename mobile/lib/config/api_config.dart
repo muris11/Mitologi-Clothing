@@ -108,16 +108,28 @@ class ApiConfig {
   static const int timeoutDuration = 30000;
 
   static Uri buildUri(String endpoint, {Map<String, String>? queryParams}) {
-    // Remove leading slash from endpoint to avoid double slashes
-    final cleanEndpoint = endpoint.startsWith('/')
+    final trimmedEndpoint = endpoint.startsWith('/')
         ? endpoint.substring(1)
         : endpoint;
-    final path = 'api/$cleanEndpoint';
+    final endpointUri = Uri.parse(trimmedEndpoint);
+    final mergedQueryParams = <String, String>{
+      ...endpointUri.queryParameters,
+      ...?queryParams,
+    };
+    final path = 'api/${endpointUri.path}';
 
     if (useHttps) {
-      return Uri.https(authority, path, queryParams);
+      return Uri.https(
+        authority,
+        path,
+        mergedQueryParams.isEmpty ? null : mergedQueryParams,
+      );
     } else {
-      return Uri.http(authority, path, queryParams);
+      return Uri.http(
+        authority,
+        path,
+        mergedQueryParams.isEmpty ? null : mergedQueryParams,
+      );
     }
   }
 

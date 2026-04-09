@@ -19,7 +19,7 @@ class HyperText extends StatefulWidget {
 }
 
 class _HyperTextState extends State<HyperText> {
-  String _currentText = "";
+  String _currentText = '';
   Timer? _timer;
   final _random = Random();
   final String _chars =

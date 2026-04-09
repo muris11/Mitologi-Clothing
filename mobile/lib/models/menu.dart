@@ -5,7 +5,10 @@ class MenuItem {
   MenuItem({required this.title, required this.path});
 
   factory MenuItem.fromJson(Map<String, dynamic> json) {
-    return MenuItem(title: json['title'] ?? '', path: json['path'] ?? '');
+    return MenuItem(
+      title: json['title']?.toString() ?? '',
+      path: json['path']?.toString() ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {

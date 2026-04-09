@@ -190,7 +190,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
         ),
         const SizedBox(height: 4),
         Text(
-          kaosJerseyData['description'],
+          kaosJerseyData['description'] as String,
           style: const TextStyle(
             fontSize: 14,
             color: AppTheme.onSurfaceVariant,
@@ -355,7 +355,7 @@ class _PanduanUkuranScreenState extends State<PanduanUkuranScreen>
                     ),
                   ),
                   child: Text(
-                    cat['title'],
+                    cat['title'] as String,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,

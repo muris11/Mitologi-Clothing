@@ -8,7 +8,7 @@ class ProductOption {
   factory ProductOption.fromJson(Map<String, dynamic> json) {
     return ProductOption(
       id: json['id']?.toString() ?? '',
-      name: json['name'] ?? '',
+      name: json['name']?.toString() ?? '',
       values:
           (json['values'] as List<dynamic>?)
               ?.map((e) => e.toString())

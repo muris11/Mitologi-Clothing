@@ -8,8 +8,16 @@ class PriceRange {
 
   factory PriceRange.fromJson(Map<String, dynamic> json) {
     return PriceRange(
-      maxVariantPrice: Money.fromJson(json['maxVariantPrice'] ?? {}),
-      minVariantPrice: Money.fromJson(json['minVariantPrice'] ?? {}),
+      maxVariantPrice: Money.fromJson(
+        json['maxVariantPrice'] is Map<String, dynamic>
+            ? json['maxVariantPrice'] as Map<String, dynamic>
+            : <String, dynamic>{},
+      ),
+      minVariantPrice: Money.fromJson(
+        json['minVariantPrice'] is Map<String, dynamic>
+            ? json['minVariantPrice'] as Map<String, dynamic>
+            : <String, dynamic>{},
+      ),
     );
   }
 

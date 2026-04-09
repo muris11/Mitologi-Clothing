@@ -54,7 +54,7 @@ class ChatbotProvider extends ChangeNotifier {
       _messages.add(
         ChatMessage(text: reply, isUser: false, timestamp: DateTime.now()),
       );
-    } catch (e) {
+    } on Exception catch (e) {
       _error = e.toString();
       _messages.add(
         ChatMessage(

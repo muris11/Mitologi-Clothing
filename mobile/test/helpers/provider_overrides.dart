@@ -236,8 +236,8 @@ Product buildTestProduct() {
       ProductOption(id: 'opt-1', name: 'Size', values: ['M']),
     ],
     priceRange: PriceRange(
-      maxVariantPrice: Money(amount: '349000', currencyCode: 'IDR'),
-      minVariantPrice: Money(amount: '349000', currencyCode: 'IDR'),
+      maxVariantPrice: const Money(amount: '349000', currencyCode: 'IDR'),
+      minVariantPrice: const Money(amount: '349000', currencyCode: 'IDR'),
     ),
     variants: [
       ProductVariant(
@@ -245,7 +245,7 @@ Product buildTestProduct() {
         title: 'M',
         availableForSale: true,
         selectedOptions: [SelectedOption(name: 'Size', value: 'M')],
-        price: Money(amount: '349000', currencyCode: 'IDR'),
+        price: const Money(amount: '349000', currencyCode: 'IDR'),
         stock: 10,
       ),
     ],
@@ -289,9 +289,9 @@ Cart buildTestCart() {
     id: 'cart-1',
     checkoutUrl: 'https://example.com/checkout',
     cost: CartCost(
-      subtotalAmount: Money(amount: '349000', currencyCode: 'IDR'),
-      totalAmount: Money(amount: '369000', currencyCode: 'IDR'),
-      totalTaxAmount: Money(amount: '0', currencyCode: 'IDR'),
+      subtotalAmount: const Money(amount: '349000', currencyCode: 'IDR'),
+      totalAmount: const Money(amount: '369000', currencyCode: 'IDR'),
+      totalTaxAmount: const Money(amount: '0', currencyCode: 'IDR'),
     ),
     totalQuantity: 1,
     lines: [
@@ -300,7 +300,7 @@ Cart buildTestCart() {
         merchandiseId: 'merch-1',
         title: 'Jaket Mitologi Signature',
         quantity: 1,
-        price: Money(amount: '349000', currencyCode: 'IDR'),
+        price: const Money(amount: '349000', currencyCode: 'IDR'),
         imageUrl: 'https://example.com/product.jpg',
         variantTitle: 'Size: M',
       ),

@@ -7,7 +7,10 @@ class SelectedOption {
   SelectedOption({required this.name, required this.value});
 
   factory SelectedOption.fromJson(Map<String, dynamic> json) {
-    return SelectedOption(name: json['name'] ?? '', value: json['value'] ?? '');
+    return SelectedOption(
+      name: json['name']?.toString() ?? '',
+      value: json['value']?.toString() ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -37,14 +40,22 @@ class ProductVariant {
   factory ProductVariant.fromJson(Map<String, dynamic> json) {
     return ProductVariant(
       id: json['id']?.toString() ?? '',
-      title: json['title'] ?? '',
-      availableForSale: json['availableForSale'] ?? false,
+      title: json['title']?.toString() ?? '',
+      availableForSale: json['availableForSale'] == true,
       selectedOptions:
           (json['selectedOptions'] as List<dynamic>?)
-              ?.map((e) => SelectedOption.fromJson(e))
+              ?.map(
+                (e) => SelectedOption.fromJson(
+                  Map<String, dynamic>.from(e as Map),
+                ),
+              )
               .toList() ??
           [],
-      price: Money.fromJson(json['price'] ?? {}),
+      price: Money.fromJson(
+        json['price'] is Map<String, dynamic>
+            ? json['price'] as Map<String, dynamic>
+            : <String, dynamic>{},
+      ),
       sku: json['sku']?.toString(),
       stock: int.tryParse(json['stock']?.toString() ?? ''),
     );

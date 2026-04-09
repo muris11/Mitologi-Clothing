@@ -6,6 +6,7 @@ import '../../widgets/common/mitologi_scaffold.dart';
 import '../../widgets/animations/blur_fade.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/order_provider.dart';
+import '../../models/order.dart';
 import '../../widgets/animations/shimmer_button.dart';
 import 'package:intl/intl.dart';
 import '../../utils/responsive_helper.dart';
@@ -206,10 +207,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  List<_NotificationItem> _generateNotifications(List<dynamic> orders) {
+  List<_NotificationItem> _generateNotifications(List<Order> orders) {
     final List<_NotificationItem> items = [];
 
-    for (var order in orders) {
+    for (final order in orders) {
       String title = '';
       String body = '';
       IconData icon = Icons.notifications_none;
@@ -280,7 +281,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     try {
       final dateTime = DateTime.parse(dateString);
       return DateFormat('dd MMM yyyy, HH:mm').format(dateTime);
-    } catch (e) {
+    } on Exception {
       return dateString;
     }
   }

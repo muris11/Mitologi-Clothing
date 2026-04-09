@@ -18,15 +18,18 @@ class Category {
   });
 
   factory Category.fromJson(Map<String, dynamic> json) {
+    int parseInt(dynamic value, int fallback) {
+      if (value is int) return value;
+      return int.tryParse(value?.toString() ?? '') ?? fallback;
+    }
+
     return Category(
-      id: json['id'] is int
-          ? json['id']
-          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
-      name: json['name'] ?? '',
-      slug: json['slug'] ?? '',
-      handle: json['handle'] ?? '',
-      description: json['description'],
-      image: json['image'],
+      id: parseInt(json['id'], 0),
+      name: json['name']?.toString() ?? '',
+      slug: json['slug']?.toString() ?? '',
+      handle: json['handle']?.toString() ?? '',
+      description: json['description']?.toString(),
+      image: json['image']?.toString(),
       productsCount: json['products_count'] == null
           ? null
           : int.tryParse(json['products_count'].toString()),

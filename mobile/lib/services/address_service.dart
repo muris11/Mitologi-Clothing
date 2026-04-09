@@ -2,16 +2,30 @@ import '../models/address.dart';
 import 'api_service.dart';
 
 class AddressService {
-  final ApiService _api = ApiService();
+  AddressService({ApiService? api}) : _api = api ?? ApiService();
+
+  final ApiService _api;
 
   Future<List<Address>> getAddresses() async {
     final response = await _api.get('/profile/addresses', requiresAuth: true);
     if (response is List) {
-      return response.map((data) => Address.fromJson(data)).toList();
+      return response
+          .map(
+            (data) => Address.fromJson(Map<String, dynamic>.from(data as Map)),
+          )
+          .toList();
+    } else if (response is Map<String, dynamic> && response['data'] is List) {
+      return (response['data'] as List)
+          .map(
+            (data) => Address.fromJson(Map<String, dynamic>.from(data as Map)),
+          )
+          .toList();
     } else if (response is Map<String, dynamic> &&
         response['addresses'] is List) {
       return (response['addresses'] as List)
-          .map((data) => Address.fromJson(data))
+          .map(
+            (data) => Address.fromJson(Map<String, dynamic>.from(data as Map)),
+          )
           .toList();
     }
     return [];
@@ -23,7 +37,10 @@ class AddressService {
       body: data,
       requiresAuth: true,
     );
-    return Address.fromJson(response['address']);
+    final payload = response is Map<String, dynamic>
+        ? response['data']
+        : response;
+    return Address.fromJson(Map<String, dynamic>.from(payload as Map));
   }
 
   Future<Address> updateAddress(int id, Map<String, dynamic> data) async {
@@ -32,7 +49,10 @@ class AddressService {
       body: data,
       requiresAuth: true,
     );
-    return Address.fromJson(response['address']);
+    final payload = response is Map<String, dynamic>
+        ? response['data']
+        : response;
+    return Address.fromJson(Map<String, dynamic>.from(payload as Map));
   }
 
   Future<void> deleteAddress(int id) async {

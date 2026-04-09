@@ -21,7 +21,7 @@ class WishlistProvider extends ChangeNotifier {
   Future<void> _safeFetchWishlist() async {
     try {
       await fetchWishlist();
-    } catch (_) {
+    } on Exception catch (_) {
       // Silently ignore for guest users who don't have auth token
     }
   }
@@ -33,7 +33,7 @@ class WishlistProvider extends ChangeNotifier {
 
     try {
       _items = await _service.getWishlist();
-    } catch (e) {
+    } on Exception catch (e) {
       _error = e.toString();
     } finally {
       _isLoading = false;
@@ -63,7 +63,7 @@ class WishlistProvider extends ChangeNotifier {
       } else {
         await _service.addToWishlist(productId);
       }
-    } catch (e) {
+    } on Exception {
       // Revert on failure
       if (currentlyWishlisted) {
         _items.add(product);

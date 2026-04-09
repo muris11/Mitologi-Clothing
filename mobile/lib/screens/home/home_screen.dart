@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../models/collection.dart';
+import '../../models/landing_page_data.dart';
 import '../../models/product.dart';
 import '../../providers/content_provider.dart';
 import '../../providers/product_provider.dart';
@@ -113,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Quick Links
                       FadeInUp(
                         delay: const Duration(milliseconds: 100),
-                        child: _buildQuickLinks(),
+                        child: _buildQuickLinksSection(),
                       ),
 
                       SizedBox(height: ResponsiveHelper.sectionGap(context)),
@@ -269,7 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHeroSlider(List<dynamic> slides) {
+  Widget _buildHeroSlider(List<HeroSlide> slides) {
     final heroHeight = ResponsiveHelper.heroHeight(context);
 
     return Stack(
@@ -478,6 +479,39 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildQuickLinksSection() {
+    final horizontalPadding = ResponsiveHelper.horizontalPadding(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Jalur Cepat',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Akses promo, ukuran, produk terlaris, dan cerita brand tanpa banyak langkah.',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppTheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        _buildQuickLinks(),
+      ],
+    );
+  }
+
   Widget _buildQuickLinkChip(_QuickLink link) {
     return Material(
       color: Colors.transparent,
@@ -586,6 +620,43 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
+        Padding(
+          padding: EdgeInsets.fromLTRB(
+            horizontalPadding,
+            12,
+            horizontalPadding,
+            0,
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: AppTheme.surfaceContainerLowest,
+              borderRadius: AppTheme.radius16,
+              border: Border.all(color: AppTheme.outlineLight),
+            ),
+            child: const Row(
+              children: [
+                Icon(
+                  Icons.local_shipping_outlined,
+                  size: 18,
+                  color: AppTheme.primary,
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Dipilih untuk membantu Anda langsung menemukan koleksi yang paling relevan hari ini.',
+                    style: TextStyle(
+                      color: AppTheme.onSurfaceVariant,
+                      fontSize: 12,
+                      height: 1.45,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
         SizedBox(height: sectionGap * 0.6),
 
         // Product Grid
@@ -677,6 +748,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 'Jelajahi koleksi pilihan kami',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppTheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: AppTheme.surfaceContainerLowest,
+                  borderRadius: AppTheme.radius16,
+                  border: Border.all(color: AppTheme.outlineLight),
+                ),
+                child: const Text(
+                  'Setiap koleksi dirancang untuk memberi pintu masuk yang lebih terarah ke gaya dan kebutuhan Anda.',
+                  style: TextStyle(
+                    color: AppTheme.onSurfaceVariant,
+                    fontSize: 12,
+                    height: 1.45,
+                  ),
                 ),
               ),
             ],
@@ -884,7 +972,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildMaterialsSection(List<dynamic> materials) {
+  Widget _buildMaterialsSection(List<MaterialInfo> materials) {
     final horizontalPadding = ResponsiveHelper.horizontalPadding(context);
 
     return Column(
@@ -950,7 +1038,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildTestimonialsSection(List<dynamic> testimonials) {
+  Widget _buildTestimonialsSection(List<Testimonial> testimonials) {
     final horizontalPadding = ResponsiveHelper.horizontalPadding(context);
 
     return Container(

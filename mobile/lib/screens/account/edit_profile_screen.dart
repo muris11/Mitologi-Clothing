@@ -84,7 +84,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         });
         _uploadAvatar();
       }
-    } catch (e) {
+    } on Exception catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(
           context,

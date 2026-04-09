@@ -1,7 +1,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const defaultApiUrl = "http://localhost:8000/api";
+const defaultApiUrl = "http://localhost:8011/api";
 const publicApiUrl = process.env.NEXT_PUBLIC_API_URL || defaultApiUrl;
 const internalApiUrl =
   process.env.INTERNAL_API_URL || publicApiUrl || defaultApiUrl;
@@ -81,12 +81,12 @@ export default {
       {
         protocol: "http",
         hostname: "localhost",
-        port: "8000",
+        port: "8011",
       },
       {
         protocol: "http",
         hostname: "127.0.0.1",
-        port: "8000",
+        port: "8011",
       },
       {
         protocol: "https",
@@ -113,8 +113,8 @@ export default {
     const connectSources = [
       "'self'",
       ...backendOrigins,
-      "http://localhost:8000",
-      "http://127.0.0.1:8000",
+        "http://localhost:8011",
+        "http://127.0.0.1:8011",
       "https://app.sandbox.midtrans.com",
       "https://app.midtrans.com",
       "https://api.sandbox.midtrans.com",

@@ -21,6 +21,7 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   int _currentStep = 0;
+  static const _stepTitles = ['Alamat', 'Ringkasan', 'Bayar'];
 
   // Form controls
   final _formKey = GlobalKey<FormState>();
@@ -85,6 +86,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
             child: Column(
               children: [
+                _buildProgressHeader(cartProvider),
+                const SizedBox(height: 16),
                 // Address Step
                 FadeInUp(
                   delay: const Duration(milliseconds: 100),
@@ -171,8 +174,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                           child: Text(
                             _currentStep == 2
-                                ? 'Bayar Sekarang'
-                                : 'Selanjutnya',
+                                ? 'Bayar dengan Midtrans'
+                                : _currentStep == 1
+                                ? 'Lanjut ke Pembayaran'
+                                : 'Lanjut ke Ringkasan',
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 15,
@@ -183,10 +188,115 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 12),
+                Text(
+                  _currentStep == 2
+                      ? 'Anda akan diarahkan ke halaman pembayaran aman untuk menyelesaikan transaksi.'
+                      : 'Setiap langkah bisa diperiksa ulang sebelum pesanan dibuat.',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: AppTheme.onSurfaceVariant,
+                    fontSize: 12,
+                    height: 1.5,
+                  ),
+                ),
               ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildProgressHeader(CartProvider provider) {
+    final totalText = provider.cart == null
+        ? ''
+        : PriceFormatter.formatStringIDR(
+            provider.cart!.cost.totalAmount.amount,
+          );
+
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppTheme.sectionBackground,
+        borderRadius: AppTheme.radius22,
+        border: Border.all(color: AppTheme.outlineLight),
+        boxShadow: AppTheme.shadowSoft,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: AppTheme.surfaceContainerLow,
+                  borderRadius: AppTheme.radius12,
+                ),
+                child: Text(
+                  'Langkah ${_currentStep + 1} dari 3',
+                  style: const TextStyle(
+                    color: AppTheme.onSurfaceVariant,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '${provider.itemCount} item • $totalText',
+                style: const TextStyle(
+                  color: AppTheme.onSurfaceVariant,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Row(
+            children: List.generate(_stepTitles.length, (index) {
+              final isActive = index == _currentStep;
+              final isCompleted = index < _currentStep;
+              return Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(right: index == 2 ? 0 : 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 6,
+                        decoration: BoxDecoration(
+                          color: isCompleted || isActive
+                              ? AppTheme.primary
+                              : AppTheme.surfaceContainerHigh,
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        _stepTitles[index],
+                        style: TextStyle(
+                          color: isActive
+                              ? AppTheme.onSurface
+                              : AppTheme.onSurfaceVariant,
+                          fontWeight: isActive
+                              ? FontWeight.w700
+                              : FontWeight.w600,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+          ),
+        ],
       ),
     );
   }
@@ -229,7 +339,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               Expanded(
                 child: TextFormField(
                   decoration: _inputDecoration('Nama Depan'),
-                  validator: (v) => v!.isEmpty ? 'Wajib diisi' : null,
+                  validator: (v) =>
+                      v!.isEmpty ? 'Masukkan nama depan penerima' : null,
                   onSaved: (v) => _firstName = v!,
                 ),
               ),
@@ -237,7 +348,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               Expanded(
                 child: TextFormField(
                   decoration: _inputDecoration('Nama Belakang'),
-                  validator: (v) => v!.isEmpty ? 'Wajib diisi' : null,
+                  validator: (v) =>
+                      v!.isEmpty ? 'Masukkan nama belakang penerima' : null,
                   onSaved: (v) => _lastName = v!,
                 ),
               ),
@@ -247,14 +359,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           TextFormField(
             decoration: _inputDecoration('No. WhatsApp / HP'),
             keyboardType: TextInputType.phone,
-            validator: (v) => v!.isEmpty ? 'Wajib diisi' : null,
+            validator: (v) =>
+                v!.isEmpty ? 'Masukkan nomor yang bisa dihubungi' : null,
             onSaved: (v) => _phone = v!,
           ),
           const SizedBox(height: 16),
           TextFormField(
             decoration: _inputDecoration('Alamat Lengkap (Jalan, No Rumah)'),
             maxLines: 2,
-            validator: (v) => v!.isEmpty ? 'Wajib diisi' : null,
+            validator: (v) =>
+                v!.isEmpty ? 'Masukkan alamat lengkap pengiriman' : null,
             onSaved: (v) => _address1 = v!,
           ),
           const SizedBox(height: 16),
@@ -263,7 +377,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               Expanded(
                 child: TextFormField(
                   decoration: _inputDecoration('Kota/Kabupaten'),
-                  validator: (v) => v!.isEmpty ? 'Wajib diisi' : null,
+                  validator: (v) => v!.isEmpty ? 'Masukkan kota tujuan' : null,
                   onSaved: (v) => _city = v!,
                 ),
               ),
@@ -271,7 +385,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               Expanded(
                 child: TextFormField(
                   decoration: _inputDecoration('Provinsi'),
-                  validator: (v) => v!.isEmpty ? 'Wajib diisi' : null,
+                  validator: (v) =>
+                      v!.isEmpty ? 'Masukkan provinsi tujuan' : null,
                   onSaved: (v) => _province = v!,
                 ),
               ),
@@ -281,7 +396,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           TextFormField(
             decoration: _inputDecoration('Kode Pos'),
             keyboardType: TextInputType.number,
-            validator: (v) => v!.isEmpty ? 'Wajib diisi' : null,
+            validator: (v) => v!.isEmpty ? 'Masukkan kode pos tujuan' : null,
             onSaved: (v) => _zip = v!,
           ),
         ],
@@ -292,7 +407,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget _buildOrderSummary(CartProvider provider) {
     if (provider.cart == null) return const SizedBox();
 
-    double subtotal =
+    final double subtotal =
         double.tryParse(provider.cart!.cost.subtotalAmount.amount) ?? 0;
     final totalTax =
         double.tryParse(provider.cart!.cost.totalTaxAmount.amount) ?? 0;
@@ -314,6 +429,34 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
         ),
         const Divider(height: 32, color: AppTheme.muted),
+        Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceContainerLowest,
+            borderRadius: AppTheme.radius16,
+          ),
+          child: const Row(
+            children: [
+              Icon(
+                Icons.inventory_2_outlined,
+                size: 18,
+                color: AppTheme.primary,
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Pesanan akan kami siapkan setelah pembayaran berhasil diverifikasi.',
+                  style: TextStyle(
+                    color: AppTheme.onSurfaceVariant,
+                    fontSize: 12,
+                    height: 1.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -434,6 +577,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               fontSize: 13,
             ),
           ),
+          const SizedBox(height: 16),
+          const _PaymentHint(
+            icon: Icons.check_circle_outline,
+            text:
+                'Detail pesanan tetap bisa Anda tinjau ulang sebelum transaksi selesai.',
+          ),
+          const SizedBox(height: 10),
+          const _PaymentHint(
+            icon: Icons.lock_outline,
+            text: 'Metode pembayaran diproses di halaman aman dan terenkripsi.',
+          ),
         ],
       ),
     );
@@ -476,14 +630,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       Navigator.pop(context); // Close loading
 
       if (response is Map<String, dynamic> &&
-          response.containsKey('snap_token')) {
-        final snapToken = response['snap_token'];
+          (response.containsKey('snapToken') ||
+              response.containsKey('snap_token'))) {
+        final snapToken = response['snapToken'] ?? response['snap_token'];
         final snapRedirectUrl =
-            response['redirect_url'] ?? response['snap_redirect_url'];
-        final orderNumber = response['order_number'];
+            response['redirectUrl'] ??
+            response['redirect_url'] ??
+            response['snap_redirect_url'];
+        final orderNumber =
+            response['orderNumber'] ?? response['order_number'] ?? '';
 
         final targetUrl =
-            snapRedirectUrl ??
+            snapRedirectUrl?.toString() ??
             'https://app.sandbox.midtrans.com/snap/v2/vtweb/$snapToken';
 
         if (!mounted) return;
@@ -493,7 +651,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         );
       } else if (response is Map<String, dynamic>) {
         // Handle direct order success (e.g., COD)
-        final orderNumber = response['order_number'] ?? '';
+        final orderNumber =
+            response['orderNumber'] ?? response['order_number'] ?? '';
         if (!mounted) return;
         cartProvider.clearCart();
         context.go('/shop/checkout/success?order_number=$orderNumber');
@@ -508,7 +667,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
         );
       }
-    } catch (e) {
+    } on Exception catch (e) {
       if (!mounted) return;
       Navigator.pop(context); // Close loading
       ScaffoldMessenger.of(context).showSnackBar(
@@ -519,5 +678,33 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
       );
     }
+  }
+}
+
+class _PaymentHint extends StatelessWidget {
+  const _PaymentHint({required this.icon, required this.text});
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 18, color: AppTheme.onSurfaceVariant),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: AppTheme.onSurfaceVariant,
+              fontSize: 12,
+              height: 1.45,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

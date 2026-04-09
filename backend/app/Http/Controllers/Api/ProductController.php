@@ -163,14 +163,7 @@ class ProductController extends Controller
         $products = Product::with(['variants.selectedOptions', 'options', 'images', 'categories'])
             ->where('is_hidden', false)
             ->where('created_at', '>=', now()->subDays(60))
-            ->withCount(['interactions' => function ($query) {
-                $query->selectRaw('SUM(CASE 
-                    WHEN type = "view" THEN 1 
-                    WHEN type = "cart_add" THEN 3 
-                    WHEN type = "purchase" THEN 5 
-                    ELSE 0 
-                END) as interactions_weighted');
-            }])
+            ->withSum('interactions as interaction_score', 'score')
             ->orderByDesc('created_at')
             ->limit($limit)
             ->get();
@@ -184,14 +177,7 @@ class ProductController extends Controller
 
         $products = Product::with(['variants.selectedOptions', 'options', 'images', 'categories'])
             ->where('is_hidden', false)
-            ->withCount(['interactions as interaction_score' => function ($query) {
-                $query->selectRaw('SUM(CASE 
-                    WHEN type = "view" THEN 1 
-                    WHEN type = "cart_add" THEN 2 
-                    WHEN type = "purchase" THEN 5 
-                    ELSE 0 
-                END)');
-            }])
+            ->withSum('interactions as interaction_score', 'score')
             ->orderByDesc('interaction_score')
             ->limit($limit)
             ->get();

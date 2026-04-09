@@ -1,10 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'money.dart';
 import 'cart_item.dart';
 
-part 'cart.g.dart';
-
-@JsonSerializable()
 class CartCost {
   final Money subtotalAmount;
   final Money totalAmount;
@@ -16,13 +12,27 @@ class CartCost {
     required this.totalTaxAmount,
   });
 
-  factory CartCost.fromJson(Map<String, dynamic> json) =>
-      _$CartCostFromJson(json);
+  factory CartCost.fromJson(Map<String, dynamic> json) {
+    return CartCost(
+      subtotalAmount: Money.fromJson(
+        Map<String, dynamic>.from(json['subtotalAmount'] as Map),
+      ),
+      totalAmount: Money.fromJson(
+        Map<String, dynamic>.from(json['totalAmount'] as Map),
+      ),
+      totalTaxAmount: Money.fromJson(
+        Map<String, dynamic>.from(json['totalTaxAmount'] as Map),
+      ),
+    );
+  }
 
-  Map<String, dynamic> toJson() => _$CartCostToJson(this);
+  Map<String, dynamic> toJson() => {
+    'subtotalAmount': subtotalAmount.toJson(),
+    'totalAmount': totalAmount.toJson(),
+    'totalTaxAmount': totalTaxAmount.toJson(),
+  };
 }
 
-@JsonSerializable()
 class Cart {
   final String? id;
   final String? sessionId;
@@ -40,7 +50,27 @@ class Cart {
     required this.totalQuantity,
   });
 
-  factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);
+  factory Cart.fromJson(Map<String, dynamic> json) {
+    return Cart(
+      id: json['id']?.toString(),
+      sessionId: json['sessionId']?.toString(),
+      checkoutUrl: json['checkoutUrl']?.toString() ?? '/checkout',
+      cost: CartCost.fromJson(Map<String, dynamic>.from(json['cost'] as Map)),
+      lines: (json['lines'] as List<dynamic>? ?? <dynamic>[])
+          .map((e) => CartItem.fromJson(Map<String, dynamic>.from(e as Map)))
+          .toList(),
+      totalQuantity: json['totalQuantity'] is int
+          ? json['totalQuantity'] as int
+          : int.tryParse(json['totalQuantity']?.toString() ?? '0') ?? 0,
+    );
+  }
 
-  Map<String, dynamic> toJson() => _$CartToJson(this);
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'sessionId': sessionId,
+    'checkoutUrl': checkoutUrl,
+    'cost': cost.toJson(),
+    'lines': lines.map((e) => e.toJson()).toList(),
+    'totalQuantity': totalQuantity,
+  };
 }

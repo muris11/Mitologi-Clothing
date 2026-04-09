@@ -287,28 +287,109 @@ class _ShopScreenState extends State<ShopScreen> {
   Widget _buildResultsHeader() {
     final provider = context.watch<ProductProvider>();
     final horizontalPadding = ResponsiveHelper.horizontalPadding(context);
+    final hasSearch = provider.searchQuery?.isNotEmpty == true;
+    final hasCategory = provider.selectedCategory != null;
+    final activeFilterCount = [hasSearch, hasCategory].where((e) => e).length;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Results count
-          Text(
-            'Menampilkan ${provider.products.length} produk',
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: AppTheme.onSurfaceVariant),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Menampilkan ${provider.products.length} produk',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppTheme.onSurface,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      activeFilterCount > 0
+                          ? '$activeFilterCount filter aktif • ${_getSortLabel(provider.sortKey)}'
+                          : 'Urutan saat ini: ${_getSortLabel(provider.sortKey)}',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppTheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              TextButton.icon(
+                onPressed: _showSortBottomSheet,
+                icon: const Icon(Icons.sort, size: 18),
+                label: const Text('Urutkan'),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppTheme.primary,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                ),
+              ),
+            ],
           ),
+          if (hasSearch || hasCategory) ...[
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                if (hasSearch)
+                  _buildActivePill(
+                    'Pencarian: ${provider.searchQuery}',
+                    onClear: () {
+                      _searchController.clear();
+                      provider.setSearchQuery('');
+                    },
+                  ),
+                if (hasCategory)
+                  _buildActivePill(
+                    'Kategori aktif',
+                    onClear: () => provider.setCategory(null),
+                  ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
 
-          // Sort button
-          TextButton.icon(
-            onPressed: _showSortBottomSheet,
-            icon: const Icon(Icons.sort, size: 18),
-            label: Text(_getSortLabel(provider.sortKey)),
-            style: TextButton.styleFrom(
-              foregroundColor: AppTheme.primary,
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+  Widget _buildActivePill(String label, {required VoidCallback onClear}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceContainerLow,
+        borderRadius: AppTheme.radius12,
+        border: Border.all(color: AppTheme.outlineLight),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              color: AppTheme.onSurfaceVariant,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(width: 8),
+          GestureDetector(
+            onTap: onClear,
+            child: const Icon(
+              Icons.close,
+              size: 16,
+              color: AppTheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -338,7 +419,7 @@ class _ShopScreenState extends State<ShopScreen> {
     final spacing = ResponsiveHelper.gridSpacing(context);
 
     if (provider.products.isEmpty && !provider.isLoading) {
-      return SliverToBoxAdapter(child: _buildEmptyState());
+      return SliverToBoxAdapter(child: _buildEmptyState(provider));
     }
 
     return SliverGrid(
@@ -358,7 +439,16 @@ class _ShopScreenState extends State<ShopScreen> {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(ProductProvider provider) {
+    final hasSearch = provider.searchQuery?.isNotEmpty == true;
+    final hasCategory = provider.selectedCategory != null;
+    final title = hasSearch || hasCategory
+        ? 'Belum ada hasil yang cocok'
+        : 'Produk tidak ditemukan';
+    final subtitle = hasSearch || hasCategory
+        ? 'Coba kata kunci lain atau lepaskan filter aktif untuk melihat lebih banyak koleksi.'
+        : 'Coba ubah kata kunci pencarian atau filter';
+
     return Container(
       padding: const EdgeInsets.all(48),
       child: Column(
@@ -378,14 +468,14 @@ class _ShopScreenState extends State<ShopScreen> {
           ),
           const SizedBox(height: 24),
           Text(
-            'Produk tidak ditemukan',
+            title,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 8),
           Text(
-            'Coba ubah kata kunci pencarian atau filter',
+            subtitle,
             style: Theme.of(
               context,
             ).textTheme.bodyMedium?.copyWith(color: AppTheme.onSurfaceVariant),

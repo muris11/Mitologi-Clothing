@@ -2,12 +2,15 @@ import '../models/user.dart';
 import 'api_service.dart';
 
 class ProfileService {
-  final ApiService _api = ApiService();
+  ProfileService({ApiService? api}) : _api = api ?? ApiService();
+
+  final ApiService _api;
 
   /// Get current user profile
   Future<User> getProfile() async {
     final response = await _api.get('/profile', requiresAuth: true);
-    return User.fromJson(response);
+    final data = response is Map<String, dynamic> ? response['data'] : response;
+    return User.fromJson(data as Map<String, dynamic>);
   }
 
   /// Update profile
@@ -30,7 +33,8 @@ class ProfileService {
     if (postalCode != null) body['postal_code'] = postalCode;
 
     final response = await _api.put('/profile', body: body, requiresAuth: true);
-    return User.fromJson(response);
+    final data = response is Map<String, dynamic> ? response['data'] : response;
+    return User.fromJson(data as Map<String, dynamic>);
   }
 
   /// Update avatar
@@ -43,7 +47,11 @@ class ProfileService {
     );
 
     // Assuming backend returns { avatar_url: "..." }
-    return response['avatar_url'] ?? '';
+    final data = response is Map<String, dynamic> ? response['data'] : response;
+    if (data is Map<String, dynamic>) {
+      return (data['avatarUrl'] ?? data['avatar_url'] ?? '').toString();
+    }
+    return '';
   }
 
   /// Update password
@@ -63,7 +71,7 @@ class ProfileService {
         requiresAuth: true,
       );
       return true;
-    } catch (e) {
+    } on Exception {
       return false;
     }
   }

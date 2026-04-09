@@ -28,22 +28,31 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
+    int parseInt(dynamic value, int fallback) {
+      if (value is int) return value;
+      return int.tryParse(value?.toString() ?? '') ?? fallback;
+    }
+
+    String parseString(dynamic value, [String fallback = '']) {
+      if (value is String) return value;
+      return value?.toString() ?? fallback;
+    }
+
     return User(
-      id: json['id'] is int
-          ? json['id']
-          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
-      name: json['name'] ?? '',
-      email: json['email'] ?? '',
-      role: json['role'] ?? json['role_name'],
-      avatarUrl: json['avatar_url'] ?? json['avatar'],
-      phone: json['phone'],
+      id: parseInt(json['id'], 0),
+      name: parseString(json['name']),
+      email: parseString(json['email']),
+      role: (json['role'] ?? json['role_name'])?.toString(),
+      avatarUrl: (json['avatar_url'] ?? json['avatarUrl'] ?? json['avatar'])
+          ?.toString(),
+      phone: json['phone']?.toString(),
       addresses: (json['addresses'] as List<dynamic>?)
-          ?.map((e) => Address.fromJson(e))
+          ?.map((e) => Address.fromJson(Map<String, dynamic>.from(e as Map)))
           .toList(),
-      address: json['address'],
-      city: json['city'],
-      province: json['province'],
-      postalCode: json['postal_code'] ?? json['postalCode'],
+      address: json['address']?.toString(),
+      city: json['city']?.toString(),
+      province: json['province']?.toString(),
+      postalCode: (json['postal_code'] ?? json['postalCode'])?.toString(),
     );
   }
 }

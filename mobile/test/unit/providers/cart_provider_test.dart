@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile/models/cart.dart';
-import 'package:mobile/models/cart_item.dart';
 import 'package:mobile/models/money.dart';
 import 'package:mobile/providers/cart_provider.dart';
 
@@ -36,9 +35,9 @@ void main() {
           id: 'test-cart',
           checkoutUrl: '',
           cost: CartCost(
-            subtotalAmount: Money(amount: '100000', currencyCode: 'IDR'),
-            totalAmount: Money(amount: '100000', currencyCode: 'IDR'),
-            totalTaxAmount: Money(amount: '0', currencyCode: 'IDR'),
+            subtotalAmount: const Money(amount: '100000', currencyCode: 'IDR'),
+            totalAmount: const Money(amount: '100000', currencyCode: 'IDR'),
+            totalTaxAmount: const Money(amount: '0', currencyCode: 'IDR'),
           ),
           lines: [],
           totalQuantity: 0,
@@ -74,9 +73,9 @@ void main() {
           id: 'test-cart',
           checkoutUrl: '',
           cost: CartCost(
-            subtotalAmount: Money(amount: '0', currencyCode: 'IDR'),
-            totalAmount: Money(amount: '0', currencyCode: 'IDR'),
-            totalTaxAmount: Money(amount: '0', currencyCode: 'IDR'),
+            subtotalAmount: const Money(amount: '0', currencyCode: 'IDR'),
+            totalAmount: const Money(amount: '0', currencyCode: 'IDR'),
+            totalTaxAmount: const Money(amount: '0', currencyCode: 'IDR'),
           ),
           lines: [],
           totalQuantity: 0,

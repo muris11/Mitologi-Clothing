@@ -73,6 +73,18 @@ class AccountQuickActions extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 8),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Pantau status pesanan aktif dan masuk kembali ke riwayat pembelian Anda.',
+                  style: TextStyle(
+                    color: AppTheme.onSurfaceVariant,
+                    fontSize: 12,
+                    height: 1.45,
+                  ),
+                ),
+              ),
               const Divider(height: 28),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -99,6 +111,20 @@ class AccountQuickActions extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
+        const Padding(
+          padding: EdgeInsets.only(left: 4, bottom: 12),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Profil & Aktivitas',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: AppTheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+        ),
         // Account Settings Card
         _buildCard(
           child: Column(

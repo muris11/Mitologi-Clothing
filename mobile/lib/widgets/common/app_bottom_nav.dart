@@ -157,7 +157,7 @@ class AppBottomNav extends StatelessWidget {
   int _getWishlistCount(BuildContext context) {
     try {
       return context.watch<WishlistProvider>().itemCount;
-    } catch (_) {
+    } on Exception {
       return 0;
     }
   }
@@ -165,7 +165,7 @@ class AppBottomNav extends StatelessWidget {
   int _getCartCount(BuildContext context) {
     try {
       return context.watch<CartProvider>().itemCount;
-    } catch (_) {
+    } on Exception {
       return 0;
     }
   }
@@ -264,7 +264,9 @@ class AppBottomNav extends StatelessWidget {
                   style: TextStyle(
                     fontSize: isSmallScreen ? 10 : 11,
                     fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                    color: isSelected ? AppTheme.primary : AppTheme.onSurfaceVariant,
+                    color: isSelected
+                        ? AppTheme.primary
+                        : AppTheme.onSurfaceVariant,
                     height: 1.2,
                   ),
                   maxLines: 1,

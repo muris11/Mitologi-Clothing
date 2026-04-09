@@ -12,11 +12,16 @@ class ImageModel {
   });
 
   factory ImageModel.fromJson(Map<String, dynamic> json) {
+    int parseInt(dynamic value, int fallback) {
+      if (value is int) return value;
+      return int.tryParse(value?.toString() ?? '') ?? fallback;
+    }
+
     return ImageModel(
-      url: json['url'] ?? '',
-      altText: json['altText'] ?? '',
-      width: json['width'] ?? 0,
-      height: json['height'] ?? 0,
+      url: json['url']?.toString() ?? '',
+      altText: json['altText']?.toString() ?? '',
+      width: parseInt(json['width'], 0),
+      height: parseInt(json['height'], 0),
     );
   }
 

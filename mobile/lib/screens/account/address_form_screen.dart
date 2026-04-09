@@ -90,7 +90,7 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
           const SnackBar(content: Text('Alamat berhasil disimpan')),
         );
       }
-    } catch (e) {
+    } on Exception catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
         ScaffoldMessenger.of(

@@ -402,7 +402,7 @@ class EnhancedConfettiPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..style = PaintingStyle.fill;
 
-    for (var particle in particles) {
+    for (final particle in particles) {
       _updateParticleState(particle, size);
       _updateParticlePhysics(particle, size);
       _renderParticle(canvas, paint, particle, size);

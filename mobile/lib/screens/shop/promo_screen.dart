@@ -11,44 +11,44 @@ class PromoScreen extends StatelessWidget {
   final List<Map<String, dynamic>> benefits = const [
     {
       'icon': Icons.local_shipping_outlined,
-      'title': "Gratis Ongkir",
+      'title': 'Gratis Ongkir',
       'description':
-          "Nikmati gratis ongkir untuk setiap pembelian minimum Rp 200.000 ke seluruh Indonesia.",
+          'Nikmati gratis ongkir untuk setiap pembelian minimum Rp 200.000 ke seluruh Indonesia.',
     },
     {
       'icon': Icons.local_offer_outlined,
-      'title': "Diskon Member",
+      'title': 'Diskon Member',
       'description':
-          "Daftar sebagai member dan dapatkan diskon hingga 15% untuk setiap pembelian berikutnya.",
+          'Daftar sebagai member dan dapatkan diskon hingga 15% untuk setiap pembelian berikutnya.',
     },
     {
       'icon': Icons.card_giftcard_outlined,
-      'title': "Hadiah Spesial",
+      'title': 'Hadiah Spesial',
       'description':
-          "Dapatkan hadiah spesial di hari ulang tahun Anda dan bonus poin setiap transaksi.",
+          'Dapatkan hadiah spesial di hari ulang tahun Anda dan bonus poin setiap transaksi.',
     },
   ];
 
   final List<Map<String, dynamic>> promos = const [
     {
-      'title': "Flash Sale Mingguan",
+      'title': 'Flash Sale Mingguan',
       'description':
-          "Setiap hari Jumat, nikmati diskon hingga 30% untuk produk-produk pilihan. Stok terbatas, jangan sampai kehabisan!",
-      'badge': "Setiap Jumat",
+          'Setiap hari Jumat, nikmati diskon hingga 30% untuk produk-produk pilihan. Stok terbatas, jangan sampai kehabisan!',
+      'badge': 'Setiap Jumat',
       'icon': Icons.calendar_today_outlined,
     },
     {
-      'title': "Beli 2 Gratis 1",
+      'title': 'Beli 2 Gratis 1',
       'description':
-          "Berlaku untuk kategori kaos dan t-shirt pilihan. Pilih 3 produk favorit Anda dan bayar hanya 2!",
-      'badge': "Syarat & Ketentuan Berlaku",
+          'Berlaku untuk kategori kaos dan t-shirt pilihan. Pilih 3 produk favorit Anda dan bayar hanya 2!',
+      'badge': 'Syarat & Ketentuan Berlaku',
       'icon': Icons.people_outline,
     },
     {
-      'title': "Diskon Koleksi Baru",
+      'title': 'Diskon Koleksi Baru',
       'description':
-          "Dapatkan potongan 10% untuk pre-order koleksi terbaru kami. Jadilah yang pertama memiliki desain eksklusif.",
-      'badge': "Pre-Order",
+          'Dapatkan potongan 10% untuk pre-order koleksi terbaru kami. Jadilah yang pertama memiliki desain eksklusif.',
+      'badge': 'Pre-Order',
       'icon': Icons.sell_outlined,
     },
   ];

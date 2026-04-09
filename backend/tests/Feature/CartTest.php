@@ -17,9 +17,10 @@ class CartTest extends TestCase
 
     public function test_can_clear_cart(): void
     {
+        /** @var User $user */
         $user = User::factory()->create();
         $cart = Cart::factory()->create(['user_id' => $user->id]);
-        
+
         // Create 3 cart items with different variants
         for ($i = 0; $i < 3; $i++) {
             $product = Product::factory()->create();
@@ -46,7 +47,7 @@ class CartTest extends TestCase
             'user_id' => null,
             'session_id' => $sessionId,
         ]);
-        
+
         // Create 2 cart items with different variants
         for ($i = 0; $i < 2; $i++) {
             $product = Product::factory()->create();
@@ -58,8 +59,8 @@ class CartTest extends TestCase
         }
 
         $response = $this->withHeaders([
-                'X-Cart-Id' => $sessionId,
-            ])
+            'X-Cart-Id' => $sessionId,
+        ])
             ->deleteJson('/api/v1/cart/clear');
 
         $response->assertStatus(200)
@@ -70,9 +71,10 @@ class CartTest extends TestCase
 
     public function test_clear_empty_cart_returns_success(): void
     {
+        /** @var User $user */
         $user = User::factory()->create();
         $cart = Cart::factory()->create(['user_id' => $user->id]);
-        
+
         // No items in cart
 
         $response = $this->actingAs($user)

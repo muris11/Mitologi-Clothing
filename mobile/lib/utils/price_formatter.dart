@@ -11,7 +11,7 @@ class PriceFormatter {
   }
 
   static String formatStringIDR(String amountStr) {
-    double? amount = double.tryParse(amountStr);
+    final double? amount = double.tryParse(amountStr);
     if (amount == null) return 'Rp0';
     return formatIDR(amount);
   }

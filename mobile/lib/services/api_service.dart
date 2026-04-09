@@ -35,6 +35,7 @@ class ApiService {
     final cartSessionId = await SecureStorageService.getCartSessionId();
     if (cartSessionId != null) {
       headers['X-Cart-Id'] = cartSessionId;
+      headers['X-Session-Id'] = cartSessionId;
     }
 
     return headers;
@@ -60,7 +61,7 @@ class ApiService {
       return _processResponse(response);
     } on ApiException {
       rethrow;
-    } catch (e) {
+    } on Exception catch (e) {
       throw ApiException('Network Error: $e', 0);
     }
   }
@@ -85,7 +86,7 @@ class ApiService {
       return _processResponse(response);
     } on ApiException {
       rethrow;
-    } catch (e) {
+    } on Exception catch (e) {
       throw ApiException('Network Error: $e', 0);
     }
   }
@@ -110,7 +111,7 @@ class ApiService {
       return _processResponse(response);
     } on ApiException {
       rethrow;
-    } catch (e) {
+    } on Exception catch (e) {
       throw ApiException('Network Error: $e', 0);
     }
   }
@@ -127,7 +128,7 @@ class ApiService {
       return _processResponse(response);
     } on ApiException {
       rethrow;
-    } catch (e) {
+    } on Exception catch (e) {
       throw ApiException('Network Error: $e', 0);
     }
   }
@@ -145,7 +146,7 @@ class ApiService {
     headers.remove('Content-Type');
 
     try {
-      var request = http.MultipartRequest('POST', url);
+      final request = http.MultipartRequest('POST', url);
       request.headers.addAll(headers);
 
       if (fields != null) {
@@ -154,15 +155,15 @@ class ApiService {
 
       request.files.add(await http.MultipartFile.fromPath(fileField, filePath));
 
-      var streamedResponse = await request.send().timeout(
+      final streamedResponse = await request.send().timeout(
         const Duration(milliseconds: ApiConfig.timeoutDuration),
       );
-      var response = await http.Response.fromStream(streamedResponse);
+      final response = await http.Response.fromStream(streamedResponse);
 
       return _processResponse(response);
     } on ApiException {
       rethrow;
-    } catch (e) {
+    } on Exception catch (e) {
       throw ApiException('Network Error: $e', 0);
     }
   }
@@ -173,7 +174,7 @@ class ApiService {
     dynamic jsonResponse;
     try {
       jsonResponse = json.decode(response.body);
-    } catch (e) {
+    } on Exception {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return response.body;
       }
@@ -187,7 +188,12 @@ class ApiService {
       dynamic errors;
 
       if (jsonResponse is Map<String, dynamic>) {
-        message = (jsonResponse['message'] as String?) ?? message;
+        message =
+            (jsonResponse['message'] as String?) ??
+            (jsonResponse['error'] is Map<String, dynamic>
+                ? jsonResponse['error']['message'] as String?
+                : null) ??
+            message;
         errors = jsonResponse['errors'];
       }
 

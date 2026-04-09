@@ -19,12 +19,16 @@ class Collection {
 
   factory Collection.fromJson(Map<String, dynamic> json) {
     return Collection(
-      handle: json['handle'] ?? '',
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
-      seo: SEO.fromJson(json['seo'] ?? {}),
-      path: json['path'] ?? '',
-      updatedAt: json['updatedAt'] ?? '',
+      handle: json['handle']?.toString() ?? '',
+      title: json['title']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
+      seo: SEO.fromJson(
+        json['seo'] is Map<String, dynamic>
+            ? json['seo'] as Map<String, dynamic>
+            : <String, dynamic>{},
+      ),
+      path: json['path']?.toString() ?? '',
+      updatedAt: json['updatedAt']?.toString() ?? '',
     );
   }
 }

@@ -71,7 +71,7 @@ class ProductProvider extends ChangeNotifier {
     try {
       _categories = await _productService.getCategories();
       notifyListeners();
-    } catch (e) {
+    } on Exception {
       // Silently handle category fetch errors
     }
   }
@@ -143,7 +143,7 @@ class ProductProvider extends ChangeNotifier {
       }
 
       _pagination = response.pagination;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString().replaceAll('ApiException: ', ''));
     } finally {
       _isLoading = false;
@@ -205,7 +205,7 @@ class ProductProvider extends ChangeNotifier {
   Future<Product?> getProductDetail(String handle) async {
     try {
       return await _productService.getProductDetail(handle);
-    } catch (e) {
+    } on Exception {
       // Error handled in calling code
       return null;
     }
@@ -214,7 +214,7 @@ class ProductProvider extends ChangeNotifier {
   Future<List<ReviewItem>> getProductReviews(String productId) async {
     try {
       return await _productService.getProductReviews(productId);
-    } catch (e) {
+    } on Exception {
       // Return empty list on error
       return [];
     }
@@ -227,7 +227,7 @@ class ProductProvider extends ChangeNotifier {
   ) async {
     try {
       return await _productService.submitReview(productId, rating, comment);
-    } catch (e) {
+    } on Exception {
       // Rethrow for UI handling
       rethrow;
     }
@@ -249,7 +249,7 @@ class ProductProvider extends ChangeNotifier {
       _newArrivals = results[0] as List<Product>;
       _bestSellers = results[1] as List<Product>;
       _collections = results[2] as List<Collection>;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString().replaceAll('ApiException: ', ''));
     } finally {
       _isLoadingHomeData = false;
@@ -277,7 +277,7 @@ class ProductProvider extends ChangeNotifier {
 
       _currentProductReviews = results[0] as List<ReviewItem>;
       _currentProductRelated = results[1] as List<Product>;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(e.toString().replaceAll('ApiException: ', ''));
     } finally {
       _isLoadingProductDetail = false;
@@ -288,7 +288,7 @@ class ProductProvider extends ChangeNotifier {
   Future<List<Product>> getRecommendations() async {
     try {
       return await _productService.getRecommendations();
-    } catch (e) {
+    } on Exception {
       return [];
     }
   }

@@ -61,6 +61,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/app-configuration', [\App\Http\Controllers\Admin\AppConfigurationController::class, 'index'])->name('app-configuration.index');
     Route::put('/app-configuration/{group}', [\App\Http\Controllers\Admin\AppConfigurationController::class, 'update'])->name('app-configuration.update');
     Route::post('/app-configuration/test/{service}', [\App\Http\Controllers\Admin\AppConfigurationController::class, 'test'])->name('app-configuration.test');
+    Route::post('/app-configuration/backup/restore', [\App\Http\Controllers\Admin\AppConfigurationController::class, 'restoreBackup'])->name('app-configuration.restore');
+    Route::delete('/app-configuration/backup', [\App\Http\Controllers\Admin\AppConfigurationController::class, 'destroyBackup'])->name('app-configuration.destroy-backup');
+    Route::delete('/app-configuration/audit-log/{id}', [\App\Http\Controllers\Admin\AppConfigurationController::class, 'destroyAuditLog'])->name('app-configuration.destroy-audit-log');
+    Route::delete('/app-configuration/audit-log', [\App\Http\Controllers\Admin\AppConfigurationController::class, 'destroyAllAuditLogs'])->name('app-configuration.destroy-all-audit-logs');
 
     // === Beranda Sub-Resources ===
     Route::prefix('beranda')->name('beranda.')->group(function () {

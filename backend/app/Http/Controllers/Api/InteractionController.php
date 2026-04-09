@@ -19,7 +19,7 @@ class InteractionController extends Controller
             'interactions.*.score' => 'nullable|integer',
         ]);
 
-        $user = auth()->user();
+        $user = $request->user('sanctum');
 
         // Skip if user is not authenticated (guest users)
         if (! $user) {
@@ -45,7 +45,6 @@ class InteractionController extends Controller
                 'type' => $interaction['action'],
                 'score' => $score,
                 'created_at' => now(),
-                'updated_at' => now(),
             ];
         }
 

@@ -1,9 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'money.dart';
 
-part 'cart_item.g.dart';
-
-@JsonSerializable()
 class CartItem {
   final String id;
   final String merchandiseId;
@@ -23,8 +19,48 @@ class CartItem {
     this.variantTitle,
   });
 
-  factory CartItem.fromJson(Map<String, dynamic> json) =>
-      _$CartItemFromJson(json);
+  factory CartItem.fromJson(Map<String, dynamic> json) {
+    final merchandise = json['merchandise'] is Map
+        ? Map<String, dynamic>.from(json['merchandise'] as Map)
+        : <String, dynamic>{};
+    final product = merchandise['product'] is Map
+        ? Map<String, dynamic>.from(merchandise['product'] as Map)
+        : <String, dynamic>{};
+    final featuredImage = product['featuredImage'] is Map
+        ? Map<String, dynamic>.from(product['featuredImage'] as Map)
+        : <String, dynamic>{};
+    final totalAmount =
+        json['cost'] is Map && (json['cost'] as Map)['totalAmount'] is Map
+        ? Map<String, dynamic>.from((json['cost'] as Map)['totalAmount'] as Map)
+        : <String, dynamic>{};
 
-  Map<String, dynamic> toJson() => _$CartItemToJson(this);
+    return CartItem(
+      id: json['id']?.toString() ?? '',
+      merchandiseId:
+          json['merchandiseId']?.toString() ??
+          merchandise['id']?.toString() ??
+          '',
+      title: json['title']?.toString() ?? product['title']?.toString() ?? '',
+      quantity: json['quantity'] is int
+          ? json['quantity'] as int
+          : int.tryParse(json['quantity']?.toString() ?? '0') ?? 0,
+      price: json['price'] is Map
+          ? Money.fromJson(Map<String, dynamic>.from(json['price'] as Map))
+          : Money.fromJson(totalAmount),
+      imageUrl:
+          json['imageUrl']?.toString() ?? featuredImage['url']?.toString(),
+      variantTitle:
+          json['variantTitle']?.toString() ?? merchandise['title']?.toString(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'merchandiseId': merchandiseId,
+    'title': title,
+    'quantity': quantity,
+    'price': price.toJson(),
+    'imageUrl': imageUrl,
+    'variantTitle': variantTitle,
+  };
 }

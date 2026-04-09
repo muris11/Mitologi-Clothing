@@ -3,15 +3,25 @@ import '../models/product.dart';
 import 'api_service.dart';
 
 class CollectionService {
-  final ApiService _api = ApiService();
+  CollectionService({ApiService? api}) : _api = api ?? ApiService();
+
+  final ApiService _api;
 
   Future<List<Collection>> getCollections() async {
     final response = await _api.get('/collections');
     if (response is List) {
-      return response.map((json) => Collection.fromJson(json)).toList();
-    } else if (response != null && response['data'] != null) {
+      return response
+          .map(
+            (json) =>
+                Collection.fromJson(Map<String, dynamic>.from(json as Map)),
+          )
+          .toList();
+    } else if (response is Map<String, dynamic> && response['data'] is List) {
       return (response['data'] as List)
-          .map((json) => Collection.fromJson(json))
+          .map(
+            (json) =>
+                Collection.fromJson(Map<String, dynamic>.from(json as Map)),
+          )
           .toList();
     }
     return [];
@@ -19,10 +29,12 @@ class CollectionService {
 
   Future<Collection> getCollection(String handle) async {
     final response = await _api.get('/collections/$handle');
-    if (response != null && response['data'] != null) {
-      return Collection.fromJson(response['data']);
+    if (response is Map<String, dynamic> && response['data'] is Map) {
+      return Collection.fromJson(
+        Map<String, dynamic>.from(response['data'] as Map),
+      );
     }
-    return Collection.fromJson(response);
+    return Collection.fromJson(Map<String, dynamic>.from(response as Map));
   }
 
   Future<List<Product>> getCollectionProducts(
@@ -40,10 +52,16 @@ class CollectionService {
     );
 
     if (response is List) {
-      return response.map((json) => Product.fromJson(json)).toList();
-    } else if (response != null && response['data'] != null) {
+      return response
+          .map(
+            (json) => Product.fromJson(Map<String, dynamic>.from(json as Map)),
+          )
+          .toList();
+    } else if (response is Map<String, dynamic> && response['data'] is List) {
       return (response['data'] as List)
-          .map((json) => Product.fromJson(json))
+          .map(
+            (json) => Product.fromJson(Map<String, dynamic>.from(json as Map)),
+          )
           .toList();
     }
     return [];

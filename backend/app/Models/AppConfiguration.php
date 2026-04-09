@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Support\Facades\Artisan;
@@ -26,7 +28,7 @@ class AppConfiguration
                 'MAIL_PORT' => env('MAIL_PORT', '587'),
                 'MAIL_USERNAME' => env('MAIL_USERNAME', ''),
                 'MAIL_PASSWORD' => env('MAIL_PASSWORD', ''),
-                'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION', 'tls'),
+                'MAIL_ENCRYPTION' => env('MAIL_SCHEME', env('MAIL_ENCRYPTION', 'tls')),
                 'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS', ''),
             ],
             'midtrans' => [
@@ -47,11 +49,35 @@ class AppConfiguration
         return $configs;
     }
 
+    public function listBackups(): array
+    {
+        $backupPattern = base_path('.env.backup.*');
+
+        return collect(glob($backupPattern) ?: [])
+            ->map(function (string $path): array {
+                return [
+                    'name' => basename($path),
+                    'path' => $path,
+                    'size' => File::size($path),
+                    'modified_at' => date('Y-m-d H:i:s', File::lastModified($path)),
+                ];
+            })
+            ->sortByDesc('name')
+            ->values()
+            ->all();
+    }
+
     /**
      * Update .env file with new values
      */
     public function update(array $groupData, string $group, int $userId): bool
     {
+        // MAIL_SCHEME must always be "smtp" for Laravel 11+ compatibility
+        // MAIL_ENCRYPTION handles tls/ssl/null separately
+        if ($group === 'email') {
+            $groupData['MAIL_SCHEME'] = 'smtp';
+        }
+
         // Create backup first
         $this->backup();
 
@@ -94,6 +120,53 @@ class AppConfiguration
         return true;
     }
 
+    public function restoreBackup(string $backupName, int $userId, string $ipAddress): bool
+    {
+        $backupPath = $this->resolveBackupPath($backupName);
+
+        if (! File::exists($backupPath)) {
+            throw new \RuntimeException('Backup file tidak ditemukan.');
+        }
+
+        $this->backup();
+        File::copy($backupPath, $this->envPath);
+
+        ConfigAuditLog::create([
+            'user_id' => $userId,
+            'group' => 'backup',
+            'key' => 'restore',
+            'old_value' => '***',
+            'new_value' => $backupName,
+            'ip_address' => $ipAddress,
+        ]);
+
+        Artisan::call('config:clear');
+
+        return true;
+    }
+
+    public function deleteBackup(string $backupName, int $userId, string $ipAddress): bool
+    {
+        $backupPath = $this->resolveBackupPath($backupName);
+
+        if (! File::exists($backupPath)) {
+            throw new \RuntimeException('Backup file tidak ditemukan.');
+        }
+
+        File::delete($backupPath);
+
+        ConfigAuditLog::create([
+            'user_id' => $userId,
+            'group' => 'backup',
+            'key' => 'delete',
+            'old_value' => $backupName,
+            'new_value' => 'deleted',
+            'ip_address' => $ipAddress,
+        ]);
+
+        return true;
+    }
+
     /**
      * Create backup of .env file
      */
@@ -101,6 +174,15 @@ class AppConfiguration
     {
         $backupPath = $this->envPath.'.backup.'.now()->format('Y-m-d-His');
         File::copy($this->envPath, $backupPath);
+    }
+
+    private function resolveBackupPath(string $backupName): string
+    {
+        if (! preg_match('/^\.env\.backup\.\d{4}-\d{2}-\d{2}-\d{6}$/', $backupName)) {
+            throw new \InvalidArgumentException('Nama backup tidak valid.');
+        }
+
+        return base_path($backupName);
     }
 
     /**
@@ -143,9 +225,15 @@ class AppConfiguration
                     ->subject('Test Email Configuration');
             });
 
-            return ['success' => true, 'message' => 'Email sent successfully'];
+            return ['success' => true, 'message' => 'Email berhasil dikirim. Periksa inbox atau folder spam Anda.'];
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            $message = $e->getMessage();
+
+            if (str_contains($message, '530 Authentication required')) {
+                $message = 'Authentication required. Periksa MAIL_USERNAME, MAIL_PASSWORD, dan pastikan SMTP/App Password sudah benar.';
+            }
+
+            return ['success' => false, 'message' => $message];
         }
     }
 

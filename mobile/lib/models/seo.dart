@@ -6,8 +6,8 @@ class SEO {
 
   factory SEO.fromJson(Map<String, dynamic> json) {
     return SEO(
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
+      title: json['title']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
     );
   }
 

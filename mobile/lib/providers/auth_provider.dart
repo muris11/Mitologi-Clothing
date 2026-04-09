@@ -41,7 +41,7 @@ class AuthProvider extends ChangeNotifier {
         // Fetch fresh user data
         _user = await _authService.getUser();
       }
-    } catch (e) {
+    } on Exception {
       // Token might be invalid or expired
       _token = null;
       _user = null;
@@ -75,7 +75,7 @@ class AuthProvider extends ChangeNotifier {
 
       _setLoading(false);
       return true;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(
         e
             .toString()
@@ -117,7 +117,7 @@ class AuthProvider extends ChangeNotifier {
 
       _setLoading(false);
       return true;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(
         e
             .toString()
@@ -133,7 +133,7 @@ class AuthProvider extends ChangeNotifier {
     _setLoading(true);
     try {
       await _authService.logout();
-    } catch (e) {
+    } on Exception {
       // Ignore errors on logout (e.g., already unauthenticated)
     } finally {
       _token = null;
@@ -150,7 +150,7 @@ class AuthProvider extends ChangeNotifier {
       await _authService.forgotPassword(email);
       _setLoading(false);
       return true;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(
         e
             .toString()
@@ -179,7 +179,7 @@ class AuthProvider extends ChangeNotifier {
       );
       _setLoading(false);
       return true;
-    } catch (e) {
+    } on Exception catch (e) {
       _setError(
         e
             .toString()

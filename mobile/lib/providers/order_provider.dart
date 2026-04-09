@@ -36,7 +36,7 @@ class OrderProvider extends ChangeNotifier {
 
     try {
       _orders = await _service.getOrders();
-    } catch (e) {
+    } on Exception catch (e) {
       _error = e.toString();
     } finally {
       _isLoading = false;
@@ -50,7 +50,7 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
     try {
       _currentOrder = await _service.getOrderDetail(orderNumber);
-    } catch (e) {
+    } on Exception catch (e) {
       _error = e.toString();
     } finally {
       _isLoading = false;
@@ -67,7 +67,7 @@ class OrderProvider extends ChangeNotifier {
     try {
       final response = await _service.createCheckout(checkoutData);
       return response;
-    } catch (e) {
+    } on Exception catch (e) {
       _error = e.toString();
       notifyListeners();
       return null;
@@ -84,7 +84,7 @@ class OrderProvider extends ChangeNotifier {
     try {
       final response = await _service.payOrder(orderNumber);
       return response;
-    } catch (e) {
+    } on Exception catch (e) {
       _error = e.toString();
       notifyListeners();
       return null;
@@ -105,7 +105,7 @@ class OrderProvider extends ChangeNotifier {
         await fetchOrders();
       }
       return success;
-    } catch (e) {
+    } on Exception catch (e) {
       _error = e.toString();
       notifyListeners();
       return false;
@@ -126,7 +126,7 @@ class OrderProvider extends ChangeNotifier {
         await fetchOrders();
       }
       return success;
-    } catch (e) {
+    } on Exception catch (e) {
       _error = e.toString();
       notifyListeners();
       return false;

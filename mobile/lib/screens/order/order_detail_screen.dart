@@ -40,7 +40,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       // Try to find it in the list first to show immediately
       try {
         _order = orders.firstWhere((o) => o.orderNumber == widget.orderNumber);
-      } catch (_) {}
+      } on Exception {
+        _order = null;
+      }
 
       setState(() {
         _isLoading = true;
@@ -54,7 +56,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         _isLoading = false;
         _error = _order == null ? 'Pesanan tidak ditemukan' : null;
       });
-    } catch (e) {
+    } on Exception catch (e) {
       setState(() {
         _isLoading = false;
         _error = e.toString();
@@ -82,10 +84,14 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     if (!mounted) return;
     Navigator.pop(context); // Close loading
 
-    if (response != null && response.containsKey('snap_token')) {
-      final snapToken = response['snap_token'];
+    if (response != null &&
+        (response.containsKey('snapToken') ||
+            response.containsKey('snap_token'))) {
+      final snapToken = response['snapToken'] ?? response['snap_token'];
       final targetUrl =
-          response['snap_redirect_url'] ??
+          response['redirectUrl']?.toString() ??
+          response['redirect_url']?.toString() ??
+          response['snap_redirect_url']?.toString() ??
           'https://app.sandbox.midtrans.com/snap/v2/vtweb/$snapToken';
       context.push(
         '/payment/${_order!.orderNumber}?url=${Uri.encodeComponent(targetUrl)}',

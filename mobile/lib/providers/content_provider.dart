@@ -74,7 +74,7 @@ class ContentProvider extends ChangeNotifier {
 
     try {
       _landingPage = await _service.getLandingPage();
-    } catch (e) {
+    } on Exception catch (e) {
       _landingError = e.toString();
     } finally {
       _isLoadingLanding = false;
@@ -91,7 +91,7 @@ class ContentProvider extends ChangeNotifier {
 
     try {
       _currentPage = await _service.getPage(slug);
-    } catch (e) {
+    } on Exception catch (e) {
       _pageError = e.toString();
     } finally {
       _isLoadingPage = false;
@@ -109,7 +109,7 @@ class ContentProvider extends ChangeNotifier {
 
     try {
       _pages = await _service.getPages();
-    } catch (e) {
+    } on Exception catch (e) {
       _pagesError = e.toString();
     } finally {
       _isLoadingPages = false;
@@ -126,7 +126,7 @@ class ContentProvider extends ChangeNotifier {
 
     try {
       _menuItems = await _service.getMenu(handle);
-    } catch (e) {
+    } on Exception catch (e) {
       _menuError = e.toString();
     } finally {
       _isLoadingMenu = false;
@@ -144,7 +144,7 @@ class ContentProvider extends ChangeNotifier {
 
     try {
       _materials = await _service.getMaterials();
-    } catch (e) {
+    } on Exception catch (e) {
       _materialsError = e.toString();
     } finally {
       _isLoadingMaterials = false;
@@ -160,7 +160,7 @@ class ContentProvider extends ChangeNotifier {
 
     try {
       _orderSteps = await _service.getOrderSteps(type: type, grouped: grouped);
-    } catch (e) {
+    } on Exception catch (e) {
       _orderStepsError = e.toString();
     } finally {
       _isLoadingOrderSteps = false;

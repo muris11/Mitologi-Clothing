@@ -96,113 +96,211 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
           return RefreshIndicator(
             onRefresh: provider.fetchCollections,
             color: AppTheme.accent,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                int crossAxisCount = 2;
-                if (constraints.maxWidth > 900) {
-                  crossAxisCount = 4;
-                } else if (constraints.maxWidth > 600) {
-                  crossAxisCount = 3;
-                }
-
-                return GridView.builder(
-                  padding: EdgeInsets.all(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
                     ResponsiveHelper.horizontalPadding(context),
+                    20,
+                    ResponsiveHelper.horizontalPadding(context),
+                    0,
                   ),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: crossAxisCount,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 0.8,
-                  ),
-                  itemCount: provider.collections.length,
-                  itemBuilder: (context, index) {
-                    final collection = provider.collections[index];
-                    Widget cardContent = Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: AppTheme.radius16,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          Container(
-                            color: AppTheme.primary.withValues(alpha: 0.1),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Colors.transparent,
-                                  Colors.black.withValues(alpha: 0.6),
-                                ],
-                              ),
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: AppTheme.surfaceContainerLowest,
+                      borderRadius: AppTheme.radius16,
+                      border: Border.all(color: AppTheme.outlineLight),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.style_outlined,
+                          color: AppTheme.primary,
+                          size: 18,
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            'Pilih jalur koleksi yang paling dekat dengan kebutuhan, gaya, atau cerita yang ingin Anda tampilkan.',
+                            style: TextStyle(
+                              color: AppTheme.onSurfaceVariant,
+                              fontSize: 12,
+                              height: 1.45,
                             ),
                           ),
-                          Positioned(
-                            bottom: 16,
-                            left: 16,
-                            right: 16,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  collection.title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      int crossAxisCount = 2;
+                      if (constraints.maxWidth > 900) {
+                        crossAxisCount = 4;
+                      } else if (constraints.maxWidth > 600) {
+                        crossAxisCount = 3;
+                      }
+
+                      return GridView.builder(
+                        padding: EdgeInsets.all(
+                          ResponsiveHelper.horizontalPadding(context),
+                        ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: crossAxisCount,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          childAspectRatio: 0.8,
+                        ),
+                        itemCount: provider.collections.length,
+                        itemBuilder: (context, index) {
+                          final collection = provider.collections[index];
+                          final cardContent = Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: AppTheme.radius16,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.05),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
                                 ),
-                                if (collection.description.isNotEmpty)
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Text(
-                                      collection.description,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white70,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    );
+                            clipBehavior: Clip.antiAlias,
+                            child: Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                Container(
+                                  color: AppTheme.primary.withValues(
+                                    alpha: 0.1,
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Colors.transparent,
+                                        Colors.black.withValues(alpha: 0.6),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 16,
+                                  left: 16,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 6,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.16,
+                                      ),
+                                      borderRadius: AppTheme.radius12,
+                                      border: Border.all(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.18,
+                                        ),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Koleksi Pilihan',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 16,
+                                  left: 16,
+                                  right: 16,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        collection.title,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      if (collection.description.isNotEmpty)
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 4,
+                                          ),
+                                          child: Text(
+                                            collection.description,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.white70,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      const SizedBox(height: 10),
+                                      const Row(
+                                        children: [
+                                          Text(
+                                            'Buka koleksi',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          SizedBox(width: 6),
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            size: 14,
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
 
-                    return BlurFade(
-                      delay: Duration(milliseconds: 50 * (index % 10)),
-                      child: GestureDetector(
-                        onTap: () => context.push('/shop/${collection.handle}'),
-                        child: index == 0
-                            ? NeonGlowCard(
-                                intensity: 0.4,
-                                glowSpread: 2.0,
-                                child: cardContent,
-                              )
-                            : cardContent,
-                      ),
-                    );
-                  }, // closes itemBuilder
-                ); // closes GridView
-              }, // closes LayoutBuilder builder function
-            ), // closes LayoutBuilder
+                          return BlurFade(
+                            delay: Duration(milliseconds: 50 * (index % 10)),
+                            child: GestureDetector(
+                              onTap: () =>
+                                  context.push('/shop/${collection.handle}'),
+                              child: index == 0
+                                  ? NeonGlowCard(
+                                      intensity: 0.4,
+                                      glowSpread: 2.0,
+                                      child: cardContent,
+                                    )
+                                  : cardContent,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ); // closes return RefreshIndicator
         }, // closes Consumer builder function
       ), // closes body: Consumer

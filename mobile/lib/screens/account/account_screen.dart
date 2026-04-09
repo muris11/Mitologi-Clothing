@@ -72,31 +72,91 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     child: FadeInUp(
                       delay: const Duration(milliseconds: 100),
-                      child: AccountQuickActions(
-                        pendingCount: orderProvider.pendingCount,
-                        packedCount: orderProvider.packedCount,
-                        shippedCount: orderProvider.shippedCount,
-                        onOrderHistory: () =>
-                            context.push('/shop/account/orders'),
-                        onEditProfile: () =>
-                            context.push('/shop/account/edit-profile'),
-                        onAddresses: () =>
-                            context.push('/shop/account/addresses'),
-                        onWishlist: () => context.go('/wishlist'),
-                        onSecurity: () =>
-                            context.push('/shop/account/change-password'),
-                        onHelp: () => context.push('/chatbot'),
-                        onFaq: () => context.push('/shop/faq'),
-                        onPromo: () => context.push('/shop/promo'),
-                        onPanduanUkuran: () =>
-                            context.push('/shop/panduan-ukuran'),
-                        onKebijakanPengembalian: () =>
-                            context.push('/shop/kebijakan-pengembalian'),
-                        onKebijakanPrivasi: () =>
-                            context.push('/shop/kebijakan-privasi'),
-                        onSyaratKetentuan: () =>
-                            context.push('/shop/syarat-ketentuan'),
-                        onTentangKami: () => context.push('/shop/tentang-kami'),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppTheme.surfaceContainerLowest,
+                              borderRadius: AppTheme.radius16,
+                              border: Border.all(color: AppTheme.outlineLight),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: AppTheme.primary.withValues(
+                                      alpha: 0.08,
+                                    ),
+                                    borderRadius: AppTheme.radius12,
+                                  ),
+                                  child: const Icon(
+                                    Icons.inventory_2_outlined,
+                                    color: AppTheme.primary,
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        orderProvider.pendingCount > 0
+                                            ? 'Ada ${orderProvider.pendingCount} pesanan yang menunggu tindak lanjut'
+                                            : 'Semua pesanan Anda terlihat aman dan terpantau',
+                                        style: const TextStyle(
+                                          color: AppTheme.onSurface,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      const Text(
+                                        'Gunakan shortcut di bawah untuk cek status, alamat, dan pengaturan akun.',
+                                        style: TextStyle(
+                                          color: AppTheme.onSurfaceVariant,
+                                          fontSize: 12,
+                                          height: 1.45,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          AccountQuickActions(
+                            pendingCount: orderProvider.pendingCount,
+                            packedCount: orderProvider.packedCount,
+                            shippedCount: orderProvider.shippedCount,
+                            onOrderHistory: () =>
+                                context.push('/shop/account/orders'),
+                            onEditProfile: () =>
+                                context.push('/shop/account/edit-profile'),
+                            onAddresses: () =>
+                                context.push('/shop/account/addresses'),
+                            onWishlist: () => context.go('/wishlist'),
+                            onSecurity: () =>
+                                context.push('/shop/account/change-password'),
+                            onHelp: () => context.push('/chatbot'),
+                            onFaq: () => context.push('/shop/faq'),
+                            onPromo: () => context.push('/shop/promo'),
+                            onPanduanUkuran: () =>
+                                context.push('/shop/panduan-ukuran'),
+                            onKebijakanPengembalian: () =>
+                                context.push('/shop/kebijakan-pengembalian'),
+                            onKebijakanPrivasi: () =>
+                                context.push('/shop/kebijakan-privasi'),
+                            onSyaratKetentuan: () =>
+                                context.push('/shop/syarat-ketentuan'),
+                            onTentangKami: () =>
+                                context.push('/shop/tentang-kami'),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -186,7 +246,7 @@ class _AccountScreenState extends State<AccountScreen> {
             const FadeInUp(
               delay: Duration(milliseconds: 200),
               child: Text(
-                'Silahkan login atau daftar untuk mengakses profil dan pesanan Anda.',
+                'Masuk untuk melihat status pesanan, wishlist, alamat, dan riwayat akun Anda di satu tempat.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppTheme.onSurfaceVariant,
@@ -215,6 +275,18 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                   ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            FadeInUp(
+              delay: const Duration(milliseconds: 350),
+              child: Text(
+                'Proses login aman dan memudahkan Anda melanjutkan checkout kapan saja.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppTheme.onSurfaceVariant,
+                  height: 1.5,
                 ),
               ),
             ),

@@ -33,36 +33,60 @@ class Order {
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
+    int parseInt(dynamic value, int fallback) {
+      if (value is int) return value;
+      return int.tryParse(value?.toString() ?? '') ?? fallback;
+    }
+
+    String parseString(dynamic value, [String fallback = '']) {
+      if (value is String) return value;
+      return value?.toString() ?? fallback;
+    }
+
+    final shippingAddressJson =
+        json['shipping_address'] ?? json['shippingAddress'];
+
     return Order(
-      id: json['id'] is int
-          ? json['id']
-          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
-      orderNumber: json['order_number'] ?? '',
-      status: json['status'] ?? 'pending',
-      paymentStatus: json['payment_status'],
+      id: parseInt(json['id'], 0),
+      orderNumber: parseString(json['order_number'] ?? json['orderNumber']),
+      status: parseString(json['status'], 'pending'),
+      paymentStatus: (json['payment_status'] ?? json['paymentStatus'])
+          ?.toString(),
       total: json['total'] == null
           ? 0.0
           : double.tryParse(json['total'].toString()) ?? 0.0,
       subtotal: json['subtotal'] == null
           ? 0.0
           : double.tryParse(json['subtotal'].toString()) ?? 0.0,
-      shippingCost: json['shipping_cost'] == null
+      shippingCost: (json['shipping_cost'] ?? json['shippingCost']) == null
           ? 0.0
-          : double.tryParse(json['shipping_cost'].toString()) ?? 0.0,
-      shippingAddress: json['shipping_address'] == null
+          : double.tryParse(
+                  (json['shipping_cost'] ?? json['shippingCost']).toString(),
+                ) ??
+                0.0,
+      shippingAddress:
+          (json['shipping_address'] ?? json['shippingAddress']) == null
           ? null
-          : Address.fromJson(json['shipping_address']),
-      itemsCount: json['items_count'] == null
+          : Address.fromJson(
+              Map<String, dynamic>.from(shippingAddressJson as Map),
+            ),
+      itemsCount: (json['items_count'] ?? json['itemsCount']) == null
           ? null
-          : int.tryParse(json['items_count'].toString()),
-      createdAt: json['created_at'] ?? '',
+          : int.tryParse(
+              (json['items_count'] ?? json['itemsCount']).toString(),
+            ),
+      createdAt: parseString(json['created_at'] ?? json['createdAt']),
       items:
           (json['items'] as List<dynamic>?)
-              ?.map((e) => OrderItem.fromJson(e))
+              ?.map(
+                (e) => OrderItem.fromJson(Map<String, dynamic>.from(e as Map)),
+              )
               .toList() ??
           [],
-      refundRequestedAt: json['refund_requested_at'],
-      refundReason: json['refund_reason'],
+      refundRequestedAt:
+          (json['refund_requested_at'] ?? json['refundRequestedAt'])
+              ?.toString(),
+      refundReason: (json['refund_reason'] ?? json['refundReason'])?.toString(),
     );
   }
 }

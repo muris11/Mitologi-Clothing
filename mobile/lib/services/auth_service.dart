@@ -10,23 +10,32 @@ class AuthResponse {
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) {
     // Handle both camelCase (backend) and snake_case (legacy) responses
-    final data = json['data'] ?? json;
+    final data = json['data'] is Map
+        ? Map<String, dynamic>.from(json['data'] as Map)
+        : json;
 
     return AuthResponse(
-      token: data['token'] ?? json['token'] ?? '',
-      user: User.fromJson(data['user'] ?? data),
+      token: (data['token'] ?? json['token'] ?? '').toString(),
+      user: User.fromJson(
+        data['user'] is Map
+            ? Map<String, dynamic>.from(data['user'] as Map)
+            : data,
+      ),
       // Support both camelCase (new) and snake_case (legacy)
       cartId:
-          data['cartId'] ??
-          data['cart_id'] ??
-          json['cartId'] ??
-          json['cart_id'],
+          (data['cartId'] ??
+                  data['cart_id'] ??
+                  json['cartId'] ??
+                  json['cart_id'])
+              ?.toString(),
     );
   }
 }
 
 class AuthService {
-  final ApiService _api = ApiService();
+  AuthService({ApiService? api}) : _api = api ?? ApiService();
+
+  final ApiService _api;
 
   Future<AuthResponse> login(
     String email,
@@ -35,11 +44,11 @@ class AuthService {
   }) async {
     final body = {'email': email, 'password': password};
     if (cartSessionId != null) {
-      body['cartSessionId'] = cartSessionId; // Backend expects camelCase
+      body['cart_session_id'] = cartSessionId;
     }
 
     final response = await _api.post('/auth/login', body: body);
-    return AuthResponse.fromJson(response);
+    return AuthResponse.fromJson(Map<String, dynamic>.from(response as Map));
   }
 
   Future<AuthResponse> register(
@@ -56,11 +65,11 @@ class AuthService {
       'password_confirmation': passwordConfirmation,
     };
     if (cartSessionId != null) {
-      body['cartSessionId'] = cartSessionId; // Backend expects camelCase
+      body['cart_session_id'] = cartSessionId;
     }
 
     final response = await _api.post('/auth/register', body: body);
-    return AuthResponse.fromJson(response);
+    return AuthResponse.fromJson(Map<String, dynamic>.from(response as Map));
   }
 
   Future<void> logout() async {
@@ -69,10 +78,13 @@ class AuthService {
 
   Future<User> getUser() async {
     final response = await _api.get('/auth/user', requiresAuth: true);
-    if (response is Map<String, dynamic> && response.containsKey('user')) {
-      return User.fromJson(response['user']);
+    if (response is Map<String, dynamic> && response['data'] is Map) {
+      return User.fromJson(Map<String, dynamic>.from(response['data'] as Map));
     }
-    return User.fromJson(response);
+    if (response is Map<String, dynamic> && response.containsKey('user')) {
+      return User.fromJson(Map<String, dynamic>.from(response['user'] as Map));
+    }
+    return User.fromJson(Map<String, dynamic>.from(response as Map));
   }
 
   Future<void> forgotPassword(String email) async {

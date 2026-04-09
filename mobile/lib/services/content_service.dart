@@ -6,28 +6,39 @@ import '../models/order_step.dart';
 import 'api_service.dart';
 
 class ContentService {
-  final ApiService _api = ApiService();
+  ContentService({ApiService? api}) : _api = api ?? ApiService();
+
+  final ApiService _api;
 
   Future<LandingPageData> getLandingPage() async {
     final response = await _api.get('/landing-page');
-    return LandingPageData.fromJson(response);
+    final data = response is Map<String, dynamic> ? response['data'] : response;
+    return LandingPageData.fromJson(data as Map<String, dynamic>);
   }
 
   Future<PageData> getPage(String slug) async {
     final response = await _api.get('/pages/$slug');
-    if (response != null && response['data'] != null) {
-      return PageData.fromJson(response['data']);
+    if (response is Map<String, dynamic> && response['data'] is Map) {
+      return PageData.fromJson(
+        Map<String, dynamic>.from(response['data'] as Map),
+      );
     }
-    return PageData.fromJson(response);
+    return PageData.fromJson(Map<String, dynamic>.from(response as Map));
   }
 
   Future<List<PageData>> getPages() async {
     final response = await _api.get('/pages');
     if (response is List) {
-      return response.map((json) => PageData.fromJson(json)).toList();
-    } else if (response != null && response['data'] != null) {
+      return response
+          .map(
+            (json) => PageData.fromJson(Map<String, dynamic>.from(json as Map)),
+          )
+          .toList();
+    } else if (response is Map<String, dynamic> && response['data'] is List) {
       return (response['data'] as List)
-          .map((json) => PageData.fromJson(json))
+          .map(
+            (json) => PageData.fromJson(Map<String, dynamic>.from(json as Map)),
+          )
           .toList();
     }
     return [];
@@ -41,10 +52,22 @@ class ContentService {
       final response = await _api.get('/menus/$handle');
 
       if (response is List) {
-        return response.map((json) => MenuItem.fromJson(json)).toList();
+        return response
+            .map(
+              (json) =>
+                  MenuItem.fromJson(Map<String, dynamic>.from(json as Map)),
+            )
+            .toList();
+      } else if (response is Map<String, dynamic> && response['data'] is List) {
+        return (response['data'] as List)
+            .map(
+              (json) =>
+                  MenuItem.fromJson(Map<String, dynamic>.from(json as Map)),
+            )
+            .toList();
       }
       return [];
-    } catch (e) {
+    } on Exception {
       return [];
     }
   }
@@ -57,14 +80,22 @@ class ContentService {
       final response = await _api.get('/materials');
 
       if (response is List) {
-        return response.map((json) => Material.fromJson(json)).toList();
-      } else if (response != null && response['data'] != null) {
+        return response
+            .map(
+              (json) =>
+                  Material.fromJson(Map<String, dynamic>.from(json as Map)),
+            )
+            .toList();
+      } else if (response is Map<String, dynamic> && response['data'] is List) {
         return (response['data'] as List)
-            .map((json) => Material.fromJson(json))
+            .map(
+              (json) =>
+                  Material.fromJson(Map<String, dynamic>.from(json as Map)),
+            )
             .toList();
       }
       return [];
-    } catch (e) {
+    } on Exception {
       return [];
     }
   }
@@ -77,33 +108,43 @@ class ContentService {
     bool grouped = false,
   }) async {
     try {
-      List<String> queryParams = [];
+      final queryParams = <String, dynamic>{};
       if (type != null) {
-        queryParams.add('type=$type');
+        queryParams['type'] = type;
       }
       if (grouped) {
-        queryParams.add('grouped=true');
+        queryParams['grouped'] = 'true';
       }
-
-      final queryString = queryParams.isNotEmpty
-          ? '?${queryParams.join('&')}'
-          : '';
-      final response = await _api.get('/order-steps$queryString');
+      final response = await _api.get('/order-steps', queryParams: queryParams);
 
       if (response is List) {
-        return response.map((json) => OrderStep.fromJson(json)).toList();
+        return response
+            .map(
+              (json) =>
+                  OrderStep.fromJson(Map<String, dynamic>.from(json as Map)),
+            )
+            .toList();
       } else if (response is Map<String, dynamic> && grouped) {
         // Handle grouped response
-        List<OrderStep> allSteps = [];
-        response.forEach((key, value) {
+        final wrapped = response['data'];
+        final groupedData = wrapped is Map<String, dynamic>
+            ? wrapped
+            : response;
+        final List<OrderStep> allSteps = [];
+        groupedData.forEach((key, value) {
           if (value is List) {
-            allSteps.addAll(value.map((json) => OrderStep.fromJson(json)));
+            allSteps.addAll(
+              value.map(
+                (json) =>
+                    OrderStep.fromJson(Map<String, dynamic>.from(json as Map)),
+              ),
+            );
           }
         });
         return allSteps;
       }
       return [];
-    } catch (e) {
+    } on Exception {
       return [];
     }
   }
