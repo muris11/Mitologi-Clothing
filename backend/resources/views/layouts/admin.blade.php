@@ -208,7 +208,7 @@
                              <div 
                                 x-show="open" 
                                 @click.away="open = false" 
-                                class="fixed inset-x-4 top-[76px] md:absolute md:inset-auto md:right-0 md:top-full md:mt-3 md:w-80 bg-white rounded-2xl shadow-2xl py-2 z-50 border border-gray-100 overflow-hidden transform origin-top md:origin-top-right transition-all"
+                                class="fixed inset-x-4 top-[76px] md:absolute md:inset-auto md:right-0 md:top-full md:mt-3 md:w-80 bg-white rounded-2xl shadow-2xl py-2 z-[60] border border-gray-100 overflow-hidden transform origin-top md:origin-top-right transition-all"
                                 style="display: none;"
                                 x-transition:enter="transition ease-out duration-200"
                                 x-transition:enter-start="opacity-0 scale-95"
