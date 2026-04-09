@@ -34,6 +34,7 @@ class ApiConfig {
 
     if (Platform.isAndroid) {
       // 10.0.2.2 is the special alias for the host machine in Android Emulator
+      // Changed from 127.0.0.1:8011 to localhost:8011 to match backend config
       return 'http://10.0.2.2:8011';
     }
 

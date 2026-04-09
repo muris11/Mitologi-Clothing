@@ -57,6 +57,10 @@ export default {
   async rewrites() {
     return [
       {
+        source: "/api/v1/:path*",
+        destination: `${backendInternalOrigin}/api/v1/:path*`,
+      },
+      {
         source: "/storage/:path*",
         destination: `${backendInternalOrigin}/storage/:path*`,
       },

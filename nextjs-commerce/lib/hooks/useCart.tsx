@@ -12,11 +12,23 @@ import { Cart, UnknownError } from "lib/api/types";
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { useToast } from "components/ui/ultra-quality-toast";
+
+// ML Interaction tracking for learning
+interface PendingInteraction {
+  productId: number;
+  action: "cart" | "purchase";
+  timestamp: number;
+}
+
+const INTERACTION_STORAGE_KEY = "ml_pending_cart_interactions";
+const BATCH_SEND_INTERVAL = 30000; // 30 seconds
 
 interface CartContextType {
   cart: Cart | undefined;
@@ -52,6 +64,68 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { addToast } = useToast();
+
+  // ML Learning: Track cart/purchase interactions
+  const pendingInteractionsRef = useRef<PendingInteraction[]>([]);
+
+  // Load pending interactions from localStorage
+  useEffect(() => {
+    const stored = localStorage.getItem(INTERACTION_STORAGE_KEY);
+    if (stored) {
+      pendingInteractionsRef.current = JSON.parse(stored);
+    }
+  }, []);
+
+  // Save interactions to localStorage
+  const saveInteractions = useCallback(() => {
+    localStorage.setItem(INTERACTION_STORAGE_KEY, JSON.stringify(pendingInteractionsRef.current));
+  }, []);
+
+  // Track interaction for ML learning
+  const trackInteraction = useCallback((productId: number, action: "cart" | "purchase") => {
+    pendingInteractionsRef.current.push({
+      productId,
+      action,
+      timestamp: Date.now(),
+    });
+    saveInteractions();
+  }, [saveInteractions]);
+
+  // Send interactions batch to API
+  const sendInteractionsBatch = useCallback(async () => {
+    if (pendingInteractionsRef.current.length === 0) return;
+
+    const batch = [...pendingInteractionsRef.current];
+    pendingInteractionsRef.current = [];
+    localStorage.removeItem(INTERACTION_STORAGE_KEY);
+
+    try {
+      const { apiFetch, ENDPOINTS } = await import("lib/api");
+      await apiFetch(ENDPOINTS.INTERACTIONS_BATCH, {
+        method: "POST",
+        body: JSON.stringify({
+          interactions: batch.map((i) => ({
+            productId: i.productId,
+            action: i.action,
+            score: i.action === "cart" ? 3 : 5, // Cart=3, Purchase=5
+          })),
+        }),
+      });
+    } catch (error) {
+      // Restore failed interactions
+      pendingInteractionsRef.current = [...batch, ...pendingInteractionsRef.current];
+      saveInteractions();
+    }
+  }, [saveInteractions]);
+
+  // Setup batch sending interval
+  useEffect(() => {
+    const interval = setInterval(sendInteractionsBatch, BATCH_SEND_INTERVAL);
+    return () => {
+      clearInterval(interval);
+      sendInteractionsBatch(); // Send remaining on unmount
+    };
+  }, [sendInteractionsBatch]);
 
   const refreshCart = async () => {
     try {
@@ -150,7 +224,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      if (cartId) {
+        if (cartId) {
         const updatedCart = await addToCart(cartId, [
           { merchandiseId, quantity },
         ]);
@@ -160,6 +234,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
           variant: "success",
           title: "Produk berhasil ditambahkan ke keranjang",
         });
+        // Track cart interaction for ML learning
+        if (productDetails?.id) {
+          trackInteraction(Number(productDetails.id), "cart");
+        }
       }
     } catch (e: unknown) {
       const err = e as UnknownError;

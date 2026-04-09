@@ -27,7 +27,11 @@
         </h2>
     </div>
     
-    @if($action_text && $action_url)
+    @if(isset($actions))
+        <div>
+            {{ $actions }}
+        </div>
+    @elseif($action_text && $action_url)
         <a href="{{ $action_url }}" class="inline-flex items-center justify-center w-full sm:w-auto px-5 py-3 bg-mitologi-navy border border-transparent rounded-xl font-semibold text-xs text-white uppercase tracking-[0.18em] hover:bg-mitologi-navy-light focus:outline-none focus:ring-2 focus:ring-mitologi-gold focus:ring-offset-2 transition-colors duration-150 shadow-sm">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
             {{ $action_text }}

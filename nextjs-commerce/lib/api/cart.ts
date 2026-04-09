@@ -1,8 +1,10 @@
 import { ENDPOINTS } from "./endpoints";
 import { apiFetch } from "./index";
 import { Cart } from "./types";
+import { ensureSanctumCsrfCookie } from "./auth";
 
 export async function createCart(): Promise<Cart> {
+  await ensureSanctumCsrfCookie();
   return await apiFetch<Cart>(ENDPOINTS.CART, { method: "POST" });
 }
 
@@ -27,6 +29,7 @@ export async function addToCart(
   cartId: string,
   lines: { merchandiseId: string; quantity: number }[],
 ): Promise<Cart> {
+  await ensureSanctumCsrfCookie();
   return await apiFetch<Cart>(ENDPOINTS.CART_ITEMS, {
     method: "POST",
     headers: {
@@ -44,6 +47,7 @@ export async function removeFromCart(
   lineIds: string[],
 ): Promise<Cart | undefined> {
   if (!lineIds.length) return undefined;
+  await ensureSanctumCsrfCookie();
   return await apiFetch<Cart>(
     ENDPOINTS.CART_ITEM_DETAIL(lineIds[0] as string),
     {
@@ -60,6 +64,7 @@ export async function updateCart(
   lines: { id: string; merchandiseId: string; quantity: number }[],
 ): Promise<Cart | undefined> {
   if (!lines.length) return undefined;
+  await ensureSanctumCsrfCookie();
   return await apiFetch<Cart>(ENDPOINTS.CART_ITEM_DETAIL(lines[0]!.id), {
     method: "PUT",
     headers: {

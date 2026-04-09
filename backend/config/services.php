@@ -36,7 +36,7 @@ return [
     ],
 
     'ai' => [
-        'url' => env('AI_SERVICE_URL', 'http://localhost:8001/api'),
+        'url' => env('AI_SERVICE_URL', 'http://127.0.0.1:5011/api'),
         'key' => env('RECOMMENDER_API_KEY'),
     ],
 
@@ -45,7 +45,7 @@ return [
     ],
 
     'nextjs' => [
-        'url' => env('NEXTJS_URL', 'http://localhost:3000'),
+        'url' => env('NEXTJS_URL', 'http://127.0.0.1:3011'),
         'revalidation_secret' => env('NEXTJS_REVALIDATION_SECRET'),
     ],
 

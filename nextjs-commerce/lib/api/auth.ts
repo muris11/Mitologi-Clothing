@@ -13,7 +13,7 @@ function getBackendBaseUrl(): string {
   return resolveBackendBaseUrl();
 }
 
-async function ensureSanctumCsrfCookie(): Promise<void> {
+export async function ensureSanctumCsrfCookie(): Promise<void> {
   const backendUrl = getBackendBaseUrl();
   const res = await fetch(`${backendUrl}/sanctum/csrf-cookie`, {
     method: "GET",
