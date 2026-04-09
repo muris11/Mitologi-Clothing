@@ -52,8 +52,8 @@
         </div>
 
         {{-- Sticky Save --}}
-        <div class="sticky bottom-6 mt-8 flex justify-end z-50">
-            <x-primary-button class="py-3 px-8 text-base shadow-lg">
+        <div class="sticky bottom-6 mt-8 flex justify-end">
+            <x-primary-button class="w-full sm:w-auto py-3 px-8 text-base shadow-lg justify-center">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 Simpan Perubahan
             </x-primary-button>

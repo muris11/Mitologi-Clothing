@@ -151,8 +151,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/reports/stock-recommendations', [ReportController::class, 'stockRecommendations']);
         Route::get('/ml/status', [ReportController::class, 'mlStatus']);
         Route::post('/ml/retrain', [ReportController::class, 'retrainModel']);
-        // RFID Status Endpoint
-        Route::get('/rfid/status', [\App\Http\Controllers\Admin\RfidController::class, 'apiStatus']);
     });
 });
 

@@ -38,9 +38,9 @@
         </div>
 
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Total Revenue -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-premium border border-gray-100 dark:border-gray-700 transition-colors">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-premium border border-gray-100 dark:border-gray-700 transition-colors sm:col-span-2 lg:col-span-1">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider">Total Pendapatan</h3>
                     <div class="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
@@ -80,9 +80,10 @@
             </div>
         </div>
 
-        <!-- Orders Table -->
+        <!-- Orders View -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium border border-gray-100 dark:border-gray-700 overflow-hidden">
-            <div class="overflow-x-auto">
+            <!-- Desktop Table View -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left text-sm text-gray-600 dark:text-gray-400">
                     <thead class="bg-gray-50/80 dark:bg-gray-700/50 uppercase font-bold text-xs text-gray-500 dark:text-gray-300 tracking-wider">
                         <tr>
@@ -95,7 +96,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
-                        @forelse($orders as $order)
+                        @foreach($orders as $order)
                         <tr class="hover:bg-mitologi-cream/30 dark:hover:bg-gray-700/30 transition-colors group">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="font-mono text-sm font-medium text-mitologi-navy dark:text-white">{{ $order->order_number }}</span>
@@ -132,21 +133,66 @@
                                 </a>
                             </td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td colspan="6" class="px-6 py-12 text-center text-gray-500 bg-gray-50/30 dark:bg-gray-800/50">
-                                <div class="flex flex-col items-center justify-center">
-                                    <div class="p-4 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 mb-3">
-                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </div>
-                                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Tidak ada data penjualan</h3>
-                                    <p class="text-sm text-gray-500 mt-1">Coba sesuaikan filter tanggal atau status Anda.</p>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Mobile Card View -->
+            <div class="md:hidden divide-y divide-gray-100 dark:divide-gray-700">
+                @forelse($orders as $order)
+                <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex flex-col">
+                            <span class="font-mono text-xs font-medium text-gray-500 uppercase tracking-tight">{{ $order->order_number }}</span>
+                            <span class="text-xs text-gray-400 font-medium">{{ $order->created_at->format('d M Y, H:i') }}</span>
+                        </div>
+                        @php
+                            $statusClasses = [
+                                'pending' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
+                                'paid' => 'bg-green-100 text-green-800 border-green-200',
+                                'shipped' => 'bg-blue-100 text-blue-800 border-blue-200',
+                                'processing' => 'bg-purple-100 text-purple-800 border-purple-200',
+                                'completed' => 'bg-green-100 text-green-800 border-green-200',
+                                'cancelled' => 'bg-red-100 text-red-800 border-red-200',
+                            ];
+                            $class = $statusClasses[$order->status] ?? 'bg-gray-100 text-gray-800 border-gray-200';
+                        @endphp
+                        <span class="px-2 py-0.5 text-[10px] font-bold rounded-full border {{ $class }}">
+                            {{ ucfirst($order->status) }}
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between items-end">
+                        <div class="space-y-0.5">
+                            <div class="text-sm font-bold text-mitologi-navy dark:text-white">
+                                {{ $order->user ? $order->user->name : ($order->shippingAddress->name ?? 'Guest') }}
+                            </div>
+                            <div class="text-xs text-gray-500">
+                                {{ $order->user ? $order->user->email : 'N/A' }}
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm font-black text-mitologi-navy dark:text-white">
+                                Rp {{ number_format($order->total, 0, ',', '.') }}
+                            </div>
+                            <a href="{{ route('admin.orders.show', $order->id) }}" class="mt-1 text-xs font-bold text-mitologi-gold hover:underline flex items-center justify-end">
+                                Detail <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="p-8 text-center text-gray-500">
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="p-4 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 mb-3">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Tidak ada data penjualan</h3>
+                        <p class="text-sm text-gray-500 mt-1">Coba sesuaikan filter Anda.</p>
+                    </div>
+                </div>
+                @endforelse
             </div>
             
             <!-- Pagination -->

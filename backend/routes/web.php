@@ -93,8 +93,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::resource('printing-methods', \App\Http\Controllers\Admin\PrintingMethodController::class);
     });
 
-    // RFID Management
-    Route::resource('rfids', \App\Http\Controllers\Admin\RfidController::class)->only(['index', 'show']);
 });
 
 Route::get('/admin/orders/{order}/invoice', [InvoiceController::class, 'show'])
