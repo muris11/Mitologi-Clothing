@@ -20,61 +20,61 @@
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-8 lg:mb-12">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8 mb-8 lg:mb-12">
         <!-- Products -->
-        <div class="bg-white  rounded-2xl shadow-sm border border-gray-100  p-5 md:p-6 relative overflow-hidden flex flex-col justify-center min-h-[120px]">
-            <div class="absolute right-0 bottom-0 pointer-events-none" style="transform: translate(10px, 10px);">
-                <svg class="w-24 h-24" style="color: #f3f4f6;" fill="currentColor" viewBox="0 0 20 20"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/></svg>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6 relative overflow-hidden flex flex-col justify-center min-h-[110px] md:min-h-[120px]">
+            <div class="absolute right-0 bottom-0 pointer-events-none opacity-50 md:opacity-100" style="transform: translate(10px, 10px);">
+                <svg class="w-16 h-16 md:w-24 md:h-24" style="color: #f3f4f6;" fill="currentColor" viewBox="0 0 20 20"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/></svg>
             </div>
             <div class="relative z-10">
-                <p class="text-[11px] font-semibold text-gray-400  uppercase tracking-widest mb-1">Total Produk</p>
-                <div class="flex flex-row items-center gap-2">
-                    <h4 class="text-3xl font-extrabold text-mitologi-navy ">{{ $totalProducts }}</h4>
-                    <span class="text-[11px] text-[#22c55e] font-semibold mt-1">Aktif</span>
+                <p class="text-[10px] md:text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Total Produk</p>
+                <div class="flex flex-row items-center gap-1.5 md:gap-2">
+                    <h4 class="text-2xl md:text-3xl font-extrabold text-mitologi-navy">{{ $totalProducts }}</h4>
+                    <span class="text-[10px] md:text-[11px] text-[#22c55e] font-semibold">Aktif</span>
                 </div>
             </div>
             <div class="absolute bottom-0 left-4 right-4 h-1 rounded-t-md" style="background-color: #1a233a;"></div>
         </div>
 
         <!-- Revenue -->
-        <div class="bg-white  rounded-2xl shadow-sm border border-gray-100  p-5 md:p-6 relative overflow-hidden flex flex-col justify-center min-h-[120px]">
-            <div class="absolute right-0 bottom-0 pointer-events-none" style="transform: translate(10px, 10px);">
-                 <svg class="w-24 h-24" style="color: #dcfce7;" fill="currentColor" viewBox="0 0 20 20"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/></svg>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6 relative overflow-hidden flex flex-col justify-center min-h-[110px] md:min-h-[120px]">
+            <div class="absolute right-0 bottom-0 pointer-events-none opacity-50 md:opacity-100" style="transform: translate(10px, 10px);">
+                 <svg class="w-16 h-16 md:w-24 md:h-24" style="color: #dcfce7;" fill="currentColor" viewBox="0 0 20 20"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/></svg>
             </div>
             <div class="relative z-10">
-                <p class="text-[11px] font-semibold text-gray-400  uppercase tracking-widest mb-1">Pendapatan</p>
+                <p class="text-[10px] md:text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Pendapatan</p>
                 <div class="flex items-center">
-                    <h4 class="text-3xl font-extrabold text-mitologi-navy  tracking-tight">Rp {{ number_format($revenue, 0, ',', '.') }}</h4>
+                    <h4 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-mitologi-navy tracking-tight">Rp {{ number_format($revenue, 0, ',', '.') }}</h4>
                 </div>
             </div>
             <div class="absolute bottom-0 left-4 right-4 h-1 rounded-t-md" style="background-color: #4ade80;"></div>
         </div>
 
         <!-- New Customers -->
-        <div class="bg-white  rounded-2xl shadow-sm border border-gray-100  p-5 md:p-6 relative overflow-hidden flex flex-col justify-center min-h-[120px]">
-            <div class="absolute right-0 bottom-0 pointer-events-none" style="transform: translate(10px, 10px);">
-                 <svg class="w-24 h-24" style="color: #eff6ff;" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6 relative overflow-hidden flex flex-col justify-center min-h-[110px] md:min-h-[120px]">
+            <div class="absolute right-0 bottom-0 pointer-events-none opacity-50 md:opacity-100" style="transform: translate(10px, 10px);">
+                 <svg class="w-16 h-16 md:w-24 md:h-24" style="color: #eff6ff;" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
             </div>
             <div class="relative z-10">
-                <p class="text-[11px] font-semibold text-gray-400  uppercase tracking-widest mb-1">Pelanggan Baru</p>
-                <div class="flex flex-row items-center gap-2">
-                    <h4 class="text-3xl font-extrabold text-mitologi-navy ">{{ $newCustomers }}</h4>
-                    <span class="text-[11px] text-[#3b82f6] font-mono tracking-tighter mt-1">+30 Hari</span>
+                <p class="text-[10px] md:text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Pelanggan Baru</p>
+                <div class="flex flex-row items-center gap-1.5 md:gap-2">
+                    <h4 class="text-2xl md:text-3xl font-extrabold text-mitologi-navy">{{ $newCustomers }}</h4>
+                    <span class="text-[10px] md:text-[11px] text-[#3b82f6] font-mono tracking-tighter">+30 Hari</span>
                 </div>
             </div>
             <div class="absolute bottom-0 left-4 right-4 h-1 rounded-t-md" style="background-color: #3b82f6;"></div>
         </div>
 
         <!-- Pending Orders -->
-        <div class="bg-white  rounded-2xl shadow-sm border border-gray-100  p-5 md:p-6 relative overflow-hidden flex flex-col justify-center min-h-[120px]">
-            <div class="absolute right-0 bottom-0 pointer-events-none" style="transform: translate(10px, 10px);">
-                 <svg class="w-24 h-24" style="color: #fefce8;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 001-1l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/></svg>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6 relative overflow-hidden flex flex-col justify-center min-h-[110px] md:min-h-[120px]">
+            <div class="absolute right-0 bottom-0 pointer-events-none opacity-50 md:opacity-100" style="transform: translate(10px, 10px);">
+                 <svg class="w-16 h-16 md:w-24 md:h-24" style="color: #fefce8;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 001-1l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/></svg>
             </div>
             <div class="relative z-10">
-                <p class="text-[11px] font-semibold text-gray-400  uppercase tracking-widest mb-1">Pesanan Pending</p>
-                <div class="flex flex-row items-center gap-2">
-                    <h4 class="text-3xl font-extrabold text-mitologi-navy ">{{ $newOrders }}</h4>
-                    <span class="text-[10px] px-2 py-0.5 rounded-full text-white font-bold w-max" style="background-color: #dfa100; margin-top: 2px;">Butuh Proses</span>
+                <p class="text-[10px] md:text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Pesanan Pending</p>
+                <div class="flex flex-row items-center gap-1.5 md:gap-2">
+                    <h4 class="text-2xl md:text-3xl font-extrabold text-mitologi-navy">{{ $newOrders }}</h4>
+                    <span class="text-[9px] md:text-[10px] px-1.5 py-0.5 rounded-full text-white font-bold w-max" style="background-color: #dfa100;">Butuh Proses</span>
                 </div>
             </div>
             <div class="absolute bottom-0 left-4 right-4 h-1 rounded-t-md" style="background-color: #dfa100;"></div>
