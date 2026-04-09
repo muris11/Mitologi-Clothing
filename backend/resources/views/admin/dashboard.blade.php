@@ -20,7 +20,7 @@
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-10">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-8 lg:mb-12">
         <!-- Products -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-5 md:p-6 relative overflow-hidden flex flex-col justify-center min-h-[120px]">
             <div class="absolute right-0 bottom-0 pointer-events-none" style="transform: translate(10px, 10px);">
@@ -157,7 +157,8 @@
                   <a href="{{ route('admin.products.index') }}" class="text-sm font-medium text-mitologi-gold hover:text-mitologi-gold-dark transition-colors">Lihat Semua</a>
             </div>
             <div class="p-0">
-                <div class="overflow-x-auto">
+                <!-- Desktop View -->
+                <div class="hidden md:block overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-gray-50/50 dark:bg-gray-700/50 text-xs uppercase text-gray-500 font-semibold tracking-wider">
@@ -182,12 +183,12 @@
                                         </div>
                                         <div>
                                             <h6 class="text-sm font-bold text-mitologi-navy dark:text-white group-hover:text-mitologi-gold transition-colors">{{ $item->product ? $item->product->title : 'Produk Dihapus' }}</h6>
-                                            <p class="text-xs text-gray-500">{{ $item->total_sold }} item terjual</p>
+                                            <p class="text-xs text-gray-500 font-medium">{{ $item->total_sold }} item terjual</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-100">
                                         {{ $item->total_sold }} Terjual
                                     </span>
                                 </td>
@@ -204,6 +205,32 @@
                             @endforelse
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Mobile View -->
+                <div class="md:hidden divide-y divide-gray-100 dark:divide-gray-700">
+                    @forelse($topProducts as $item)
+                        <div class="p-4 flex items-center gap-4 bg-white dark:bg-gray-800">
+                            <div class="w-16 h-16 rounded-xl bg-gray-50 dark:bg-gray-700 overflow-hidden flex-shrink-0 border border-gray-100 dark:border-gray-600">
+                                @if($item->product && $item->product->featured_image)
+                                    <img src="{{ asset('storage/'.$item->product->featured_image) }}" class="w-full h-full object-cover">
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center text-gray-300">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h6 class="text-sm font-bold text-mitologi-navy dark:text-white truncate">{{ $item->product ? $item->product->title : 'Produk Dihapus' }}</h6>
+                                <div class="flex items-center justify-between mt-1">
+                                    <span class="text-xs font-bold text-mitologi-gold">{{ $item->total_sold }} Terjual</span>
+                                    <span class="text-sm font-black text-gray-900 dark:text-gray-100">Rp {{ number_format($item->total_revenue, 0, ',', '.') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="p-8 text-center text-gray-500 text-sm">Belum ada data penjualan.</div>
+                    @endforelse
                 </div>
             </div>
         </div>

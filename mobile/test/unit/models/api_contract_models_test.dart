@@ -73,8 +73,8 @@ void main() {
       expect(review.createdAt, '2026-01-01T00:00:00Z');
     });
 
-    test('Material parses backend camelCase fields', () {
-      final material = material_model.Material.fromJson({
+    test('MaterialInfo parses backend camelCase fields', () {
+      final material = material_model.MaterialInfo.fromJson({
         'id': 2,
         'name': 'Cotton Combed',
         'description': 'Premium',

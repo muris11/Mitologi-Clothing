@@ -173,9 +173,9 @@
         <!-- Main Content Wrapper -->
         <div class="flex-1 flex flex-col overflow-hidden relative md:ml-80">
              <!-- Top Header -->
-             <header class="h-24 bg-transparent z-40 sticky top-0 px-5 lg:px-8 flex items-center justify-between transition-all duration-300 pointer-events-none">
+             <header class="h-20 md:h-24 bg-transparent z-40 sticky top-0 px-3 md:px-5 lg:px-8 flex items-center justify-between transition-all duration-300 pointer-events-none">
                   <!-- Glass Container for Header Content -->
-                  <div class="w-full h-16 bg-white/88 dark:bg-gray-800/88 shadow-glass rounded-[22px] flex items-center justify-between px-5 pointer-events-auto border border-gray-200/80 mt-4">
+                  <div class="w-full h-14 md:h-16 bg-white/90 dark:bg-gray-800/90 shadow-glass rounded-xl md:rounded-[22px] flex items-center justify-between px-3 md:px-5 pointer-events-auto border border-gray-200/80 mt-2 md:mt-4">
                      
                     <div class="flex items-center md:hidden">
                         <button @click="sidebarOpen = !sidebarOpen" class="text-gray-500 hover:text-gray-700 focus:outline-none">
@@ -191,22 +191,24 @@
                     </div>
 
                     <!-- Right Actions -->
-                    <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-2 md:space-x-6">
                          <!-- Notifications -->
                         <div x-data="{ open: false }" class="relative">
-                            <button @click="open = !open" class="relative p-2 text-gray-400 hover:text-mitologi-gold transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full focus:outline-none">
+                            <button @click="open = !open" class="relative p-2.5 text-gray-400 hover:text-mitologi-gold transition-all duration-300 hover:bg-gray-100/80 dark:hover:bg-gray-700/80 rounded-xl focus:outline-none">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                                <!-- Ping Animation for Badge -->
                                 @if($adminNotificationCount > 0)
-                                <span id="notification-badge" class="absolute top-1.5 right-1.5 h-2.5 w-2.5 bg-red-500 rounded-full border-2 border-white dark:border-gray-800 animate-pulse"></span>
-                                @else
-                                <span id="notification-badge" class="absolute top-1.5 right-1.5 h-2.5 w-2.5 bg-red-500 rounded-full border-2 border-white dark:border-gray-800 animate-pulse" style="display: none;"></span>
+                                <span class="absolute top-2 right-2 flex h-2.5 w-2.5">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 border-2 border-white dark:border-gray-800"></span>
+                                </span>
                                 @endif
                             </button>
                             
                              <div 
                                 x-show="open" 
                                 @click.away="open = false" 
-                                class="absolute right-0 mt-3 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-2xl py-2 z-50 border border-gray-100 dark:border-gray-700 overflow-hidden transform origin-top-right"
+                                class="absolute right-[-60px] md:right-0 mt-3 w-[280px] sm:w-80 bg-white dark:bg-gray-800 rounded-xl shadow-2xl py-2 z-50 border border-gray-100 dark:border-gray-700 overflow-hidden transform origin-top-right"
                                 style="display: none;"
                                 x-transition:enter="transition ease-out duration-200"
                                 x-transition:enter-start="opacity-0 scale-95"
