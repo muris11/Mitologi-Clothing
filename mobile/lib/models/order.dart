@@ -64,11 +64,10 @@ class Order {
                   (json['shipping_cost'] ?? json['shippingCost']).toString(),
                 ) ??
                 0.0,
-      shippingAddress:
-          (json['shipping_address'] ?? json['shippingAddress']) == null
+      shippingAddress: shippingAddressJson == null
           ? null
           : Address.fromJson(
-              Map<String, dynamic>.from(shippingAddressJson as Map),
+              _processAddressMap(Map<String, dynamic>.from(shippingAddressJson as Map)),
             ),
       itemsCount: (json['items_count'] ?? json['itemsCount']) == null
           ? null
@@ -88,5 +87,16 @@ class Order {
               ?.toString(),
       refundReason: (json['refund_reason'] ?? json['refundReason'])?.toString(),
     );
+  }
+
+  static Map<String, dynamic> _processAddressMap(Map<String, dynamic> map) {
+    // Map generic keys from Order Detail API to Address Model keys
+    if (map.containsKey('name')) {
+      map['recipientName'] = map['name'];
+    }
+    if (map.containsKey('address')) {
+      map['addressLine1'] = map['address'];
+    }
+    return map;
   }
 }

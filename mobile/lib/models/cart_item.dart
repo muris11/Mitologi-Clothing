@@ -34,6 +34,17 @@ class CartItem {
         ? Map<String, dynamic>.from((json['cost'] as Map)['totalAmount'] as Map)
         : <String, dynamic>{};
 
+    // Safe price parsing with fallback
+    Money parsePrice(dynamic priceValue) {
+      if (priceValue is Map<String, dynamic>) {
+        return Money.fromJson(priceValue);
+      }
+      if (priceValue is Map) {
+        return Money.fromJson(Map<String, dynamic>.from(priceValue));
+      }
+      return const Money(amount: '0', currencyCode: 'IDR');
+    }
+
     return CartItem(
       id: json['id']?.toString() ?? '',
       merchandiseId:
@@ -44,9 +55,11 @@ class CartItem {
       quantity: json['quantity'] is int
           ? json['quantity'] as int
           : int.tryParse(json['quantity']?.toString() ?? '0') ?? 0,
-      price: json['price'] is Map
-          ? Money.fromJson(Map<String, dynamic>.from(json['price'] as Map))
-          : Money.fromJson(totalAmount),
+      price: json['price'] != null
+          ? parsePrice(json['price'])
+          : (totalAmount.isNotEmpty
+                ? Money.fromJson(totalAmount)
+                : const Money(amount: '0', currencyCode: 'IDR')),
       imageUrl:
           json['imageUrl']?.toString() ?? featuredImage['url']?.toString(),
       variantTitle:

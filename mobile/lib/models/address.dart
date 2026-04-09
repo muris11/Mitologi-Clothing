@@ -61,15 +61,15 @@ class Address {
   Map<String, dynamic> toJson() {
     return {
       'label': label,
-      'recipient_name': recipientName,
+      'recipientName': recipientName,
       'phone': phone,
-      'address_line_1': addressLine1,
-      'address_line_2': addressLine2,
+      'addressLine1': addressLine1,
+      'addressLine2': addressLine2,
       'city': city,
       'province': province,
-      'postal_code': postalCode,
+      'postalCode': postalCode,
       'country': country,
-      'is_primary': isPrimary,
+      'isPrimary': isPrimary,
     };
   }
 }

@@ -9,6 +9,38 @@ class ProductService {
 
   final ApiService _api;
 
+  /// Safe helper to convert response to Map
+  Map<String, dynamic> _safeToMap(dynamic response) {
+    if (response == null) return {};
+    if (response is Map<String, dynamic>) return response;
+    if (response is Map) return Map<String, dynamic>.from(response);
+    return {};
+  }
+
+  /// Safe helper to get List from response
+  List<dynamic> _safeToList(dynamic response, {String? dataKey}) {
+    if (response == null) return [];
+
+    // Try to get from data key first
+    if (dataKey != null && response is Map) {
+      final data = response[dataKey];
+      if (data is List) return data;
+      if (data is Map && data['data'] is List) {
+        return data['data'] as List<dynamic>;
+      }
+    }
+
+    // Check if response has data field (common Laravel format)
+    if (response is Map<String, dynamic> && response['data'] is List) {
+      return response['data'] as List<dynamic>;
+    }
+
+    // Response is already a list
+    if (response is List) return response;
+
+    return [];
+  }
+
   Future<ProductListResponse> getProducts({
     String? q,
     String? category,
@@ -18,6 +50,7 @@ class ProductService {
     double? maxPrice,
     int page = 1,
     int limit = 12,
+    String? ids,
   }) async {
     final queryParams = <String, dynamic>{'page': page, 'limit': limit};
     if (q != null && q.isNotEmpty) {
@@ -38,29 +71,36 @@ class ProductService {
     if (maxPrice != null) {
       queryParams['maxPrice'] = maxPrice;
     }
+    if (ids != null && ids.isNotEmpty) {
+      queryParams['ids'] = ids;
+    }
 
     final response = await _api.get('/products', queryParams: queryParams);
 
-    return ProductListResponse.fromJson(
-      Map<String, dynamic>.from(response as Map),
-    );
+    return ProductListResponse.fromJson(_safeToMap(response));
   }
 
   Future<Product> getProductDetail(String handle) async {
     final response = await _api.get('/products/$handle');
 
-    if (response is Map<String, dynamic> &&
-        response['data'] is Map<String, dynamic>) {
-      return Product.fromJson(
-        Map<String, dynamic>.from(response['data'] as Map),
-      );
+    if (response == null) {
+      throw ApiException('Product not found', 404);
     }
-    if (response is Map<String, dynamic> && response.containsKey('product')) {
-      return Product.fromJson(
-        Map<String, dynamic>.from(response['product'] as Map),
-      );
+
+    final map = _safeToMap(response);
+
+    // Try different response formats
+    final data = map['data'];
+    if (data is Map) {
+      return Product.fromJson(Map<String, dynamic>.from(data));
     }
-    return Product.fromJson(Map<String, dynamic>.from(response as Map));
+    final product = map['product'];
+    if (product is Map) {
+      return Product.fromJson(Map<String, dynamic>.from(product));
+    }
+
+    // Direct product response
+    return Product.fromJson(map);
   }
 
   Future<List<Product>> getBestSellers({int limit = 4}) async {
@@ -69,13 +109,8 @@ class ProductService {
       queryParams: {'limit': limit},
     );
 
-    final List<dynamic> data =
-        response is Map<String, dynamic> && response['data'] is List
-        ? response['data'] as List<dynamic>
-        : (response as List<dynamic>);
-    return data
-        .map((e) => Product.fromJson(Map<String, dynamic>.from(e as Map)))
-        .toList();
+    final data = _safeToList(response, dataKey: 'data');
+    return data.whereType<Map<String, dynamic>>().map((e) => Product.fromJson(e)).toList();
   }
 
   Future<List<Product>> getNewArrivals({int limit = 4}) async {
@@ -84,59 +119,32 @@ class ProductService {
       queryParams: {'limit': limit},
     );
 
-    final List<dynamic> data =
-        response is Map<String, dynamic> && response['data'] is List
-        ? response['data'] as List<dynamic>
-        : (response as List<dynamic>);
-    return data
-        .map((e) => Product.fromJson(Map<String, dynamic>.from(e as Map)))
-        .toList();
+    final data = _safeToList(response, dataKey: 'data');
+    return data.whereType<Map<String, dynamic>>().map((e) => Product.fromJson(e)).toList();
   }
 
   Future<List<Product>> getRelatedProducts(String handle) async {
     final product = await getProductDetail(handle);
     final response = await _api.get('/products/${product.id}/recommendations');
 
-    final List<dynamic> data =
-        response is Map<String, dynamic> && response['data'] is List
-        ? response['data'] as List<dynamic>
-        : (response as List<dynamic>);
-    return data
-        .map((e) => Product.fromJson(Map<String, dynamic>.from(e as Map)))
-        .toList();
+    final data = _safeToList(response, dataKey: 'data');
+    return data.whereType<Map<String, dynamic>>().map((e) => Product.fromJson(e)).toList();
   }
 
   Future<List<Product>> getRecommendations() async {
     final response = await _api.get('/recommendations', requiresAuth: true);
 
-    List<dynamic> data = [];
-    // New standardized format: { data: [...] }
-    if (response is Map<String, dynamic> && response.containsKey('data')) {
-      final dynamic rawData = response['data'];
-      if (rawData is List) {
-        data = rawData;
-      } else if (rawData is Map && rawData.containsKey('data')) {
-        // Nested data structure
-        data = rawData['data'] as List<dynamic>;
-      }
-    } else if (response is List) {
-      data = response;
-    }
-
-    return data
-        .map((e) => Product.fromJson(Map<String, dynamic>.from(e as Map)))
-        .toList();
+    final data = _safeToList(response, dataKey: 'data');
+    return data.whereType<Map<String, dynamic>>().map((e) => Product.fromJson(e)).toList();
   }
 
   Future<List<Category>> getCategories() async {
     final response = await _api.get('/categories');
 
-    final List<dynamic> data =
-        response is Map<String, dynamic> && response['data'] is List
-        ? response['data'] as List<dynamic>
-        : (response as List<dynamic>);
+    final data = _safeToList(response, dataKey: 'data');
     return data
-        .map((e) => Category.fromJson(Map<String, dynamic>.from(e as Map)))
+        .whereType<Map<String, dynamic>>()
+        .map((e) => Category.fromJson(e))
         .toList();
   }
 
@@ -150,24 +158,32 @@ class ProductService {
         '/products/$handle/reviews',
         queryParams: {'page': page},
       );
+
       List<dynamic> data = [];
-      if (response is Map<String, dynamic> &&
-          response['data'] is Map<String, dynamic> &&
-          response['data']['reviews'] is List) {
-        data = response['data']['reviews'] as List<dynamic>;
-      } else if (response is Map<String, dynamic> &&
-          response['reviews'] is Map<String, dynamic>) {
-        data =
-            (response['reviews'] as Map<String, dynamic>)['data']
-                as List<dynamic>? ??
-            [];
-      } else if (response is Map<String, dynamic> && response['data'] is List) {
-        data = response['data'] as List<dynamic>;
+      final map = _safeToMap(response);
+
+      // Try different response structures
+      if (map['data'] is Map<String, dynamic>) {
+        final innerData = map['data'] as Map<String, dynamic>;
+        if (innerData['reviews'] is List) {
+          data = innerData['reviews'] as List<dynamic>;
+        } else if (innerData['data'] is List) {
+          data = innerData['data'] as List<dynamic>;
+        }
+      } else if (map['reviews'] is Map<String, dynamic>) {
+        final reviewsMap = map['reviews'] as Map<String, dynamic>;
+        if (reviewsMap['data'] is List) {
+          data = reviewsMap['data'] as List<dynamic>;
+        }
+      } else if (map['data'] is List) {
+        data = map['data'] as List<dynamic>;
       } else if (response is List) {
         data = response;
       }
+
       return data
-          .map((e) => ReviewItem.fromJson(Map<String, dynamic>.from(e as Map)))
+          .whereType<Map<String, dynamic>>()
+          .map((e) => ReviewItem.fromJson(e))
           .toList();
     } on Exception {
       return []; // Return empty if error or doesn't exist yet

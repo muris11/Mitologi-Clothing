@@ -615,12 +615,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     // Construct Payload (flat fields untuk backend Laravel)
     final payload = {
-      'shipping_name': '$_firstName $_lastName'.trim(),
-      'shipping_phone': _phone,
-      'shipping_address': _address1,
-      'shipping_city': _city,
-      'shipping_province': _province,
-      'shipping_postal_code': _zip,
+      'shippingName': '$_firstName $_lastName'.trim(),
+      'shippingPhone': _phone,
+      'shippingAddress': _address1,
+      'shippingCity': _city,
+      'shippingProvince': _province,
+      'shippingPostalCode': _zip,
     };
 
     try {

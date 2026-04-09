@@ -1,4 +1,4 @@
-class Material {
+class MaterialInfo {
   final int id;
   final String name;
   final String? description;
@@ -7,7 +7,7 @@ class Material {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  Material({
+  MaterialInfo({
     required this.id,
     required this.name,
     this.description,
@@ -17,13 +17,13 @@ class Material {
     this.updatedAt,
   });
 
-  factory Material.fromJson(Map<String, dynamic> json) {
+  factory MaterialInfo.fromJson(Map<String, dynamic> json) {
     int parseInt(dynamic value, [int fallback = 0]) {
       if (value is int) return value;
       return int.tryParse(value?.toString() ?? '') ?? fallback;
     }
 
-    return Material(
+    return MaterialInfo(
       id: parseInt(json['id']),
       name: json['name']?.toString() ?? '',
       description: json['description']?.toString(),

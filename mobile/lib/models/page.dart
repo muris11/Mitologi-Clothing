@@ -27,14 +27,15 @@ class PageData {
       title: json['title']?.toString() ?? '',
       handle: json['handle']?.toString() ?? '',
       body: json['body']?.toString() ?? '',
-      bodySummary: json['bodySummary']?.toString() ?? '',
+      bodySummary:
+          (json['bodySummary'] ?? json['body_summary'])?.toString() ?? '',
       seo: SEO.fromJson(
         json['seo'] is Map<String, dynamic>
             ? json['seo'] as Map<String, dynamic>
             : <String, dynamic>{},
       ),
-      createdAt: json['createdAt']?.toString() ?? '',
-      updatedAt: json['updatedAt']?.toString() ?? '',
+      createdAt: (json['createdAt'] ?? json['created_at'])?.toString() ?? '',
+      updatedAt: (json['updatedAt'] ?? json['updated_at'])?.toString() ?? '',
     );
   }
 }

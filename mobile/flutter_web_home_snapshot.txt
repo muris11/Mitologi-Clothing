@@ -1,1 +1,0 @@
-uid=1_0 RootWebArea "mobile" url="http://127.0.0.1:4011/"

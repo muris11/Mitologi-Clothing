@@ -2,9 +2,6 @@
 
 part of 'cart_item.dart';
 
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
 
 CartItem _$CartItemFromJson(Map<String, dynamic> json) => CartItem(
   id: json['id'] as String,

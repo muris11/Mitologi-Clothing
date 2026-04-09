@@ -44,9 +44,13 @@ class LandingPageController extends Controller
         $port = request()->getPort();
         $scheme = request()->getScheme();
 
-        // Don't use localhost/127.0.0.1 for mobile access
-        if ($host === '127.0.0.1' || $host === 'localhost') {
-            $host = '192.168.1.5';
+        // For mobile/emulator access, ensure we're using a reachable address
+        // The mobile app will use dart-define to specify the correct backend URL
+        // This transformation helps when the backend is behind a proxy or Docker
+        if ($host === '127.0.0.1' || $host === 'localhost' || $host === '10.0.2.2') {
+            // Keep localhost - the mobile app should use --dart-define to set the correct URL
+            // or the reverse proxy will handle the forwarding
+            $host = 'localhost';
         }
 
         $baseUrl = $port ? "$scheme://$host:$port" : "$scheme://$host";
@@ -175,7 +179,7 @@ class LandingPageController extends Controller
                         'id' => $m->id,
                         'name' => $m->name,
                         'position' => $m->position,
-                        'photo_url' => $m->photo_url,
+                        'photo_url' => $this->toPublicStorageUrl($m->photo_url),
                         'parent_id' => $m->parent_id,
                         'level' => $m->level,
                         'sort_order' => $m->sort_order,

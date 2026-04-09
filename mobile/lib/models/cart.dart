@@ -13,15 +13,27 @@ class CartCost {
   });
 
   factory CartCost.fromJson(Map<String, dynamic> json) {
+    // Safe helper to get Money from nested JSON
+    Money safeMoneyFromJson(dynamic value) {
+      if (value is Map<String, dynamic>) {
+        return Money.fromJson(value);
+      }
+      if (value is Map) {
+        return Money.fromJson(Map<String, dynamic>.from(value));
+      }
+      // Fallback to zero amount
+      return const Money(amount: '0', currencyCode: 'IDR');
+    }
+
     return CartCost(
-      subtotalAmount: Money.fromJson(
-        Map<String, dynamic>.from(json['subtotalAmount'] as Map),
+      subtotalAmount: safeMoneyFromJson(
+        json['subtotalAmount'] ?? json['subtotal_amount'],
       ),
-      totalAmount: Money.fromJson(
-        Map<String, dynamic>.from(json['totalAmount'] as Map),
+      totalAmount: safeMoneyFromJson(
+        json['totalAmount'] ?? json['total_amount'],
       ),
-      totalTaxAmount: Money.fromJson(
-        Map<String, dynamic>.from(json['totalTaxAmount'] as Map),
+      totalTaxAmount: safeMoneyFromJson(
+        json['totalTaxAmount'] ?? json['total_tax_amount'],
       ),
     );
   }
@@ -51,11 +63,16 @@ class Cart {
   });
 
   factory Cart.fromJson(Map<String, dynamic> json) {
+    // Safely parse cost with fallback to empty values
+    final costJson = json['cost'] is Map<String, dynamic>
+        ? json['cost'] as Map<String, dynamic>
+        : <String, dynamic>{};
+
     return Cart(
       id: json['id']?.toString(),
       sessionId: json['sessionId']?.toString(),
       checkoutUrl: json['checkoutUrl']?.toString() ?? '/checkout',
-      cost: CartCost.fromJson(Map<String, dynamic>.from(json['cost'] as Map)),
+      cost: CartCost.fromJson(costJson),
       lines: (json['lines'] as List<dynamic>? ?? <dynamic>[])
           .map((e) => CartItem.fromJson(Map<String, dynamic>.from(e as Map)))
           .toList(),

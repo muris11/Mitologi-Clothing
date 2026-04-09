@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../../models/collection.dart';
 import '../../models/landing_page_data.dart';
 import '../../models/product.dart';
+import '../../models/material.dart';
 import '../../providers/content_provider.dart';
 import '../../providers/product_provider.dart';
 import '../../providers/auth_provider.dart';

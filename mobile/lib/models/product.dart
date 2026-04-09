@@ -51,7 +51,7 @@ class Product {
     return Product(
       id: json['id']?.toString() ?? '',
       handle: json['handle']?.toString() ?? '',
-      availableForSale: json['availableForSale'] == true,
+      availableForSale: json['availableForSale'] == true || json['available_for_sale'] == true,
       title: json['title']?.toString() ?? '',
       description: json['description']?.toString() ?? '',
       descriptionHtml: json['descriptionHtml']?.toString() ?? '',
@@ -97,20 +97,20 @@ class Product {
       tags:
           (json['tags'] as List<dynamic>?)?.map((e) => e.toString()).toList() ??
           [],
-      totalStock: json['totalStock'] == null
+      totalStock: (json['totalStock'] ?? json['total_stock']) == null
           ? null
-          : int.tryParse(json['totalStock'].toString()),
-      updatedAt: json['updatedAt']?.toString() ?? '',
-      isWishlisted: json['isWishlisted'] as bool?,
-      averageRating: json['averageRating'] == null
+          : int.tryParse((json['totalStock'] ?? json['total_stock']).toString()),
+      updatedAt: (json['updatedAt'] ?? json['updated_at'])?.toString() ?? '',
+      isWishlisted: (json['isWishlisted'] ?? json['is_wishlisted']) as bool?,
+      averageRating: (json['averageRating'] ?? json['average_rating']) == null
           ? null
-          : double.tryParse(json['averageRating'].toString()),
-      totalReviews: json['totalReviews'] == null
+          : double.tryParse((json['averageRating'] ?? json['average_rating']).toString()),
+      totalReviews: (json['totalReviews'] ?? json['total_reviews'] ?? json['reviews_count']) == null
           ? null
-          : int.tryParse(json['totalReviews'].toString()),
-      totalSold: json['totalSold'] == null
+          : int.tryParse((json['totalReviews'] ?? json['total_reviews'] ?? json['reviews_count']).toString()),
+      totalSold: (json['totalSold'] ?? json['total_sold']) == null
           ? null
-          : int.tryParse(json['totalSold'].toString()),
+          : int.tryParse((json['totalSold'] ?? json['total_sold']).toString()),
     );
   }
 }

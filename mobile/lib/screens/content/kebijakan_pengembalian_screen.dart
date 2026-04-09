@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
 import '../../utils/responsive_helper.dart';
@@ -597,7 +598,9 @@ class KebijakanPengembalianScreen extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          // TODO WhatsApp Launch
+                          launchUrlString(
+                            'https://wa.me/6281322170902?text=Halo%20Mitologi%20Clothing%2C%20saya%20ingin%20bertanya%20mengenai%20kebijakan%20pengembalian%20produk.',
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppTheme.accent,

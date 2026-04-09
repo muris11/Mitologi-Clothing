@@ -23,19 +23,18 @@ class ApiConfig {
 
   static String get _defaultBackendOrigin {
     // TIPS: Use 'ipconfig' on Windows to find your IPv4 if using physical device.
-    // const String physicalDeviceIp = 'http://192.168.1.XX:8011';
+    // Example for physical device: 'http://192.168.1.XX:8000'
 
     if (kIsWeb) {
       // For web, use localhost or override via dart-define
       const webOverride = String.fromEnvironment('MITOLOGI_WEB_API_URL');
       if (webOverride.isNotEmpty) return webOverride;
-      return 'http://localhost:8011';
+      return 'http://192.168.2.100:8011';
     }
 
     if (Platform.isAndroid) {
       // 10.0.2.2 is the special alias for the host machine in Android Emulator
-      // Changed from 127.0.0.1:8011 to localhost:8011 to match backend config
-      return 'http://10.0.2.2:8011';
+      return 'http://192.168.2.100:8011';
     }
 
     if (Platform.isIOS) {
@@ -50,10 +49,10 @@ class ApiConfig {
   static String get baseUrl {
     final override = _normalizeBase(_apiBaseOverride.trim());
     if (override.isNotEmpty) {
-      return override.endsWith('/api') ? override : '$override/api';
+      return override.endsWith('/api/v1') ? override : '$override/api/v1';
     }
 
-    return '${_normalizeBase(_defaultBackendOrigin)}/api';
+    return '${_normalizeBase(_defaultBackendOrigin)}/api/v1';
   }
 
   /// Raw base URL without API version (for URI construction)
@@ -117,7 +116,7 @@ class ApiConfig {
       ...endpointUri.queryParameters,
       ...?queryParams,
     };
-    final path = 'api/${endpointUri.path}';
+    final path = 'api/v1/${endpointUri.path}';
 
     if (useHttps) {
       return Uri.https(

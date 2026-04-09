@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../config/theme.dart';
 import '../../utils/navigation_helper.dart';
 import '../../utils/responsive_helper.dart';
@@ -317,7 +318,9 @@ class _FaqScreenState extends State<FaqScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          // TODO: Launch WhatsApp or Help contact
+                          launchUrlString(
+                            'https://wa.me/6281322170902?text=Halo%20Mitologi%20Clothing%2C%20saya%20punya%20pertanyaan%20mengenai...',
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppTheme.accent,

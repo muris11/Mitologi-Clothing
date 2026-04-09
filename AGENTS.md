@@ -33,6 +33,7 @@
 - Frontend cache invalidation is cross-service: Laravel calls Next.js `/api/revalidate` through `backend/app/Services/FrontendCacheService.php`.
 - Next.js rewrites `/storage/*` to Laravel and also proxies `/api/team-members/:id/photo`; that photo route exists to avoid Windows `artisan serve` symlink issues.
 - Recommendation-service auth uses `X-API-Key` and the env key name is `RECOMMENDER_API_KEY`, which must stay aligned with Laravel `config/services.php`.
+- API Documentation is available at `/api/docs` (HTML) and `/api/docs/json` (JSON). Source is `backend/app/Http/Controllers/ApiDocsController.php` and view is `backend/resources/views/api-docs.blade.php`. Uses Tailwind CSS with Font Awesome icons.
 
 ## Service Boundaries
 - `nextjs-commerce/`: storefront only. Use `lib/api/` wrappers for backend communication.

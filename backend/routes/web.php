@@ -2,8 +2,13 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\ApiDocsController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
+
+// API Documentation (Public)
+Route::get('/api/docs', [ApiDocsController::class, 'index'])->name('api.docs');
+Route::get('/api/docs/json', [ApiDocsController::class, 'json'])->name('api.docs.json');
 
 Route::get('/', function () {
     return redirect()->route('login');

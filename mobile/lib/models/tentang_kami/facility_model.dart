@@ -24,9 +24,9 @@ class Facility {
       name: json['name']?.toString() ?? '',
       description: json['description']?.toString(),
       image: json['image']?.toString(),
-      sortOrder: json['sort_order'] == null
+      sortOrder: (json['sort_order'] ?? json['sortOrder']) == null
           ? null
-          : parseInt(json['sort_order'], 0),
+          : parseInt(json['sort_order'] ?? json['sortOrder'], 0),
     );
   }
 }

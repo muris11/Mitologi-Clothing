@@ -6,15 +6,24 @@ class ChatbotService {
 
   final ApiService _api;
 
-  Future<String> sendMessage(String message) async {
+  Future<String> sendMessage(String message, {List<Map<String, String>> history = const []}) async {
     try {
+      final body = {
+        'message': message,
+      };
+      
+      if (history.isNotEmpty) {
+        body['history'] = history;
+      }
+
       final response = await _api
-          .post('/chatbot', body: {'message': message}, requiresAuth: true)
+          .post('/chatbot', body: body, requiresAuth: false)
           .timeout(const Duration(seconds: 15));
 
       final data = response is Map<String, dynamic>
-          ? response['data']
+          ? (response['data'] ?? response)
           : response;
+          
       if (data is Map<String, dynamic>) {
         return (data['reply'] ??
                 data['response'] ??

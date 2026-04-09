@@ -22,10 +22,10 @@ class TeamMember {
       id: json['id'] as int,
       name: json['name'] as String,
       role: json['position'] as String? ?? json['role'] as String? ?? '',
-      imageUrl: json['photo_url'] as String? ?? json['image_url'] as String?,
-      parentId: json['parent_id'] as int?,
+      imageUrl: json['photoUrl'] as String? ?? json['photo_url'] as String? ?? json['image_url'] as String?,
+      parentId: json['parent_id'] as int? ?? json['parentId'] as int?,
       level: json['level'] as int? ?? 0,
-      sortOrder: json['sort_order'] as int? ?? 0,
+      sortOrder: json['sort_order'] as int? ?? json['sortOrder'] as int? ?? 0,
     );
   }
 

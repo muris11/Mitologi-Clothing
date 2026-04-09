@@ -18,10 +18,10 @@ class Pagination {
     }
 
     return Pagination(
-      currentPage: parseInt(json['current_page'] ?? json['currentPage'], 1),
-      lastPage: parseInt(json['last_page'] ?? json['lastPage'], 1),
+      currentPage: parseInt(json['currentPage'] ?? json['current_page'], 1),
+      lastPage: parseInt(json['lastPage'] ?? json['last_page'], 1),
       total: parseInt(json['total'], 0),
-      perPage: parseInt(json['per_page'] ?? json['perPage'], 12),
+      perPage: parseInt(json['perPage'] ?? json['per_page'], 12),
     );
   }
 
@@ -43,26 +43,35 @@ class ProductListResponse {
       perPage: 12,
     );
 
-    // New standardized format: { data: { products: [...], pagination: {...} } }
-    if (json['data'] is Map) {
+    // Standardized format: { data: [...], meta: { ... } }
+    if (json['data'] is List) {
+      productsList = json['data'] as List<dynamic>;
+      final meta = json['meta'] ?? json['pagination'];
+      if (meta is Map) {
+        paging = Pagination.fromJson(Map<String, dynamic>.from(meta));
+      }
+    } else if (json['data'] is Map) {
+      // Nested data format: { data: { products: [...], pagination: { ... } } }
       final data = Map<String, dynamic>.from(json['data'] as Map);
-      if (data.containsKey('products') && data['products'] is List) {
+      if (data['products'] is List) {
         productsList = data['products'] as List<dynamic>;
-        if (data['pagination'] is Map) {
-          paging = Pagination.fromJson(
-            Map<String, dynamic>.from(data['pagination'] as Map),
-          );
+        final meta = data['pagination'] ?? data['meta'];
+        if (meta is Map) {
+          paging = Pagination.fromJson(Map<String, dynamic>.from(meta));
+        }
+      } else if (data['items'] is List) {
+        productsList = data['items'] as List<dynamic>;
+        final meta = data['pagination'] ?? data['meta'];
+        if (meta is Map) {
+          paging = Pagination.fromJson(Map<String, dynamic>.from(meta));
         }
       }
-    } else if (json['data'] is List) {
-      // Direct array format: { data: [...] }
-      productsList = json['data'] as List<dynamic>;
     } else if (json['products'] is List) {
-      // Old format: { products: [...], pagination: {...} }
+      // Legacy format: { products: [...], pagination: { ... } }
       productsList = json['products'] as List<dynamic>;
       if (json['pagination'] is Map) {
         paging = Pagination.fromJson(
-          Map<String, dynamic>.from(json['pagination'] as Map),
+          Map<String, dynamic>.from(json['pagination']),
         );
       }
     }

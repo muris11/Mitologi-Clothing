@@ -30,9 +30,11 @@ class Category {
       handle: json['handle']?.toString() ?? '',
       description: json['description']?.toString(),
       image: json['image']?.toString(),
-      productsCount: json['products_count'] == null
+      productsCount: (json['productsCount'] ?? json['products_count']) == null
           ? null
-          : int.tryParse(json['products_count'].toString()),
+          : int.tryParse(
+            (json['productsCount'] ?? json['products_count']).toString(),
+          ),
     );
   }
 }
