@@ -1,5 +1,5 @@
-@forelse($adminNotifications as $notif)
-<div class="px-4 py-3 hover:bg-gray-50  transition-colors cursor-pointer border-b border-gray-50  last:border-b-0">
+ @forelse($adminNotifications as $notif)
+ <div class="px-5 py-4 hover:bg-gray-50 transition-all duration-200 cursor-pointer border-b border-gray-50 last:border-b-0 active:bg-gray-100">
     <div class="flex items-start gap-3">
         <div class="p-2 rounded-full flex-shrink-0
             @if($notif['color'] === 'blue') bg-blue-50  text-blue-600
