@@ -110,7 +110,10 @@ class ProductService {
     );
 
     final data = _safeToList(response, dataKey: 'data');
-    return data.whereType<Map<String, dynamic>>().map((e) => Product.fromJson(e)).toList();
+    return data
+        .whereType<Map<String, dynamic>>()
+        .map((e) => Product.fromJson(e))
+        .toList();
   }
 
   Future<List<Product>> getNewArrivals({int limit = 4}) async {
@@ -120,7 +123,10 @@ class ProductService {
     );
 
     final data = _safeToList(response, dataKey: 'data');
-    return data.whereType<Map<String, dynamic>>().map((e) => Product.fromJson(e)).toList();
+    return data
+        .whereType<Map<String, dynamic>>()
+        .map((e) => Product.fromJson(e))
+        .toList();
   }
 
   Future<List<Product>> getRelatedProducts(String handle) async {
@@ -128,14 +134,20 @@ class ProductService {
     final response = await _api.get('/products/${product.id}/recommendations');
 
     final data = _safeToList(response, dataKey: 'data');
-    return data.whereType<Map<String, dynamic>>().map((e) => Product.fromJson(e)).toList();
+    return data
+        .whereType<Map<String, dynamic>>()
+        .map((e) => Product.fromJson(e))
+        .toList();
   }
 
   Future<List<Product>> getRecommendations() async {
     final response = await _api.get('/recommendations', requiresAuth: true);
 
     final data = _safeToList(response, dataKey: 'data');
-    return data.whereType<Map<String, dynamic>>().map((e) => Product.fromJson(e)).toList();
+    return data
+        .whereType<Map<String, dynamic>>()
+        .map((e) => Product.fromJson(e))
+        .toList();
   }
 
   Future<List<Category>> getCategories() async {
@@ -202,6 +214,60 @@ class ProductService {
     } on Exception catch (e) {
       throw Exception('Gagal mengirim ulasan: $e');
     }
+  }
+
+  // Update existing review
+  Future<bool> updateReview(
+    int reviewId, {
+    int? rating,
+    String? comment,
+  }) async {
+    try {
+      final body = <String, dynamic>{};
+      if (rating != null) body['rating'] = rating;
+      if (comment != null) body['comment'] = comment;
+
+      await _api.put('/reviews/$reviewId', body: body, requiresAuth: true);
+      return true;
+    } on Exception catch (e) {
+      throw Exception('Gagal mengupdate ulasan: $e');
+    }
+  }
+
+  // Delete review
+  Future<bool> deleteReview(int reviewId) async {
+    try {
+      await _api.delete('/reviews/$reviewId', requiresAuth: true);
+      return true;
+    } on Exception catch (e) {
+      throw Exception('Gagal menghapus ulasan: $e');
+    }
+  }
+
+  // Get single category by handle
+  Future<Category> getCategory(String handle) async {
+    final response = await _api.get('/categories/$handle');
+
+    if (response == null) {
+      throw ApiException('Category not found', 404);
+    }
+
+    final map = _safeToMap(response);
+
+    // Try {data: {...}} format first
+    final data = map['data'];
+    if (data is Map) {
+      return Category.fromJson(Map<String, dynamic>.from(data));
+    }
+
+    // Try {category: {...}} format
+    final category = map['category'];
+    if (category is Map) {
+      return Category.fromJson(Map<String, dynamic>.from(category));
+    }
+
+    // Direct response
+    return Category.fromJson(map);
   }
 
   // Send user interactions for ML recommendations
