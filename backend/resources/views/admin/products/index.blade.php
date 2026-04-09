@@ -6,7 +6,7 @@
         :action_url="route('admin.products.create')"
     />
 
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium overflow-hidden border border-gray-100 dark:border-gray-700">
+    <div class="bg-white  rounded-2xl shadow-premium overflow-hidden border border-gray-100 ">
         <!-- Filter/Search Bar -->
         <div class="p-5 border-b border-gray-200/80 bg-gray-50/80 flex flex-col md:flex-row justify-between items-center gap-4">
             <form action="{{ route('admin.products.index') }}" method="GET" class="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
@@ -38,8 +38,8 @@
 
         <!-- Desktop Table -->
         <div class="hidden md:block overflow-x-auto">
-            <table class="w-full text-left text-sm text-gray-600 dark:text-gray-400">
-                <thead class="bg-gray-50/80 dark:bg-gray-700/50 uppercase font-bold text-xs text-gray-500 dark:text-gray-300 tracking-wider">
+            <table class="w-full text-left text-sm text-gray-600 ">
+                <thead class="bg-gray-50/80  uppercase font-bold text-xs text-gray-500  tracking-wider">
                     <tr>
                         <th class="px-6 py-4">Produk</th>
                         <th class="px-6 py-4">Harga / Varian</th>
@@ -48,16 +48,16 @@
                         <th class="px-6 py-4 text-right">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
+                <tbody class="divide-y divide-gray-100 ">
                     @forelse($products as $product)
-                    <tr class="hover:bg-mitologi-cream/30 dark:hover:bg-gray-700/30 transition-colors group">
+                    <tr class="hover:bg-mitologi-cream/30  transition-colors group">
                         <td class="px-6 py-4">
                             <div class="flex items-center">
-                                <div class="h-16 w-16 flex-shrink-0 rounded-xl bg-gray-100 dark:bg-gray-700 overflow-hidden shadow-sm border border-gray-200 dark:border-gray-600 relative group-hover:shadow-md transition-shadow">
+                                <div class="h-16 w-16 flex-shrink-0 rounded-xl bg-gray-100  overflow-hidden shadow-sm border border-gray-200  relative group-hover:shadow-md transition-shadow">
                                     @if($product->featured_image)
                                         <img src="{{ asset('storage/' . $product->featured_image) }}" alt="{{ $product->title }}" class="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500">
                                     @else
-                                        <div class="h-full w-full flex items-center justify-center text-gray-400 bg-gray-50 dark:bg-gray-800">
+                                        <div class="h-full w-full flex items-center justify-center text-gray-400 bg-gray-50 ">
                                             <svg class="h-8 w-8 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>
@@ -65,7 +65,7 @@
                                     @endif
                                 </div>
                                 <div class="ml-4">
-                                     <div class="text-sm font-bold text-mitologi-navy dark:text-white group-hover:text-mitologi-gold transition-colors">{{ $product->title }}</div>
+                                     <div class="text-sm font-bold text-mitologi-navy  group-hover:text-mitologi-gold transition-colors">{{ $product->title }}</div>
                                     <div class="text-xs text-gray-500 font-mono mt-0.5">SKU: {{ $product->handle }}</div>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                             @endphp
                             
                             <div class="flex flex-col">
-                                <span class="font-bold text-mitologi-navy dark:text-white">
+                                <span class="font-bold text-mitologi-navy ">
                                     @if($minPrice == $maxPrice)
                                         Rp {{ number_format($minPrice, 0, ',', '.') }}
                                     @else
@@ -90,7 +90,7 @@
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-1">
                                 <i class="fas fa-star text-yellow-400 text-sm"></i>
-                                <span class="font-bold text-gray-700 dark:text-gray-300">{{ $product->reviews->count() > 0 ? round($product->reviews->avg('rating'), 1) : '-' }}</span>
+                                <span class="font-bold text-gray-700 ">{{ $product->reviews->count() > 0 ? round($product->reviews->avg('rating'), 1) : '-' }}</span>
                                 <span class="text-xs text-gray-500 ml-1">({{ $product->reviews->count() }})</span>
                             </div>
                         </td>
@@ -102,16 +102,16 @@
                         </td>
                         <td class="px-6 py-4 text-right text-sm font-medium">
                             <div class="flex items-center justify-end space-x-3 opacity-100">
-                                <a href="{{ route('admin.products.show', $product) }}" class="inline-flex items-center justify-center rounded-lg border border-blue-200 bg-blue-50 p-1.5 text-blue-600 shadow-sm transition-colors hover:bg-blue-100 dark:border-blue-800/60 dark:bg-blue-900/20 dark:text-blue-300 dark:hover:bg-blue-900/30" title="Lihat Detail & Ulasan">
+                                <a href="{{ route('admin.products.show', $product) }}" class="inline-flex items-center justify-center rounded-lg border border-blue-200 bg-blue-50 p-1.5 text-blue-600 shadow-sm transition-colors hover:bg-blue-100    " title="Lihat Detail & Ulasan">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                 </a>
-                                <a href="{{ route('admin.products.edit', $product) }}" class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-1.5 text-mitologi-navy shadow-sm transition-colors hover:bg-gray-100 hover:text-mitologi-gold dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white" title="Edit Produk">
+                                <a href="{{ route('admin.products.edit', $product) }}" class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-1.5 text-mitologi-navy shadow-sm transition-colors hover:bg-gray-100 hover:text-mitologi-gold     " title="Edit Produk">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                 </a>
                                 <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-red-50 p-1.5 text-red-600 shadow-sm transition-colors hover:bg-red-100 dark:border-red-800/60 dark:bg-red-900/20 dark:text-red-300 dark:hover:bg-red-900/30">
+                                    <button type="submit" class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-red-50 p-1.5 text-red-600 shadow-sm transition-colors hover:bg-red-100    ">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                     </button>
                                 </form>
@@ -120,12 +120,12 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-12 text-center text-gray-500 bg-gray-50/30 dark:bg-gray-800/50">
+                        <td colspan="5" class="px-6 py-12 text-center text-gray-500 bg-gray-50/30 ">
                             <div class="flex flex-col items-center justify-center">
-                                <div class="p-4 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 mb-3">
+                                <div class="p-4 rounded-full bg-gray-100  text-gray-400 mb-3">
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
                                 </div>
-                                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Belum ada produk</h3>
+                                <h3 class="text-lg font-medium text-gray-900 ">Belum ada produk</h3>
                                 <p class="text-sm text-gray-500 mt-1 mb-4">Mulai dengan menambahkan produk pertama Anda.</p>
                                 <a href="{{ route('admin.products.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-mitologi-navy hover:bg-mitologi-navy-light transition-colors">
                                     Tambah Produk
@@ -139,16 +139,16 @@
         </div>
 
         <!-- Mobile Card List -->
-        <div class="md:hidden divide-y divide-gray-100 dark:divide-gray-700">
+        <div class="md:hidden divide-y divide-gray-100 ">
             @forelse($products as $product)
-                <div class="p-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                <div class="p-4 bg-white  hover:bg-gray-50  transition-colors">
                     <div class="flex gap-4">
                          <!-- Image -->
-                        <div class="h-20 w-20 flex-shrink-0 rounded-lg bg-gray-100 dark:bg-gray-700 overflow-hidden shadow-sm border border-gray-200 dark:border-gray-600 relative">
+                        <div class="h-20 w-20 flex-shrink-0 rounded-lg bg-gray-100  overflow-hidden shadow-sm border border-gray-200  relative">
                             @if($product->featured_image)
                                 <img src="{{ asset('storage/' . $product->featured_image) }}" alt="{{ $product->title }}" class="h-full w-full object-cover">
                             @else
-                                <div class="h-full w-full flex items-center justify-center text-gray-400 bg-gray-50 dark:bg-gray-800">
+                                <div class="h-full w-full flex items-center justify-center text-gray-400 bg-gray-50 ">
                                     <svg class="h-8 w-8 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
@@ -160,7 +160,7 @@
                         <div class="flex-1 flex flex-col justify-between">
                             <div>
                                 <div class="flex justify-between items-start">
-                                    <h3 class="text-sm font-bold text-mitologi-navy dark:text-white line-clamp-2 leading-tight mb-1">{{ $product->title }}</h3>
+                                    <h3 class="text-sm font-bold text-mitologi-navy  line-clamp-2 leading-tight mb-1">{{ $product->title }}</h3>
                                 </div>
                                 <div class="text-xs text-gray-500 font-mono mb-2">SKU: {{ $product->handle }}</div>
                             </div>
@@ -171,7 +171,7 @@
                                     $minPrice = $priceRange['minVariantPrice']['amount'];
                                     $maxPrice = $priceRange['maxVariantPrice']['amount'];
                                 @endphp
-                                <div class="font-bold text-mitologi-navy dark:text-white text-sm">
+                                <div class="font-bold text-mitologi-navy  text-sm">
                                     @if($minPrice == $maxPrice)
                                         Rp {{ number_format($minPrice, 0, ',', '.') }}
                                     @else
@@ -179,7 +179,7 @@
                                     @endif
                                     <div class="flex items-center gap-1 mt-1">
                                         <i class="fas fa-star text-yellow-400 text-[10px]"></i>
-                                        <span class="font-bold text-xs text-gray-700 dark:text-gray-300">{{ $product->reviews->count() > 0 ? round($product->reviews->avg('rating'), 1) : '-' }}</span>
+                                        <span class="font-bold text-xs text-gray-700 ">{{ $product->reviews->count() > 0 ? round($product->reviews->avg('rating'), 1) : '-' }}</span>
                                         <span class="text-[10px] text-gray-500">({{ $product->reviews->count() }})</span>
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@
                     </div>
 
                     <!-- Actions -->
-                    <div class="flex items-center gap-2 mt-4 pt-3 border-t border-gray-100 dark:border-gray-700">
+                    <div class="flex items-center gap-2 mt-4 pt-3 border-t border-gray-100 ">
                         <a href="{{ route('admin.products.show', $product) }}" class="flex-1 inline-flex justify-center items-center px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-medium rounded-lg transition-colors border border-blue-200">
                             <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                             Detail
@@ -211,14 +211,15 @@
                     </div>
                 </div>
             @empty
-                <div class="p-8 text-center text-gray-500 bg-gray-50/50 dark:bg-gray-800/50">
+                <div class="p-8 text-center text-gray-500 bg-gray-50/50 ">
                     <p class="text-sm">Belum ada produk.</p>
                 </div>
             @endforelse
         </div>
         
-        <div class="bg-gray-50 dark:bg-gray-700/30 border-t border-gray-200 dark:border-gray-700 p-4">
+        <div class="bg-gray-50  border-t border-gray-200  p-4">
              {{ $products->links() }}
         </div>
     </div>
 </x-admin-layout>
+

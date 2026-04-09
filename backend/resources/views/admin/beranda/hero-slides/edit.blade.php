@@ -12,9 +12,9 @@
             <!-- Left Column: Main Info -->
             <div class="lg:col-span-2 space-y-8">
                 <!-- Text Content -->
-               <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium p-8 border border-gray-100 dark:border-gray-700 relative overflow-hidden group">
+               <div class="bg-white  rounded-2xl shadow-premium p-8 border border-gray-100  relative overflow-hidden group">
                       <div class="absolute top-0 right-0 w-32 h-32 bg-mitologi-gold/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-700"></div>
-                      <h3 class="text-lg font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                      <h3 class="text-lg font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                          <span class="w-1 h-6 bg-mitologi-gold rounded-full"></span>
                          Konten Slide
                      </h3>
@@ -35,8 +35,8 @@
                  </div>
 
                 <!-- Smart Image Upload with Cropper -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium p-8 border border-gray-100 dark:border-gray-700">
-                    <h3 class="text-lg font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                <div class="bg-white  rounded-2xl shadow-premium p-8 border border-gray-100 ">
+                    <h3 class="text-lg font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                         <span class="w-1 h-6 bg-mitologi-gold rounded-full"></span>
                         Gambar Background
                         <span class="text-xs bg-mitologi-gold/20 text-mitologi-navy px-2 py-1 rounded-full">Auto 16:9</span>
@@ -106,8 +106,8 @@
                 </div>
 
                 <!-- Call to Action -->
-                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium p-8 border border-gray-100 dark:border-gray-700">
-                    <h3 class="text-lg font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                 <div class="bg-white  rounded-2xl shadow-premium p-8 border border-gray-100 ">
+                    <h3 class="text-lg font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                         <span class="w-1 h-6 bg-mitologi-navy rounded-full"></span>
                         Call to Action (Tombol)
                     </h3>
@@ -128,7 +128,7 @@
             <!-- Right Column: Sidebar -->
             <div class="space-y-8">
                  <!-- Media & Status -->
-                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium p-6 border border-gray-100 dark:border-gray-700">
+                 <div class="bg-white  rounded-2xl shadow-premium p-6 border border-gray-100 ">
                     <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Pengaturan</h3>
                     
                     <div class="space-y-6">
@@ -136,32 +136,32 @@
                          <div>
                              <x-input-label for="sort_order" :value="__('Urutan Tampil')" />
                              <div class="flex items-center mt-1">
-                                 <button type="button" onclick="document.getElementById('sort_order').stepDown()" class="p-2 bg-gray-100 dark:bg-gray-700 rounded-l-lg hover:bg-gray-200 dark:hover:bg-gray-600 border border-r-0 border-gray-300 dark:border-gray-600">-</button>
-                                 <input type="number" id="sort_order" name="sort_order" value="{{ old('sort_order', $heroSlide->sort_order) }}" class="block w-full text-center border-gray-300 dark:border-gray-600 dark:bg-gray-900 border-x-0 focus:ring-0 focus:border-gray-300" />
-                                 <button type="button" onclick="document.getElementById('sort_order').stepUp()" class="p-2 bg-gray-100 dark:bg-gray-700 rounded-r-lg hover:bg-gray-200 dark:hover:bg-gray-600 border border-l-0 border-gray-300 dark:border-gray-600">+</button>
+                                 <button type="button" onclick="document.getElementById('sort_order').stepDown()" class="p-2 bg-gray-100  rounded-l-lg hover:bg-gray-200  border border-r-0 border-gray-300 ">-</button>
+                                 <input type="number" id="sort_order" name="sort_order" value="{{ old('sort_order', $heroSlide->sort_order) }}" class="block w-full text-center border-gray-300   border-x-0 focus:ring-0 focus:border-gray-300" />
+                                 <button type="button" onclick="document.getElementById('sort_order').stepUp()" class="p-2 bg-gray-100  rounded-r-lg hover:bg-gray-200  border border-l-0 border-gray-300 ">+</button>
                              </div>
                              <x-input-error :messages="$errors->get('sort_order')" class="mt-2" />
                          </div>
 
                          <!-- Status Toggle -->
-                         <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/30 rounded-xl">
-                             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Status Aktif</span>
+                         <div class="flex items-center justify-between p-4 bg-gray-50  rounded-xl">
+                             <span class="text-sm font-medium text-gray-700 ">Status Aktif</span>
                              <label class="relative inline-flex items-center cursor-pointer">
                                  <input type="checkbox" name="is_active" value="1" class="sr-only peer" {{ old('is_active', $heroSlide->is_active) ? 'checked' : '' }}>
-                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-mitologi-navy dark:peer-focus:ring-mitologi-gold rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-mitologi-navy"></div>
+                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-mitologi-navy  rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-mitologi-navy"></div>
                              </label>
                          </div>
                      </div>
                  </div>
 
                  <!-- Actions -->
-                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium p-6 border border-gray-100 dark:border-gray-700">
+                 <div class="bg-white  rounded-2xl shadow-premium p-6 border border-gray-100 ">
                      <button type="submit" id="submit-btn" class="w-full px-4 py-3 bg-mitologi-navy text-white rounded-xl hover:bg-mitologi-navy-light shadow-lg hover:shadow-mitologi-navy/30 transition-all duration-300 font-bold text-lg flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                          Perbarui Slide
                      </button>
                      
-                     <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 text-center">
+                     <div class="mt-4 pt-4 border-t border-gray-100  text-center">
                          <span class="text-xs text-gray-500">Terakhir diubah: {{ $heroSlide->updated_at->diffForHumans() }}</span>
                      </div>
                  </div>
@@ -288,3 +288,4 @@
         });
     </script>
 </x-admin-layout>
+

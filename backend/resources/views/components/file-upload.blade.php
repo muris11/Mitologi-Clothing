@@ -14,7 +14,7 @@
     }
 }" class="w-full">
     
-    <label class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">
+    <label class="block font-medium text-sm text-gray-700  mb-2">
         {{ $label }}
     </label>
 
@@ -48,6 +48,7 @@
     </div>
     
     @error($name)
-        <p class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</p>
+        <p class="text-sm text-red-600  mt-2">{{ $message }}</p>
     @enderror
 </div>
+

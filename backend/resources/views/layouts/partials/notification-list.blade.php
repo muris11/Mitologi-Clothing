@@ -1,12 +1,12 @@
 @forelse($adminNotifications as $notif)
-<div class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer border-b border-gray-50 dark:border-gray-700/50 last:border-b-0">
+<div class="px-4 py-3 hover:bg-gray-50  transition-colors cursor-pointer border-b border-gray-50  last:border-b-0">
     <div class="flex items-start gap-3">
         <div class="p-2 rounded-full flex-shrink-0
-            @if($notif['color'] === 'blue') bg-blue-50 dark:bg-blue-900/20 text-blue-600
-            @elseif($notif['color'] === 'yellow') bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600
-            @elseif($notif['color'] === 'red') bg-red-50 dark:bg-red-900/20 text-red-600
-            @elseif($notif['color'] === 'green') bg-green-50 dark:bg-green-900/20 text-green-600
-            @elseif($notif['color'] === 'amber') bg-amber-50 dark:bg-amber-900/20 text-amber-600
+            @if($notif['color'] === 'blue') bg-blue-50  text-blue-600
+            @elseif($notif['color'] === 'yellow') bg-yellow-50  text-yellow-600
+            @elseif($notif['color'] === 'red') bg-red-50  text-red-600
+            @elseif($notif['color'] === 'green') bg-green-50  text-green-600
+            @elseif($notif['color'] === 'amber') bg-amber-50  text-amber-600
             @endif
         ">
             @if($notif['icon'] === 'shopping-bag')
@@ -22,7 +22,7 @@
             @endif
         </div>
         <div class="min-w-0 flex-1">
-            <p class="text-sm text-gray-800 dark:text-gray-200 font-medium truncate">{{ $notif['title'] }}</p>
+            <p class="text-sm text-gray-800  font-medium truncate">{{ $notif['title'] }}</p>
             <p class="text-xs text-gray-500 mt-0.5">{{ $notif['subtitle'] }} · {{ $notif['time'] }}</p>
         </div>
     </div>
@@ -33,3 +33,4 @@
     <p class="text-sm text-gray-400">Tidak ada notifikasi baru</p>
 </div>
 @endforelse
+

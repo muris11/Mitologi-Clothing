@@ -6,7 +6,7 @@
         :action_url="''"
     />
 
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium overflow-hidden border border-gray-100 dark:border-gray-700 mb-8">
+    <div class="bg-white  rounded-2xl shadow-premium overflow-hidden border border-gray-100  mb-8">
         <!-- Tabs Navigation -->
         <div class="border-b border-gray-200/80 bg-gray-50/80 px-6 py-4">
             <nav class="-mb-px flex gap-1 overflow-x-auto pb-2 pr-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -55,7 +55,7 @@
                         <div>
                             <x-input-label for="mail_mailer" :value="__('Mail Driver')" />
                             <div class="relative mt-1">
-                                <select id="mail_mailer" name="MAIL_MAILER" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 appearance-none cursor-pointer">
+                                <select id="mail_mailer" name="MAIL_MAILER" class="w-full px-4 py-3 border border-gray-300  bg-white  text-gray-900  focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400  appearance-none cursor-pointer">
                                     <option value="smtp" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'smtp' ? 'selected' : '' }}>SMTP</option>
                                     <option value="sendmail" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'sendmail' ? 'selected' : '' }}>Sendmail</option>
                                     <option value="mailgun" {{ ($configs['email']['MAIL_MAILER'] ?? '') === 'mailgun' ? 'selected' : '' }}>Mailgun</option>
@@ -80,7 +80,7 @@
                         <div>
                             <x-input-label for="mail_encryption" :value="__('Encryption')" />
                             <div class="relative mt-1">
-                                <select id="mail_encryption" name="MAIL_ENCRYPTION" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 appearance-none cursor-pointer">
+                                <select id="mail_encryption" name="MAIL_ENCRYPTION" class="w-full px-4 py-3 border border-gray-300  bg-white  text-gray-900  focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400  appearance-none cursor-pointer">
                                     <option value="tls" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'tls' ? 'selected' : '' }}>TLS</option>
                                     <option value="ssl" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'ssl' ? 'selected' : '' }}>SSL</option>
                                     <option value="null" {{ ($configs['email']['MAIL_ENCRYPTION'] ?? '') === 'null' ? 'selected' : '' }}>None</option>
@@ -144,7 +144,7 @@
                         <div class="md:col-span-2">
                             <x-input-label for="midtrans_env" :value="__('Environment')" />
                             <div class="relative mt-1">
-                                <select id="midtrans_env" name="MIDTRANS_IS_PRODUCTION" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 appearance-none cursor-pointer">
+                                <select id="midtrans_env" name="MIDTRANS_IS_PRODUCTION" class="w-full px-4 py-3 border border-gray-300  bg-white  text-gray-900  focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400  appearance-none cursor-pointer">
                                     <option value="false" {{ ($configs['midtrans']['MIDTRANS_IS_PRODUCTION'] ?? '') === 'false' ? 'selected' : '' }}>Sandbox (Testing)</option>
                                     <option value="true" {{ ($configs['midtrans']['MIDTRANS_IS_PRODUCTION'] ?? '') === 'true' ? 'selected' : '' }}>Production (Live)</option>
                                 </select>
@@ -333,8 +333,8 @@
                 </div>
                 
                 <div class="overflow-x-auto rounded-xl border border-gray-200">
-                    <table class="w-full text-left text-sm text-gray-600 dark:text-gray-400">
-                        <thead class="bg-gray-50/80 dark:bg-gray-700/50 uppercase font-bold text-xs text-gray-500 dark:text-gray-300 tracking-wider">
+                    <table class="w-full text-left text-sm text-gray-600 ">
+                        <thead class="bg-gray-50/80  uppercase font-bold text-xs text-gray-500  tracking-wider">
                             <tr>
                                 <th class="px-6 py-4">Tanggal</th>
                                 <th class="px-6 py-4">User</th>
@@ -346,7 +346,7 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-100">
                             @forelse($auditLogs as $log)
-                            <tr class="hover:bg-mitologi-cream/30 dark:hover:bg-gray-700/30 transition-colors">
+                            <tr class="hover:bg-mitologi-cream/30  transition-colors">
                                 <td class="px-6 py-4 text-sm text-gray-900">{{ $log->created_at->format('d M Y H:i') }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-900 font-medium">{{ $log->user->name ?? 'Unknown' }}</td>
                                 <td class="px-6 py-4 text-sm">
@@ -368,12 +368,12 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-12 text-center text-gray-500 bg-gray-50/30 dark:bg-gray-800/50">
+                                <td colspan="6" class="px-6 py-12 text-center text-gray-500 bg-gray-50/30 ">
                                     <div class="flex flex-col items-center justify-center">
-                                        <div class="p-4 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 mb-3">
+                                        <div class="p-4 rounded-full bg-gray-100  text-gray-400 mb-3">
                                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                         </div>
-                                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Belum ada perubahan</h3>
+                                        <h3 class="text-lg font-medium text-gray-900 ">Belum ada perubahan</h3>
                                         <p class="text-sm text-gray-500 mt-1">Log audit akan muncul di sini.</p>
                                     </div>
                                 </td>
@@ -614,3 +614,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </x-admin-layout>
+

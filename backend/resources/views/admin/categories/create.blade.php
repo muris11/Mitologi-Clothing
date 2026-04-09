@@ -21,7 +21,7 @@
             <div class="lg:col-span-2 space-y-6">
                 <x-admin-card>
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-bold text-mitologi-navy dark:text-white flex items-center gap-2">
+                        <h3 class="text-lg font-bold text-mitologi-navy  flex items-center gap-2">
                             <span class="w-1.5 h-6 bg-mitologi-gold rounded-full"></span>
                             Informasi Kategori
                         </h3>
@@ -50,14 +50,14 @@
                      <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Pengaturan</h3>
                      
                      <div class="space-y-6">
-                         <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/30 rounded-xl border border-gray-100 dark:border-gray-700">
+                         <div class="flex items-center justify-between p-4 bg-gray-50  rounded-xl border border-gray-100 ">
                              <div class="flex flex-col">
-                                 <span class="text-mitologi-navy dark:text-white font-bold text-sm">Status Aktif</span>
+                                 <span class="text-mitologi-navy  font-bold text-sm">Status Aktif</span>
                                  <span class="text-gray-500 text-xs mt-0.5">Tampilkan di menu</span>
                              </div>
                              <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" name="is_active" value="1" class="sr-only peer" {{ old('is_active', true) ? 'checked' : '' }}>
-                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-mitologi-gold/50 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-mitologi-gold"></div>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-mitologi-gold/50 rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-mitologi-gold"></div>
                             </label>
                          </div>
 
@@ -88,3 +88,4 @@
         </div>
     </form>
 </x-admin-layout>
+

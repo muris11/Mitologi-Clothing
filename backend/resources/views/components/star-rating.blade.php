@@ -14,7 +14,7 @@
                 class="focus:outline-none transition-all duration-200 transform hover:scale-110 p-1"
                 :class="{
                     'text-mitologi-gold drop-shadow-md': i <= (hoverRating || rating), 
-                    'text-gray-200 dark:text-gray-700': i > (hoverRating || rating)
+                    'text-gray-200 ': i > (hoverRating || rating)
                 }"
             >
                 <svg class="w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -24,7 +24,8 @@
         </template>
     </div>
     
-    <div class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-lg">
-        <span class="text-sm font-bold text-mitologi-navy dark:text-whit" x-text="rating + ' / 5'"></span>
+    <div class="bg-gray-100  px-3 py-1 rounded-lg">
+        <span class="text-sm font-bold text-mitologi-navy " x-text="rating + ' / 5'"></span>
     </div>
 </div>
+

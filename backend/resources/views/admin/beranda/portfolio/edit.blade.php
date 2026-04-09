@@ -14,7 +14,7 @@
             <div class="lg:col-span-2 space-y-8">
                 <!-- Information -->
                 <x-admin-card>
-                     <h3 class="text-lg font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                     <h3 class="text-lg font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                         <span class="w-1 h-6 bg-mitologi-gold rounded-full"></span>
                         Informasi Proyek
                     </h3>
@@ -50,7 +50,7 @@
                 <x-admin-card>
                     <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Kategori</h3>
                     <div class="relative">
-                        <select name="category" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 appearance-none cursor-pointer">
+                        <select name="category" class="w-full px-4 py-3 border border-gray-300  bg-white  text-gray-900  focus:ring-2 focus:ring-mitologi-gold/50 focus:border-mitologi-gold rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400  appearance-none cursor-pointer">
                             <option value="" disabled>Pilih Kategori</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->name }}" {{ old('category', $portfolioItem->category) == $cat->name ? 'selected' : '' }}>{{ $cat->name }}</option>
@@ -74,11 +74,11 @@
                         </div>
 
                         <!-- Status Toggle -->
-                        <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/30 rounded-xl">
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Status Aktif</span>
+                        <div class="flex items-center justify-between p-4 bg-gray-50  rounded-xl">
+                            <span class="text-sm font-medium text-gray-700 ">Status Aktif</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" name="is_active" value="1" class="sr-only peer" {{ old('is_active', $portfolioItem->is_active) ? 'checked' : '' }}>
-                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-mitologi-navy dark:peer-focus:ring-mitologi-gold rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-mitologi-navy"></div>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-mitologi-navy  rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-mitologi-navy"></div>
                             </label>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                         Perbarui Proyek
                     </x-primary-button>
                     
-                     <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 text-center">
+                     <div class="mt-4 pt-4 border-t border-gray-100  text-center">
                          <span class="text-xs text-gray-500">Terakhir diubah: {{ $portfolioItem->updated_at->diffForHumans() }}</span>
                     </div>
                 </x-admin-card>
@@ -99,4 +99,5 @@
         </div>
     </form>
 </x-admin-layout>
+
 

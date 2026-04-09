@@ -6,7 +6,7 @@
         :action_url="''"
     />
 
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium overflow-hidden border border-gray-100 dark:border-gray-700">
+    <div class="bg-white  rounded-2xl shadow-premium overflow-hidden border border-gray-100 ">
         <!-- Search/Filter Bar -->
         <div class="p-5 border-b border-gray-200/80 bg-gray-50/80 flex flex-col md:flex-row justify-between items-center gap-4">
              <form action="{{ route('admin.orders.index') }}" method="GET" class="relative w-full md:w-64">
@@ -36,8 +36,8 @@
 
         <!-- Desktop Table -->
         <div class="hidden md:block overflow-x-auto">
-            <table class="w-full text-left text-sm text-gray-600 dark:text-gray-400">
-                <thead class="bg-gray-50/80 dark:bg-gray-700/50 uppercase font-bold text-xs text-gray-500 dark:text-gray-300 tracking-wider">
+            <table class="w-full text-left text-sm text-gray-600 ">
+                <thead class="bg-gray-50/80  uppercase font-bold text-xs text-gray-500  tracking-wider">
                     <tr>
                         <th class="px-6 py-4">ID Pesanan</th>
                         <th class="px-6 py-4">Tanggal</th>
@@ -47,27 +47,27 @@
                         <th class="px-6 py-4 text-right">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
+                <tbody class="divide-y divide-gray-100 ">
                     @forelse($orders as $order)
-                    <tr class="hover:bg-mitologi-cream/30 dark:hover:bg-gray-700/30 transition-colors group">
+                    <tr class="hover:bg-mitologi-cream/30  transition-colors group">
                         <td class="px-6 py-4">
-                            <span class="font-bold text-mitologi-navy dark:text-white">#{{ $order->order_number ?? $order->id }}</span>
+                            <span class="font-bold text-mitologi-navy ">#{{ $order->order_number ?? $order->id }}</span>
                         </td>
                         <td class="px-6 py-4">
                             {{ $order->created_at->format('d M Y, H:i') }}
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center">
-                                <div class="h-8 w-8 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center mr-3 text-xs font-bold text-gray-600 dark:text-gray-300 shadow-inner">
+                                <div class="h-8 w-8 rounded-full bg-gradient-to-br from-gray-100 to-gray-200   flex items-center justify-center mr-3 text-xs font-bold text-gray-600  shadow-inner">
                                     {{ substr($order->user->name ?? 'G', 0, 1) }}
                                 </div>
                                 <div>
-                                    <div class="font-medium text-gray-900 dark:text-white text-sm">{{ $order->user->name ?? 'Guest' }}</div>
+                                    <div class="font-medium text-gray-900  text-sm">{{ $order->user->name ?? 'Guest' }}</div>
                                     <div class="text-xs text-gray-500">{{ $order->user->email ?? '-' }}</div>
                                 </div>
                             </div>
                         </td>
-                        <td class="px-6 py-4 font-bold text-mitologi-navy dark:text-white">
+                        <td class="px-6 py-4 font-bold text-mitologi-navy ">
                             Rp {{ number_format($order->total, 0, ',', '.') }}
                         </td>
                         <td class="px-6 py-4">
@@ -93,19 +93,19 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 text-right text-sm font-medium">
-                            <a href="{{ route('admin.orders.show', $order) }}" class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-1.5 text-mitologi-navy shadow-sm transition-colors hover:bg-gray-100 hover:text-mitologi-gold dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <a href="{{ route('admin.orders.show', $order) }}" class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-1.5 text-mitologi-navy shadow-sm transition-colors hover:bg-gray-100 hover:text-mitologi-gold     ">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                             </a>
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="px-6 py-12 text-center text-gray-500 bg-gray-50/30 dark:bg-gray-800/50">
+                        <td colspan="6" class="px-6 py-12 text-center text-gray-500 bg-gray-50/30 ">
                             <div class="flex flex-col items-center justify-center">
-                                <div class="p-4 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 mb-3">
+                                <div class="p-4 rounded-full bg-gray-100  text-gray-400 mb-3">
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                                 </div>
-                                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Belum ada pesanan</h3>
+                                <h3 class="text-lg font-medium text-gray-900 ">Belum ada pesanan</h3>
                                 <p class="text-sm text-gray-500 mt-1">Pesanan baru akan muncul di sini.</p>
                             </div>
                         </td>
@@ -116,12 +116,12 @@
         </div>
 
         <!-- Mobile Card List -->
-        <div class="md:hidden divide-y divide-gray-100 dark:divide-gray-700">
+        <div class="md:hidden divide-y divide-gray-100 ">
             @forelse($orders as $order)
-                <a href="{{ route('admin.orders.show', $order) }}" class="block p-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                <a href="{{ route('admin.orders.show', $order) }}" class="block p-4 bg-white  hover:bg-gray-50  transition-colors">
                     <div class="flex justify-between items-start mb-2">
                         <div>
-                            <span class="font-bold text-mitologi-navy dark:text-white">#{{ $order->order_number ?? $order->id }}</span>
+                            <span class="font-bold text-mitologi-navy ">#{{ $order->order_number ?? $order->id }}</span>
                             <div class="text-xs text-gray-500 mt-0.5">{{ $order->created_at->format('d M Y, H:i') }}</div>
                         </div>
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border
@@ -139,25 +139,26 @@
                     
                     <div class="flex justify-between items-center">
                         <div class="flex items-center">
-                             <div class="h-6 w-6 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mr-2 text-[10px] font-bold text-gray-600 dark:text-gray-300">
+                             <div class="h-6 w-6 rounded-full bg-gray-100  flex items-center justify-center mr-2 text-[10px] font-bold text-gray-600 ">
                                 {{ substr($order->user->name ?? 'G', 0, 1) }}
                             </div>
-                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ $order->user->name ?? 'Guest' }}</span>
+                            <span class="text-sm text-gray-700 ">{{ $order->user->name ?? 'Guest' }}</span>
                         </div>
-                        <span class="font-bold text-mitologi-navy dark:text-white text-sm">
+                        <span class="font-bold text-mitologi-navy  text-sm">
                             Rp {{ number_format($order->total, 0, ',', '.') }}
                         </span>
                     </div>
                 </a>
             @empty
-                <div class="p-8 text-center text-gray-500 bg-gray-50/50 dark:bg-gray-800/50">
+                <div class="p-8 text-center text-gray-500 bg-gray-50/50 ">
                     <p class="text-sm">Belum ada pesanan.</p>
                 </div>
             @endforelse
         </div>
 
-        <div class="bg-gray-50 dark:bg-gray-700/30 border-t border-gray-200 dark:border-gray-700 p-4">
+        <div class="bg-gray-50  border-t border-gray-200  p-4">
             {{ $orders->links() }}
         </div>
     </div>
 </x-admin-layout>
+

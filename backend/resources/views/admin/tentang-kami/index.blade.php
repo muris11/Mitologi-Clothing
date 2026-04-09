@@ -12,7 +12,7 @@
 
         <div class="space-y-8">
             <x-admin-card>
-                <h3 class="text-xl font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                <h3 class="text-xl font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                     <span class="w-1 h-6 bg-mitologi-gold rounded-full"></span>
                     01 — Profil Perusahaan
                 </h3>
@@ -55,7 +55,7 @@
 
             {{-- Visi Misi --}}
             <x-admin-card>
-                <h3 class="text-xl font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                <h3 class="text-xl font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                     <span class="w-1 h-6 bg-mitologi-gold rounded-full"></span>
                     02 — Visi & Misi
                 </h3>
@@ -77,7 +77,7 @@
 
             {{-- Kisah Pendiri (Founder Story) --}}
             <x-admin-card>
-                <h3 class="text-xl font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                <h3 class="text-xl font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                     <span class="w-1 h-6 bg-mitologi-gold rounded-full"></span>
                     03 — Kisah Pendiri (Founder Story)
                 </h3>
@@ -104,7 +104,7 @@
 
             {{-- Legal Info --}}
             <x-admin-card>
-                <h3 class="text-xl font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                <h3 class="text-xl font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                     <span class="w-1 h-6 bg-mitologi-gold rounded-full"></span>
                     04 — Legalitas Perusahaan
                 </h3>
@@ -120,15 +120,15 @@
 
             {{-- SECTION 05 — Fasilitas Produksi --}}
             <x-admin-card class="!p-0 border-0">
-                <div class="p-6 bg-gray-50/50 dark:bg-gray-800 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                <div class="p-6 bg-gray-50/50  flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                     <div class="flex items-center gap-4">
                         <span class="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-lg bg-mitologi-navy text-white text-xs font-bold shadow-sm">05</span>
                         <div>
-                            <h3 class="text-base font-bold text-gray-900 dark:text-white">Fasilitas Produksi</h3>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Kelola informasi fasilitas & peralatan</p>
+                            <h3 class="text-base font-bold text-gray-900 ">Fasilitas Produksi</h3>
+                            <p class="text-xs text-gray-500  mt-0.5">Kelola informasi fasilitas & peralatan</p>
                         </div>
                     </div>
-                    <a href="{{ route('admin.tentang-kami.facilities.index') }}" class="flex-shrink-0 px-4 py-2 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-mitologi-navy dark:text-gray-200 text-sm font-bold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors shadow-sm flex items-center gap-2">
+                    <a href="{{ route('admin.tentang-kami.facilities.index') }}" class="flex-shrink-0 px-4 py-2 border border-gray-200  bg-white  text-mitologi-navy  text-sm font-bold rounded-lg hover:bg-gray-50  transition-colors shadow-sm flex items-center gap-2">
                         Kelola
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </a>
@@ -137,15 +137,15 @@
 
             {{-- SECTION 06 — Team Members --}}
             <x-admin-card class="!p-0 border-0">
-                <div class="p-6 bg-gray-50/50 dark:bg-gray-800 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                <div class="p-6 bg-gray-50/50  flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                     <div class="flex items-center gap-4">
                         <span class="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-lg bg-mitologi-navy text-white text-xs font-bold shadow-sm">06</span>
                         <div>
-                            <h3 class="text-base font-bold text-gray-900 dark:text-white">Struktur Organisasi (Tim)</h3>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Kelola anggota tim dan hierarki</p>
+                            <h3 class="text-base font-bold text-gray-900 ">Struktur Organisasi (Tim)</h3>
+                            <p class="text-xs text-gray-500  mt-0.5">Kelola anggota tim dan hierarki</p>
                         </div>
                     </div>
-                    <a href="{{ route('admin.tentang-kami.team-members.index') }}" class="flex-shrink-0 px-4 py-2 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-mitologi-navy dark:text-gray-200 text-sm font-bold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors shadow-sm flex items-center gap-2">
+                    <a href="{{ route('admin.tentang-kami.team-members.index') }}" class="flex-shrink-0 px-4 py-2 border border-gray-200  bg-white  text-mitologi-navy  text-sm font-bold rounded-lg hover:bg-gray-50  transition-colors shadow-sm flex items-center gap-2">
                         Kelola
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </a>
@@ -154,7 +154,7 @@
         </div>
 
         {{-- Sticky Save --}}
-        <div class="sticky bottom-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 p-4 -mx-4 sm:mx-0 mt-8 flex justify-end">
+        <div class="sticky bottom-0 z-40 bg-white/80  backdrop-blur-md border-t border-gray-200  p-4 -mx-4 sm:mx-0 mt-8 flex justify-end">
             <x-primary-button class="w-full sm:w-auto justify-center text-base py-3 px-8">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 Simpan Perubahan
@@ -162,4 +162,5 @@
         </div>
     </form>
 </x-admin-layout>
+
 

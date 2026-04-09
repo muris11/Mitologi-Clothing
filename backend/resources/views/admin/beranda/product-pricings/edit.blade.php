@@ -12,7 +12,7 @@
             <div class="lg:col-span-2 space-y-8">
                 <!-- Data Master -->
                 <x-admin-card>
-                    <h3 class="text-lg font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                    <h3 class="text-lg font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                         <span class="w-1 h-6 bg-mitologi-gold rounded-full"></span>
                         Data Kategori
                     </h3>
@@ -32,7 +32,7 @@
 
                         <div>
                             <x-input-label for="notes" :value="__('Catatan / Keterangan')" />
-                            <textarea id="notes" name="notes" rows="3" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-mitologi-gold dark:focus:border-mitologi-gold focus:ring-mitologi-gold dark:focus:ring-mitologi-gold rounded-md shadow-sm">{{ old('notes', $pricing->notes) }}</textarea>
+                            <textarea id="notes" name="notes" rows="3" class="block mt-1 w-full border-gray-300    focus:border-mitologi-gold  focus:ring-mitologi-gold  rounded-md shadow-sm">{{ old('notes', $pricing->notes) }}</textarea>
                             <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                         </div>
                     </div>
@@ -40,7 +40,7 @@
 
                 <!-- Dynamic Item Harga Array -->
                 <x-admin-card>
-                    <h3 class="text-lg font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                    <h3 class="text-lg font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                         <span class="w-1 h-6 bg-mitologi-gold rounded-full"></span>
                         Item dan Harga
                     </h3>
@@ -56,25 +56,25 @@
                     <div x-data='{ items: @json($oldItems) }'>
                         <div class="space-y-4">
                             <template x-for="(item, index) in items" :key="index">
-                                <div class="relative p-5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 shadow-sm">
+                                <div class="relative p-5 border border-gray-200  rounded-xl bg-white  shadow-sm">
                                     {{-- Delete button top-right --}}
                                     <button type="button" @click="items.splice(index, 1)"
                                         x-show="items.length > 1"
-                                        class="absolute top-3 right-3 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                                        class="absolute top-3 right-3 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50  rounded-lg transition-colors"
                                         title="Hapus Item">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                     </button>
                                     <div class="space-y-4 pr-8">
                                         <div>
-                                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Nama Item / Bahan</label>
+                                            <label class="block text-xs font-bold text-gray-700  mb-1">Nama Item / Bahan</label>
                                             <input type="text" x-model="items[index].name" :name="`items[${index}][name]`"
-                                                class="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800 text-gray-900 dark:text-white focus:border-mitologi-navy focus:ring-2 focus:ring-mitologi-navy/20 rounded-xl shadow-sm placeholder-gray-400 transition-all duration-200 text-sm"
+                                                class="w-full px-4 py-3 border border-gray-200  bg-gray-50/50  text-gray-900  focus:border-mitologi-navy focus:ring-2 focus:ring-mitologi-navy/20 rounded-xl shadow-sm placeholder-gray-400 transition-all duration-200 text-sm"
                                                 placeholder="Contoh: Cotton Combed 24s" required>
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Range Harga</label>
+                                            <label class="block text-xs font-bold text-gray-700  mb-1">Range Harga</label>
                                             <input type="text" x-model="items[index].price_range" :name="`items[${index}][price_range]`"
-                                                class="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800 text-gray-900 dark:text-white focus:border-mitologi-navy focus:ring-2 focus:ring-mitologi-navy/20 rounded-xl shadow-sm placeholder-gray-400 transition-all duration-200 text-sm"
+                                                class="w-full px-4 py-3 border border-gray-200  bg-gray-50/50  text-gray-900  focus:border-mitologi-navy focus:ring-2 focus:ring-mitologi-navy/20 rounded-xl shadow-sm placeholder-gray-400 transition-all duration-200 text-sm"
                                                 placeholder="Contoh: Rp 45.000 - Rp 55.000 / pcs" required>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@
                             </template>
                         </div>
                         <button type="button" @click="items.push({name: '', price_range: ''})"
-                            class="mt-4 w-full py-3 border border-dashed border-gray-300 dark:border-gray-600 rounded-xl text-sm font-semibold text-gray-500 dark:text-gray-400 hover:border-mitologi-gold hover:text-mitologi-gold dark:hover:text-mitologi-gold transition-colors flex items-center justify-center gap-2">
+                            class="mt-4 w-full py-3 border border-dashed border-gray-300  rounded-xl text-sm font-semibold text-gray-500  hover:border-mitologi-gold hover:text-mitologi-gold  transition-colors flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                             + Tambah Item
                         </button>
@@ -101,11 +101,11 @@
                             <x-input-error :messages="$errors->get('sort_order')" class="mt-2" />
                         </div>
 
-                        <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/30 rounded-xl">
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Status Aktif</span>
+                        <div class="flex items-center justify-between p-4 bg-gray-50  rounded-xl">
+                            <span class="text-sm font-medium text-gray-700 ">Status Aktif</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" name="is_active" value="1" class="sr-only peer" {{ old('is_active', $pricing->is_active) ? 'checked' : '' }}>
-                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-mitologi-navy rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:bg-mitologi-navy after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-mitologi-navy rounded-full peer  peer-checked:after:translate-x-full peer-checked:bg-mitologi-navy after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                             </label>
                         </div>
                     </div>
@@ -118,4 +118,5 @@
         </div>
     </form>
 </x-admin-layout>
+
 

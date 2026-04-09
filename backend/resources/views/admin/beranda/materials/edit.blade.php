@@ -4,27 +4,27 @@
         :breadcrumbs="[['title' => 'Beranda', 'url' => route('admin.beranda.index')], ['title' => 'Material', 'url' => route('admin.beranda.materials.index')], ['title' => 'Edit: ' . $material->name]]"
     />
 
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-premium border border-gray-100 dark:border-gray-700 p-8">
+    <div class="bg-white  rounded-2xl shadow-premium border border-gray-100  p-8">
         <form action="{{ route('admin.beranda.materials.update', $material) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Nama Material <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-bold text-gray-700  mb-2">Nama Material <span class="text-red-500">*</span></label>
                     <input type="text" name="name" value="{{ old('name', $material->name) }}" required
-                        class="w-full rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-mitologi-gold focus:ring-mitologi-gold py-3 px-4">
+                        class="w-full rounded-xl border-gray-300    shadow-sm focus:border-mitologi-gold focus:ring-mitologi-gold py-3 px-4">
                     @error('name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Deskripsi <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-bold text-gray-700  mb-2">Deskripsi <span class="text-red-500">*</span></label>
                     <textarea name="description" rows="3" required
-                        class="w-full rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-mitologi-gold focus:ring-mitologi-gold py-3 px-4">{{ old('description', $material->description) }}</textarea>
+                        class="w-full rounded-xl border-gray-300    shadow-sm focus:border-mitologi-gold focus:ring-mitologi-gold py-3 px-4">{{ old('description', $material->description) }}</textarea>
                     @error('description') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Tema Warna <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-bold text-gray-700  mb-2">Tema Warna <span class="text-red-500">*</span></label>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                         @php
                             $colors = [
@@ -40,7 +40,7 @@
                         @foreach($colors as $color)
                             <label class="cursor-pointer group">
                                 <input type="radio" name="color_theme" value="{{ $color['value'] }}" class="peer sr-only" {{ old('color_theme', $material->color_theme) == $color['value'] ? 'checked' : '' }}>
-                                <div class="flex items-center p-3 rounded-xl border border-gray-200 dark:border-gray-600 hover:border-mitologi-navy dark:hover:border-mitologi-gold transition-all peer-checked:border-mitologi-navy peer-checked:ring-2 peer-checked:ring-mitologi-navy/20 dark:peer-checked:border-mitologi-gold dark:peer-checked:ring-mitologi-gold/20 {{ $color['bg'] }}">
+                                <div class="flex items-center p-3 rounded-xl border border-gray-200  hover:border-mitologi-navy  transition-all peer-checked:border-mitologi-navy peer-checked:ring-2 peer-checked:ring-mitologi-navy/20   {{ $color['bg'] }}">
                                     <span class="text-sm font-bold {{ $color['text'] }}">{{ $color['label'] }}</span>
                                     <div class="ml-auto w-4 h-4 rounded-full border border-current opacity-0 peer-checked:opacity-100 transition-opacity text-mitologi-navy">
                                         <div class="w-2 h-2 rounded-full bg-current m-0.5"></div>
@@ -53,18 +53,19 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Urutan</label>
+                    <label class="block text-sm font-bold text-gray-700  mb-2">Urutan</label>
                     <input type="number" name="sort_order" value="{{ old('sort_order', $material->sort_order) }}" min="0"
-                        class="w-full rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-mitologi-gold focus:ring-mitologi-gold py-3 px-4">
+                        class="w-full rounded-xl border-gray-300    shadow-sm focus:border-mitologi-gold focus:ring-mitologi-gold py-3 px-4">
                     @error('sort_order') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
             </div>
 
-            <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-gray-100 dark:border-gray-700">
+            <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-gray-100 ">
                 <a href="{{ route('admin.beranda.materials.index') }}" class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium">Batal</a>
                 <button type="submit" class="px-6 py-2.5 bg-mitologi-navy text-white rounded-lg hover:bg-mitologi-navy-light shadow-lg transition-all font-medium">Perbarui Material</button>
             </div>
         </form>
     </div>
 </x-admin-layout>
+
 

@@ -18,7 +18,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @stack('styles')
 </head>
-<body class="font-sans antialiased admin-shell text-gray-900 dark:text-gray-100" x-data="{ sidebarOpen: false }">
+<body class="font-sans antialiased admin-shell text-gray-900 " x-data="{ sidebarOpen: false }">
     <div class="min-h-screen flex admin-shell">
         
         <!-- Sidebar -->
@@ -175,7 +175,7 @@
              <!-- Top Header -->
              <header class="h-20 md:h-24 bg-transparent z-40 sticky top-0 px-3 md:px-5 lg:px-8 flex items-center justify-between transition-all duration-300 pointer-events-none">
                   <!-- Glass Container for Header Content -->
-                  <div class="w-full h-14 md:h-16 bg-white/90 dark:bg-gray-800/90 shadow-glass rounded-xl md:rounded-[22px] flex items-center justify-between px-3 md:px-5 pointer-events-auto border border-gray-200/80 mt-2 md:mt-4">
+                  <div class="w-full h-14 md:h-16 bg-white/90  shadow-glass rounded-xl md:rounded-[22px] flex items-center justify-between px-3 md:px-5 pointer-events-auto border border-gray-200/80 mt-2 md:mt-4">
                      
                     <div class="flex items-center md:hidden">
                         <button @click="sidebarOpen = !sidebarOpen" class="text-gray-500 hover:text-gray-700 focus:outline-none">
@@ -185,7 +185,7 @@
 
                     <!-- Breadcrumb/Title Area -->
                     <div class="hidden md:flex flex-col">
-                        <h2 class="text-lg font-bold text-mitologi-navy dark:text-white tracking-tight">
+                        <h2 class="text-lg font-bold text-mitologi-navy  tracking-tight">
                             {{ $header ?? 'Dashboard' }}
                         </h2>
                     </div>
@@ -194,13 +194,13 @@
                     <div class="flex items-center space-x-2 md:space-x-6">
                          <!-- Notifications -->
                         <div x-data="{ open: false }" class="relative">
-                            <button @click="open = !open" class="relative p-2.5 text-gray-400 hover:text-mitologi-gold transition-all duration-300 hover:bg-gray-100/80 dark:hover:bg-gray-700/80 rounded-xl focus:outline-none">
+                            <button @click="open = !open" class="relative p-2.5 text-gray-400 hover:text-mitologi-gold transition-all duration-300 hover:bg-gray-100/80  rounded-xl focus:outline-none">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                                 <!-- Ping Animation for Badge -->
                                 @if($adminNotificationCount > 0)
                                 <span class="absolute top-2 right-2 flex h-2.5 w-2.5">
                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 border-2 border-white dark:border-gray-800"></span>
+                                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 border-2 border-white "></span>
                                 </span>
                                 @endif
                             </button>
@@ -208,7 +208,7 @@
                              <div 
                                 x-show="open" 
                                 @click.away="open = false" 
-                                class="absolute right-[-60px] md:right-0 mt-3 w-[280px] sm:w-80 bg-white dark:bg-gray-800 rounded-xl shadow-2xl py-2 z-50 border border-gray-100 dark:border-gray-700 overflow-hidden transform origin-top-right"
+                                class="absolute right-[-60px] md:right-0 mt-3 w-[280px] sm:w-80 bg-white  rounded-xl shadow-2xl py-2 z-50 border border-gray-100  overflow-hidden transform origin-top-right"
                                 style="display: none;"
                                 x-transition:enter="transition ease-out duration-200"
                                 x-transition:enter-start="opacity-0 scale-95"
@@ -217,8 +217,8 @@
                                 x-transition:leave-start="opacity-100 scale-100"
                                 x-transition:leave-end="opacity-0 scale-95"
                             >
-                                <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
-                                    <h3 class="text-sm font-bold text-gray-900 dark:text-white">Notifikasi</h3>
+                                <div class="px-4 py-3 border-b border-gray-100  flex justify-between items-center">
+                                    <h3 class="text-sm font-bold text-gray-900 ">Notifikasi</h3>
                                     <span id="notification-count-text" class="text-xs text-mitologi-gold font-medium">
                                         @if($adminNotificationCount > 0)
                                             {{ $adminNotificationCount }} Baru
@@ -229,7 +229,7 @@
                                     @include('layouts.partials.notification-list')
                                 </div>
                                 @if($adminNotificationCount > 0)
-                                <div class="px-4 py-2 border-t border-gray-100 dark:border-gray-700 text-center">
+                                <div class="px-4 py-2 border-t border-gray-100  text-center">
                                     <span class="text-xs text-gray-400">Menampilkan {{ $adminNotificationCount }} notifikasi terbaru</span>
                                 </div>
                                 @endif
@@ -246,8 +246,8 @@
                                     </div>
                                 @endif
                                 <div class="hidden md:block text-left">
-                                    <p class="text-sm font-bold text-gray-700 dark:text-gray-200 leading-tight group-hover:text-mitologi-navy transition-colors">{{ Auth::user()->name }}</p>
-                                    <p class="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wide">Admin</p>
+                                    <p class="text-sm font-bold text-gray-700  leading-tight group-hover:text-mitologi-navy transition-colors">{{ Auth::user()->name }}</p>
+                                    <p class="text-[10px] text-gray-500  uppercase tracking-wide">Admin</p>
                                 </div>
                                 <svg class="w-4 h-4 text-gray-400 group-hover:text-mitologi-gold transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
@@ -255,7 +255,7 @@
                             <div 
                                 x-show="open" 
                                 @click.away="open = false" 
-                                class="absolute right-0 mt-3 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-2xl py-2 z-50 border border-gray-100 dark:border-gray-700 overflow-hidden transform origin-top-right"
+                                class="absolute right-0 mt-3 w-48 bg-white  rounded-xl shadow-2xl py-2 z-50 border border-gray-100  overflow-hidden transform origin-top-right"
                                 style="display: none;"
                                 x-transition:enter="transition ease-out duration-200"
                                 x-transition:enter-start="opacity-0 scale-95"
@@ -264,14 +264,14 @@
                                 x-transition:leave-start="opacity-100 scale-100"
                                 x-transition:leave-end="opacity-0 scale-95"
                             >
-                                <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700 mb-1">
-                                    <p class="text-sm text-gray-900 dark:text-white font-bold">Masuk sebagai</p>
+                                <div class="px-4 py-3 border-b border-gray-100  mb-1">
+                                    <p class="text-sm text-gray-900  font-bold">Masuk sebagai</p>
                                     <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
                                 </div>
                                 
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 dark:text-red-400 transition-colors">
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50   transition-colors">
                                         Keluar
                                     </a>
                                 </form>
@@ -408,3 +408,4 @@
     </script>
 </body>
 </html>
+

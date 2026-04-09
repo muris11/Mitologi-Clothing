@@ -7,7 +7,7 @@
                 </a>
                 <h2 class="text-3xl font-display font-semibold text-mitologi-navy tracking-tight">Detail Pelanggan</h2>
             </div>
-            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1 ml-7">View customer profile and order history</p>
+            <p class="text-gray-500  text-sm mt-1 ml-7">View customer profile and order history</p>
         </div>
         <!-- Actions -->
         <div class="flex items-center gap-3">
@@ -28,13 +28,13 @@
                         @if($customer->avatar)
                             <img src="{{ asset('storage/' . $customer->avatar) }}" alt="{{ $customer->name }}" class="h-full w-full rounded-full object-cover">
                         @else
-                            <div class="h-full w-full rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-3xl font-bold text-mitologi-navy dark:text-white">
+                            <div class="h-full w-full rounded-full bg-gray-100  flex items-center justify-center text-3xl font-bold text-mitologi-navy ">
                                 {{ substr($customer->name, 0, 1) }}
                             </div>
                         @endif
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ $customer->name }}</h3>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm">{{ $customer->email }}</p>
+                    <h3 class="text-xl font-bold text-gray-900 ">{{ $customer->name }}</h3>
+                    <p class="text-gray-500  text-sm">{{ $customer->email }}</p>
                     <div class="mt-4 flex flex-wrap justify-center gap-2">
                         <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium border border-green-200">
                             Customer
@@ -45,14 +45,14 @@
                     </div>
                 </div>
 
-                <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700 space-y-4">
+                <div class="mt-8 pt-6 border-t border-gray-100  space-y-4">
                     <div class="flex items-center justify-between">
                          <span class="text-sm text-gray-500">Phone</span>
-                         <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $customer->phone ?? '-' }}</span>
+                         <span class="text-sm font-medium text-gray-900 ">{{ $customer->phone ?? '-' }}</span>
                     </div>
                     <div class="flex items-center justify-between">
                          <span class="text-sm text-gray-500">Total Pesanan</span>
-                         <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $stats['total_orders'] }}</span>
+                         <span class="text-sm font-medium text-gray-900 ">{{ $stats['total_orders'] }}</span>
                     </div>
                     <div class="flex items-center justify-between">
                          <span class="text-sm text-gray-500">Total Pengeluaran</span>
@@ -63,11 +63,11 @@
 
             <!-- Address (Placeholder if no address relation yet) -->
             <div class="admin-panel p-6">
-                 <h4 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4">Alamat Utama</h4>
-                 <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                 <h4 class="text-sm font-bold text-gray-900  uppercase tracking-wider mb-4">Alamat Utama</h4>
+                 <div class="text-sm text-gray-600  space-y-1">
                      <p>Alamat belum tersedia.</p>
                      {{-- 
-                     <p class="font-medium text-gray-900 dark:text-white">John Doe</p>
+                     <p class="font-medium text-gray-900 ">John Doe</p>
                      <p>Jl. Jendral Sudirman No. 123</p>
                      <p>Jakarta Selatan, DKI Jakarta 12190</p>
                      <p>Indonesia</p> 
@@ -79,13 +79,13 @@
         <!-- Order History -->
         <div class="lg:col-span-2">
             <div class="admin-panel overflow-hidden">
-                <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
-                    <h3 class="text-lg font-bold text-mitologi-navy dark:text-white">Riwayat Pesanan</h3>
+                <div class="p-6 border-b border-gray-100  flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-mitologi-navy ">Riwayat Pesanan</h3>
                 </div>
                 
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm text-gray-600 dark:text-gray-400">
-                        <thead class="bg-gray-50/80 dark:bg-gray-700/50 uppercase font-bold text-xs text-gray-500 dark:text-gray-300 tracking-wider">
+                    <table class="w-full text-left text-sm text-gray-600 ">
+                        <thead class="bg-gray-50/80  uppercase font-bold text-xs text-gray-500  tracking-wider">
                             <tr>
                                 <th class="px-6 py-4">ID Pesanan</th>
                                 <th class="px-6 py-4">Tanggal</th>
@@ -94,10 +94,10 @@
                                 <th class="px-6 py-4 text-right">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
+                        <tbody class="divide-y divide-gray-100 ">
                             @forelse($customer->orders as $order)
-                            <tr class="hover:bg-mitologi-cream/30 dark:hover:bg-gray-700/30 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            <tr class="hover:bg-mitologi-cream/30  transition-colors">
+                                <td class="px-6 py-4 font-medium text-gray-900 ">
                                     #{{ $order->order_number ?? $order->id }}
                                 </td>
                                 <td class="px-6 py-4">
@@ -136,3 +136,4 @@
         </div>
     </div>
 </x-admin-layout>
+

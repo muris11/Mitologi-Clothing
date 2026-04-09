@@ -16,14 +16,14 @@
         name="{{ $fieldName }}"
         rows="{{ $rows }}"
         @disabled($disabled)
-        class="block w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-xl shadow-sm focus:border-mitologi-gold focus:ring-mitologi-gold"
+        class="block w-full border-gray-300  bg-white  text-gray-900  rounded-xl shadow-sm focus:border-mitologi-gold focus:ring-mitologi-gold"
     >{{ $fieldValue }}</textarea>
 
     <input id="{{ $editorId }}" type="hidden" value="{{ $fieldValue }}" @disabled($disabled)>
 
     <trix-editor
         input="{{ $editorId }}"
-        class="trix-content border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-xl focus:border-mitologi-gold focus:ring-mitologi-gold shadow-sm p-4 hidden"
+        class="trix-content border-gray-300  bg-white  text-gray-900  rounded-xl focus:border-mitologi-gold focus:ring-mitologi-gold shadow-sm p-4 hidden"
         style="min-height: 300px;"
     ></trix-editor>
 </div>
@@ -112,3 +112,4 @@
     trix-editor pre { background-color: #f3f4f6; padding: 0.75rem; border-radius: 0.5rem; font-size: 0.875rem; }
     .dark trix-editor pre { background-color: #1f2937; }
 </style>
+

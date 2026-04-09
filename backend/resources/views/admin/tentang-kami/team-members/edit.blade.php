@@ -11,7 +11,7 @@
             {{-- Left: Main Content --}}
             <div class="lg:col-span-2 space-y-8">
                 <x-admin-card>
-                    <h3 class="text-lg font-bold text-mitologi-navy dark:text-white mb-6 flex items-center gap-2">
+                    <h3 class="text-lg font-bold text-mitologi-navy  mb-6 flex items-center gap-2">
                         <span class="w-1 h-6 bg-mitologi-gold rounded-full"></span>
                         Data Anggota
                     </h3>
@@ -34,7 +34,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
                                 <x-input-label for="parent_id" :value="__('Atasan')" />
-                                <select id="parent_id" name="parent_id" class="mt-1 w-full px-4 py-3 border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800 text-gray-900 dark:text-white focus:border-mitologi-navy focus:ring-2 focus:ring-mitologi-navy/20 rounded-xl shadow-sm transition-all duration-200">
+                                <select id="parent_id" name="parent_id" class="mt-1 w-full px-4 py-3 border border-gray-200  bg-gray-50/50  text-gray-900  focus:border-mitologi-navy focus:ring-2 focus:ring-mitologi-navy/20 rounded-xl shadow-sm transition-all duration-200">
                                     <option value="">— Tidak ada (Tingkat paling atas) —</option>
                                     @foreach($parents as $parent)
                                         <option value="{{ $parent->id }}" {{ old('parent_id', $teamMember->parent_id) == $parent->id ? 'selected' : '' }}>
@@ -58,16 +58,16 @@
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                                 @php
                                     $levels = [
-                                        ['value' => 0, 'label' => 'Founder', 'color' => 'bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-900/20 dark:border-amber-700 dark:text-amber-300'],
-                                        ['value' => 1, 'label' => 'Manager', 'color' => 'bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-900/20 dark:border-blue-700 dark:text-blue-300'],
-                                        ['value' => 2, 'label' => 'Staff', 'color' => 'bg-green-50 border-green-200 text-green-800 dark:bg-green-900/20 dark:border-green-700 dark:text-green-300'],
-                                        ['value' => 3, 'label' => 'Sub-Staff', 'color' => 'bg-gray-50 border-gray-200 text-gray-800 dark:bg-gray-700/30 dark:border-gray-600 dark:text-gray-300'],
+                                        ['value' => 0, 'label' => 'Founder', 'color' => 'bg-amber-50 border-amber-200 text-amber-800   '],
+                                        ['value' => 1, 'label' => 'Manager', 'color' => 'bg-blue-50 border-blue-200 text-blue-800   '],
+                                        ['value' => 2, 'label' => 'Staff', 'color' => 'bg-green-50 border-green-200 text-green-800   '],
+                                        ['value' => 3, 'label' => 'Sub-Staff', 'color' => 'bg-gray-50 border-gray-200 text-gray-800   '],
                                     ];
                                 @endphp
                                 @foreach($levels as $level)
                                     <label class="cursor-pointer group">
                                         <input type="radio" name="level" value="{{ $level['value'] }}" class="peer sr-only" {{ old('level', $teamMember->level) == $level['value'] ? 'checked' : '' }}>
-                                        <div class="flex items-center justify-center p-3 rounded-xl border-2 {{ $level['color'] }} transition-all peer-checked:ring-2 peer-checked:ring-mitologi-navy/30 peer-checked:border-mitologi-navy dark:peer-checked:border-mitologi-gold">
+                                        <div class="flex items-center justify-center p-3 rounded-xl border-2 {{ $level['color'] }} transition-all peer-checked:ring-2 peer-checked:ring-mitologi-navy/30 peer-checked:border-mitologi-navy ">
                                             <span class="text-sm font-bold">{{ $level['label'] }}</span>
                                         </div>
                                     </label>
@@ -85,12 +85,12 @@
                     <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Foto Anggota</h3>
                     <div class="space-y-4">
                         @if($teamMember->photo)
-                            <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/30 rounded-xl">
+                            <div class="flex items-center gap-3 p-3 bg-gray-50  rounded-xl">
                                 <img src="{{ asset('storage/'.$teamMember->photo) }}"
-                                    class="w-14 h-14 rounded-full object-cover border-2 border-gray-200 dark:border-gray-600 shadow-sm"
+                                    class="w-14 h-14 rounded-full object-cover border-2 border-gray-200  shadow-sm"
                                     alt="{{ $teamMember->name }}">
                                 <div>
-                                    <p class="text-xs font-medium text-gray-700 dark:text-gray-300">Foto Saat Ini</p>
+                                    <p class="text-xs font-medium text-gray-700 ">Foto Saat Ini</p>
                                     <p class="text-xs text-gray-400">Upload baru untuk mengganti</p>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                         Perbarui Anggota
                     </button>
-                    <a href="{{ route('admin.tentang-kami.team-members.index') }}" class="block mt-3 w-full text-center px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium text-sm">
+                    <a href="{{ route('admin.tentang-kami.team-members.index') }}" class="block mt-3 w-full text-center px-4 py-2.5 bg-gray-100  text-gray-700  rounded-xl hover:bg-gray-200  transition-colors font-medium text-sm">
                         Batal
                     </a>
                 </x-admin-card>
@@ -117,3 +117,4 @@
         </div>
     </form>
 </x-admin-layout>
+
