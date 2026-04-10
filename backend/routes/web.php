@@ -100,6 +100,24 @@ Route::get('/admin/orders/{order}/invoice', [InvoiceController::class, 'show'])
     ->middleware('auth'); // Ensure only authenticated users can view, might need stricter middleware
 
 if (app()->environment('local')) {
+    Route::get('/mail-preview-reset', function () {
+        $user = \App\Models\User::factory()->make(['name' => 'Demo Customer', 'email' => 'customer@example.com']);
+        $notification = new \App\Notifications\ResetPasswordNotification('fake-token-12345');
+        return $notification->toMail($user);
+    });
+
+    Route::get('/mail-preview-order', function () {
+        $order = \App\Models\Order::latest()->first() ?? \App\Models\Order::factory()->make([
+            'order_number' => 'ORD-12345',
+            'status' => 'processing',
+            'total_amount' => 500000,
+        ]);
+        if (!$order->user) {
+            $order->setRelation('user', \App\Models\User::factory()->make(['name' => 'Demo User', 'email' => 'user@example.com']));
+        }
+        return new \App\Mail\OrderStatusMail($order);
+    });
+
     Route::get('/storage/{path}', function (string $path) {
         $storageRoot = realpath(storage_path('app/public'));
         if ($storageRoot === false) {
