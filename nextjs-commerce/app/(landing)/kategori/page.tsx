@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `Kategori Produk | ${siteName}`,
       description: `Jelajahi semua kategori produksi ${siteName}.`,
       type: "website",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id"}/kategori`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/kategori`,
     },
     twitter: {
       card: "summary_large_image",

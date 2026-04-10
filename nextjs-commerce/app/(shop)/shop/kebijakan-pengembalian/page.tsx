@@ -294,7 +294,7 @@ export default function KebijakanPengembalianPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://wa.me/6281322170902?text=Halo%2C%20saya%20ingin%20mengajukan%20pengembalian%20produk"
+              href={`${process.env.NEXT_PUBLIC_WHATSAPP_BASE_URL}/6281322170902?text=Halo%2C%20saya%20ingin%20mengajukan%20pengembalian%20produk`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-8 py-4 bg-mitologi-gold text-mitologi-navy hover:bg-mitologi-gold-dark rounded-full font-sans tracking-wide font-extrabold transition-all shadow-xl text-sm"

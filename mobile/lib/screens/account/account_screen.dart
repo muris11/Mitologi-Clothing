@@ -175,26 +175,17 @@ class _AccountScreenState extends State<AccountScreen> {
                       delay: const Duration(milliseconds: 200),
                       child: SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppTheme.surfaceContainerLow,
-                            foregroundColor: AppTheme.error,
-                            elevation: 0,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: AppTheme.radius16,
+                        child: PressableButton(
+                          backgroundColor: AppTheme.surfaceContainerLow,
+                          foregroundColor: AppTheme.error,
+                          borderRadius: 16,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          onPressed: () => _showLogoutDialog(context, authProvider),
+                          child: const Center(
+                            child: Text(
+                              'Keluar Akun',
+                              style: TextStyle(fontWeight: FontWeight.w700),
                             ),
-                          ),
-                          onPressed: () async {
-                            await authProvider.logout();
-                            if (context.mounted) {
-                              context.read<OrderProvider>().clearOrderData();
-                              context.go('/shop/login');
-                            }
-                          },
-                          child: const Text(
-                            'Keluar Akun',
-                            style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
@@ -203,6 +194,48 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ],
             ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context, AuthProvider auth) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppTheme.sectionBackground,
+        shape: RoundedRectangleBorder(borderRadius: AppTheme.radius22),
+        title: const Text(
+          'Keluar Akun?',
+          style: TextStyle(fontWeight: FontWeight.w800, color: AppTheme.onSurface),
+        ),
+        content: const Text(
+          'Apakah Anda yakin ingin keluar? Anda perlu login kembali untuk melihat status pesanan.',
+          style: TextStyle(color: AppTheme.onSurfaceVariant),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Batal',
+                style: TextStyle(color: AppTheme.onSurfaceVariant)),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.pop(context); // Close dialog
+              await auth.logout();
+              if (context.mounted) {
+                context.read<OrderProvider>().clearOrderData();
+                context.go('/shop/login');
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.error,
+              foregroundColor: Colors.white,
+              elevation: 0,
+              shape: RoundedRectangleBorder(borderRadius: AppTheme.radius12),
+            ),
+            child: const Text('Keluar'),
+          ),
+        ],
+      ),
     );
   }
 

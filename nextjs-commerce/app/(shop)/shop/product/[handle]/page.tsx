@@ -26,7 +26,7 @@ export async function generateMetadata(props: {
   const tags = Array.isArray(product.tags) ? product.tags : [];
   const indexable = !tags.includes("hidden");
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
   const productUrl = `${baseUrl}/shop/product/${params.handle}`;
   const productTitle = product.seo.title || product.title;
   const productDescription = product.seo.description || product.description;
@@ -108,13 +108,13 @@ export default async function ProductPage(props: {
         "@type": "ListItem",
         position: 1,
         name: "Beranda",
-        item: `${process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id"}`,
+        item: `${process.env.NEXT_PUBLIC_SITE_URL}`,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Katalog",
-        item: `${process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id"}/shop`,
+        item: `${process.env.NEXT_PUBLIC_SITE_URL}/shop`,
       },
       {
         "@type": "ListItem",

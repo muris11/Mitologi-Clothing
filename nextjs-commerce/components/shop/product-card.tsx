@@ -94,7 +94,7 @@ export const ProductCard = memo(function ProductCard({
       <div className="relative aspect-[4/4.8] overflow-hidden bg-app-cream">
         <Link
           href={`/shop/product/${product.handle}`}
-          className="block h-full w-full"
+          className="relative block h-full w-full"
         >
           {imageUrl ? (
             <Image

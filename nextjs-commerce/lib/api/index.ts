@@ -68,13 +68,19 @@ function resolveDynamicHost(url: string): string {
  * - Server runtime (RSC/SSR): INTERNAL_API_URL fallback to NEXT_PUBLIC_API_URL
  */
 export function resolveApiBaseUrl(): string {
+  const isBrowser = typeof window !== "undefined";
+
+  // Di browser (client-side), gunakan path relatif /api yang diproksi oleh Next.js
+  // untuk menghindari masalah CORS.
+  if (isBrowser) {
+    return "/api";
+  }
+
   const publicApiUrl = process.env.NEXT_PUBLIC_API_URL;
   const internalApiUrl = process.env.INTERNAL_API_URL;
-  const isServerRuntime = typeof window === "undefined";
 
-  const resolved = isServerRuntime
-    ? internalApiUrl || publicApiUrl
-    : publicApiUrl;
+  // Di server (SSR/ISR), gunakan internal URL untuk komunikasi langsung ke backend.
+  const resolved = internalApiUrl || publicApiUrl;
 
   if (!resolved) {
     throw new ApiError("NEXT_PUBLIC_API_URL belum dikonfigurasi.", 500);

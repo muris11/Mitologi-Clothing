@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       type: "website",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://mitologi.id"}/layanan`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/layanan`,
     },
     twitter: {
       card: "summary_large_image",

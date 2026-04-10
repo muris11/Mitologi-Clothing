@@ -18,9 +18,10 @@ describe("revalidate route", () => {
 
   it("authorizes requests using NEXTJS_REVALIDATION_SECRET", async () => {
     const { POST } = await import("./route");
-
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    if (!siteUrl) throw new Error("NEXT_PUBLIC_SITE_URL is required for tests");
     const response = await POST({
-      nextUrl: new URL("http://localhost:3000/api/revalidate?secret=secret-123"),
+      nextUrl: new URL(`${siteUrl}/api/revalidate?secret=secret-123`),
       json: vi.fn().mockResolvedValue({ tags: ["products"] }),
     } as never);
 

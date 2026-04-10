@@ -21,58 +21,34 @@ class ApiConfig {
   static String _normalizeBase(String value) =>
       value.endsWith('/') ? value.substring(0, value.length - 1) : value;
 
+  /// Private getter for base URL derived strictly from environment variables.
+  /// Throws an [UnimplementedError] if MITOLOGI_API_BASE_URL is not provided.
   static String get _defaultBackendOrigin {
-    // TIPS: Use 'ipconfig' on Windows to find your IPv4 if using physical device.
-    // Example for physical device: 'http://192.168.1.XX:8000'
-
-    if (kIsWeb) {
-      // For web, use localhost or override via dart-define
-      const webOverride = String.fromEnvironment('MITOLOGI_WEB_API_URL');
-      if (webOverride.isNotEmpty) return webOverride;
-      return 'http://localhost:8011';
+    if (_apiBaseOverride.isEmpty) {
+      throw UnimplementedError(
+        'MITOLOGI_API_BASE_URL is not defined via --dart-define. '
+        'Example: --dart-define=MITOLOGI_API_BASE_URL=https://api.yourdomain.com',
+      );
     }
-
-    if (Platform.isAndroid) {
-      // 10.0.2.2 is the special alias for the host machine in Android Emulator
-      // For physical device, use your computer's IP address
-      return 'http://10.0.2.2:8011'; // Emulator default
-    }
-
-    if (Platform.isIOS) {
-      // iOS Simulator shares the host's localhost
-      return 'http://localhost:8011';
-    }
-
-    return 'http://localhost:8011';
+    return _apiBaseOverride;
   }
 
-  /// Base URL from dart-define or platform default
+  /// Base URL from dart-define (with fallback logic removed for strict production configuration)
   static String get baseUrl {
-    final override = _normalizeBase(_apiBaseOverride.trim());
-    if (override.isNotEmpty) {
-      return override.endsWith('/api/v1') ? override : '$override/api/v1';
-    }
-
-    return '${_normalizeBase(_defaultBackendOrigin)}/api/v1';
+    final base = _normalizeBase(_defaultBackendOrigin);
+    return base.endsWith('/api/v1') ? base : '$base/api/v1';
   }
 
   /// Raw base URL without API version (for URI construction)
   static String get _rawBaseUrl {
-    final override = _normalizeBase(_apiBaseOverride.trim());
-    if (override.isNotEmpty) {
-      return normalizedBase;
-    }
     return _normalizeBase(_defaultBackendOrigin);
   }
 
   static String get normalizedBase {
-    final override = _normalizeBase(_apiBaseOverride.trim());
-    if (override.isNotEmpty) {
-      return override.endsWith('/api')
-          ? override.substring(0, override.length - 4)
-          : override;
-    }
-    return _normalizeBase(_defaultBackendOrigin);
+    final base = _normalizeBase(_defaultBackendOrigin);
+    return base.endsWith('/api')
+        ? base.substring(0, base.length - 4)
+        : base;
   }
 
   /// Authority (host:port) for Uri.https/Uri.http construction

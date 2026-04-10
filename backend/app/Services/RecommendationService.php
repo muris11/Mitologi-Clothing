@@ -16,7 +16,7 @@ class RecommendationService
 
     public function __construct()
     {
-        $this->baseUrl = config('services.ai.url', env('AI_SERVICE_URL', 'http://localhost:8001/api'));
+        $this->baseUrl = config('services.ai.url', env('AI_SERVICE_URL'));
         $this->apiKey = config('services.ai.key');
     }
 

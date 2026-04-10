@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  : process.env.NEXT_PUBLIC_SITE_URL || "";
 
 export const createUrl = (
   pathname: string,
@@ -46,19 +46,29 @@ export const createSocialUrl = (platform: string, username?: string | null) => {
 
   const cleanUsername = username.replace(/^@/, "");
 
+  const socialBases = {
+    instagram: process.env.NEXT_PUBLIC_INSTAGRAM_BASE_URL,
+    tiktok: process.env.NEXT_PUBLIC_TIKTOK_BASE_URL,
+    facebook: process.env.NEXT_PUBLIC_FACEBOOK_BASE_URL,
+    shopee: process.env.NEXT_PUBLIC_SHOPEE_BASE_URL,
+    twitter: process.env.NEXT_PUBLIC_TWITTER_BASE_URL,
+  };
+
   switch (platform.toLowerCase()) {
     case "instagram":
-      return `https://instagram.com/${cleanUsername}`;
+      return `${socialBases.instagram}/${cleanUsername}`;
     case "tiktok":
-      return `https://tiktok.com/@${cleanUsername}`;
+      return `${socialBases.tiktok}${cleanUsername}`;
     case "facebook":
-      return `https://facebook.com/${cleanUsername}`;
+      return `${socialBases.facebook}/${cleanUsername}`;
     case "shopee":
-      return `https://shopee.co.id/${cleanUsername}`;
+      return `${socialBases.shopee}/${cleanUsername}`;
     case "twitter":
     case "twitter/x":
     case "x":
-      return `https://twitter.com/${cleanUsername}`;
+      return `${socialBases.twitter}/${cleanUsername}`;
+    case "whatsapp":
+      return process.env.NEXT_PUBLIC_WHATSAPP_BASE_URL || "#";
     default:
       return username;
   }

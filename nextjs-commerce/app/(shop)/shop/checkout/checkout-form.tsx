@@ -21,6 +21,7 @@ import {
   PlusIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
+import { storageUrl } from "lib/utils/storage-url";
 
 declare global {
   interface Window {
@@ -210,10 +211,7 @@ export default function CheckoutForm({
   return (
     <>
       <Script
-        src={
-          process.env.NEXT_PUBLIC_MIDTRANS_SNAP_URL ||
-          "https://app.sandbox.midtrans.com/snap/snap.js"
-        }
+        src={process.env.NEXT_PUBLIC_MIDTRANS_SNAP_URL}
         data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
         strategy="lazyOnload"
       />
@@ -404,7 +402,7 @@ export default function CheckoutForm({
                       <div className="h-20 w-20 border border-slate-100 rounded-xl overflow-hidden bg-slate-50 shadow-sm relative">
                         {imageUrl ? (
                           <Image
-                            src={imageUrl}
+                            src={storageUrl(imageUrl)}
                             alt={altText}
                             fill
                             className="object-cover object-center"

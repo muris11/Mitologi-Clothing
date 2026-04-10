@@ -195,11 +195,7 @@ export function PlastisolPricing({ settings }: { settings?: PricingSettings }) {
                 className="w-full h-auto min-h-[52px] py-1 flex items-center justify-center rounded-full font-sans tracking-wide font-bold bg-mitologi-gold text-mitologi-navy hover:bg-[#E5AA28] shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all text-center"
               >
                 <a
-                  href={
-                    settings?.contact?.whatsappNumber
-                      ? `https://wa.me/${settings.contact.whatsappNumber}`
-                      : "#"
-                  }
+                  href={process.env.NEXT_PUBLIC_WHATSAPP_URL || "#"}
                 >
                   <span className="w-full text-center leading-tight whitespace-normal max-w-full px-2">
                     Hubungi Admin Sekarang

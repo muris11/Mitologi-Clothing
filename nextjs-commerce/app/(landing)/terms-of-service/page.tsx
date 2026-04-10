@@ -356,7 +356,7 @@ export default async function TermsOfServicePage() {
               </div>
               <div className="mt-6">
                 <a
-                  href={`https://wa.me/${whatsapp}`}
+                  href={`${process.env.NEXT_PUBLIC_WHATSAPP_BASE_URL}/${whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-mitologi-gold px-6 py-3 text-sm font-bold text-mitologi-navy shadow-lg shadow-mitologi-gold/20 hover:bg-white transition-all duration-300 transform hover:-translate-y-0.5"

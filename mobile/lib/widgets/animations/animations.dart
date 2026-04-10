@@ -1,4 +1,4 @@
-export 'blur_fade.dart';
+export 'blur_fade.dart' show BlurFade, FadeIn, FadeInUp, ScaleIn, SlideIn, StaggeredList;
 export 'shimmer_button.dart';
 export 'page_transitions.dart';
 

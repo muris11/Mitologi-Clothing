@@ -8,6 +8,7 @@ import { DEFAULT_OPTION } from "lib/constants";
 import { useAuth } from "lib/hooks/useAuth";
 import { useCart } from "lib/hooks/useCart";
 import { createUrl } from "lib/utils";
+import { storageUrl } from "lib/utils/storage-url";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,38 +20,35 @@ type MerchandiseSearchParams = {
   [key: string]: string;
 };
 
+/**
+ * Determines if we should bypass Next.js Image Optimization for specific external hosts.
+ * This prevents processing overhead for reliable CDNs or mock image providers.
+ */
 function shouldBypassImageOptimization(src: string): boolean {
+  if (!src) return false;
+  
   try {
     const imageUrl = new URL(src);
     const host = imageUrl.hostname.toLowerCase();
-
-    const allowedHosts = new Set([
-      "placehold.co",
-      "images.unsplash.com",
-      "localhost",
-      "127.0.0.1",
-    ]);
-
-    const apiUrls = [
-      process.env.NEXT_PUBLIC_API_URL,
-      process.env.INTERNAL_API_URL,
+    
+    // Hosts from environment variables
+    const bypassHosts = [
+      process.env.NEXT_PUBLIC_PLACEHOLD_ORIGIN?.replace("https://", ""),
+      process.env.NEXT_PUBLIC_UNSPLASH_ORIGIN?.replace("https://", ""),
+      process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL).hostname : "",
+      process.env.NEXT_PUBLIC_API_URL ? new URL(process.env.NEXT_PUBLIC_API_URL).hostname : "",
+      process.env.INTERNAL_API_URL ? new URL(process.env.INTERNAL_API_URL).hostname : "",
     ].filter(Boolean) as string[];
 
-    for (const apiUrl of apiUrls) {
-      try {
-        const apiHost = new URL(apiUrl).hostname.toLowerCase();
-        if (apiHost) allowedHosts.add(apiHost);
-      } catch {
-        // Ignore malformed env value
-      }
+    if (bypassHosts.some(h => host === h || host.endsWith(h))) {
+      return true;
     }
 
-    if (allowedHosts.has(host)) return false;
-    if (host.endsWith(".amazonaws.com")) return false;
+    // AWS S3 buckets are often used for direct serving
+    if (host.endsWith(".amazonaws.com")) return true;
 
-    return true;
+    return false;
   } catch {
-    // Relative/local paths should stay optimized.
     return false;
   }
 }
@@ -149,6 +147,9 @@ export default function CartModal() {
                     // Use item.id if available (unique per line), otherwise fallback to merchandise.id and index composite
                     const itemKey = item.id || `${item.merchandise.id}-${i}`;
 
+                    // Resolved Image URL via storageUrl helper
+                    const imageUrl = storageUrl(item.merchandise.product.featuredImage?.url);
+
                     return (
                       <li
                         key={itemKey}
@@ -160,21 +161,17 @@ export default function CartModal() {
                           </div>
                           <div className="flex flex-row gap-4">
                             <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
-                              {item.merchandise.product.featuredImage?.url ? (
+                              {imageUrl ? (
                                 <Image
                                   className="h-full w-full object-cover"
                                   width={96}
                                   height={96}
                                   alt={
                                     item.merchandise.product.featuredImage
-                                      .altText || item.merchandise.product.title
+                                      ?.altText || item.merchandise.product.title
                                   }
-                                  src={
-                                    item.merchandise.product.featuredImage.url
-                                  }
-                                  unoptimized={shouldBypassImageOptimization(
-                                    item.merchandise.product.featuredImage.url,
-                                  )}
+                                  src={imageUrl}
+                                  unoptimized={shouldBypassImageOptimization(imageUrl)}
                                 />
                               ) : (
                                 <div className="flex h-full w-full items-center justify-center text-[10px] font-sans font-semibold uppercase text-slate-400">

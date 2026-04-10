@@ -13,6 +13,7 @@ import {
 import clsx from "clsx";
 import { Order, User } from "lib/api/types";
 import { useAuth } from "lib/hooks/useAuth";
+import { storageUrl } from "lib/utils/storage-url";
 import { useEffect, useState } from "react";
 import { OrdersTab } from "./orders-tab";
 import { ProfileTab } from "./profile-tab";
@@ -92,7 +93,7 @@ export function AccountDashboard({
             <div className="h-12 w-12 rounded-full bg-white border border-slate-200 flex items-center justify-center font-sans font-bold text-xl overflow-hidden shrink-0 shadow-sm text-mitologi-navy">
               {user.avatarUrl && !avatarLoadError ? (
                 <img
-                  src={user.avatarUrl}
+                  src={storageUrl(user.avatarUrl)}
                   alt={user.name || "Foto profil"}
                   className="w-full h-full object-cover"
                   onError={() => setAvatarLoadError(true)}

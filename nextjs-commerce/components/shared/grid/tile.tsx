@@ -37,8 +37,13 @@ export function GridTileImage({
           {...props}
           unoptimized={
             typeof props.src === "string" &&
-            (props.src.includes("placehold.co") ||
-              props.src.includes("localhost"))
+            (props.src.includes(
+              process.env.NEXT_PUBLIC_PLACEHOLD_ORIGIN?.replace("https://", "") || "",
+            ) ||
+              (process.env.NEXT_PUBLIC_SITE_URL &&
+                props.src.includes(
+                  new URL(process.env.NEXT_PUBLIC_SITE_URL).hostname,
+                )))
           }
         />
       ) : null}

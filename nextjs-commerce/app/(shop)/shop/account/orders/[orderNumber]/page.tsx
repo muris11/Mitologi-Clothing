@@ -21,6 +21,7 @@ import { notFound, useRouter } from "next/navigation";
 import Script from "next/script";
 import { use, useEffect, useState } from "react";
 import { useToast } from "components/ui/ultra-quality-toast";
+import { storageUrl } from "lib/utils/storage-url";
 
 export default function OrderDetailPage(props: {
   params: Promise<{ orderNumber: string }>;
@@ -168,7 +169,7 @@ export default function OrderDetailPage(props: {
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       <Script
-        src="https://app.sandbox.midtrans.com/snap/snap.js"
+        src={process.env.NEXT_PUBLIC_MIDTRANS_SNAP_URL}
         data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || ""}
         strategy="lazyOnload"
       />
@@ -313,7 +314,7 @@ export default function OrderDetailPage(props: {
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-xl border border-slate-200 relative bg-slate-50">
                       {line.productImage ? (
                         <Image
-                          src={line.productImage}
+                          src={storageUrl(line.productImage)}
                           alt={line.productTitle}
                           fill
                           className="object-cover object-center"

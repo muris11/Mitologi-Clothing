@@ -32,7 +32,7 @@ export default async function Footer() {
             <div className="flex gap-4 mt-4">
               {/* Social Icons (SVG) */}
               <a
-                href="https://instagram.com"
+                href={process.env.NEXT_PUBLIC_INSTAGRAM_BASE_URL || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-400 hover:text-mitologi-gold hover:-translate-y-1 transition-all p-2 bg-white/5 rounded-full hover:bg-white/10"
@@ -154,10 +154,10 @@ export default async function Footer() {
                   />
                 </svg>
                 <a
-                  href="tel:+6281234567890"
+                  href={`tel:${process.env.NEXT_PUBLIC_CONTACT_PHONE}`}
                   className="hover:text-mitologi-gold transition-colors"
                 >
-                  +62 812-3456-7890
+                  {process.env.NEXT_PUBLIC_CONTACT_PHONE}
                 </a>
               </li>
               <li className="flex gap-3">
@@ -175,10 +175,10 @@ export default async function Footer() {
                   />
                 </svg>
                 <a
-                  href="mailto:hello@mitologiclothing.com"
+                  href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`}
                   className="hover:text-mitologi-gold transition-colors"
                 >
-                  hello@mitologiclothing.com
+                  {process.env.NEXT_PUBLIC_CONTACT_EMAIL}
                 </a>
               </li>
             </ul>

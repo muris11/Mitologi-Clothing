@@ -465,7 +465,7 @@ export default function PanduanUkuranPage() {
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="https://wa.me/6281322170902?text=Halo%2C%20saya%20ingin%20konsultasi%20ukuran"
+            href={`${process.env.NEXT_PUBLIC_WHATSAPP_BASE_URL}/6281322170902?text=Halo%2C%20saya%20ingin%20konsultasi%20ukuran`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 bg-wa-green text-white hover:bg-wa-green-dark rounded-full text-sm font-bold transition-all shadow-lg shadow-wa-green/20"

@@ -30,7 +30,7 @@
     $navyColor = '#0f172a';
     $goldColor = '#d4af37';
     $userName = $order->user ? $order->user->name : ($order->shippingAddress->name ?? 'Pelanggan');
-    $frontendUrl = config('app.frontend_url', 'http://localhost:3000');
+    $frontendUrl = config('app.frontend_url');
     $isCancelled = $order->status === 'cancelled';
     $steps = ['Pesanan Diterima', 'Diproses', 'Dikirim', 'Selesai'];
 @endphp

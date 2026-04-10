@@ -11,6 +11,7 @@ import { MenuToggleIcon } from "components/ui/menu-toggle-icon";
 import { useAuth } from "lib/hooks/useAuth";
 import { useCart } from "lib/hooks/useCart";
 import { cn } from "lib/utils";
+import { storageUrl } from "lib/utils/storage-url";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -170,7 +171,7 @@ export function ShopNavbar() {
                     >
                       {user.avatarUrl && !avatarLoadError ? (
                         <Image
-                          src={user.avatarUrl}
+                          src={storageUrl(user.avatarUrl)}
                           alt={user.name || "Foto profil"}
                           width={32}
                           height={32}
@@ -274,7 +275,7 @@ export function ShopNavbar() {
                 <div className="mb-4 flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/50 p-3">
                   {user.avatarUrl && !avatarLoadError ? (
                     <Image
-                      src={user.avatarUrl}
+                      src={storageUrl(user.avatarUrl)}
                       alt={user.name || "Foto profil"}
                       width={40}
                       height={40}

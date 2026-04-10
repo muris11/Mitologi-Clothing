@@ -25,6 +25,7 @@ import {
 } from "lib/api/addresses";
 import { updateProfile } from "lib/api/account";
 import { UnknownError, User, Address } from "lib/api/types";
+import { storageUrl } from "lib/utils/storage-url";
 import { useAuth } from "lib/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -369,7 +370,7 @@ export function ProfileTab({
                 <div className="h-full w-full rounded-xl bg-white flex items-center justify-center text-4xl font-sans font-bold text-mitologi-navy overflow-hidden">
                   {user.avatarUrl && !avatarLoadError ? (
                     <img
-                      src={user.avatarUrl}
+                      src={storageUrl(user.avatarUrl)}
                       alt={user.name || "Foto profil"}
                       className="w-full h-full object-cover"
                       onError={() => setAvatarLoadError(true)}

@@ -10,10 +10,12 @@ async function capture() {
     hasTouch: true,
   });
 
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "").replace(/\/+$/, "");
+
   try {
     // 1. Mobile Syarat Ketentuan
     const page1 = await context.newPage();
-    await page1.goto("http://localhost:3000/shop/syarat-ketentuan");
+    await page1.goto(`${siteUrl}/shop/syarat-ketentuan`);
     await page1.waitForLoadState("networkidle");
     await page1.screenshot({
       path: path.join(
@@ -26,7 +28,7 @@ async function capture() {
 
     // 2. Mobile Kebijakan Privasi
     const page2 = await context.newPage();
-    await page2.goto("http://localhost:3000/shop/kebijakan-privasi");
+    await page2.goto(`${siteUrl}/shop/kebijakan-privasi`);
     await page2.waitForLoadState("networkidle");
     await page2.screenshot({
       path: path.join(
@@ -40,7 +42,7 @@ async function capture() {
     // 3. Mobile Product CTA Bar
     const pageProductMobile = await context.newPage();
     await pageProductMobile.goto(
-      "http://localhost:3000/shop/product/hanoman-warrior-zip-hoodie",
+      `${siteUrl}/shop/product/hanoman-warrior-zip-hoodie`,
     );
     await pageProductMobile.waitForLoadState("networkidle");
     // Scroll down slightly to make sure sticky bar is obvious
@@ -62,7 +64,7 @@ async function capture() {
 
     // 3. Shop Catalog Empty State & Product Cards
     const page3 = await desktopContext.newPage();
-    await page3.goto("http://localhost:3000/shop");
+    await page3.goto(`${siteUrl}/shop`);
     await page3.waitForLoadState("networkidle");
     await page3.screenshot({
       path: path.join(
@@ -74,7 +76,7 @@ async function capture() {
     await page3.close();
 
     const page4 = await desktopContext.newPage();
-    await page4.goto("http://localhost:3000/shop/hoodie");
+    await page4.goto(`${siteUrl}/shop/hoodie`);
     await page4.waitForLoadState("networkidle");
     await page4.screenshot({
       path: path.join(

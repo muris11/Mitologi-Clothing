@@ -41,8 +41,8 @@ class AppConfiguration
                 'GROQ_API_KEYS' => env('GROQ_API_KEYS', ''),
             ],
             'general' => [
-                'FRONTEND_URL' => env('FRONTEND_URL', 'http://localhost:3000'),
-                'AI_SERVICE_URL' => env('AI_SERVICE_URL', 'http://127.0.0.1:8001/api'),
+                'FRONTEND_URL' => env('FRONTEND_URL'),
+                'AI_SERVICE_URL' => env('AI_SERVICE_URL'),
             ],
         ];
 

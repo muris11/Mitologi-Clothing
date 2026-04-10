@@ -35,7 +35,7 @@ export function AboutContactCTA({ settings }: { settings?: SiteSettings }) {
                   className="text-base font-bold shadow-soft hover:shadow-hover"
                 >
                   <a
-                    href={`https://wa.me/${settings.contact.whatsappNumber}`}
+                    href={`${process.env.NEXT_PUBLIC_WHATSAPP_BASE_URL}/${settings.contact.whatsappNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

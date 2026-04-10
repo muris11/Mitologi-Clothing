@@ -239,12 +239,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <x-input-label for="frontend_url" :value="__('Frontend URL')" />
-                            <x-text-input id="frontend_url" class="mt-1 block w-full" type="url" name="FRONTEND_URL" :value="$configs['general']['FRONTEND_URL'] ?? ''" placeholder="http://localhost:3000" />
+                            <x-text-input id="frontend_url" class="mt-1 block w-full" type="url" name="FRONTEND_URL" :value="$configs['general']['FRONTEND_URL'] ?? ''" placeholder="https://example.com" />
                         </div>
                         
                         <div>
                             <x-input-label for="ai_service_url" :value="__('AI Service URL')" />
-                            <x-text-input id="ai_service_url" class="mt-1 block w-full" type="url" name="AI_SERVICE_URL" :value="$configs['general']['AI_SERVICE_URL'] ?? ''" placeholder="http://127.0.0.1:8001/api" />
+                            <x-text-input id="ai_service_url" class="mt-1 block w-full" type="url" name="AI_SERVICE_URL" :value="$configs['general']['AI_SERVICE_URL'] ?? ''" placeholder="https://ai.example.com/api" />
                         </div>
                     </div>
                     

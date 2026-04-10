@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         \Illuminate\Auth\Notifications\ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
-            return env('FRONTEND_URL', 'http://localhost:3000')."/shop/reset-password?token={$token}&email={$notifiable->getEmailForPasswordReset()}";
+            return env('FRONTEND_URL')."/shop/reset-password?token={$token}&email={$notifiable->getEmailForPasswordReset()}";
         });
 
         \Illuminate\Support\Facades\View::composer(

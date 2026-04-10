@@ -65,7 +65,7 @@ class MidtransService
                 ] : null,
             ],
             'callbacks' => [
-                'finish' => config('app.frontend_url', 'http://localhost:3000').'/shop/account/orders/'.$order->order_number,
+                'finish' => config('app.frontend_url').'/shop/account/orders/'.$order->order_number,
             ],
         ];
 

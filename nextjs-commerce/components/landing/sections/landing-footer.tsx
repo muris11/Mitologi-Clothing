@@ -166,10 +166,9 @@ export default function LandingFooter({
               )}
             </ul>
             <div className="mt-8">
-              {(settings?.contact?.contactWhatsapp ||
-                settings?.contact?.whatsappNumber) && (
+              {process.env.NEXT_PUBLIC_WHATSAPP_URL && (
                 <a
-                  href={`https://wa.me/${settings?.contact?.contactWhatsapp || settings?.contact?.whatsappNumber}`}
+                  href={process.env.NEXT_PUBLIC_WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-mitologi-gold px-6 py-3 text-sm font-bold text-mitologi-navy shadow-lg shadow-mitologi-gold/20 hover:bg-white hover:text-mitologi-navy hover:-translate-y-0.5 transition-all duration-300 w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mitologi-gold focus-visible:ring-offset-2 focus-visible:ring-offset-mitologi-navy"

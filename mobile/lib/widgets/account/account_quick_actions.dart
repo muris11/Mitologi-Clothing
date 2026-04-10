@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../config/theme.dart';
+import '../animations/animations.dart';
 
 class AccountQuickActions extends StatelessWidget {
   const AccountQuickActions({
@@ -44,220 +45,246 @@ class AccountQuickActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Orders Card
-        _buildCard(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Pesanan Saya',
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-                  ),
-                  TextButton(
-                    onPressed: onOrderHistory,
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: Size.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    child: const Text(
-                      'Lihat Riwayat',
+        // Orders Section
+        FadeInUp(
+          delay: const Duration(milliseconds: 100),
+          child: _buildCard(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Pesanan Saya',
                       style: TextStyle(
-                        color: AppTheme.primary,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18,
+                        letterSpacing: -0.5,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Pantau status pesanan aktif dan masuk kembali ke riwayat pembelian Anda.',
-                  style: TextStyle(
-                    color: AppTheme.onSurfaceVariant,
-                    fontSize: 12,
-                    height: 1.45,
-                  ),
+                    TextButton(
+                      onPressed: onOrderHistory,
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        backgroundColor: AppTheme.primary.withValues(alpha: 0.05),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: const Text(
+                        'Riwayat',
+                        style: TextStyle(
+                          color: AppTheme.primary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              const Divider(height: 28),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _StatusItem(
-                    Icons.payment_outlined,
-                    'Belum Bayar',
-                    count: pendingCount,
-                  ),
-                  _StatusItem(
-                    Icons.inventory_2_outlined,
-                    'Dikemas',
-                    count: packedCount,
-                  ),
-                  _StatusItem(
-                    Icons.local_shipping_outlined,
-                    'Dikirim',
-                    count: shippedCount,
-                  ),
-                  const _StatusItem(Icons.chat_bubble_outline, 'Bantuan'),
-                ],
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        const Padding(
-          padding: EdgeInsets.only(left: 4, bottom: 12),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Profil & Aktivitas',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-                color: AppTheme.onSurfaceVariant,
-              ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _StatusItem(
+                        Icons.payment_outlined,
+                        'Pesan',
+                        count: pendingCount,
+                        onTap: onOrderHistory,
+                        color: Colors.orange,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _StatusItem(
+                        Icons.inventory_2_outlined,
+                        'Kemas',
+                        count: packedCount,
+                        onTap: onOrderHistory,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _StatusItem(
+                        Icons.local_shipping_outlined,
+                        'Kirim',
+                        count: shippedCount,
+                        onTap: onOrderHistory,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
-        // Account Settings Card
-        _buildCard(
+        const SizedBox(height: 24),
+        
+        // Settings Section
+        FadeInUp(
+          delay: const Duration(milliseconds: 200),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _SettingsTile(Icons.person_outline, 'Edit Profil', onEditProfile),
-              _SettingsTile(
-                Icons.location_on_outlined,
-                'Daftar Alamat',
-                onAddresses,
+              const Padding(
+                padding: EdgeInsets.only(left: 8, bottom: 12),
+                child: Text(
+                  'Pengaturan Akun',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 14,
+                    color: AppTheme.onSurfaceVariant,
+                    letterSpacing: 1,
+                  ),
+                ),
               ),
-              _SettingsTile(Icons.favorite_border, 'Wishlist', onWishlist),
-              _SettingsTile(
-                Icons.security_outlined,
-                'Keamanan Akun',
-                onSecurity,
+              _buildCard(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Column(
+                  children: [
+                    _SettingsTile(Icons.person_outline, 'Edit Profil', onEditProfile),
+                    _SettingsTile(Icons.location_on_outlined, 'Daftar Alamat', onAddresses),
+                    _SettingsTile(Icons.favorite_border, 'Wishlist', onWishlist),
+                    _SettingsTile(Icons.security_outlined, 'Keamanan', onSecurity),
+                  ],
+                ),
               ),
-              _SettingsTile(Icons.info_outline, 'Tentang Kami', onTentangKami),
-              _SettingsTile(Icons.help_outline, 'Pusat Bantuan', onHelp),
             ],
           ),
         ),
         const SizedBox(height: 24),
-        // Info Section Label
-        const Padding(
-          padding: EdgeInsets.only(left: 4, bottom: 12),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Info & Kebijakan',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-                color: AppTheme.onSurfaceVariant,
-              ),
-            ),
-          ),
-        ),
-        // Info & Policy Card
-        _buildCard(
+
+        // Support & Policy Section
+        FadeInUp(
+          delay: const Duration(milliseconds: 300),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _SettingsTile(Icons.help_outline, 'FAQ', onFaq),
-              _SettingsTile(Icons.local_offer_outlined, 'Promo', onPromo),
-              _SettingsTile(
-                Icons.straighten_outlined,
-                'Panduan Ukuran',
-                onPanduanUkuran,
+              const Padding(
+                padding: EdgeInsets.only(left: 8, bottom: 12),
+                child: Text(
+                  'Bantuan & Kebijakan',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 14,
+                    color: AppTheme.onSurfaceVariant,
+                    letterSpacing: 1,
+                  ),
+                ),
               ),
-              _SettingsTile(
-                Icons.sync_outlined,
-                'Kebijakan Pengembalian',
-                onKebijakanPengembalian,
-              ),
-              _SettingsTile(
-                Icons.privacy_tip_outlined,
-                'Kebijakan Privasi',
-                onKebijakanPrivasi,
-              ),
-              _SettingsTile(
-                Icons.description_outlined,
-                'Syarat Ketentuan',
-                onSyaratKetentuan,
+              _buildCard(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Column(
+                  children: [
+                    _SettingsTile(Icons.help_outline, 'Pusat Bantuan', onHelp),
+                    _SettingsTile(Icons.quiz_outlined, 'FAQ', onFaq),
+                    _SettingsTile(Icons.straighten_outlined, 'Panduan Ukuran', onPanduanUkuran),
+                    _SettingsTile(Icons.info_outline, 'Tentang Kami', onTentangKami),
+                    _SettingsTile(Icons.description_outlined, 'Syarat & Ketentuan', onSyaratKetentuan),
+                  ],
+                ),
               ),
             ],
           ),
         ),
+        const SizedBox(height: 32),
       ],
     );
   }
 
-  Widget _buildCard({required Widget child}) {
+  Widget _buildCard({required Widget child, EdgeInsetsGeometry? padding}) {
     return Container(
       decoration: BoxDecoration(
         color: AppTheme.sectionBackground,
         borderRadius: AppTheme.radius24,
-        border: Border.all(color: AppTheme.outlineLight, width: 1),
+        border: Border.all(color: AppTheme.outlineLight.withValues(alpha: 0.5), width: 1.5),
         boxShadow: AppTheme.shadowSoft,
       ),
-      padding: const EdgeInsets.all(20),
+      padding: padding ?? const EdgeInsets.all(20),
       child: child,
     );
   }
 }
 
 class _StatusItem extends StatelessWidget {
-  const _StatusItem(this.icon, this.label, {this.count = 0});
+  const _StatusItem(this.icon, this.label, {
+    this.count = 0, 
+    required this.onTap,
+    this.color = AppTheme.primary,
+  });
 
   final IconData icon;
   final String label;
   final int count;
+  final VoidCallback onTap;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: AppTheme.onSurfaceVariant, size: 28),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppTheme.onSurfaceVariant,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-        if (count > 0)
-          Positioned(
-            right: -6,
-            top: -6,
-            child: Container(
-              padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
-                color: AppTheme.error,
-                shape: BoxShape.circle,
-              ),
-              child: Text(
-                count > 9 ? '9+' : count.toString(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppTheme.radius16,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.05),
+            borderRadius: AppTheme.radius16,
+            border: Border.all(color: color.withValues(alpha: 0.1), width: 1),
           ),
-      ],
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(icon, color: color, size: 24),
+                  const SizedBox(height: 8),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: AppTheme.onSurface.withValues(alpha: 0.8),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+              if (count > 0)
+                Positioned(
+                  top: -8,
+                  right: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: color,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: color.withValues(alpha: 0.3),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      count > 9 ? '9+' : count.toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -272,15 +299,14 @@ class _SettingsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
       leading: Container(
-        width: 36,
-        height: 36,
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: AppTheme.muted,
+          color: AppTheme.surfaceContainerLow,
           borderRadius: AppTheme.radius12,
         ),
-        child: Icon(icon, color: AppTheme.onSurfaceVariant, size: 18),
+        child: Icon(icon, color: AppTheme.onSurfaceVariant, size: 20),
       ),
       title: Text(
         label,
@@ -290,7 +316,7 @@ class _SettingsTile extends StatelessWidget {
           color: AppTheme.onSurface,
         ),
       ),
-      trailing: const Icon(Icons.chevron_right, color: AppTheme.outline),
+      trailing: const Icon(Icons.chevron_right_rounded, color: AppTheme.outline, size: 20),
       onTap: onTap,
     );
   }

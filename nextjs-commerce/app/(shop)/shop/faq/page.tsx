@@ -194,7 +194,7 @@ export default function FAQPage() {
             Hubungi Kami
           </Link>
           <a
-            href="https://wa.me/6281322170902"
+            href={`${process.env.NEXT_PUBLIC_WHATSAPP_BASE_URL}/6281322170902`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 border border-slate-200 bg-white hover:bg-slate-50 hover:border-mitologi-navy/30 hover:text-mitologi-navy text-slate-700 rounded-full text-sm font-sans font-bold transition-all"

@@ -12,11 +12,11 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   display: "swap",
   weight: ["400", "500", "600", "700", "800"],
-  preload: false,
+  preload: true,
 });
 
 export const metadata = {
-  metadataBase: new URL(baseUrl),
+  metadataBase: baseUrl ? new URL(baseUrl) : undefined,
   title: {
     default: SITE_NAME!,
     template: `%s | ${SITE_NAME}`,

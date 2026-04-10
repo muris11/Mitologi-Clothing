@@ -52,23 +52,29 @@ function parseMapsEmbed(rawValue?: string): string {
   const srcMatch = rawValue.match(/src=["']([^"']+)["']/);
   let url = srcMatch?.[1] || rawValue;
 
+  const mapsBase =
+    process.env.NEXT_PUBLIC_GOOGLE_MAPS_BASE_URL ||
+    "https://www.google.com/maps";
+
   // Handle coordinates (e.g., -6.438597, 108.287315)
   if (/^-?\d+\.?\d*\s*,\s*-?\d+\.?\d*$/.test(url.trim())) {
-    return `https://www.google.com/maps?q=${url.replace(/\s/g, "")}&output=embed`;
+    return `${mapsBase}?q=${url.replace(/\s/g, "")}&output=embed`;
   }
 
   // Convert old Google Maps embed URL format to new format
-  if (url.includes("maps.google.com/maps?")) {
+  const mapsOrigin =
+    process.env.NEXT_PUBLIC_MAPS_GOOGLE_ORIGIN || "https://maps.google.com";
+  if (url.includes(mapsOrigin) && url.includes("maps?")) {
     // Extract parameters from old format (handle &amp; encoding)
     const qMatch = url.match(/[?&](?:amp;)?q=([^&]+)/);
     const query = qMatch && qMatch[1] ? decodeURIComponent(qMatch[1]) : "";
     if (query) {
-      return `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+      return `${mapsBase}?q=${encodeURIComponent(query)}&output=embed`;
     }
   }
 
   // If already new format or other valid URL
-  if (url.startsWith("http")) {
+  if (url.includes("://")) {
     return url;
   }
 
@@ -121,7 +127,7 @@ export function KontakSection({ settings }: KontakSectionProps) {
     {
       type: "whatsapp",
       url: contact?.whatsappNumber
-        ? `https://wa.me/${contact.whatsappNumber.replace(/\D/g, "")}`
+        ? `${process.env.NEXT_PUBLIC_WHATSAPP_BASE_URL}/${contact.whatsappNumber.replace(/\D/g, "")}`
         : undefined,
       enabled: true,
       label: "WhatsApp",

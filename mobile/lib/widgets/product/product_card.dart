@@ -43,248 +43,275 @@ class ProductCard extends StatelessWidget {
     final lowStock =
         (product.totalStock ?? 0) > 0 && (product.totalStock ?? 0) <= 5;
 
-    return InkWell(
-      borderRadius: AppTheme.radius22,
-      onTap: () => context.push('/shop/product/${product.handle}'),
-      child: Ink(
-        decoration: BoxDecoration(
-          color: AppTheme.sectionBackground,
-          borderRadius: AppTheme.radius22,
-          border: Border.all(color: AppTheme.outlineLight, width: 1),
-          boxShadow: AppTheme.shadowSoft,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.vertical(
-                      top: AppTheme.radius22.topLeft,
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl: imageUrl,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                      placeholder: (context, url) => Container(
-                        color: AppTheme.surfaceContainerLow,
-                        child: const Center(
-                          child: SizedBox(
-                            width: 22,
-                            height: 22,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: AppTheme.secondary,
+    return Semantics(
+      label: 'Produk: ${product.title}, Harga: ${hasPriceRange ? '$minPrice sampai $maxPrice' : minPrice}',
+      child: InkWell(
+        borderRadius: AppTheme.radius22,
+        onTap: () => context.push('/shop/product/${product.handle}'),
+        child: Ink(
+          decoration: BoxDecoration(
+            color: AppTheme.sectionBackground,
+            borderRadius: AppTheme.radius22,
+            border: Border.all(color: AppTheme.outlineLight, width: 1),
+            boxShadow: AppTheme.shadowSoft,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.vertical(
+                        top: AppTheme.radius22.topLeft,
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: imageUrl,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                        placeholder: (context, url) => Container(
+                          color: AppTheme.surfaceContainerLow,
+                          child: const Center(
+                            child: SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: AppTheme.secondary,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      errorWidget: (context, url, error) => Container(
-                        color: AppTheme.surfaceContainerLow,
-                        child: const Icon(
-                          Icons.image_outlined,
-                          color: AppTheme.surfaceContainerHigh,
-                          size: 30,
+                        errorWidget: (context, url, error) => Container(
+                          color: AppTheme.surfaceContainerLow,
+                          child: const Icon(
+                            Icons.image_outlined,
+                            color: AppTheme.surfaceContainerHigh,
+                            size: 30,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    left: 10,
-                    top: 10,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (isBestSeller)
-                          _Badge(
-                            label: 'BEST SELLER',
-                            backgroundColor: AppTheme.secondary.withValues(
-                              alpha: 0.95,
-                            ),
-                            foregroundColor: Colors.white,
-                          ),
-                        if (isNewArrival)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 6),
-                            child: _Badge(
-                              label: 'BARU',
-                              backgroundColor: AppTheme.primary.withValues(
-                                alpha: 0.92,
+                    Positioned(
+                      left: 10,
+                      top: 10,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (isBestSeller)
+                            _Badge(
+                              label: 'BEST SELLER',
+                              backgroundColor: AppTheme.secondary.withValues(
+                                alpha: 0.95,
                               ),
                               foregroundColor: Colors.white,
                             ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Consumer<WishlistProvider>(
-                      builder: (context, wishlistProvider, child) {
-                        final isWishlisted = wishlistProvider.isWishlisted(
-                          product.id.toString(),
-                        );
-                        return InkWell(
-                          borderRadius: AppTheme.radius12,
-                          onTap: () => wishlistProvider.toggleWishlist(product),
-                          child: Ink(
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(
-                              color: AppTheme.sectionBackground.withValues(
-                                alpha: 0.95,
+                          if (isNewArrival)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: _Badge(
+                                label: 'BARU',
+                                backgroundColor: AppTheme.primary.withValues(
+                                  alpha: 0.92,
+                                ),
+                                foregroundColor: Colors.white,
                               ),
-                              borderRadius: AppTheme.radius12,
-                              border: Border.all(
-                                color: AppTheme.outlineLight,
-                                width: 1,
-                              ),
-                            ),
-                            child: Icon(
-                              isWishlisted
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: isWishlisted
-                                  ? AppTheme.error
-                                  : AppTheme.onSurfaceVariant,
-                              size: 18,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            AppTheme.onSurface.withValues(alpha: 0.76),
-                            Colors.transparent,
-                          ],
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          const Spacer(),
-                          if (lowStock)
-                            Text(
-                              'Sisa ${product.totalStock}',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: AppTheme.warning,
-                                    fontWeight: FontWeight.w700,
-                                  ),
                             ),
                         ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleSmall?.copyWith(fontSize: 14, height: 1.2),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    hasPriceRange ? '$minPrice - $maxPrice' : minPrice,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppTheme.onSurface,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    variantLabel,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppTheme.onSurfaceVariant,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.2,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.arrow_outward,
-                        color: AppTheme.onSurface,
-                        size: 16,
-                      ),
-                      const SizedBox(width: 4),
-                      if (rating != null) ...[
-                        Text(
-                          rating,
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(
-                                color: AppTheme.onSurface,
-                                fontWeight: FontWeight.w700,
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: Consumer<WishlistProvider>(
+                        builder: (context, wishlistProvider, child) {
+                          final isWishlisted = wishlistProvider.isWishlisted(
+                            product.id.toString(),
+                          );
+                          return Semantics(
+                            label: isWishlisted
+                                ? 'Hapus dari Wishlist'
+                                : 'Tambah ke Wishlist',
+                            button: true,
+                            child: Tooltip(
+                              message: isWishlisted
+                                  ? 'Hapus dari Wishlist'
+                                  : 'Tambah ke Wishlist',
+                              child: InkWell(
+                                borderRadius: AppTheme.radius12,
+                                onTap:
+                                    () => wishlistProvider.toggleWishlist(
+                                      product,
+                                    ),
+                                child: Ink(
+                                  width: 36,
+                                  height: 36,
+                                  decoration: BoxDecoration(
+                                    color: AppTheme.sectionBackground
+                                        .withValues(alpha: 0.95),
+                                    borderRadius: AppTheme.radius12,
+                                    border: Border.all(
+                                      color: AppTheme.outlineLight,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    isWishlisted
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color:
+                                        isWishlisted
+                                            ? AppTheme.error
+                                            : AppTheme.onSurfaceVariant,
+                                    size: 18,
+                                  ),
+                                ),
                               ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 6),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              AppTheme.onSurface.withValues(alpha: 0.76),
+                              Colors.transparent,
+                            ],
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            const Spacer(),
+                            if (lowStock)
+                              Semantics(
+                                label: 'Stok menipis, sisa ${product.totalStock}',
+                                child: Text(
+                                  'Sisa ${product.totalStock}',
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(
+                                        color: AppTheme.warning,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.titleSmall?.copyWith(fontSize: 14, height: 1.2),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      hasPriceRange ? '$minPrice - $maxPrice' : minPrice,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AppTheme.onSurface,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      variantLabel,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppTheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.2,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.arrow_outward,
+                          color: AppTheme.onSurface,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
+                        if (rating != null) ...[
+                          Semantics(
+                            label: 'Rating $rating bintang',
+                            child: Text(
+                              rating,
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: AppTheme.onSurface,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 6),
+                            child: Text(
+                              '•',
+                              style: TextStyle(
+                                color: AppTheme.surfaceContainerHigh,
+                              ),
+                            ),
+                          ),
+                        ],
+                        Expanded(
                           child: Text(
-                            '•',
-                            style: TextStyle(
-                              color: AppTheme.surfaceContainerHigh,
+                            soldLabel,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(color: AppTheme.onSurfaceVariant),
+                          ),
+                        ),
+                        Semantics(
+                          label: 'Lihat detail produk',
+                          button: true,
+                          child: Container(
+                            width: 28,
+                            height: 28,
+                            decoration: BoxDecoration(
+                              color: AppTheme.muted,
+                              borderRadius: AppTheme.radius8,
+                            ),
+                            child: const Icon(
+                              Icons.arrow_forward,
+                              color: AppTheme.onSurface,
+                              size: 14,
                             ),
                           ),
                         ),
                       ],
-                      Expanded(
-                        child: Text(
-                          soldLabel,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(color: AppTheme.onSurfaceVariant),
-                        ),
-                      ),
-                      Container(
-                        width: 28,
-                        height: 28,
-                        decoration: BoxDecoration(
-                          color: AppTheme.muted,
-                          borderRadius: AppTheme.radius8,
-                        ),
-                        child: const Icon(
-                          Icons.arrow_forward,
-                          color: AppTheme.onSurface,
-                          size: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

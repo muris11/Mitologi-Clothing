@@ -297,6 +297,28 @@ class AppTheme {
   ];
 
   // ===========================================================================
+  // ANIMATION & MOTION - Consistent Timing
+  // ===========================================================================
+
+  static const Duration durationFast = Duration(milliseconds: 200);
+  static const Duration durationNormal = Duration(milliseconds: 300);
+  static const Duration durationSlow = Duration(milliseconds: 500);
+  static const Duration durationVerySlow = Duration(milliseconds: 800);
+
+  static const Curve curveDefault = Curves.easeInOut;
+  static const Curve curvePremium = Curves.fastOutSlowIn;
+
+  // ===========================================================================
+  // OVERLAY ALPHAS - Semantic Opacity Levels
+  // ===========================================================================
+
+  static const double alphaHover = 0.08;
+  static const double alphaPressed = 0.12;
+  static const double alphaOverlay = 0.40;
+  static const double alphaGlass = 0.75;
+  static const double alphaSkeleton = 0.60;
+
+  // ===========================================================================
   // TYPOGRAPHY - Plus Jakarta Sans (Matching Next.js)
   // ===========================================================================
 
@@ -528,10 +550,10 @@ class AppTheme {
             ).copyWith(
               overlayColor: WidgetStateProperty.resolveWith((states) {
                 if (states.contains(WidgetState.pressed)) {
-                  return onPrimary.withValues(alpha: 0.12);
+                  return onPrimary.withValues(alpha: alphaPressed);
                 }
                 if (states.contains(WidgetState.hovered)) {
-                  return onPrimary.withValues(alpha: 0.08);
+                  return onPrimary.withValues(alpha: alphaHover);
                 }
                 return null;
               }),
