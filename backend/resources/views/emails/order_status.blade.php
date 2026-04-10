@@ -1,184 +1,252 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Status Pesanan - Mitologi Clothing</title>
-    <!--[if mso]>
-    <noscript>
-        <xml>
-            <o:OfficeDocumentSettings>
-                <o:PixelsPerInch>96</o:PixelsPerInch>
-            </o:OfficeDocumentSettings>
-        </xml>
-    </noscript>
-    <![endif]-->
-    <style>
-        {!! file_exists(public_path('css/email.css')) ? file_get_contents(public_path('css/email.css')) : '' !!}
-        body { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-    </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Status Pesanan - Mitologi Clothing</title>
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
+    table { border-collapse: collapse !important; }
+    body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+    a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
+
+    @media screen and (max-width: 620px) {
+      .main-wrap { width: 100% !important; }
+      .body-pad { padding: 32px 20px !important; }
+      .col-half { display: block !important; width: 100% !important; padding-bottom: 16px !important; }
+      .hide-mobile { display: none !important; }
+    }
+  </style>
 </head>
-<body class="bg-[#f1f5f9] text-[#0f172a] m-0 p-0 antialiased" style="font-family: 'Plus Jakarta Sans', 'Inter', Helvetica, Arial, sans-serif;">
-    @php
-        $statusConfig = [
-            'pending'    => ['label' => 'Menunggu Pembayaran', 'text' => '#b45309', 'bg' => '#fef3c7', 'border' => '#fde68a'],
-            'processing' => ['label' => 'Sedang Diproses',     'text' => '#1d4ed8', 'bg' => '#dbeafe', 'border' => '#bfdbfe'],
-            'shipped'    => ['label' => 'Dalam Pengiriman',    'text' => '#6d28d9', 'bg' => '#ede9fe', 'border' => '#ddd6fe'],
-            'completed'  => ['label' => 'Selesai',             'text' => '#047857', 'bg' => '#d1fae5', 'border' => '#a7f3d0'],
-            'cancelled'  => ['label' => 'Dibatalkan',          'text' => '#b91c1c', 'bg' => '#fee2e2', 'border' => '#fecaca'],
-        ];
-        $current = $statusConfig[$order->status] ?? ['label' => ucfirst($order->status), 'text' => '#334155', 'bg' => '#f1f5f9', 'border' => '#e2e8f0'];
-        $userName = $order->user ? $order->user->name : ($order->shippingAddress->name ?? 'Pelanggan');
-        $frontendUrl = config('app.frontend_url');
-    @endphp
+<body style="margin:0;padding:0;background-color:#F8FAFC;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;">
 
-    <div class="w-full bg-[#f1f5f9] py-10 px-4 sm:px-6">
-        <div class="max-w-2xl mx-auto w-full">
-            
-            <!-- Email Card -->
-            <div class="bg-white rounded-2xl shadow-xl border border-[#e2e8f0] overflow-hidden relative">
-                
-                <!-- Premium Header -->
-                <div class="bg-[#0f172a] py-8 px-6 text-center border-b-[4px] border-[#d4af37]">
-                    <h1 class="text-2xl font-black text-[#d4af37] uppercase tracking-[0.2em] m-0">{{ config('app.name', 'Mitologi Clothing') }}</h1>
-                </div>
-                
-                <div class="p-6 sm:p-10">
-                    <!-- Title & Status Badge -->
-                    <div class="flex flex-wrap items-center justify-between mb-8 pb-4 border-b border-[#e2e8f0]">
-                        <h2 class="text-lg font-bold text-[#0f172a] m-0">Pembaruan Pesanan</h2>
-                        <span class="inline-block px-3 py-1 text-[11px] font-bold uppercase tracking-wider rounded-md border" style="color: {{ $current['text'] }}; background-color: {{ $current['bg'] }}; border-color: {{ $current['border'] }};">
-                            {{ $current['label'] }}
-                        </span>
-                    </div>
-                    
-                    <p class="text-base text-[#0f172a] font-bold tracking-wide mb-3">
-                        Halo, {{ $userName }}
-                    </p>
-                    
-                    <div class="text-sm text-[#475569] leading-relaxed mb-8">
-                        @if($order->status == 'pending')
-                            Pesanan Anda telah kami terima dengan detail berikut. Harap segera selesaikan pembayaran untuk melanjutkan proses produksi.
-                        @elseif($order->status == 'processing')
-                            Pembayaran Anda telah berhasil diverifikasi. Tim kualitas kami saat ini sedang memproses pesanan Anda dengan presisi.
-                        @elseif($order->status == 'shipped')
-                            Pesanan Anda telah dalam perjalanan menggunakan layanan ekspedisi terkait. Lacak pengiriman menggunakan nomor resi di bawah.
-                        @elseif($order->status == 'completed')
-                            Terima kasih telah berbelanja. Paket pesanan Anda telah resmi dinyatakan selesai dan diterima dengan baik.
-                        @elseif($order->status == 'cancelled')
-                            Pesanan Anda telah dibatalkan karena tidak ada kelanjutan pembayaran, perubahan sistematis, atau kendala operasional.
-                        @else
-                            Status terbaru pesanan Anda saat ini adalah: {{ $current['label'] }}.
-                        @endif
-                    </div>
+@php
+  $statusConfig = [
+    'pending'    => ['label' => 'Menunggu Pembayaran', 'dot' => '#D4A853', 'ink' => '#7A5C1E', 'wash' => '#FBF3E2'],
+    'processing' => ['label' => 'Sedang Diproses',     'dot' => '#4A7FA5', 'ink' => '#1D4466', 'wash' => '#E6F0F8'],
+    'shipped'    => ['label' => 'Dalam Pengiriman',    'dot' => '#6A5ACD', 'ink' => '#3B2F8C', 'wash' => '#EDEAFC'],
+    'completed'  => ['label' => 'Selesai',             'dot' => '#4A9E7A', 'ink' => '#1F5C42', 'wash' => '#E4F5ED'],
+    'cancelled'  => ['label' => 'Dibatalkan',          'dot' => '#C0544A', 'ink' => '#7A2020', 'wash' => '#FCE8E6'],
+  ];
+  $current = $statusConfig[$order->status] ?? ['label' => ucfirst($order->status), 'dot' => '#888', 'ink' => '#444', 'wash' => '#F5F5F5'];
+  $userName = $order->user ? $order->user->name : ($order->shippingAddress->name ?? 'Pelanggan');
+  $frontendUrl = config('app.frontend_url');
+@endphp
 
-                    <!-- Order Info Panel -->
-                    <div class="bg-[#f8fafc] border border-[#e2e8f0] rounded-xl p-5 mb-8">
-                        <div class="grid grid-cols-2 gap-y-5 text-sm">
-                            <div>
-                                <p class="text-[10px] text-[#64748b] font-bold uppercase tracking-wider mb-1">Nomor Pesanan</p>
-                                <p class="text-[#0f172a] font-bold m-0 uppercase">#{{ $order->order_number }}</p>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-[#64748b] font-bold uppercase tracking-wider mb-1">Tanggal & Waktu</p>
-                                <p class="text-[#0f172a] font-semibold m-0">{{ $order->created_at->format('d M Y, H:i') }} WIB</p>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-[#64748b] font-bold uppercase tracking-wider mb-1">Metode Bayar</p>
-                                <p class="text-[#0f172a] font-semibold m-0 uppercase">{{ $order->payment_method ?? 'Transfer Bank' }}</p>
-                            </div>
-                            @if($order->tracking_number && $order->status === 'shipped')
-                            <div>
-                                <p class="text-[10px] text-[#64748b] font-bold uppercase tracking-wider mb-1">Nomor Resi</p>
-                                <p class="text-[#0f172a] font-bold m-0">{{ $order->tracking_number }}</p>
-                            </div>
-                            @endif
-                        </div>
-                    </div>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="center" style="padding:48px 16px 56px;">
 
-                    <!-- Product Table -->
-                    <div class="mb-8 overflow-hidden rounded-xl border border-[#e2e8f0]">
-                        <table class="w-full text-sm font-medium border-collapse">
-                            <thead>
-                                <tr class="bg-[#f8fafc] border-b border-[#e2e8f0] text-left">
-                                    <th class="p-4 text-[11px] uppercase tracking-wider text-[#64748b] font-bold">Rincian Item</th>
-                                    <th class="p-4 text-[11px] uppercase tracking-wider text-[#64748b] font-bold text-center w-16">Qty</th>
-                                    <th class="p-4 text-[11px] uppercase tracking-wider text-[#64748b] font-bold text-right">Harga</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-[#e2e8f0]">
-                                @foreach($order->items as $item)
-                                <tr>
-                                    <td class="p-4 align-top">
-                                        <p class="m-0 font-bold text-[#0f172a]">{{ $item->product_title }}</p>
-                                        @if($item->variant_title)
-                                        <p class="m-0 mt-1 text-xs text-[#64748b] font-normal uppercase tracking-wide">{{ $item->variant_title }}</p>
-                                        @endif
-                                    </td>
-                                    <td class="p-4 text-center align-top text-[#475569] font-bold">{{ $item->quantity }}</td>
-                                    <td class="p-4 text-right align-top text-[#0f172a] font-bold whitespace-nowrap">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                            <tfoot class="border-t border-[#cbd5e1] bg-[#f8fafc] text-sm">
-                                @if($order->subtotal)
-                                <tr>
-                                    <td colspan="2" class="px-4 py-3 text-right text-[11px] uppercase tracking-wider text-[#64748b] font-bold">Total Harga Barang</td>
-                                    <td class="px-4 py-3 text-right text-[#0f172a] font-semibold">Rp {{ number_format($order->subtotal, 0, ',', '.') }}</td>
-                                </tr>
-                                @endif
-                                @if($order->shipping_cost > 0)
-                                <tr>
-                                    <td colspan="2" class="px-4 py-2 text-right text-[11px] uppercase tracking-wider text-[#64748b] font-bold">Total Ongkos Kirim</td>
-                                    <td class="px-4 py-2 text-right text-[#0f172a] font-semibold">Rp {{ number_format($order->shipping_cost, 0, ',', '.') }}</td>
-                                </tr>
-                                @endif
-                                @if($order->tax > 0)
-                                <tr>
-                                    <td colspan="2" class="px-4 py-2 text-right text-[11px] uppercase tracking-wider text-[#64748b] font-bold">Biaya Layanan/Pajak</td>
-                                    <td class="px-4 py-2 text-right text-[#0f172a] font-semibold">Rp {{ number_format($order->tax, 0, ',', '.') }}</td>
-                                </tr>
-                                @endif
-                                <tr class="bg-[#0f172a] text-white">
-                                    <td colspan="2" class="p-4 text-right text-[12px] uppercase tracking-widest font-black">Total Keseluruhan</td>
-                                    <td class="p-4 text-right text-[#d4af37] text-[16px] font-black whitespace-nowrap border-b-[3px] border-[#d4af37]">Rp {{ number_format($order->total, 0, ',', '.') }}</td>
-                                </tr>
-                            </tfoot>
+      <!-- CARD -->
+      <table border="0" cellpadding="0" cellspacing="0" width="600" class="main-wrap"
+             style="background-color:#FFFFFF;border-radius:20px;overflow:hidden;border:1px solid #E2E8F0;">
+
+        <!-- ══ HEADER ══ -->
+        <tr>
+          <td style="background-color:#14193C;padding:36px 48px 32px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td>
+                  <p style="margin:0;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;font-size:22px;font-weight:800;color:#C9A84C;letter-spacing:0.08em;">
+                    Mitologi
+                  </p>
+                  <p style="margin:4px 0 0;font-size:10px;color:#94A3B8;letter-spacing:0.25em;text-transform:uppercase;font-weight:500;">
+                    Clothing
+                  </p>
+                </td>
+                <td align="right" style="vertical-align:top;">
+                  <!-- Status pill -->
+                  <table border="0" cellpadding="0" cellspacing="0" style="display:inline-table;">
+                    <tr>
+                      <td style="padding:5px 14px;border-radius:100px;font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:{{ $current['ink'] }};background-color:{{ $current['wash'] }};">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td style="padding-right:8px;vertical-align:middle;">
+                            </td>
+                            <td style="vertical-align:middle;">
+                              {{ $current['label'] }}
+                            </td>
+                          </tr>
                         </table>
-                    </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+            <!-- thin gold rule -->
+            <div style="height:1px;background:linear-gradient(to right,#C9A84C,transparent);margin-top:28px;"></div>
+          </td>
+        </tr>
 
-                    <!-- Shipping Address -->
-                    @if($order->shippingAddress)
-                    <div class="mb-10 bg-white border border-[#e2e8f0] rounded-xl p-5">
-                        <h3 class="text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2 m-0">Tujuan Pengiriman</h3>
-                        <p class="m-0 font-bold text-[#0f172a] text-[15px] mb-1 capitalize">{{ $order->shippingAddress->name }}</p>
-                        <p class="m-0 text-[13px] text-[#475569] font-medium leading-relaxed">
-                            <span class="block mb-1">{{ $order->shippingAddress->phone }}</span>
-                            {{ $order->shippingAddress->address }}<br>
-                            {{ $order->shippingAddress->city }}, {{ $order->shippingAddress->province }} {{ $order->shippingAddress->postal_code }}
-                        </p>
-                    </div>
-                    @endif
+        <!-- ══ BODY ══ -->
+        <tr>
+          <td class="body-pad" style="padding:44px 48px;">
 
-                    <!-- Action Button -->
-                    <div class="mb-2 text-center">
-                        <a href="{{ $frontendUrl }}/shop/account/orders/{{ $order->order_number }}" class="inline-block bg-[#0f172a] text-[#d4af37] border border-[#0f172a] border-b-[4px] border-b-[#020617] rounded-xl font-bold text-sm uppercase tracking-widest py-4 px-8 hover:bg-[#1e293b] hover:translate-y-[2px] transition-all decoration-none" style="text-decoration: none;">
-                            Lihat Detail & Lacak
-                        </a>
-                    </div>
-                </div>
+            <!-- Greeting -->
+            <p style="margin:0 0 6px;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;font-size:26px;font-weight:700;color:#1A1612;line-height:1.2;">
+              Halo, {{ $userName }}.
+            </p>
+            <p style="margin:0 0 28px;font-size:14px;color:#475569;line-height:1.7;">
+              @if($order->status == 'pending')
+                Pesanan Anda sudah kami terima. Selesaikan pembayaran sesegera mungkin agar proses produksi bisa segera kami mulai.
+              @elseif($order->status == 'processing')
+                Pembayaran berhasil terverifikasi. Tim kami sedang mengerjakan pesanan Anda dengan penuh perhatian.
+              @elseif($order->status == 'shipped')
+                Pesanan Anda sudah dalam perjalanan. Gunakan nomor resi di bawah untuk melacak pengiriman.
+              @elseif($order->status == 'completed')
+                Terima kasih sudah berbelanja bersama kami. Semoga produk kami menemani hari-hari Anda dengan baik.
+              @elseif($order->status == 'cancelled')
+                Pesanan ini telah dibatalkan. Jika ada pertanyaan, tim kami siap membantu.
+              @else
+                Status terbaru pesanan Anda: {{ $current['label'] }}.
+              @endif
+            </p>
 
-            </div>
+            <!-- Order meta strip -->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                   style="background-color:#F1F5F9;border-radius:12px;margin-bottom:28px;">
+              <tr>
+                <td style="padding:20px 24px;">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                      <td class="col-half" width="50%" style="padding-right:16px;">
+                        <p style="margin:0 0 3px;font-size:9px;font-weight:600;color:#9C8E7F;letter-spacing:0.2em;text-transform:uppercase;">Nomor Pesanan</p>
+                        <p style="margin:0;font-size:14px;font-weight:600;color:#1A1612;letter-spacing:0.04em;">#{{ $order->order_number }}</p>
+                      </td>
+                      <td class="col-half" width="50%">
+                        <p style="margin:0 0 3px;font-size:9px;font-weight:600;color:#9C8E7F;letter-spacing:0.2em;text-transform:uppercase;">Tanggal</p>
+                        <p style="margin:0;font-size:14px;font-weight:500;color:#1A1612;">{{ $order->created_at->format('d M Y, H:i') }} WIB</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-top:16px;" class="col-half" width="50%">
+                        <p style="margin:0 0 3px;font-size:9px;font-weight:600;color:#9C8E7F;letter-spacing:0.2em;text-transform:uppercase;">Metode Bayar</p>
+                        <p style="margin:0;font-size:14px;font-weight:500;color:#1A1612;text-transform:uppercase;">{{ $order->payment_method ?? 'Transfer Bank' }}</p>
+                      </td>
+                      @if($order->tracking_number && $order->status === 'shipped')
+                      <td style="padding-top:16px;" class="col-half" width="50%">
+                        <p style="margin:0 0 3px;font-size:9px;font-weight:600;color:#9C8E7F;letter-spacing:0.2em;text-transform:uppercase;">Nomor Resi</p>
+                        <p style="margin:0;font-size:14px;font-weight:600;color:#1A1612;">{{ $order->tracking_number }}</p>
+                      </td>
+                      @endif
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
 
-            <!-- Footer -->
-            <div class="mt-8 text-center px-4">
-                <p class="text-xs text-[#64748b] mb-2 font-bold uppercase tracking-widest">© {{ date('Y') }} {{ config('app.name', 'Mitologi Clothing') }}</p>
-                <p class="text-[11px] text-[#94a3b8] leading-relaxed">
-                    Pesan operasional ini dihasilkan secara otomatis oleh armada sistem kami.<br>Jangan membalas langsung ke alamat email ini.
-                </p>
-            </div>
+            <!-- Items -->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:28px;">
+              <!-- header row -->
+              <tr>
+                <td style="padding:0 0 10px;font-size:9px;font-weight:600;color:#64748B;letter-spacing:0.2em;text-transform:uppercase;border-bottom:1px solid #E2E8F0;">Item</td>
+                <td style="padding:0 0 10px;text-align:center;font-size:9px;font-weight:600;color:#64748B;letter-spacing:0.2em;text-transform:uppercase;border-bottom:1px solid #E2E8F0;width:40px;">Qty</td>
+                <td style="padding:0 0 10px;text-align:right;font-size:9px;font-weight:600;color:#64748B;letter-spacing:0.2em;text-transform:uppercase;border-bottom:1px solid #E2E8F0;">Harga</td>
+              </tr>
 
-        </div>
-    </div>
+              @foreach($order->items as $item)
+              <tr>
+                <td style="padding:14px 0;border-bottom:1px solid #F1F5F9;">
+                  <p style="margin:0;font-size:14px;font-weight:500;color:#1A1612;">{{ $item->product_title }}</p>
+                  @if($item->variant_title)
+                  <p style="margin:3px 0 0;font-size:11px;color:#64748B;letter-spacing:0.05em;">{{ $item->variant_title }}</p>
+                  @endif
+                </td>
+                <td style="padding:14px 0;text-align:center;font-size:13px;color:#475569;border-bottom:1px solid #F1F5F9;">{{ $item->quantity }}</td>
+                <td style="padding:14px 0;text-align:right;font-size:14px;font-weight:500;color:#0F172A;white-space:nowrap;border-bottom:1px solid #F1F5F9;">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
+              </tr>
+              @endforeach
+
+              <!-- Subtotals -->
+              @if($order->subtotal)
+              <tr>
+                <td colspan="2" style="padding:12px 0 4px;text-align:right;font-size:12px;color:#64748B;">Subtotal</td>
+                <td style="padding:12px 0 4px;text-align:right;font-size:13px;color:#0F172A;">Rp {{ number_format($order->subtotal, 0, ',', '.') }}</td>
+              </tr>
+              @endif
+              @if($order->shipping_cost > 0)
+              <tr>
+                <td colspan="2" style="padding:4px 0;text-align:right;font-size:12px;color:#9C8E7F;">Ongkos Kirim</td>
+                <td style="padding:4px 0;text-align:right;font-size:13px;color:#1A1612;">Rp {{ number_format($order->shipping_cost, 0, ',', '.') }}</td>
+              </tr>
+              @endif
+              @if($order->tax > 0)
+              <tr>
+                <td colspan="2" style="padding:4px 0;text-align:right;font-size:12px;color:#9C8E7F;">Pajak</td>
+                <td style="padding:4px 0;text-align:right;font-size:13px;color:#1A1612;">Rp {{ number_format($order->tax, 0, ',', '.') }}</td>
+              </tr>
+              @endif
+
+              <!-- Grand total row -->
+              <tr>
+                <td colspan="3" style="padding:0;">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                         style="margin-top:12px;background-color:#14193C;border-radius:10px;overflow:hidden;">
+                    <tr>
+                      <td style="padding:16px 20px;font-size:10px;font-weight:600;color:#94A3B8;letter-spacing:0.2em;text-transform:uppercase;">Total Keseluruhan</td>
+                      <td style="padding:16px 20px;text-align:right;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:#C9A84C;white-space:nowrap;">
+                        Rp {{ number_format($order->total, 0, ',', '.') }}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Shipping address -->
+            @if($order->shippingAddress)
+            <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                   style="border:1px solid #E2E8F0;border-radius:12px;margin-bottom:36px;">
+              <tr>
+                <td style="padding:18px 22px;">
+                  <p style="margin:0 0 8px;font-size:9px;font-weight:600;color:#64748B;letter-spacing:0.2em;text-transform:uppercase;">Tujuan Pengiriman</p>
+                  <p style="margin:0 0 4px;font-size:14px;font-weight:600;color:#0F172A;">{{ $order->shippingAddress->name }}</p>
+                  <p style="margin:0;font-size:13px;color:#475569;line-height:1.7;">
+                    {{ $order->shippingAddress->phone }}<br>
+                    {{ $order->shippingAddress->address }}<br>
+                    {{ $order->shippingAddress->city }}, {{ $order->shippingAddress->province }} {{ $order->shippingAddress->postal_code }}
+                  </p>
+                </td>
+              </tr>
+            </table>
+            @endif
+
+            <!-- CTA -->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td align="center">
+                  <a href="{{ $frontendUrl }}/shop/account/orders/{{ $order->order_number }}" target="_blank"
+                     style="display:inline-block;padding:15px 40px;background-color:#14193C;color:#C9A84C;font-size:11px;font-weight:600;text-decoration:none;text-transform:uppercase;letter-spacing:0.18em;border-radius:100px;border:1px solid #C9A84C;">
+                    Lihat Detail Pesanan &rarr;
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- ══ FOOTER ══ -->
+        <tr>
+          <td style="background-color:#F8FAFC;padding:28px 48px;border-top:1px solid #E2E8F0;">
+            <p style="margin:0 0 4px;font-size:11px;color:#64748B;text-align:center;">
+              &copy; {{ date('Y') }} Mitologi Clothing &mdash; Semua hak dilindungi
+            </p>
+            <p style="margin:0;font-size:11px;color:#94A3B8;text-align:center;line-height:1.7;">
+              Email ini dibuat otomatis oleh sistem. Mohon tidak membalas langsung.
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+
 </body>
 </html>

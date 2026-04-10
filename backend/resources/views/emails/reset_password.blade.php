@@ -1,86 +1,148 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password - Mitologi Clothing</title>
-    <!--[if mso]>
-    <noscript>
-        <xml>
-            <o:OfficeDocumentSettings>
-                <o:PixelsPerInch>96</o:PixelsPerInch>
-            </o:OfficeDocumentSettings>
-        </xml>
-    </noscript>
-    <![endif]-->
-    <style>
-        {!! file_exists(public_path('css/email.css')) ? file_get_contents(public_path('css/email.css')) : '' !!}
-        body { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-    </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reset Password - Mitologi Clothing</title>
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
+    table { border-collapse: collapse !important; }
+    body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+    a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
+
+    @media screen and (max-width: 620px) {
+      .main-wrap { width: 100% !important; }
+      .body-pad { padding: 36px 24px !important; }
+    }
+  </style>
 </head>
-<body class="bg-[#f1f5f9] text-[#0f172a] m-0 p-0 antialiased" style="font-family: 'Plus Jakarta Sans', 'Inter', Helvetica, Arial, sans-serif;">
-    <div class="w-full bg-[#f1f5f9] py-10 px-4 sm:px-6">
-        <!-- Main Container -->
-        <div class="max-w-xl mx-auto w-full">
-            
-            <!-- Email Card -->
-            <div class="bg-white rounded-2xl shadow-xl border border-[#e2e8f0] overflow-hidden">
-                
-                <!-- Premium Header -->
-                <div class="bg-[#0f172a] py-8 px-6 text-center border-b-[4px] border-[#d4af37]">
-                    <h1 class="text-2xl font-black text-[#d4af37] uppercase tracking-[0.2em] m-0">{{ config('app.name', 'Mitologi Clothing') }}</h1>
-                </div>
+<body style="margin:0;padding:0;background-color:#F8FAFC;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;">
 
-                <!-- Body content -->
-                <div class="p-8 sm:p-10">
-                    <h2 class="text-xl sm:text-2xl font-bold text-[#0f172a] mb-6">Reset Password Akun</h2>
-                    
-                    <p class="text-base text-[#334155] leading-relaxed mb-6 font-medium">
-                        Halo <span class="text-[#0f172a] font-bold">{{ $name }}</span>,
-                    </p>
-                    
-                    <p class="text-sm text-[#475569] leading-relaxed mb-8">
-                        Kami menerima permintaan untuk melakukan pengaturan ulang kata sandi pada akun Mitologi Clothing Anda. Jika Anda merasa <strong>tidak melakukan permintaan ini</strong>, Anda dapat mengabaikan pesan ini dengan aman.
-                    </p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="center" style="padding:48px 16px 56px;">
 
-                    <!-- Action Button -->
-                    <div class="mb-10 text-center">
-                        <a href="{{ $url }}" class="inline-block bg-[#0f172a] text-[#d4af37] border border-[#0f172a] border-b-[4px] border-b-[#020617] rounded-xl font-bold text-sm uppercase tracking-widest py-4 px-10 hover:bg-[#1e293b] hover:translate-y-[2px] transition-all decoration-none" style="text-decoration: none;">
-                            Atur Ulang Password
-                        </a>
-                    </div>
+      <!-- CARD -->
+      <table border="0" cellpadding="0" cellspacing="0" width="560" class="main-wrap"
+             style="background-color:#FFFFFF;border-radius:20px;overflow:hidden;border:1px solid #E2E8F0;">
 
-                    <!-- Alert Panel -->
-                    <div class="bg-[#fffbeb] border border-[#fef08a] rounded-xl p-5 mb-8 flex gap-3">
-                        <div>
-                            <p class="text-xs text-[#b45309] font-bold uppercase tracking-wider mb-1">Informasi Keamanan</p>
-                            <p class="text-[13px] text-[#92400e] leading-relaxed m-0">
-                                Tautan reset password ini bersifat rahasia dan akan kedaluwarsa secara otomatis dalam waktu <strong>60 menit</strong>.
-                            </p>
-                        </div>
-                    </div>
+        <!-- ══ HEADER ══ -->
+        <tr>
+          <td style="background-color:#14193C;padding:36px 48px;">
+            <p style="margin:0;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;font-size:22px;font-weight:800;color:#C9A84C;letter-spacing:0.08em;">
+              Mitologi
+            </p>
+            <p style="margin:4px 0 0;font-size:10px;color:#94A3B8;letter-spacing:0.25em;text-transform:uppercase;font-weight:500;">
+              Clothing
+            </p>
+            <div style="height:1px;background:linear-gradient(to right,#C9A84C,transparent);margin-top:24px;"></div>
+          </td>
+        </tr>
 
-                    <!-- Sign Off -->
-                    <div class="border-t border-[#e2e8f0] pt-6 mt-6">
-                        <p class="text-sm text-[#475569] leading-relaxed mb-1 font-medium">
-                            Salam Hangat,
-                        </p>
-                        <p class="text-sm text-[#0f172a] font-bold uppercase tracking-wide">
-                            Mitologi Clothing Team
-                        </p>
-                    </div>
-                </div>
-            </div>
+        <!-- ══ ICON STRIP ══ -->
+        <tr>
+          <td align="center" style="padding:40px 48px 0;">
+            <table border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td align="center"
+                    style="width:48px;height:48px;background-color:#F1F5F9;border-radius:14px;border:1px solid #E2E8F0;text-align:center;vertical-align:middle;">
+                  <!-- SVG lock icon -->
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:13px auto 0;">
+                    <rect x="5" y="11" width="14" height="10" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+                    <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="12" cy="16" r="1.2" fill="#C9A84C"/>
+                  </svg>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
 
-            <!-- Footer -->
-            <div class="mt-8 text-center px-4">
-                <p class="text-xs text-[#64748b] mb-2 font-bold uppercase tracking-widest">© {{ date('Y') }} {{ config('app.name', 'Mitologi Clothing') }}</p>
-                <p class="text-[11px] text-[#94a3b8] leading-relaxed">
-                    Pesanan ini dihasilkan secara otomatis oleh sistem kami.<br>Mohon untuk tidak membalas email ini secara langsung.
-                </p>
-            </div>
+        <!-- ══ BODY ══ -->
+        <tr>
+          <td class="body-pad" style="padding:28px 48px 44px;">
 
-        </div>
-    </div>
+            <!-- Title -->
+            <p style="margin:0 0 8px;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;font-size:26px;font-weight:700;color:#1A1612;line-height:1.2;text-align:center;">
+              Reset Password
+            </p>
+            <p style="margin:0 0 32px;font-size:13px;color:#64748B;text-align:center;letter-spacing:0.04em;">
+              Permintaan pengaturan ulang kata sandi
+            </p>
+
+            <!-- Divider -->
+            <div style="height:1px;background-color:#F1F5F9;margin-bottom:28px;"></div>
+
+            <!-- Greeting -->
+            <p style="margin:0 0 16px;font-size:15px;color:#1A1612;font-weight:500;">
+              Halo, <span style="color:#1A1612;font-weight:600;">{{ $name }}</span>
+            </p>
+
+            <p style="margin:0 0 32px;font-size:14px;color:#475569;line-height:1.75;">
+              Kami menerima permintaan untuk mengatur ulang kata sandi akun Mitologi Clothing Anda.
+              Klik tombol di bawah ini untuk melanjutkan. Jika Anda tidak merasa melakukan permintaan ini, abaikan saja email ini.
+            </p>
+
+            <!-- CTA Button -->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:32px;">
+              <tr>
+                <td align="center">
+                  <a href="{{ $url }}" target="_blank"
+                     style="display:inline-block;padding:16px 48px;background-color:#14193C;color:#C9A84C;font-size:11px;font-weight:600;text-decoration:none;text-transform:uppercase;letter-spacing:0.18em;border-radius:100px;border:1px solid #C9A84C;">
+                    Atur Ulang Password &rarr;
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+
+
+            <!-- Security notice -->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                   style="background-color:#F8FAFC;border-radius:12px;border-left:3px solid #C9A84C;">
+              <tr>
+                <td style="padding:16px 20px;">
+                  <p style="margin:0 0 4px;font-size:9px;font-weight:600;color:#64748B;letter-spacing:0.2em;text-transform:uppercase;">Informasi Keamanan</p>
+                  <p style="margin:0;font-size:13px;color:#475569;line-height:1.6;">
+                    Tautan ini bersifat rahasia dan akan kedaluwarsa otomatis dalam <strong style="color:#1A1612;">60 menit</strong>.
+                    Jangan bagikan tautan ini kepada siapa pun.
+                  </p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Divider -->
+            <div style="height:1px;background-color:#F1F5F9;margin:32px 0 24px;"></div>
+
+            <!-- Sign off -->
+            <p style="margin:0;font-size:13px;color:#475569;line-height:1.7;">
+              Salam,<br>
+              <span style="font-weight:600;color:#0F172A;letter-spacing:0.04em;">Tim Mitologi Clothing</span>
+            </p>
+
+          </td>
+        </tr>
+
+        <!-- ══ FOOTER ══ -->
+        <tr>
+          <td style="background-color:#F8FAFC;padding:24px 48px;border-top:1px solid #E2E8F0;">
+            <p style="margin:0 0 4px;font-size:11px;color:#64748B;text-align:center;">
+              &copy; {{ date('Y') }} Mitologi Clothing &mdash; Semua hak dilindungi
+            </p>
+            <p style="margin:0;font-size:11px;color:#94A3B8;text-align:center;line-height:1.7;">
+              Email ini dibuat otomatis oleh sistem. Mohon tidak membalas langsung.
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+
 </body>
 </html>
