@@ -4,8 +4,15 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Update Status Pesanan - Mitologi Clothing</title>
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
   <style type="text/css">
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      color-scheme: light;
+      supported-color-schemes: light;
+    }
 
     body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
     table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
@@ -20,9 +27,19 @@
       .col-half { display: block !important; width: 100% !important; padding-bottom: 16px !important; }
       .hide-mobile { display: none !important; }
     }
+
+    /* Force Light Mode */
+    @media (prefers-color-scheme: dark) {
+      body, .body-bg { background-color: #F8FAFC !important; }
+      .main-wrap { background-color: #FFFFFF !important; }
+      h1, h2, p, span, td { color: #1A1612 !important; }
+      .footer-bg { background-color: #F8FAFC !important; }
+      .section-bg { background-color: #F1F5F9 !important; }
+      .text-muted { color: #64748B !important; }
+    }
   </style>
 </head>
-<body style="margin:0;padding:0;background-color:#F8FAFC;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;">
+<body class="body-bg" style="margin:0;padding:0;background-color:#F8FAFC !important;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;">
 
 @php
   $statusConfig = [
@@ -43,7 +60,7 @@
 
       <!-- CARD -->
       <table border="0" cellpadding="0" cellspacing="0" width="600" class="main-wrap"
-             style="background-color:#FFFFFF;border-radius:20px;overflow:hidden;border:1px solid #E2E8F0;">
+             style="background-color:#FFFFFF !important;border-radius:20px;overflow:hidden;border:1px solid #E2E8F0;">
 
         <!-- ══ HEADER ══ -->
         <tr>
@@ -83,12 +100,27 @@
           </td>
         </tr>
 
+        <!-- ══ ICON STRIP ══ -->
+        <tr>
+          <td align="center" style="padding:40px 48px 0;">
+            <table border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td align="center"
+                    style="width:48px;height:48px;background-color:#F1F5F9;border-radius:14px;border:1px solid #E2E8F0;text-align:center;vertical-align:middle;">
+                  <img src="{{ url('images/emails/order-icon.png') }}" width="26" height="26" alt=""
+                       style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;">
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
         <!-- ══ BODY ══ -->
         <tr>
           <td class="body-pad" style="padding:44px 48px;">
 
             <!-- Greeting -->
-            <p style="margin:0 0 6px;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;font-size:26px;font-weight:700;color:#1A1612;line-height:1.2;">
+            <p style="margin:0 0 6px;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;font-size:26px;font-weight:700;color:#1A1612 !important;line-height:1.2;">
               Halo, {{ $userName }}.
             </p>
             <p style="margin:0 0 28px;font-size:14px;color:#475569;line-height:1.7;">
@@ -108,8 +140,8 @@
             </p>
 
             <!-- Order meta strip -->
-            <table border="0" cellpadding="0" cellspacing="0" width="100%"
-                   style="background-color:#F1F5F9;border-radius:12px;margin-bottom:28px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" class="section-bg"
+                   style="background-color:#F1F5F9 !important;border-radius:12px;margin-bottom:28px;">
               <tr>
                 <td style="padding:20px 24px;">
                   <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -233,7 +265,7 @@
 
         <!-- ══ FOOTER ══ -->
         <tr>
-          <td style="background-color:#F8FAFC;padding:28px 48px;border-top:1px solid #E2E8F0;">
+          <td class="footer-bg" style="background-color:#F8FAFC !important;padding:28px 48px;border-top:1px solid #E2E8F0;">
             <p style="margin:0 0 4px;font-size:11px;color:#64748B;text-align:center;">
               &copy; {{ date('Y') }} Mitologi Clothing &mdash; Semua hak dilindungi
             </p>

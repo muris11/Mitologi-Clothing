@@ -4,8 +4,15 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reset Password - Mitologi Clothing</title>
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
   <style type="text/css">
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      color-scheme: light;
+      supported-color-schemes: light;
+    }
 
     body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
     table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
@@ -18,9 +25,18 @@
       .main-wrap { width: 100% !important; }
       .body-pad { padding: 36px 24px !important; }
     }
+
+    /* Force Light Mode */
+    @media (prefers-color-scheme: dark) {
+      body, .body-bg { background-color: #F8FAFC !important; }
+      .main-wrap { background-color: #FFFFFF !important; }
+      h1, h2, p, span, td { color: #1A1612 !important; }
+      .footer-bg { background-color: #F8FAFC !important; }
+      .text-muted { color: #64748B !important; }
+    }
   </style>
 </head>
-<body style="margin:0;padding:0;background-color:#F8FAFC;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;">
+<body class="body-bg" style="margin:0;padding:0;background-color:#F8FAFC !important;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;">
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
   <tr>
@@ -28,7 +44,7 @@
 
       <!-- CARD -->
       <table border="0" cellpadding="0" cellspacing="0" width="560" class="main-wrap"
-             style="background-color:#FFFFFF;border-radius:20px;overflow:hidden;border:1px solid #E2E8F0;">
+             style="background-color:#FFFFFF !important;border-radius:20px;overflow:hidden;border:1px solid #E2E8F0;">
 
         <!-- ══ HEADER ══ -->
         <tr>
@@ -50,12 +66,8 @@
               <tr>
                 <td align="center"
                     style="width:48px;height:48px;background-color:#F1F5F9;border-radius:14px;border:1px solid #E2E8F0;text-align:center;vertical-align:middle;">
-                  <!-- SVG lock icon -->
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:13px auto 0;">
-                    <rect x="5" y="11" width="14" height="10" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
-                    <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-                    <circle cx="12" cy="16" r="1.2" fill="#C9A84C"/>
-                  </svg>
+                  <img src="{{ url('images/emails/lock-icon.png') }}" width="26" height="26" alt=""
+                       style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;">
                 </td>
               </tr>
             </table>
@@ -67,7 +79,7 @@
           <td class="body-pad" style="padding:28px 48px 44px;">
 
             <!-- Title -->
-            <p style="margin:0 0 8px;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;font-size:26px;font-weight:700;color:#1A1612;line-height:1.2;text-align:center;">
+            <p style="margin:0 0 8px;font-family:'Plus Jakarta Sans',Helvetica,Arial,sans-serif;font-size:26px;font-weight:700;color:#1A1612 !important;line-height:1.2;text-align:center;">
               Reset Password
             </p>
             <p style="margin:0 0 32px;font-size:13px;color:#64748B;text-align:center;letter-spacing:0.04em;">
@@ -78,8 +90,8 @@
             <div style="height:1px;background-color:#F1F5F9;margin-bottom:28px;"></div>
 
             <!-- Greeting -->
-            <p style="margin:0 0 16px;font-size:15px;color:#1A1612;font-weight:500;">
-              Halo, <span style="color:#1A1612;font-weight:600;">{{ $name }}</span>
+            <p style="margin:0 0 16px;font-size:15px;color:#1A1612 !important;font-weight:500;">
+              Halo, <span style="color:#1A1612 !important;font-weight:600;">{{ $name }}</span>
             </p>
 
             <p style="margin:0 0 32px;font-size:14px;color:#475569;line-height:1.75;">
@@ -106,9 +118,9 @@
                    style="background-color:#F8FAFC;border-radius:12px;border-left:3px solid #C9A84C;">
               <tr>
                 <td style="padding:16px 20px;">
-                  <p style="margin:0 0 4px;font-size:9px;font-weight:600;color:#64748B;letter-spacing:0.2em;text-transform:uppercase;">Informasi Keamanan</p>
-                  <p style="margin:0;font-size:13px;color:#475569;line-height:1.6;">
-                    Tautan ini bersifat rahasia dan akan kedaluwarsa otomatis dalam <strong style="color:#1A1612;">60 menit</strong>.
+                  <p style="margin:0 0 4px;font-size:9px;font-weight:600;color:#64748B !important;letter-spacing:0.2em;text-transform:uppercase;" class="text-muted">Informasi Keamanan</p>
+                  <p style="margin:0;font-size:13px;color:#475569 !important;line-height:1.6;">
+                    Tautan ini bersifat rahasia dan akan kedaluwarsa otomatis dalam <strong style="color:#1A1612 !important;">60 menit</strong>.
                     Jangan bagikan tautan ini kepada siapa pun.
                   </p>
                 </td>
@@ -129,7 +141,7 @@
 
         <!-- ══ FOOTER ══ -->
         <tr>
-          <td style="background-color:#F8FAFC;padding:24px 48px;border-top:1px solid #E2E8F0;">
+          <td class="footer-bg" style="background-color:#F8FAFC !important;padding:24px 48px;border-top:1px solid #E2E8F0;">
             <p style="margin:0 0 4px;font-size:11px;color:#64748B;text-align:center;">
               &copy; {{ date('Y') }} Mitologi Clothing &mdash; Semua hak dilindungi
             </p>
